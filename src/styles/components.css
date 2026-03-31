@@ -1,0 +1,13 @@
+/* Todos os estilos do header, card, tag-list, botões, tabelas, experiência, containers, switch e responsividade foram migrados para arquivos separados em ./components/.
+Este arquivo agora serve apenas como ponto de importação central. */
+
+@import "./components/header.css";
+@import "./components/experience-card.css";
+@import "./components/tag-list.css";
+@import "./components/button.css";
+@import "./components/back-top.css";
+@import "./components/table.css";
+@import "./components/exp-item.css";
+@import "./components/layout-container.css";
+@import "./components/switch.css";
+@import "./components/responsive-toolbar.css";

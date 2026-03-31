@@ -1,0 +1,68 @@
+{
+  "id": "pao-forma-450",
+  "slug": "pao-de-forma-450g-p",
+  "sku": "pao-forma-450",
+  "name": "Pão de Forma 450g",
+  "brand": "Padaria",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=24",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=24",
+      "alt": "Pão de Forma 450g",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 8.99,
+  "listPrice": 9.99,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Padaria",
+    "Pães"
+  ],
+  "categoryPath": [
+    {
+      "id": "8",
+      "slug": "padaria",
+      "name": "Padaria"
+    },
+    {
+      "id": "61",
+      "slug": "paes",
+      "name": "Pães"
+    }
+  ],
+  "departments": [
+    "Pães",
+    "Paes"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Pão de Forma 450g",
+  "longDescription": "",
+  "seo": {
+    "title": "Pão de Forma 450g",
+    "description": "Pão de Forma 450g",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.710Z",
+  "updatedAt": "2026-03-18T22:13:42.710Z"
+}

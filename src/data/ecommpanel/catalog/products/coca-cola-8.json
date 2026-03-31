@@ -1,0 +1,74 @@
+{
+  "id": "coca-cola-8",
+  "slug": "coca-cola-2l-p",
+  "sku": "coca-cola-8",
+  "name": "Refrigerante Coca-Cola 2L",
+  "brand": "Coca-Cola",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=8",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=8",
+      "alt": "Refrigerante Coca-Cola 2L",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 5.89,
+  "listPrice": 6.49,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Bebidas",
+    "Refrigerantes",
+    "Cola"
+  ],
+  "categoryPath": [
+    {
+      "id": "4",
+      "slug": "bebidas",
+      "name": "Bebidas"
+    },
+    {
+      "id": "18",
+      "slug": "refrigerantes",
+      "name": "Refrigerantes"
+    },
+    {
+      "id": "95",
+      "slug": "cola",
+      "name": "Cola"
+    }
+  ],
+  "departments": [
+    "Refrigerantes",
+    "Cola"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Refrigerante Coca-Cola 2L",
+  "longDescription": "",
+  "seo": {
+    "title": "Refrigerante Coca-Cola 2L",
+    "description": "Refrigerante Coca-Cola 2L",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.689Z",
+  "updatedAt": "2026-03-18T22:13:42.689Z"
+}

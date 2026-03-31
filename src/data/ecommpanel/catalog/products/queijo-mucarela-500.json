@@ -1,0 +1,67 @@
+{
+  "id": "queijo-mucarela-500",
+  "slug": "queijo-mucarela-500g-p",
+  "sku": "queijo-mucarela-500",
+  "name": "Queijo Muçarela 500g",
+  "brand": "Local",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=18",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=18",
+      "alt": "Queijo Muçarela 500g",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 24.99,
+  "listPrice": 26.99,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Frios e Laticínios",
+    "Queijos"
+  ],
+  "categoryPath": [
+    {
+      "id": "7",
+      "slug": "frios-e-laticinios",
+      "name": "Frios e Laticínios"
+    },
+    {
+      "id": "51",
+      "slug": "queijos",
+      "name": "Queijos"
+    }
+  ],
+  "departments": [
+    "Queijos"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Queijo Muçarela 500g",
+  "longDescription": "",
+  "seo": {
+    "title": "Queijo Muçarela 500g",
+    "description": "Queijo Muçarela 500g",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.702Z",
+  "updatedAt": "2026-03-18T22:13:42.702Z"
+}

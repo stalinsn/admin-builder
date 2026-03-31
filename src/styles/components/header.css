@@ -1,0 +1,100 @@
+@import "../tokens/colors.css";
+@import "../tokens/typography.css";
+@import "../tokens/spacings.css";
+@import "../tokens/shadows.css";
+
+/* Header e Topbar */
+.topbar {
+  width: 100%;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-radius: var(--radius-lg);
+  transition: box-shadow var(--transition-normal);
+}
+
+.toolbar {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--gap-md) var(--gap-lg);
+  gap: var(--gap-lg);
+}
+
+.brand {
+  font-weight: var(--font-weight-bold);
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  font-family: var(--font-family);
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.theme-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text);
+  line-height: 1;
+  font-family: var(--font-family);
+}
+
+/* Contatos Header */
+.contact-info {
+  color: var(--accent);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.01em;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0 var(--gap-xs);
+  transition: color var(--transition-fast);
+  font-family: var(--font-family);
+}
+button.contact-phone-btn {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+.contact-linkedin,
+.contact-linkedin:visited,
+button.contact-linkedin {
+  color: var(--accent);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 var(--gap-xs);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.contact-linkedin:hover,
+.contact-linkedin:focus,
+button.contact-linkedin:hover,
+button.contact-linkedin:focus {
+  color: #00c46a;
+  text-decoration: underline;
+  outline: none;
+}

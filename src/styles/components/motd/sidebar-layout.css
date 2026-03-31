@@ -1,0 +1,39 @@
+/* =====================================================================
+   SIDEBAR - LAYOUT E ESTRUTURA
+   ===================================================================== */
+
+.motd-sidebar {
+  flex: 1;
+  background: var(--motd-card-bg);
+  border-left: 1px solid var(--motd-border);
+  overflow: hidden;
+  min-width: var(--sidebar-min-width);
+  max-width: var(--sidebar-width);
+  box-shadow: var(--motd-shadow);
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+}
+
+/* Header da sidebar */
+.sidebar-header {
+  background: var(--motd-bg);
+  border-bottom: 1px solid var(--motd-border);
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+/* Responsividade */
+@media (max-width: 800px) {
+  .motd-sidebar {
+    max-width: none;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--motd-border);
+    height: 50vh;
+    box-shadow: var(--motd-shadow);
+  }
+}

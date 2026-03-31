@@ -1,0 +1,32 @@
+@import "../tokens/colors.css";
+@import "../tokens/typography.css";
+@import "../tokens/spacings.css";
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.tag {
+  background: var(--accent);
+  color: var(--text-inverse);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  font-family: var(--font-family);
+  transition: background var(--transition-fast);
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  .tag {
+    font-size: var(--font-size-xs);
+  }
+}
+
+.tag:hover {
+  background: var(--accent-hover);
+}

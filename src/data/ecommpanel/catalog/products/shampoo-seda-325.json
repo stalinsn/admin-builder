@@ -1,0 +1,67 @@
+{
+  "id": "shampoo-seda-325",
+  "slug": "shampoo-seda-325ml-p",
+  "sku": "shampoo-seda-325",
+  "name": "Shampoo Seda 325ml",
+  "brand": "Seda",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=17",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=17",
+      "alt": "Shampoo Seda 325ml",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 12.99,
+  "listPrice": 14.99,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Higiene e Beleza",
+    "Cabelos"
+  ],
+  "categoryPath": [
+    {
+      "id": "6",
+      "slug": "higiene-e-beleza",
+      "name": "Higiene e Beleza"
+    },
+    {
+      "id": "41",
+      "slug": "cabelos",
+      "name": "Cabelos"
+    }
+  ],
+  "departments": [
+    "Cabelos"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Shampoo Seda 325ml",
+  "longDescription": "",
+  "seo": {
+    "title": "Shampoo Seda 325ml",
+    "description": "Shampoo Seda 325ml",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.701Z",
+  "updatedAt": "2026-03-18T22:13:42.701Z"
+}

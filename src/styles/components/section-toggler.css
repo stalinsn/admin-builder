@@ -1,0 +1,135 @@
+.section-toggler {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  color: var(--accent, #0070f3);
+  font-size: 1.6rem;
+  cursor: pointer;
+  z-index: 2;
+  padding: 4px;
+  border-radius: 50%;
+  transition:
+    background 0.18s,
+    box-shadow 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+.section-toggler:hover {
+  background: rgba(0, 112, 243, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+.section-toggler svg {
+  transition: transform 0.38s cubic-bezier(0.4, 2, 0.6, 1);
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.section-toggler[aria-expanded="false"] svg {
+  transform: rotate(-180deg);
+}
+.section-toggler[aria-expanded="true"] svg {
+  transform: rotate(0deg);
+}
+.card {
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+.section-content {
+  transition:
+    max-height 1.25s cubic-bezier(0.4, 2, 0.6, 1),
+    opacity 0.48s;
+  overflow: hidden;
+}
+.section-content.closed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.section-content.open {
+  max-height: 2000px;
+  opacity: 1;
+}
+.toggle-all-btn {
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  background: var(--accent, #0070f3);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.18s;
+}
+.toggle-all-btn:hover {
+  background: #005fa3;
+}
+.toggle-all-icon-btn {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  color: var(--accent, #0070f3);
+  cursor: pointer;
+  z-index: 3;
+  padding: 4px;
+  border-radius: 50%;
+  transition:
+    background 0.18s,
+    box-shadow 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 44px;
+}
+.toggle-all-icon-btn:hover {
+  background: rgba(0, 112, 243, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.toggle-all-icon-btn svg {
+  display: block;
+  width: 26px;
+  height: 44px;
+  color: var(--accent, #0070f3);
+  transition: transform 0.38s cubic-bezier(0.4, 2, 0.6, 1);
+}
+@media (max-width: 1024px) {
+  .card > .section-toggler {
+    top: 10px;
+    right: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .card > .section-toggler {
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+  }
+  .card > .section-toggler svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+@media (max-width: 500px) {
+  .card > .section-toggler {
+    top: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
+  }
+  .card > .section-toggler svg {
+    width: 15px;
+    height: 15px;
+  }
+}

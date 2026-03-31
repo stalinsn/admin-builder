@@ -1,0 +1,67 @@
+{
+  "modules": {
+    "enabled": true,
+    "heroMessage": true,
+    "showcaseDaily": true,
+    "services": true,
+    "showcaseGrocery": true,
+    "largeBanner": true,
+    "strips": false
+  },
+  "override": {
+    "enabled": false,
+    "pageSlug": "home",
+    "hideHeader": false,
+    "hideFooter": false
+  },
+  "heroMessage": "Economize no seu café da manhã! 40% OFF no 2º",
+  "dailyShowcaseTitle": "Ofertas do dia",
+  "groceryShowcaseTitle": "Para sua despensa",
+  "services": [
+    {
+      "id": "service-schedule",
+      "icon": "⏰",
+      "label": "Agende dia e hora",
+      "enabled": true
+    },
+    {
+      "id": "service-pickup",
+      "icon": "🏪",
+      "label": "Retire na loja",
+      "enabled": true
+    },
+    {
+      "id": "service-payment",
+      "icon": "💳",
+      "label": "Cartão e PIX",
+      "enabled": true
+    },
+    {
+      "id": "service-security",
+      "icon": "🛡",
+      "label": "Compra segura",
+      "enabled": true
+    }
+  ],
+  "largeBannerText": "Economize com combos — mobile-first banner",
+  "strips": [
+    {
+      "id": "strip-1",
+      "label": "Faixa promocional 1",
+      "href": "/e-commerce",
+      "enabled": true
+    },
+    {
+      "id": "strip-2",
+      "label": "Faixa promocional 2",
+      "href": "/e-commerce",
+      "enabled": true
+    },
+    {
+      "id": "strip-3",
+      "label": "Faixa promocional 3",
+      "href": "/e-commerce",
+      "enabled": true
+    }
+  ]
+}

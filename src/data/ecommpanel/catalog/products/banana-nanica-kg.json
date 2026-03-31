@@ -1,0 +1,61 @@
+{
+  "id": "banana-nanica-kg",
+  "slug": "banana-nanica-kg-p",
+  "sku": "banana-nanica-kg",
+  "name": "Banana Nanica",
+  "brand": "Hortifruti",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=21",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=21",
+      "alt": "Banana Nanica",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 3.99,
+  "listPrice": 4.99,
+  "unit": "kg",
+  "packSize": 1,
+  "categories": [
+    "Hortifruti"
+  ],
+  "categoryPath": [
+    {
+      "id": "1",
+      "slug": "hortifruti",
+      "name": "Hortifruti"
+    }
+  ],
+  "departments": [
+    "Frutas"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Banana Nanica",
+  "longDescription": "",
+  "seo": {
+    "title": "Banana Nanica",
+    "description": "Banana Nanica",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.706Z",
+  "updatedAt": "2026-03-18T22:13:42.706Z"
+}

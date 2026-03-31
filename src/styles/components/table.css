@@ -1,0 +1,30 @@
+@import "../tokens/colors.css";
+@import "../tokens/typography.css";
+
+/* Tabela padrão */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+}
+
+th {
+  text-align: left;
+  padding-right: var(--gap-md);
+  vertical-align: top;
+  color: var(--text);
+  font-weight: var(--font-weight-semibold);
+}
+
+td {
+  padding: var(--gap-sm) 0;
+}
+
+tr:nth-child(even) {
+  background: rgba(34, 197, 94, 0.06);
+}
+
+[data-theme="light"] tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.02);
+}

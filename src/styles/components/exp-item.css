@@ -1,0 +1,39 @@
+@import "../tokens/colors.css";
+@import "../tokens/typography.css";
+@import "../tokens/spacings.css";
+
+.exp-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-family);
+}
+
+.exp-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.exp-head {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
+}
+
+.exp-period {
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+}
+
+ul.bullets {
+  padding-left: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+ul.bullets li {
+  text-indent: -0.8rem;
+  padding-left: 0.8rem;
+}

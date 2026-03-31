@@ -1,0 +1,147 @@
+/* =====================================================================
+   ÁREA PRINCIPAL - MOTD MAIN
+   ===================================================================== */
+
+.motd-main {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-2xl) var(--space-xl);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color var(--transition-slow);
+}
+
+.motd-main:hover {
+  background: var(--motd-card-bg);
+}
+
+/* Frase principal */
+.motd-frase {
+  font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-3xl));
+  font-weight: var(--font-weight-bold);
+  color: var(--accent);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--space-2xl);
+  min-height: 120px;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    opacity var(--transition-slow),
+    transform var(--transition-slow);
+}
+
+.motd-frase.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.motd-frase.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Ações */
+.motd-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Botão principal */
+.motd-button.primary {
+  padding: var(--space-md) 2.5rem;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--text-inverse);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  box-shadow: var(--motd-shadow);
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.motd-button.primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--motd-shadow-lg);
+}
+
+.motd-button.primary:active {
+  transform: translateY(0);
+}
+
+.motd-button.primary.loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+/* Spinner de loading */
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Aviso */
+.motd-aviso {
+  margin-top: var(--space-lg);
+  color: var(--accent);
+  font-size: var(--font-size-sm);
+  min-height: 20px;
+  font-weight: var(--font-weight-medium);
+}
+
+/* Dicas de teclado */
+.keyboard-hints {
+  margin-top: var(--space-lg);
+  color: var(--text-light);
+  font-size: var(--font-size-xs);
+}
+
+.keyboard-hints kbd {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.4rem;
+  font-size: 0.7rem;
+  margin: 0 0.1rem;
+}
+
+/* Responsividade */
+@media (max-width: 800px) {
+  .motd-main {
+    flex: 1;
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .motd-frase {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    margin-bottom: var(--space-xl);
+    min-height: 100px;
+  }
+
+  .motd-button.primary {
+    padding: 0.8rem 2rem;
+    font-size: var(--font-size-base);
+  }
+}

@@ -1,0 +1,45 @@
+:root {
+  --bg: #0a0d0a;
+  --card-bg: #111411;
+  --text: #f5f7f5;
+  --text-light: #9ca3af;
+  --accent: #22c55e;
+  --accent-hover: #34d399;
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --text-inverse: #fff;
+  --radius-lg: 14px;
+  --radius-sm: 4px;
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+
+  /* MOTD Specific tokens */
+  --motd-bg: #0f0f23;
+  --motd-card-bg: #1a1a2e;
+  --motd-border: #333;
+  --motd-text-muted: #a0a0a0;
+  --motd-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --motd-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --motd-accent-rgb: 34, 197, 94; /* For use in rgba() */
+}
+
+[data-theme="light"] {
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --text: #111827;
+  --text-light: #6b7280;
+  --accent: #1e9e61;
+  --accent-hover: #30be7b;
+  --border: rgba(0, 0, 0, 0.06);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --text-inverse: #ffffff;
+
+  /* MOTD Specific tokens - Light theme */
+  --motd-bg: #f5f5f5;
+  --motd-card-bg: #ffffff;
+  --motd-border: #e5e5e5;
+  --motd-text-muted: #6b7280;
+  --motd-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --motd-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+  --motd-accent-rgb: 30, 158, 97; /* Para usar em rgba() */
+}

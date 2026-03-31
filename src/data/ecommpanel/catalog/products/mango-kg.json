@@ -1,0 +1,61 @@
+{
+  "id": "mango-kg",
+  "slug": "manga-palmer-kg-p",
+  "sku": "mango-kg",
+  "name": "Manga Palmer",
+  "brand": "Hortifruti",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=2",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=2",
+      "alt": "Manga Palmer",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 5.29,
+  "listPrice": 6.49,
+  "unit": "kg",
+  "packSize": 1,
+  "categories": [
+    "Hortifruti"
+  ],
+  "categoryPath": [
+    {
+      "id": "1",
+      "slug": "hortifruti",
+      "name": "Hortifruti"
+    }
+  ],
+  "departments": [
+    "Frutas"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Manga Palmer",
+  "longDescription": "",
+  "seo": {
+    "title": "Manga Palmer",
+    "description": "Manga Palmer",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.680Z",
+  "updatedAt": "2026-03-18T22:13:42.680Z"
+}

@@ -1,0 +1,213 @@
+{
+  "id": "mock-0021",
+  "slug": "iogurte-grego-tradicional-100g",
+  "sku": "810021",
+  "name": "Iogurte Grego Tradicional 100g",
+  "brand": "Vigor",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/iogurte-grego-tradicional-100g-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/iogurte-grego-tradicional-100g-2x/400/400",
+      "alt": "Iogurte Grego Tradicional 100g",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/iogurte-grego-tradicional-100g-lifestyle/1200/800",
+      "alt": "Iogurte Grego Tradicional 100g em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 4.19,
+  "listPrice": 4.65,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Frios e Laticinios",
+    "Iogurtes",
+    "Iogurte Grego"
+  ],
+  "categoryPath": [
+    {
+      "id": "7",
+      "slug": "frios-e-laticinios",
+      "name": "Frios e Laticinios"
+    },
+    {
+      "id": "53",
+      "slug": "iogurtes",
+      "name": "Iogurtes"
+    },
+    {
+      "id": "205",
+      "slug": "iogurte-grego",
+      "name": "Iogurte Grego"
+    }
+  ],
+  "departments": [
+    "Iogurtes",
+    "Iogurte Grego"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Refrigerados",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Iogurte Grego 100g",
+  "longDescription": "Iogurte Grego Tradicional 100g da marca Vigor. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Iogurte Grego Tradicional 100g | Supermercado Mock",
+    "description": "Compre Iogurte Grego Tradicional 100g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Iogurte Grego",
+      "Vigor",
+      "Frios e Laticinios",
+      "100g"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 45,
+    "safetyStock": 4,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 100,
+    "volumetricWeightGrams": 112,
+    "temperatureZone": "chilled",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 419,
+    "listPrice": 465,
+    "discountPercent": 11,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 419,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 210,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "iogurte-grego"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-iogurte-grego",
+    "groupName": "Iogurte Grego",
+    "axis": [
+      "sabor"
+    ],
+    "options": [
+      {
+        "id": "mock-0021",
+        "slug": "iogurte-grego-tradicional-100g",
+        "name": "Iogurte Grego Tradicional 100g",
+        "size": "100g",
+        "available": true,
+        "sellingPrice": 419,
+        "listPrice": 465,
+        "image": "https://picsum.photos/seed/iogurte-grego-tradicional-100g-2x/400/400",
+        "variationAttributes": {
+          "size": "100g",
+          "flavor": "Tradicional"
+        }
+      },
+      {
+        "id": "mock-0022",
+        "slug": "iogurte-grego-morango-100g",
+        "name": "Iogurte Grego Morango 100g",
+        "size": "100g",
+        "available": true,
+        "sellingPrice": 432,
+        "listPrice": 484,
+        "image": "https://picsum.photos/seed/iogurte-grego-morango-100g-2x/400/400",
+        "variationAttributes": {
+          "size": "100g",
+          "flavor": "Morango"
+        }
+      },
+      {
+        "id": "mock-0023",
+        "slug": "iogurte-grego-maracuja-100g",
+        "name": "Iogurte Grego Maracuja 100g",
+        "size": "100g",
+        "available": true,
+        "sellingPrice": 436,
+        "listPrice": 493,
+        "image": "https://picsum.photos/seed/iogurte-grego-maracuja-100g-2x/400/400",
+        "variationAttributes": {
+          "size": "100g",
+          "flavor": "Maracuja"
+        }
+      },
+      {
+        "id": "mock-0024",
+        "slug": "iogurte-grego-baunilha-100g",
+        "name": "Iogurte Grego Baunilha 100g",
+        "size": "100g",
+        "available": true,
+        "sellingPrice": 453,
+        "listPrice": 516,
+        "image": "https://picsum.photos/seed/iogurte-grego-baunilha-100g-2x/400/400",
+        "variationAttributes": {
+          "size": "100g",
+          "flavor": "Baunilha"
+        }
+      }
+    ]
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Manter refrigerado entre 1C e 8C.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

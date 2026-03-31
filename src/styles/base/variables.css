@@ -1,0 +1,78 @@
+/* =====================================================================
+   VARIÁVEIS CSS - DESIGN SYSTEM
+   Importa os tokens centralizados do site
+   ===================================================================== */
+
+@import "../tokens/colors.css";
+
+:root {
+  /* Espaçamentos */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Tipografia */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.85rem;
+  --font-size-base: 0.9rem;
+  --font-size-lg: 1.1rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 1.8rem;
+  --font-size-3xl: 2.2rem;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+  --line-height-loose: 1.8;
+
+  /* Transições - usando os tokens do site */
+  --transition-fast: var(--transition-fast);
+  --transition-normal: var(--transition-normal);
+  --transition-slow: 0.3s ease;
+  --transition-spring: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Raios de borda - usando tokens do site */
+  --radius: 6px;
+  --radius-xl: 12px;
+  --radius-full: 50px;
+
+  /* Sombras - usando tokens do site */
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+  /* Z-index */
+  --z-dropdown: 10;
+  --z-overlay: 20;
+  --z-modal: 30;
+  --z-tooltip: 40;
+
+  /* Layout */
+  --sidebar-width: 380px;
+  --sidebar-min-width: 280px;
+  --container-max-width: 1200px;
+}
+
+/* Variáveis para dispositivos móveis */
+@media (max-width: 768px) {
+  :root {
+    --space-md: 0.75rem;
+    --space-lg: 1rem;
+    --space-xl: 1.5rem;
+    --space-2xl: 2rem;
+
+    --font-size-sm: 0.8rem;
+    --font-size-base: 0.85rem;
+    --font-size-lg: 1rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.8rem;
+  }
+}

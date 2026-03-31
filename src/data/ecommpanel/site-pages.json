@@ -1,0 +1,71 @@
+{
+  "pages": [
+    {
+      "id": "page-quem-somos",
+      "title": "Quem Somos",
+      "slug": "quem-somos",
+      "description": "Página institucional criada via painel administrativo.",
+      "seo": {
+        "title": "Quem Somos",
+        "description": "Página institucional criada via painel administrativo.",
+        "keywords": "",
+        "noIndex": true
+      },
+      "theme": {
+        "backgroundColor": "#ffffff",
+        "textColor": "#0f172a",
+        "accentColor": "#0f4f9c"
+      },
+      "status": "draft",
+      "layoutPreset": "three_vertical",
+      "slots": [
+        {
+          "id": "slot-1",
+          "label": "Área 1",
+          "blocks": [
+            {
+              "id": "blk-a212dcc3",
+              "type": "hero",
+              "enabled": true,
+              "data": {
+                "title": "Título Hero",
+                "subtitle": "Subtítulo de apoio para a seção principal."
+              }
+            }
+          ]
+        },
+        {
+          "id": "slot-2",
+          "label": "Área 2",
+          "blocks": [
+            {
+              "id": "blk-baeb1905",
+              "type": "rich_text",
+              "enabled": true,
+              "data": {
+                "content": "Bloco de texto editável com conteúdo institucional."
+              }
+            }
+          ]
+        },
+        {
+          "id": "slot-3",
+          "label": "Área 3",
+          "blocks": [
+            {
+              "id": "blk-d71f7b55",
+              "type": "cta",
+              "enabled": true,
+              "data": {
+                "label": "Saiba mais",
+                "href": "/e-commerce"
+              }
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-03-03T01:46:30.592Z",
+      "updatedAt": "2026-03-03T01:46:30.592Z"
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "id": "mock-0100",
+  "slug": "queijo-mussarela-fatiado-1kg",
+  "sku": "810100",
+  "name": "Queijo Mussarela Fatiado 1kg",
+  "brand": "Polenghi",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-1kg-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/queijo-mussarela-fatiado-1kg-2x/400/400",
+      "alt": "Queijo Mussarela Fatiado 1kg",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/queijo-mussarela-fatiado-1kg-lifestyle/1200/800",
+      "alt": "Queijo Mussarela Fatiado 1kg em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 23.37,
+  "listPrice": 27.58,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Frios e Laticinios",
+    "Queijos",
+    "Mussarela"
+  ],
+  "categoryPath": [
+    {
+      "id": "7",
+      "slug": "frios-e-laticinios",
+      "name": "Frios e Laticinios"
+    },
+    {
+      "id": "51",
+      "slug": "queijos",
+      "name": "Queijos"
+    },
+    {
+      "id": "901",
+      "slug": "mussarela",
+      "name": "Mussarela"
+    }
+  ],
+  "departments": [
+    "Queijos",
+    "Mussarela"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Refrigerados",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Queijo Mussarela Fatiado 1kg",
+  "longDescription": "Queijo Mussarela Fatiado 1kg da marca Polenghi. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Queijo Mussarela Fatiado 1kg | Supermercado Mock",
+    "description": "Compre Queijo Mussarela Fatiado 1kg com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Queijo Mussarela Fatiado",
+      "Polenghi",
+      "Frios e Laticinios",
+      "1kg"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 118,
+    "safetyStock": 9,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 1000,
+    "volumetricWeightGrams": 1120,
+    "temperatureZone": "chilled",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 2337,
+    "listPrice": 2758,
+    "discountPercent": 18,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 2337,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 1169,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "queijo-mussarela-fatiado"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-queijo-mussarela-fatiado",
+    "groupName": "Queijo Mussarela Fatiado",
+    "axis": [
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0097",
+        "slug": "queijo-mussarela-fatiado-150g",
+        "name": "Queijo Mussarela Fatiado 150g",
+        "size": "150g",
+        "available": true,
+        "sellingPrice": 647,
+        "listPrice": 744,
+        "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-150g-2x/400/400",
+        "variationAttributes": {
+          "size": "150g"
+        }
+      },
+      {
+        "id": "mock-0098",
+        "slug": "queijo-mussarela-fatiado-300g",
+        "name": "Queijo Mussarela Fatiado 300g",
+        "size": "300g",
+        "available": true,
+        "sellingPrice": 899,
+        "listPrice": 1043,
+        "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-300g-2x/400/400",
+        "variationAttributes": {
+          "size": "300g"
+        }
+      },
+      {
+        "id": "mock-0099",
+        "slug": "queijo-mussarela-fatiado-500g",
+        "name": "Queijo Mussarela Fatiado 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 1304,
+        "listPrice": 1526,
+        "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g"
+        }
+      },
+      {
+        "id": "mock-0100",
+        "slug": "queijo-mussarela-fatiado-1kg",
+        "name": "Queijo Mussarela Fatiado 1kg",
+        "size": "1kg",
+        "available": true,
+        "sellingPrice": 2337,
+        "listPrice": 2758,
+        "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-1kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1kg"
+        }
+      }
+    ]
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Manter refrigerado entre 1C e 8C.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

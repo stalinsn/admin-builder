@@ -1,0 +1,67 @@
+.nuvemContainer {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  text-align: center;
+}
+.nuvem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+.nuvemItem {
+  display: inline-block;
+  background: #e3e7ff;
+  color: #2a2a4a;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(44, 62, 80, 0.07);
+}
+.nuvemItem:hover,
+.nuvemItem:focus {
+  background: #4f6cff;
+  color: #fff;
+  outline: none;
+}
+.infoBox {
+  margin: 1.5rem auto 0 auto;
+  max-width: 400px;
+  background: #fff;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.08);
+  padding: 1.2rem 1.5rem;
+  text-align: left;
+  position: relative;
+  z-index: 10;
+}
+.infoBox strong {
+  display: block;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+.infoBox button {
+  margin-top: 1rem;
+  background: #4f6cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.infoBox button:hover {
+  background: #2a2a4a;
+}

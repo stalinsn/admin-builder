@@ -1,0 +1,59 @@
+{
+  "id": "coffee-soluble",
+  "slug": "cafe-soluv-el-200g-p",
+  "sku": "coffee-soluble",
+  "name": "Café Solúvel 200g",
+  "brand": "Café Real",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=3",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=3",
+      "alt": "Café Solúvel 200g",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 15.9,
+  "listPrice": 19.9,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Mercearia"
+  ],
+  "categoryPath": [
+    {
+      "id": "2",
+      "slug": "mercearia",
+      "name": "Mercearia"
+    }
+  ],
+  "departments": [],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Café Solúvel 200g",
+  "longDescription": "",
+  "seo": {
+    "title": "Café Solúvel 200g",
+    "description": "Café Solúvel 200g",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.682Z",
+  "updatedAt": "2026-03-18T22:13:42.682Z"
+}

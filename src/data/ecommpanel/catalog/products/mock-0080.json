@@ -1,0 +1,211 @@
+{
+  "id": "mock-0080",
+  "slug": "racao-gatos-castrados-salmao-3kg",
+  "sku": "810080",
+  "name": "Racao Gatos Castrados Salmao 3kg",
+  "brand": "Whiskas",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/racao-gatos-castrados-salmao-3kg-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/racao-gatos-castrados-salmao-3kg-2x/400/400",
+      "alt": "Racao Gatos Castrados Salmao 3kg",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/racao-gatos-castrados-salmao-3kg-lifestyle/1200/800",
+      "alt": "Racao Gatos Castrados Salmao 3kg em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 26.99,
+  "listPrice": 31.31,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Pet Shop",
+    "Gatos",
+    "Racao Seca"
+  ],
+  "categoryPath": [
+    {
+      "id": "9",
+      "slug": "pet-shop",
+      "name": "Pet Shop"
+    },
+    {
+      "id": "72",
+      "slug": "gatos",
+      "name": "Gatos"
+    },
+    {
+      "id": "602",
+      "slug": "racao-seca",
+      "name": "Racao Seca"
+    }
+  ],
+  "departments": [
+    "Gatos",
+    "Racao Seca",
+    "Caes"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Racao Gatos Castrados 3kg",
+  "longDescription": "Racao Gatos Castrados Salmao 3kg da marca Whiskas. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Racao Gatos Castrados Salmao 3kg | Supermercado Mock",
+    "description": "Compre Racao Gatos Castrados Salmao 3kg com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Racao Gatos Castrados",
+      "Whiskas",
+      "Pet Shop",
+      "3kg"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 98,
+    "safetyStock": 8,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 3000,
+    "volumetricWeightGrams": 3360,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "bulky"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 2699,
+    "listPrice": 3131,
+    "discountPercent": 16,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 2699,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 1350,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "racao-gatos-castrados"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-racao-gatos-castrados",
+    "groupName": "Racao Gatos Castrados",
+    "axis": [
+      "sabor",
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0077",
+        "slug": "racao-gatos-castrados-frango-1kg",
+        "name": "Racao Gatos Castrados Frango 1kg",
+        "size": "1kg",
+        "available": true,
+        "sellingPrice": 1349,
+        "listPrice": 1524,
+        "image": "https://picsum.photos/seed/racao-gatos-castrados-frango-1kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1kg",
+          "flavor": "Frango"
+        }
+      },
+      {
+        "id": "mock-0078",
+        "slug": "racao-gatos-castrados-frango-3kg",
+        "name": "Racao Gatos Castrados Frango 3kg",
+        "size": "3kg",
+        "available": true,
+        "sellingPrice": 2499,
+        "listPrice": 2849,
+        "image": "https://picsum.photos/seed/racao-gatos-castrados-frango-3kg-2x/400/400",
+        "variationAttributes": {
+          "size": "3kg",
+          "flavor": "Frango"
+        }
+      },
+      {
+        "id": "mock-0079",
+        "slug": "racao-gatos-castrados-carne-3kg",
+        "name": "Racao Gatos Castrados Carne 3kg",
+        "size": "3kg",
+        "available": true,
+        "sellingPrice": 2624,
+        "listPrice": 3018,
+        "image": "https://picsum.photos/seed/racao-gatos-castrados-carne-3kg-2x/400/400",
+        "variationAttributes": {
+          "size": "3kg",
+          "flavor": "Carne"
+        }
+      },
+      {
+        "id": "mock-0080",
+        "slug": "racao-gatos-castrados-salmao-3kg",
+        "name": "Racao Gatos Castrados Salmao 3kg",
+        "size": "3kg",
+        "available": true,
+        "sellingPrice": 2699,
+        "listPrice": 3131,
+        "image": "https://picsum.photos/seed/racao-gatos-castrados-salmao-3kg-2x/400/400",
+        "variationAttributes": {
+          "size": "3kg",
+          "flavor": "Salmao"
+        }
+      }
+    ]
+  },
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

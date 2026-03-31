@@ -1,0 +1,588 @@
+/* Global main container */
+.ecom {
+  width: 100%;
+  max-width: none;
+  background: var(--ecom-page-gradient), var(--bg);
+  color: var(--text);
+  line-height: var(--line-height-base);
+  margin: 0;
+  padding: 0;
+  /* Reset parent container centering and height constraints */
+  align-self: stretch;
+  min-height: auto;
+  height: auto;
+
+  > * {
+    max-width: 100%;
+  }
+}
+
+.ecom :is(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid rgba(var(--accent-rgb, 13, 122, 95), 0.45);
+  outline-offset: 2px;
+}
+
+.ecom :is(button, a, input, select, textarea) {
+  transition:
+    color var(--ecom-motion-fast),
+    border-color var(--ecom-motion-fast),
+    background-color var(--ecom-motion-fast),
+    box-shadow var(--ecom-motion-fast),
+    transform var(--ecom-motion-fast);
+}
+
+/* Ensure no horizontal overflow */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Hard stop: clamp any overflows inside with consistent page gutters */
+.ecom,
+.ecom > section,
+.plp-container {
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  box-sizing: border-box;
+}
+
+.ecom {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Constrain main content to container width on desktop while keeping header/footer full-bleed */
+.ecom > section {
+  max-width: calc(var(--container) + (var(--container-padding) * 2));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Shared container helper for inner sections */
+.container {
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* Sections and banners */
+.ecom-section {
+  padding: clamp(18px, 2vw, 28px) 0;
+  margin: 0;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .ecom-section {
+    padding: clamp(24px, 3vw, 38px) 0;
+  }
+}
+@media (min-width: 1024px) {
+  .ecom-section {
+    padding: clamp(28px, 3.4vw, 44px) 0;
+  }
+}
+.ecom-section-title {
+  font-size: var(--ecom-font-size-xl);
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ecom-hero {
+  margin: clamp(12px, 2vw, 20px) 0;
+  width: 100%;
+  .banner {
+    width: 100%;
+    height: clamp(220px, 42vw, 380px);
+    border-radius: var(--radius-lg);
+    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: var(--ecom-elevation-card);
+  }
+}
+
+.ecom-banner {
+  margin: 20px 0;
+  width: 100%;
+}
+.ecom-banner__hero {
+  width: 100%;
+  height: clamp(240px, 48vw, 440px);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: var(--ecom-elevation-card);
+  overflow: hidden;
+}
+
+/* Full-bleed banner sections: remove side paddings added by generic section gutters */
+.ecom-hero,
+.ecom-banner {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.ecom-strips {
+  display: grid;
+  gap: clamp(12px, 1.8vw, 20px);
+  padding: clamp(14px, 1.8vw, 20px) 0;
+  margin: 0;
+  width: 100%;
+}
+.ecom-strip {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  padding: 48px 24px;
+  box-shadow: var(--ecom-elevation-card);
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Spacing fixes */
+.ecom-hero + .ecom-section {
+  padding-top: 20px;
+}
+.ecom-header + .ecom-section {
+  padding-top: 20px;
+}
+.ecom-section + .ecom-section {
+  padding-top: 16px;
+}
+.ecom-banner + .ecom-section {
+  padding-top: 16px;
+}
+
+/* Carousel arrows */
+.carousel-arrow {
+  width: var(--ecom-touch-target);
+  height: var(--ecom-touch-target);
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: all var(--ecom-motion-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  &:hover {
+    background: var(--bg);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--ecom-elevation-floating);
+  }
+}
+@media (max-width: 767px) {
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+/* Carousel scroll container */
+.ecom-carousel {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  width: 100%;
+  max-width: 100%;
+}
+.ecom-carousel::-webkit-scrollbar {
+  display: none;
+  height: 0;
+}
+
+/* Shelf sections fill available container width (do not override container max-width) */
+.ecom-section.shelf {
+  width: 100%;
+}
+
+/* Force minimum card widths in carousel */
+.ecom-carousel .product-card {
+  min-width: 220px;
+  max-width: 260px;
+}
+@media (max-width: 767px) {
+  .ecom-carousel .product-card {
+    min-width: 180px;
+    max-width: 220px;
+  }
+}
+
+/* Shelf layout with optional banner and variants */
+.shelf {
+  border-radius: var(--radius-lg);
+  margin: 0;
+  width: 100%;
+  position: relative;
+  padding: clamp(14px, 2vw, 24px) 0;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+  }
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  &__see-more {
+    color: var(--accent);
+    text-decoration: underline;
+    font-weight: 600;
+    margin-right: 10px;
+  }
+  &__body {
+    display: grid;
+    gap: 24px;
+    align-items: stretch;
+    &.has-banner {
+      grid-template-columns: minmax(240px, 320px) 1fr;
+    }
+    &.banner-right {
+      direction: rtl;
+    }
+    &.banner-right > * {
+      direction: ltr;
+    }
+  }
+  &__banner {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+  }
+}
+@media (min-width: 768px) {
+  .shelf__title {
+    font-size: 22px;
+  }
+}
+@media (max-width: 1023px) {
+  .shelf__body.has-banner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 20px;
+  }
+}
+
+/* Variants */
+.shelf--brand {
+  background: linear-gradient(135deg, rgba(var(--accent-rgb, 13, 122, 95), 0.12), transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin: 20px 0;
+  padding: 24px var(--container-padding);
+  box-sizing: border-box;
+}
+.shelf--dark {
+  background: var(--surface-dark, #222);
+  border: 1px solid var(--ecom-color-border-strong);
+  color: var(--text-inverse);
+  margin: 20px 0;
+  padding: 24px var(--container-padding);
+  box-sizing: border-box;
+}
+.shelf--dark .shelf__title {
+  color: var(--text-inverse);
+}
+.shelf--dark .shelf__see-more {
+  color: var(--ecom-color-brand);
+}
+.shelf--dark .carousel-arrow {
+  background: var(--ecom-color-surface-strong);
+  border-color: var(--ecom-color-border-strong);
+  color: var(--text-inverse);
+}
+.shelf--brand .carousel-arrow {
+  background: var(--card-bg);
+}
+
+/* Mobile adjustments */
+@media (max-width: 479px) {
+  :root {
+    /* add +4px vs. previous value to avoid content sticking to the edges */
+    --container-padding: 12px;
+  }
+  .shelf__title {
+    font-size: 16px;
+  }
+  .shelf__actions {
+    gap: 6px;
+  }
+  .product-card {
+    padding: 12px;
+  }
+}
+@media (max-width: 767px) {
+  .shelf__title {
+    font-size: 18px;
+  }
+  .shelf__actions {
+    gap: 8px;
+  }
+  .shelf__header {
+    margin-bottom: 20px;
+  }
+  .shelf__banner {
+    max-height: 160px;
+  }
+  .ecom-section {
+    padding: 20px 0;
+  }
+}
+
+/* Footer */
+.ecom-footer {
+  margin-top: 40px;
+  padding: 40px 0;
+  color: var(--text);
+  width: 100%;
+  background: var(--ecom-footer-bg);
+  border-top: 1px solid var(--ecom-color-border-soft);
+  box-shadow: var(--ecom-shadow-sm);
+  > * {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  &__col {
+    h4 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  display: grid;
+  gap: 8px;
+  /* ensure items start at the same x and stretch consistently */
+  justify-items: start;
+  align-content: start;
+  align-items: start;
+    }
+    a {
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  /* Make the whole row clickable and aligned */
+  display: block;
+  width: 100%;
+  line-height: 1.5;
+  padding: 2px 0;
+      &:hover {
+        color: var(--text);
+        text-decoration: underline;
+      }
+    }
+  }
+  &__apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card-bg, var(--bg));
+      color: var(--text);
+      text-decoration: none;
+      min-width: 140px;
+    }
+  }
+  &__newsletter {
+    display: flex;
+    gap: 10px;
+    input {
+      flex: 1;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color var(--transition-fast);
+      &:focus {
+        border-color: var(--accent);
+      }
+    }
+    button {
+      border: 0;
+      background: var(--cta, var(--accent));
+      color: var(--text-inverse);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+      &:hover {
+        background: var(--accent-hover);
+      }
+    }
+  }
+  &__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-light);
+    min-height: 64px;
+  }
+  &__social {
+    display: flex;
+    gap: 12px;
+  }
+  &__toggle {
+    width: 100%;
+    background: transparent;
+    color: var(--text);
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  &__chevron {
+    transition: transform var(--transition-fast);
+  }
+  &__content {
+    overflow: hidden;
+    transition:
+      grid-template-rows var(--transition-fast),
+      opacity var(--transition-fast);
+    display: grid;
+    grid-template-rows: 1fr;
+  gap: 12px; /* ensure spacing between heading, apps and newsletter */
+    &[data-open="false"] {
+      grid-template-rows: 0fr;
+      opacity: 0.8;
+    }
+    > * {
+      min-height: 0;
+    }
+  }
+}
+@media (min-width: 768px) {
+  .ecom-footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    align-items: start;
+  }
+  .ecom-footer__toggle {
+    pointer-events: none;
+    display: block;
+    padding: 0;
+    text-align: left;
+    justify-content: flex-start;
+    gap: 0;
+  }
+  .ecom-footer__chevron {
+    display: none;
+  }
+  .ecom-footer__content {
+    display: block;
+    opacity: 1;
+  }
+  .ecom-footer__col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+@media (min-width: 1024px) {
+  .ecom-footer__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .ecom-footer {
+    margin-top: 32px;
+    padding: 32px 0;
+  }
+  .ecom-footer__grid {
+    gap: 24px;
+  }
+  .ecom-footer__bar {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    min-height: auto;
+  }
+  /* Use responsive grid to avoid overlap of app buttons */
+  .ecom-footer__apps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  margin-top: 8px; /* keep clear from the heading above */
+  }
+  .ecom-footer__apps a {
+    width: 100%;
+    min-width: 0;
+    white-space: nowrap;
+  }
+  .ecom-footer__newsletter {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecom *,
+  .ecom *::before,
+  .ecom *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

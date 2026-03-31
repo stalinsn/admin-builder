@@ -1,0 +1,76 @@
+{
+  "id": "5551",
+  "slug": "hamburguer-de-frango-e-bovino-perdigao-defumado-672g-c-12-unid-p",
+  "sku": "5551",
+  "name": "Hambúrguer de Frango e Bovino Perdigão Defumado 672g c/ 12 Unid",
+  "brand": "Perdigão",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=4",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=4",
+      "alt": "Hambúrguer de Frango e Bovino Perdigão Defumado 672g c/ 12 Unid",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 19.45,
+  "listPrice": 19.45,
+  "unit": "un",
+  "packSize": 12,
+  "categories": [
+    "Congelados",
+    "Hambúrguer",
+    "Bovino"
+  ],
+  "categoryPath": [
+    {
+      "id": "20",
+      "slug": "congelados",
+      "name": "Congelados"
+    },
+    {
+      "id": "44",
+      "slug": "hamburguer",
+      "name": "Hambúrguer"
+    },
+    {
+      "id": "476",
+      "slug": "bovino",
+      "name": "Bovino"
+    }
+  ],
+  "departments": [
+    "Hambúrguer",
+    "Bovino",
+    "Hamburguer",
+    "Vegetais Congelados"
+  ],
+  "collections": [
+    "Novidades"
+  ],
+  "shortDescription": "Hambúrguer de Frango e Bovino Perdigão Defumado 672g c/ 12 Unid",
+  "longDescription": "",
+  "seo": {
+    "title": "Hambúrguer de Frango e Bovino Perdigão Defumado 672g c/ 12 Unid",
+    "description": "Hambúrguer de Frango e Bovino Perdigão Defumado 672g c/ 12 Unid",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.683Z",
+  "updatedAt": "2026-03-18T22:13:42.683Z"
+}

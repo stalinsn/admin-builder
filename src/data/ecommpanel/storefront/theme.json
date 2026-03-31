@@ -1,0 +1,22 @@
+{
+  "preset": "default",
+  "campaign": "none",
+  "overrides": {
+    "backgroundColor": "",
+    "surfaceColor": "",
+    "surfaceSoftColor": "",
+    "textColor": "",
+    "textMutedColor": "",
+    "borderColor": "",
+    "brandColor": "",
+    "brandHoverColor": "",
+    "headerBackgroundColor": "",
+    "headerUtilStartColor": "",
+    "headerUtilEndColor": "",
+    "headerPromoStartColor": "",
+    "headerPromoEndColor": "",
+    "headerPromoTextColor": "",
+    "footerStartColor": "",
+    "footerEndColor": ""
+  }
+}

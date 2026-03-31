@@ -1,0 +1,73 @@
+/* =====================================================================
+   AÇÕES DA SIDEBAR - BOTÕES DE LIMPEZA
+   ===================================================================== */
+
+.sidebar-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding: 0.75rem var(--space-md);
+  background: var(--motd-bg);
+  border-bottom: 1px solid var(--motd-border);
+  flex-shrink: 0;
+}
+
+.clear-button,
+.clear-all-button {
+  background: transparent;
+  border: 1px solid var(--motd-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm) 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  position: relative;
+}
+
+.clear-button:hover {
+  background: var(--motd-bg);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.clear-all-button {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.clear-all-button:hover {
+  background: #ff6b6b;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+/* Tooltips para botões de limpeza */
+.clear-button::after,
+.clear-all-button::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+  z-index: var(--z-tooltip);
+  max-width: 200px;
+}
+
+.clear-button:hover::after,
+.clear-all-button:hover::after {
+  opacity: 1;
+}

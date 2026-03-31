@@ -1,0 +1,207 @@
+{
+  "id": "mock-0048",
+  "slug": "agua-sanitaria-5l",
+  "sku": "810048",
+  "name": "Agua Sanitaria 5L",
+  "brand": "Qboa",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/agua-sanitaria-5l-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/agua-sanitaria-5l-2x/400/400",
+      "alt": "Agua Sanitaria 5L",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/agua-sanitaria-5l-lifestyle/1200/800",
+      "alt": "Agua Sanitaria 5L em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 7.9,
+  "listPrice": 9.48,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Limpeza",
+    "Casa Em Geral",
+    "Alvejantes"
+  ],
+  "categoryPath": [
+    {
+      "id": "5",
+      "slug": "limpeza",
+      "name": "Limpeza"
+    },
+    {
+      "id": "33",
+      "slug": "casa-em-geral",
+      "name": "Casa Em Geral"
+    },
+    {
+      "id": "402",
+      "slug": "alvejantes",
+      "name": "Alvejantes"
+    }
+  ],
+  "departments": [
+    "Casa Em Geral",
+    "Alvejantes",
+    "Banheiro",
+    "Casa em Geral"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Agua Sanitaria 5L",
+  "longDescription": "Agua Sanitaria 5L da marca Qboa. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Agua Sanitaria 5L | Supermercado Mock",
+    "description": "Compre Agua Sanitaria 5L com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Agua Sanitaria",
+      "Qboa",
+      "Limpeza",
+      "5L"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 114,
+    "safetyStock": 9,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 5000,
+    "volumetricWeightGrams": 5600,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": true,
+    "shippingClass": "bulky"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 790,
+    "listPrice": 948,
+    "discountPercent": 20,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 790,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 395,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "agua-sanitaria"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-agua-sanitaria",
+    "groupName": "Agua Sanitaria",
+    "axis": [
+      "volume"
+    ],
+    "options": [
+      {
+        "id": "mock-0045",
+        "slug": "agua-sanitaria-1l",
+        "name": "Agua Sanitaria 1L",
+        "size": "1L",
+        "available": true,
+        "sellingPrice": 307,
+        "listPrice": 359,
+        "image": "https://picsum.photos/seed/agua-sanitaria-1l-2x/400/400",
+        "variationAttributes": {
+          "size": "1L"
+        }
+      },
+      {
+        "id": "mock-0046",
+        "slug": "agua-sanitaria-2l",
+        "name": "Agua Sanitaria 2L",
+        "size": "2L",
+        "available": true,
+        "sellingPrice": 439,
+        "listPrice": 518,
+        "image": "https://picsum.photos/seed/agua-sanitaria-2l-2x/400/400",
+        "variationAttributes": {
+          "size": "2L"
+        }
+      },
+      {
+        "id": "mock-0047",
+        "slug": "agua-sanitaria-3l",
+        "name": "Agua Sanitaria 3L",
+        "size": "3L",
+        "available": true,
+        "sellingPrice": 549,
+        "listPrice": 653,
+        "image": "https://picsum.photos/seed/agua-sanitaria-3l-2x/400/400",
+        "variationAttributes": {
+          "size": "3L"
+        }
+      },
+      {
+        "id": "mock-0048",
+        "slug": "agua-sanitaria-5l",
+        "name": "Agua Sanitaria 5L",
+        "size": "5L",
+        "available": true,
+        "sellingPrice": 790,
+        "listPrice": 948,
+        "image": "https://picsum.photos/seed/agua-sanitaria-5l-2x/400/400",
+        "variationAttributes": {
+          "size": "5L"
+        }
+      }
+    ]
+  },
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

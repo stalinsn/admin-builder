@@ -1,0 +1,212 @@
+{
+  "id": "mock-0093",
+  "slug": "pao-forma-integral-tradicional-450g",
+  "sku": "810093",
+  "name": "Pao de Forma Integral Tradicional 450g",
+  "brand": "Pullman",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/pao-forma-integral-tradicional-450g-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/pao-forma-integral-tradicional-450g-2x/400/400",
+      "alt": "Pao de Forma Integral Tradicional 450g",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/pao-forma-integral-tradicional-450g-lifestyle/1200/800",
+      "alt": "Pao de Forma Integral Tradicional 450g em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 10.11,
+  "listPrice": 11.22,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Padaria",
+    "Paes",
+    "Pao de Forma"
+  ],
+  "categoryPath": [
+    {
+      "id": "8",
+      "slug": "padaria",
+      "name": "Padaria"
+    },
+    {
+      "id": "61",
+      "slug": "paes",
+      "name": "Paes"
+    },
+    {
+      "id": "801",
+      "slug": "pao-de-forma",
+      "name": "Pao de Forma"
+    }
+  ],
+  "departments": [
+    "Paes",
+    "Pao de Forma"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Pao de Forma Integral 450g",
+  "longDescription": "Pao de Forma Integral Tradicional 450g da marca Pullman. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Pao de Forma Integral Tradicional 450g | Supermercado Mock",
+    "description": "Compre Pao de Forma Integral Tradicional 450g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Pao de Forma Integral",
+      "Pullman",
+      "Padaria",
+      "450g"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 69,
+    "safetyStock": 6,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 450,
+    "volumetricWeightGrams": 504,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 1011,
+    "listPrice": 1122,
+    "discountPercent": 11,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 1011,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 506,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "pao-forma-integral"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-pao-forma-integral",
+    "groupName": "Pao de Forma Integral",
+    "axis": [
+      "linha"
+    ],
+    "options": [
+      {
+        "id": "mock-0093",
+        "slug": "pao-forma-integral-tradicional-450g",
+        "name": "Pao de Forma Integral Tradicional 450g",
+        "size": "450g",
+        "available": true,
+        "sellingPrice": 1011,
+        "listPrice": 1122,
+        "image": "https://picsum.photos/seed/pao-forma-integral-tradicional-450g-2x/400/400",
+        "variationAttributes": {
+          "size": "450g",
+          "line": "Tradicional"
+        }
+      },
+      {
+        "id": "mock-0094",
+        "slug": "pao-forma-integral-integral-500g",
+        "name": "Pao de Forma Integral Integral 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 1099,
+        "listPrice": 1231,
+        "image": "https://picsum.photos/seed/pao-forma-integral-integral-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "line": "Integral"
+        }
+      },
+      {
+        "id": "mock-0095",
+        "slug": "pao-forma-integral-12-graos-500g",
+        "name": "Pao de Forma Integral 12 Graos 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 1264,
+        "listPrice": 1428,
+        "image": "https://picsum.photos/seed/pao-forma-integral-12-graos-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "line": "12 Graos"
+        }
+      },
+      {
+        "id": "mock-0096",
+        "slug": "pao-forma-integral-sem-casca-450g",
+        "name": "Pao de Forma Integral Sem Casca 450g",
+        "size": "450g",
+        "available": true,
+        "sellingPrice": 1231,
+        "listPrice": 1403,
+        "image": "https://picsum.photos/seed/pao-forma-integral-sem-casca-450g-2x/400/400",
+        "variationAttributes": {
+          "size": "450g",
+          "line": "Sem Casca"
+        }
+      }
+    ]
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

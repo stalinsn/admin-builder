@@ -1,0 +1,7 @@
+/* Inspector mode (URL param ?inspect=true or ?debug=true) */
+.ecom[data-inspect="true"] {
+	cursor: help;
+}
+.ecom[data-inspect="true"] *:hover {
+	outline: 1px dashed rgba(64,158,255,0.6);
+}

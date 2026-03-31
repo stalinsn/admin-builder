@@ -1,0 +1,210 @@
+{
+  "id": "mock-0070",
+  "slug": "sabonete-barra-karite-90g",
+  "sku": "810070",
+  "name": "Sabonete em Barra 90g",
+  "brand": "Dove",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/sabonete-barra-karite-90g-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/sabonete-barra-karite-90g-2x/400/400",
+      "alt": "Sabonete em Barra 90g",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/sabonete-barra-karite-90g-lifestyle/1200/800",
+      "alt": "Sabonete em Barra 90g em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 3.73,
+  "listPrice": 4.63,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Higiene e Beleza",
+    "Banho",
+    "Sabonetes"
+  ],
+  "categoryPath": [
+    {
+      "id": "6",
+      "slug": "higiene-e-beleza",
+      "name": "Higiene e Beleza"
+    },
+    {
+      "id": "43",
+      "slug": "banho",
+      "name": "Banho"
+    },
+    {
+      "id": "504",
+      "slug": "sabonetes",
+      "name": "Sabonetes"
+    }
+  ],
+  "departments": [
+    "Banho",
+    "Sabonetes",
+    "Pele"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Sabonete em Barra 90g",
+  "longDescription": "Sabonete em Barra 90g da marca Dove. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Sabonete em Barra 90g | Supermercado Mock",
+    "description": "Compre Sabonete em Barra 90g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Sabonete em Barra",
+      "Dove",
+      "Higiene e Beleza",
+      "90g"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 28,
+    "safetyStock": 3,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 90,
+    "volumetricWeightGrams": 101,
+    "temperatureZone": "ambient",
+    "fragile": true,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 373,
+    "listPrice": 463,
+    "discountPercent": 24,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 373,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 187,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "sabonete-barra"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-sabonete-barra",
+    "groupName": "Sabonete em Barra",
+    "axis": [
+      "fragrancia"
+    ],
+    "options": [
+      {
+        "id": "mock-0069",
+        "slug": "sabonete-barra-original-90g",
+        "name": "Sabonete em Barra 90g",
+        "size": "90g",
+        "available": true,
+        "sellingPrice": 359,
+        "listPrice": 442,
+        "image": "https://picsum.photos/seed/sabonete-barra-original-90g-2x/400/400",
+        "variationAttributes": {
+          "size": "90g",
+          "fragrance": "Original"
+        }
+      },
+      {
+        "id": "mock-0070",
+        "slug": "sabonete-barra-karite-90g",
+        "name": "Sabonete em Barra 90g",
+        "size": "90g",
+        "available": true,
+        "sellingPrice": 373,
+        "listPrice": 463,
+        "image": "https://picsum.photos/seed/sabonete-barra-karite-90g-2x/400/400",
+        "variationAttributes": {
+          "size": "90g",
+          "fragrance": "Karite"
+        }
+      },
+      {
+        "id": "mock-0071",
+        "slug": "sabonete-barra-pepino-cha-verde-90g",
+        "name": "Sabonete em Barra 90g",
+        "size": "90g",
+        "available": true,
+        "sellingPrice": 373,
+        "listPrice": 466,
+        "image": "https://picsum.photos/seed/sabonete-barra-pepino-cha-verde-90g-2x/400/400",
+        "variationAttributes": {
+          "size": "90g",
+          "fragrance": "Pepino e Cha Verde"
+        }
+      },
+      {
+        "id": "mock-0072",
+        "slug": "sabonete-barra-pack-4x90g",
+        "name": "Sabonete em Barra 4x90g",
+        "size": "4x90g",
+        "available": true,
+        "sellingPrice": 1292,
+        "listPrice": 1395,
+        "image": "https://picsum.photos/seed/sabonete-barra-pack-4x90g-2x/400/400",
+        "variationAttributes": {
+          "size": "4x90g",
+          "fragrance": "Original"
+        }
+      }
+    ]
+  },
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

@@ -1,0 +1,186 @@
+/* Product grid and cards */
+.ecom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--ecom-card-min), var(--ecom-card-max)));
+  gap: clamp(12px, 1.8vw, 18px);
+  justify-content: start;
+  margin: 0;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 240px));
+    gap: 16px;
+  }
+  @media (min-width: 920px) {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
+    gap: 18px;
+  }
+}
+
+.product-card {
+  background: var(--ecom-card-bg);
+  border: var(--ecom-card-border);
+  border-radius: var(--ecom-radius-lg);
+  padding: clamp(12px, 1.2vw, 16px);
+  box-shadow: var(--ecom-card-shadow);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+  min-height: clamp(360px, 45vw, 400px);
+  width: 100%;
+  margin: 0 auto;
+
+  @media (max-width: 767px) {
+    padding: 14px;
+    min-height: 380px;
+  }
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--ecom-card-shadow-hover);
+  }
+
+  &__img {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    background: var(--surface-soft, #fafafa);
+    border-radius: var(--ecom-radius-md);
+    overflow: clip;
+    margin-bottom: 12px;
+    border: 1px solid var(--ecom-color-border-soft);
+
+    @media (max-width: 767px) {
+      margin-bottom: 12px;
+    }
+    .product-card__imgPlaceholder {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      transition: transform var(--transition-fast);
+    }
+  }
+
+  &:hover .product-card__img img {
+    transform: scale(1.03);
+  }
+
+  &__title {
+    font-size: var(--ecom-font-size-sm);
+    color: var(--text);
+    margin: 0 0 10px;
+    font-weight: 500;
+    line-height: 1.35;
+    min-height: 42px;
+    flex: 1;
+    @media (min-width: 768px) {
+      font-size: var(--ecom-font-size-md);
+      min-height: 50px;
+    }
+  }
+
+  &__prices {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  &__list {
+    color: var(--text-light);
+    text-decoration: line-through;
+    font-size: 12px;
+    order: 1;
+  }
+  &__price {
+    color: var(--text);
+    font-weight: 800;
+    font-size: clamp(1.05rem, 0.92rem + 0.35vw, 1.2rem);
+    order: 2;
+    @media (min-width: 768px) {
+      font-size: 19px;
+    }
+  }
+  &__unit {
+    color: var(--text-light);
+    font-size: 12px;
+    order: 3;
+  }
+  &__pack {
+    color: var(--text-light);
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  &__cta {
+    margin-top: auto;
+    width: 100%;
+    display: block;
+
+    /* Button style when present */
+    > button {
+      width: 100%;
+      background: var(--accent);
+      color: var(--text-inverse);
+      border: none;
+      min-height: var(--ecom-touch-target);
+      padding: 10px 14px;
+      border-radius: var(--ecom-radius-sm);
+      font-weight: 700;
+      font-size: var(--ecom-font-size-sm);
+      transition:
+        background-color var(--ecom-motion-fast),
+        transform var(--ecom-motion-fast),
+        box-shadow var(--ecom-motion-fast);
+    }
+    > button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--ecom-shadow-sm);
+    }
+
+    > button[disabled] {
+      background: color-mix(in srgb, var(--text-light) 45%, white);
+      color: var(--text);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    @media (max-width: 767px) {
+      > button {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  &__availability {
+    display: block;
+    margin-top: 8px;
+    color: var(--text-light);
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+.badge-off {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--badge-danger, #dc2626);
+  color: var(--ecom-color-brand-contrast);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: var(--ecom-shadow-sm);
+}

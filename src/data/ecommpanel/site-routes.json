@@ -1,0 +1,25 @@
+{
+  "routes": [
+    {
+      "id": "page-quem-somos",
+      "title": "Quem Somos",
+      "slug": "quem-somos",
+      "description": "Página institucional criada via painel administrativo.",
+      "seo": {
+        "title": "Quem Somos",
+        "description": "Página institucional criada via painel administrativo.",
+        "keywords": "",
+        "noIndex": true
+      },
+      "theme": {
+        "backgroundColor": "#ffffff",
+        "textColor": "#0f172a",
+        "accentColor": "#0f4f9c"
+      },
+      "status": "draft",
+      "layoutPreset": "three_vertical",
+      "createdAt": "2026-03-03T01:46:30.592Z",
+      "updatedAt": "2026-03-03T01:46:30.592Z"
+    }
+  ]
+}

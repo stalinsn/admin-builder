@@ -1,0 +1,18 @@
+@import "../tokens/colors.css";
+@import "../tokens/typography.css";
+
+.btn {
+  padding: var(--gap-sm) var(--gap-md);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  color: var(--text-inverse);
+  background: var(--accent);
+  font-family: var(--font-family);
+  transition: background var(--transition-fast);
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+}

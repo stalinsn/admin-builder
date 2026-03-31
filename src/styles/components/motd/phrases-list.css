@@ -1,0 +1,100 @@
+/* =====================================================================
+   LISTA DE FRASES - PHRASES CONTAINER
+   ===================================================================== */
+
+.phrases-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+  background: var(--motd-card-bg);
+}
+
+.motd-history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.motd-history li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+  background: var(--motd-bg);
+  border: 1px solid var(--motd-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.motd-history li:hover {
+  background: var(--accent);
+  color: var(--text-inverse);
+  transform: translateX(2px);
+  border-color: var(--accent);
+}
+
+.motd-history li.current-phrase {
+  border-color: var(--accent);
+  background: rgba(var(--motd-accent-rgb), 0.1);
+}
+
+.motd-history li.current-phrase:hover {
+  background: var(--accent);
+  color: var(--text-inverse);
+  transform: translateX(2px);
+  border-color: var(--accent);
+}
+
+.frase-text {
+  flex: 1;
+  margin-right: var(--space-sm);
+  word-break: break-word;
+}
+
+.mini-fav-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.mini-fav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.mini-fav-btn.favorited {
+  color: #ff6b6b;
+}
+
+/* Estado vazio */
+.empty-state {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* Indicador de mais itens */
+.more-items-indicator {
+  text-align: center;
+  padding: var(--space-md);
+  color: var(--text-light);
+  font-size: var(--font-size-xs);
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-md);
+}
+
+.more-items-indicator small {
+  display: block;
+  margin-top: var(--space-xs);
+  opacity: 0.7;
+}

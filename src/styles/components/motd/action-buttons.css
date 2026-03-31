@@ -1,0 +1,62 @@
+/* =====================================================================
+   BOTÕES DE AÇÃO - ACTION BUTTONS
+   ===================================================================== */
+
+.action-buttons {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.action-btn {
+  background: var(--motd-card-bg);
+  border: 1px solid var(--motd-border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  transition: all var(--transition-normal);
+  position: relative;
+  color: var(--text);
+}
+
+.action-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-inverse);
+  transform: scale(1.1);
+}
+
+.action-btn.favorited {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-inverse);
+}
+
+/* Tooltip para botões de ação */
+.action-btn::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--motd-card-bg);
+  border: 1px solid var(--motd-border);
+  border-radius: var(--radius);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-xs);
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+  z-index: var(--z-tooltip);
+}
+
+.action-btn:hover::after {
+  opacity: 1;
+}

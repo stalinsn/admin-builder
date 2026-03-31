@@ -1,0 +1,246 @@
+import { Language } from '../types/cv';
+
+export type Labels = {
+  [key: string]: {
+    [lang in Language]?: string;
+  };
+};
+
+export const labels: Labels = {
+  // Navbar
+  toggleTheme: {
+    'pt-br': 'Alternar tema',
+    'en-us': 'Toggle theme',
+    'es-es': 'Cambiar tema',
+    'fr-fr': 'Changer de thème',
+    'de-de': 'Thema wechseln',
+  },
+  downloadPDF: {
+    'pt-br': 'Baixar PDF',
+    'en-us': 'Download PDF',
+    'es-es': 'Descargar PDF',
+    'fr-fr': 'Télécharger le PDF',
+    'de-de': 'PDF herunterladen',
+  },
+  print: {
+    'pt-br': 'Imprimir',
+    'en-us': 'Print',
+    'es-es': 'Imprimir',
+    'fr-fr': 'Imprimer',
+    'de-de': 'Drucken',
+  },
+  clearCache: {
+    'pt-br': 'Limpar traduções',
+    'en-us': 'Clear translations',
+    'es-es': 'Limpiar traducciones',
+    'fr-fr': 'Vider les traductions',
+    'de-de': 'Übersetzungen löschen',
+  },
+  // Footer
+  madeWith: {
+    'pt-br': 'Feito com',
+    'en-us': 'Made with',
+    'es-es': 'Hecho con',
+    'fr-fr': 'Fait avec',
+    'de-de': 'Hergestellt mit',
+  },
+  by: {
+    'pt-br': 'por',
+    'en-us': 'by',
+    'es-es': 'por',
+    'fr-fr': 'par',
+    'de-de': 'von',
+  },
+  sourceCodeOn: {
+    'pt-br': 'Código fonte em',
+    'en-us': 'Source code on',
+    'es-es': 'Código fuente en',
+    'fr-fr': 'Code source sur',
+    'de-de': 'Quellcode auf',
+  },
+  // PrivacyModal
+  privacyPolicy: {
+    'pt-br': 'Política de Privacidade',
+    'en-us': 'Privacy Policy',
+    'es-es': 'Política de Privacidad',
+    'fr-fr': 'Politique de Confidentialité',
+    'de-de': 'Datenschutz-Bestimmungen',
+  },
+  privacyModalTitle: {
+    'pt-br': 'Política de Privacidade',
+    'en-us': 'Privacy Policy',
+    'es-es': 'Política de Privacidad',
+    'fr-fr': 'Politique de Confidentialité',
+    'de-de': 'Datenschutz-Bestimmungen',
+  },
+  privacyModalTransparency: {
+    'pt-br': 'Transparência é coisa séria (mas pode ser leve):',
+    'en-us': 'Transparency is serious (but can be light):',
+    'es-es': 'La transparencia es cosa seria (¡pero puede ser ligera!):',
+    'fr-fr': 'La transparence est une affaire sérieuse (mais peut être légère) :',
+    'de-de': 'Transparenz ist wichtig (darf aber leicht sein):',
+  },
+  privacyModalList1Main: {
+    'pt-br': 'Coletamos apenas dados técnicos: IP, navegador (user agent), idioma, estatísticas de uso e um hash do texto traduzido.',
+    'en-us': 'We only collect technical data: IP, browser (user agent), language, usage statistics, and a hash of the translated text.',
+    'es-es': 'Solo recopilamos dados técnicos: IP, navegador (user agent), idioma, estadísticas de uso e un hash del texto traduzido.',
+    'fr-fr': 'Nous ne collectons que des données techniques : IP, navigateur (user agent), langue, statistiques d’utilisation et un hash du texte traduit.',
+    'de-de': 'Wir erfassen nur technische Daten: IP, Browser (User Agent), Sprache, Nutzungsstatistiken und einen Hash des übersetzten Textes.',
+  },
+  privacyModalList1Hash: {
+    'pt-br': '(O hash é um código matemático que funciona como um “carimbo único” do dado: não revela o conteúdo, só marca que aquele texto já passou por aqui.)',
+    'en-us': '(The hash is a mathematical code that works as a “unique stamp” of the data: it does not reveal the content, it just marks that the text has already passed through here.)',
+    'es-es': '(El hash es um código matemático que funciona como un “sello único” del dato: no revela el conteúdo, solo marca que ese texto ya pasó por aquí.)',
+    'fr-fr': '(Le hash est un code mathématique qui fonctionne comme un “tampon unique” de la donnée : il ne révèle pas le contenu, il marque juste que ce texte est déjà passé ici.)',
+    'de-de': '(Der Hash ist ein mathematischer Code, der als „einzigartiger Stempel“ der Daten fungiert: Er gibt den Inhalt nicht preis, sondern markiert nur, dass dieser Text bereits hier war.)',
+  },
+  privacyModalList2: {
+    'pt-br': 'Não coletamos nome, e-mail, CPF, endereço ou qualquer dado pessoal sensível.',
+    'en-us': 'We do not collect name, email, CPF, address, or any sensitive personal data.',
+    'es-es': 'No recopilamos nombre, correo electrónico, DNI, endereço ni ningún dato personal sensible.',
+    'fr-fr': 'Nous ne collectons pas de nom, e-mail, numéro d’identification, adresse ou toute donnée personnelle sensible.',
+    'de-de': 'Wir erfassen keine Namen, E-Mail-Adressen, Ausweisnummern, Adressen oder andere sensiblen personenbezogenen Daten.',
+  },
+  privacyModalList3: {
+    'pt-br': 'Esses dados servem exclusivamente para controle acadêmico, limitação de uso da IA e evitar abusos.',
+    'en-us': 'These data are used exclusively for academic control, AI usage limitation, and abuse prevention.',
+    'es-es': 'Estos dados se utilizan exclusivamente para controle acadêmico, limitación de uso de IA e prevenção de abusos.',
+    'fr-fr': 'Ces données servent exclusivement au contrôle académique, à la limitation d’utilisation de l’IA et à la prévention des abus.',
+    'de-de': 'Diese Daten dienen ausschließlich der akademischen Kontrolle, der Begrenzung der KI-Nutzung und der Missbrauchsprävention.',
+  },
+  privacyModalList4: {
+    'pt-br': 'Não vendemos, compartilhamos ou usamos seus dados para fins comerciais.',
+    'en-us': 'We do not sell, share, or use your data for commercial purposes.',
+    'es-es': 'No vendemos, compartimos ni utilizamos sus datos com fins comerciais.',
+    'fr-fr': 'Nous ne vendons, partageons ni n’utilisons vos données à des fins commerciales.',
+    'de-de': 'Wir verkaufen, teilen oder verwenden Ihre Daten nicht für kommerzielle Zwecke.',
+  },
+  privacyModalList5: {
+    'pt-br': 'Se quiser que seus dados sejam removidos, é só pedir: deletamos rapidinho!',
+    'en-us': 'If you want your data removed, just ask: we delete it quickly!',
+    'es-es': 'Si desea que se eliminen sus dados, solo tiene que pedirlo: ¡los eliminamos rápidamente!',
+    'fr-fr': 'Si vous souhaitez que vos données soient supprimées, il suffit de demander : nous les supprimons rapidement !',
+    'de-de': 'Wenn Sie möchten, dass Ihre Daten gelöscht werden, sagen Sie einfach Bescheid: Wir löschen sie umgehend!',
+  },
+  privacyModalList6: {
+    'pt-br': 'Todos os dados ficam armazenados de forma segura e não são expostos publicamente.',
+    'en-us': 'All data is stored securely and is not publicly exposed.',
+    'es-es': 'Todos los datos se almacenan de forma segura e não se exponen públicamente.',
+    'fr-fr': 'Toutes les données sont stockées en toute sécurité et ne sont pas exposées publiquement.',
+    'de-de': 'Alle Daten werden sicher gespeichert und nicht öffentlich zugänglich gemacht.',
+  },
+  privacyModalSummary: {
+    'pt-br': 'O currículo é meu, mas sua privacidade é sua mesmo. Só queremos garantir que todo mundo possa brincar com IA sem sustos (e sem falir o dono do site 😅).',
+    'en-us': 'The résumé is mine, but your privacy is yours. We just want to make sure everyone can play with AI without surprises (and without bankrupting the site owner 😅).',
+    'es-es': 'El currículum es mío, pero tu privacidad es tuya. Solo queremos asegurarnos de que todos puedan jugar com IA sin sustos (y sin arruinar al dueño del sitio 😅).',
+    'fr-fr': 'Le CV est à moi, mais votre vie privée est à vous. Nous voulons juste que tout le monde puisse s’amuser avec l’IA sans mauvaise surprise (et sans ruiner le propriétaire du site 😅).',
+    'de-de': 'Der Lebenslauf ist meiner, aber Ihre Privatsphäre gehört Ihnen. Wir wollen nur, dass jeder mit KI spielen kann, ohne böse Überraschungen (und ohne den Seitenbetreiber zu ruinieren 😅).',
+  },
+  privacyModalClose: {
+    'pt-br': 'Fechar',
+    'en-us': 'Close',
+    'es-es': 'Cerrar',
+    'fr-fr': 'Fermer',
+    'de-de': 'Schließen',
+  },
+  // Títulos fixos
+  summary: {
+    'pt-br': 'Resumo Profissional',
+    'en-us': 'Professional Summary',
+    'es-es': 'Resumen Profesional',
+    'fr-fr': 'Résumé Professionnel',
+    'de-de': 'Beruflicher Werdegang',
+  },
+  coreSkills: {
+    'pt-br': 'Competências Principais',
+    'en-us': 'Core Skills',
+    'es-es': 'Competencias Clave',
+    'fr-fr': 'Compétences Clés',
+    'de-de': 'Kernkompetenzen',
+  },
+  technicalSkills: {
+    'pt-br': 'Competências Técnicas',
+    'en-us': 'Technical Skills',
+    'es-es': 'Competencias Técnicas',
+    'fr-fr': 'Compétences Techniques',
+    'de-de': 'Technische Fähigkeiten',
+  },
+  experience: {
+    'pt-br': 'Experiência Profissional',
+    'en-us': 'Professional Experience',
+    'es-es': 'Experiencia Profesional',
+    'fr-fr': 'Expérience Professionnelle',
+    'de-de': 'Berufserfahrung',
+  },
+  education: {
+    'pt-br': 'Formação Acadêmica',
+    'en-us': 'Education',
+    'es-es': 'Educación',
+    'fr-fr': 'Formation Académique',
+    'de-de': 'Ausbildung',
+  },
+  languages: {
+    'pt-br': 'Idiomas',
+    'en-us': 'Languages',
+    'es-es': 'Idiomas',
+    'fr-fr': 'Langues',
+    'de-de': 'Sprachen',
+  },
+  footer: {
+    'pt-br': 'Todos os direitos reservados.',
+    'en-us': 'All rights reserved.',
+    'es-es': 'Todos los derechos reservados.',
+    'fr-fr': 'Tous droits réservés.',
+    'de-de': 'Alle Rechte vorbehalten.',
+  },
+  languageNames: {
+    'pt-br': 'Português',
+    'en-us': 'English',
+    'es-es': 'Español',
+    'fr-fr': 'Français',
+    'de-de': 'Allemand',
+  },
+  language: {
+    'pt-br': 'Idioma',
+    'en-us': 'Language',
+    'es-es': 'Idioma',
+    'fr-fr': 'Langue',
+    'de-de': 'Sprache',
+  },
+  mode: {
+    'pt-br': 'Modo',
+    'en-us': 'Mode',
+    'es-es': 'Modo',
+    'fr-fr': 'Mode',
+    'de-de': 'Modus',
+  },
+  // Cookies Notice
+  cookiesNotice: {
+    'pt-br': 'Este site usa cookies técnicos e coleta dados de uso para proteger sua privacidade e garantir o funcionamento da tradução IA.',
+    'en-us': 'This site uses technical cookies and collects usage data to protect your privacy and ensure AI translation works.',
+    'es-es': 'Este sitio utiliza cookies técnicos e recopila dados de uso para proteger su privacidad e garantizar el funcionamento de la traducción IA.',
+    'fr-fr': 'Ce site utilise des cookies techniques et collecte des données d’utilisation pour protéger votre vie privée et garantir le fonctionnement de la traduction IA.',
+    'de-de': 'Diese Website verwendet technische Cookies und sammelt Nutzungsdaten, um Ihre Privatsphäre zu schützen und den Betrieb der KI-Übersetzung zu gewährleisten.',
+  },
+  cookiesLearnMore: {
+    'pt-br': 'Saiba mais',
+    'en-us': 'Learn more',
+    'es-es': 'Saber más',
+    'fr-fr': 'En savoir plus',
+    'de-de': 'Mehr erfahren',
+  },
+  cookiesOk: {
+    'pt-br': 'OK',
+    'en-us': 'OK',
+    'es-es': 'OK',
+    'fr-fr': 'OK',
+    'de-de': 'OK',
+  },
+  interests: {
+    'pt-br': 'Interesses',
+    'en-us': 'Interests',
+    'es-es': 'Intereses',
+    'fr-fr': 'Intérêts',
+    'de-de': 'Interessen',
+  },
+};

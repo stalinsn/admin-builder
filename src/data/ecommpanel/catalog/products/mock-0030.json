@@ -1,0 +1,212 @@
+{
+  "id": "mock-0030",
+  "slug": "suco-uva-integral-vidro-500ml",
+  "sku": "810030",
+  "name": "Suco de Uva Integral Vidro 500ml",
+  "brand": "Aurora",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/suco-uva-integral-vidro-500ml-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/suco-uva-integral-vidro-500ml-2x/400/400",
+      "alt": "Suco de Uva Integral Vidro 500ml",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/suco-uva-integral-vidro-500ml-lifestyle/1200/800",
+      "alt": "Suco de Uva Integral Vidro 500ml em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 12.9,
+  "listPrice": 15.48,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Bebidas",
+    "Sucos",
+    "Sucos Integrais"
+  ],
+  "categoryPath": [
+    {
+      "id": "4",
+      "slug": "bebidas",
+      "name": "Bebidas"
+    },
+    {
+      "id": "26",
+      "slug": "sucos",
+      "name": "Sucos"
+    },
+    {
+      "id": "144",
+      "slug": "sucos-integrais",
+      "name": "Sucos Integrais"
+    }
+  ],
+  "departments": [
+    "Sucos",
+    "Sucos Integrais"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Suco de Uva Integral 500ml",
+  "longDescription": "Suco de Uva Integral Vidro 500ml da marca Aurora. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Suco de Uva Integral Vidro 500ml | Supermercado Mock",
+    "description": "Compre Suco de Uva Integral Vidro 500ml com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Suco de Uva Integral",
+      "Aurora",
+      "Bebidas",
+      "500ml"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 108,
+    "safetyStock": 9,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 500,
+    "volumetricWeightGrams": 560,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 1290,
+    "listPrice": 1548,
+    "discountPercent": 20,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 1290,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 645,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "suco-uva-integral"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-suco-uva-integral",
+    "groupName": "Suco de Uva Integral",
+    "axis": [
+      "embalagem"
+    ],
+    "options": [
+      {
+        "id": "mock-0029",
+        "slug": "suco-uva-integral-vidro-300ml",
+        "name": "Suco de Uva Integral Vidro 300ml",
+        "size": "300ml",
+        "available": true,
+        "sellingPrice": 851,
+        "listPrice": 1013,
+        "image": "https://picsum.photos/seed/suco-uva-integral-vidro-300ml-2x/400/400",
+        "variationAttributes": {
+          "size": "300ml",
+          "package": "Vidro"
+        }
+      },
+      {
+        "id": "mock-0030",
+        "slug": "suco-uva-integral-vidro-500ml",
+        "name": "Suco de Uva Integral Vidro 500ml",
+        "size": "500ml",
+        "available": true,
+        "sellingPrice": 1290,
+        "listPrice": 1548,
+        "image": "https://picsum.photos/seed/suco-uva-integral-vidro-500ml-2x/400/400",
+        "variationAttributes": {
+          "size": "500ml",
+          "package": "Vidro"
+        }
+      },
+      {
+        "id": "mock-0031",
+        "slug": "suco-uva-integral-vidro-1l",
+        "name": "Suco de Uva Integral Vidro 1L",
+        "size": "1L",
+        "available": true,
+        "sellingPrice": 2258,
+        "listPrice": 2732,
+        "image": "https://picsum.photos/seed/suco-uva-integral-vidro-1l-2x/400/400",
+        "variationAttributes": {
+          "size": "1L",
+          "package": "Vidro"
+        }
+      },
+      {
+        "id": "mock-0032",
+        "slug": "suco-uva-integral-tetra-1-5l",
+        "name": "Suco de Uva Integral Tetra Pak 1.5L",
+        "size": "1.5L",
+        "available": true,
+        "sellingPrice": 2838,
+        "listPrice": 3462,
+        "image": "https://picsum.photos/seed/suco-uva-integral-tetra-1-5l-2x/400/400",
+        "variationAttributes": {
+          "size": "1.5L",
+          "package": "Tetra Pak"
+        }
+      }
+    ]
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

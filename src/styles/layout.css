@@ -1,0 +1,90 @@
+/* Base body styles - minimal and flexible */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  -webkit-font-smoothing: antialiased;
+  margin: 0; /* remove UA default margin to avoid phantom scrollbars */
+  overflow-x: clip; /* prevent horizontal scroll from off-canvas UI (e.g., PDP thumbs) */
+  overscroll-behavior-y: auto;
+}
+
+/* CV/Portfolio specific layout - only apply to pages that need it */
+body:not(:has(.ecom)):not(:has(.panel-root)) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100svh;
+}
+
+/* Admin panel must always use full-width flow */
+body:has(.panel-root) {
+  display: block;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 960px;
+  /* keep generous spacing without forcing scroll when content is short */
+  padding: var(--gap-xl) 1rem var(--gap-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.25rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  margin-bottom: var(--gap-md);
+}
+
+header h1,
+.brand {
+  font-size: 2.1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  margin-bottom: 0.1em;
+}
+
+header h2 {
+  font-size: 1.15rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-light, #b3b3b3);
+  margin-bottom: 0.2em;
+}
+
+h2 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--gap-sm);
+}
+
+h3 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--gap-xs);
+}

@@ -1,0 +1,206 @@
+{
+  "id": "mock-0050",
+  "slug": "sabao-em-po-1-6kg",
+  "sku": "810050",
+  "name": "Sabao em Po Lavagem Perfeita 1.6kg",
+  "brand": "OMO",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/sabao-em-po-1-6kg-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/sabao-em-po-1-6kg-2x/400/400",
+      "alt": "Sabao em Po Lavagem Perfeita 1.6kg",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/sabao-em-po-1-6kg-lifestyle/1200/800",
+      "alt": "Sabao em Po Lavagem Perfeita 1.6kg em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 15.99,
+  "listPrice": 19.51,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Limpeza",
+    "Lavanderia",
+    "Sabao em Po"
+  ],
+  "categoryPath": [
+    {
+      "id": "5",
+      "slug": "limpeza",
+      "name": "Limpeza"
+    },
+    {
+      "id": "32",
+      "slug": "lavanderia",
+      "name": "Lavanderia"
+    },
+    {
+      "id": "403",
+      "slug": "sabao-em-po",
+      "name": "Sabao em Po"
+    }
+  ],
+  "departments": [
+    "Lavanderia",
+    "Sabao em Po",
+    "Casa em Geral"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Sabao em Po Lavagem Perfeita 1.6kg",
+  "longDescription": "Sabao em Po Lavagem Perfeita 1.6kg da marca OMO. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Sabao em Po Lavagem Perfeita 1.6kg | Supermercado Mock",
+    "description": "Compre Sabao em Po Lavagem Perfeita 1.6kg com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Sabao em Po Lavagem Perfeita",
+      "OMO",
+      "Limpeza",
+      "1.6kg"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 128,
+    "safetyStock": 10,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 1600,
+    "volumetricWeightGrams": 1792,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "bulky"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 1599,
+    "listPrice": 1951,
+    "discountPercent": 22,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 1599,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 800,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "sabao-em-po"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-sabao-em-po",
+    "groupName": "Sabao em Po Lavagem Perfeita",
+    "axis": [
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0049",
+        "slug": "sabao-em-po-800g",
+        "name": "Sabao em Po Lavagem Perfeita 800g",
+        "size": "800g",
+        "available": true,
+        "sellingPrice": 991,
+        "listPrice": 1199,
+        "image": "https://picsum.photos/seed/sabao-em-po-800g-2x/400/400",
+        "variationAttributes": {
+          "size": "800g"
+        }
+      },
+      {
+        "id": "mock-0050",
+        "slug": "sabao-em-po-1-6kg",
+        "name": "Sabao em Po Lavagem Perfeita 1.6kg",
+        "size": "1.6kg",
+        "available": true,
+        "sellingPrice": 1599,
+        "listPrice": 1951,
+        "image": "https://picsum.photos/seed/sabao-em-po-1-6kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1.6kg"
+        }
+      },
+      {
+        "id": "mock-0051",
+        "slug": "sabao-em-po-2-2kg",
+        "name": "Sabao em Po Lavagem Perfeita 2.2kg",
+        "size": "2.2kg",
+        "available": true,
+        "sellingPrice": 2047,
+        "listPrice": 2518,
+        "image": "https://picsum.photos/seed/sabao-em-po-2-2kg-2x/400/400",
+        "variationAttributes": {
+          "size": "2.2kg"
+        }
+      },
+      {
+        "id": "mock-0052",
+        "slug": "sabao-em-po-3kg",
+        "name": "Sabao em Po Lavagem Perfeita 3kg",
+        "size": "3kg",
+        "available": true,
+        "sellingPrice": 2750,
+        "listPrice": 3410,
+        "image": "https://picsum.photos/seed/sabao-em-po-3kg-2x/400/400",
+        "variationAttributes": {
+          "size": "3kg"
+        }
+      }
+    ]
+  },
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

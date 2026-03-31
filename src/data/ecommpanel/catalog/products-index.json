@@ -1,0 +1,3313 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-03-18T22:13:42.885Z",
+  "products": [
+    {
+      "id": "posta-salmao-500",
+      "slug": "posta-de-salmao-500g-p",
+      "sku": "posta-salmao-500",
+      "name": "Posta de Salmão 500g",
+      "brand": "Costa Sul",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=26",
+      "price": 65.9,
+      "listPrice": 69.9,
+      "categories": [
+        "Peixaria",
+        "Peixes"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.713Z"
+    },
+    {
+      "id": "file-tilapia-700",
+      "slug": "file-de-tilapia-700g-p",
+      "sku": "file-tilapia-700",
+      "name": "Filé de Tilápia 700g",
+      "brand": "Frescatto",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=25",
+      "price": 45.9,
+      "listPrice": 49.9,
+      "categories": [
+        "Peixaria",
+        "Peixes"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.711Z"
+    },
+    {
+      "id": "pao-forma-450",
+      "slug": "pao-de-forma-450g-p",
+      "sku": "pao-forma-450",
+      "name": "Pão de Forma 450g",
+      "brand": "Padaria",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=24",
+      "price": 8.99,
+      "listPrice": 9.99,
+      "categories": [
+        "Padaria",
+        "Pães"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.710Z"
+    },
+    {
+      "id": "coxa-sobrecoxa-1kg",
+      "slug": "coxa-sobrecoxa-1kg-p",
+      "sku": "coxa-sobrecoxa-1kg",
+      "name": "Coxa e Sobrecoxa 1kg",
+      "brand": "Sadia",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=23",
+      "price": 10.99,
+      "listPrice": 11.99,
+      "categories": [
+        "Açougue",
+        "Frango"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.709Z"
+    },
+    {
+      "id": "maca-gala-kg",
+      "slug": "maca-gala-kg-p",
+      "sku": "maca-gala-kg",
+      "name": "Maçã Gala",
+      "brand": "Hortifruti",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=22",
+      "price": 6.99,
+      "listPrice": 7.99,
+      "categories": [
+        "Hortifruti"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.707Z"
+    },
+    {
+      "id": "banana-nanica-kg",
+      "slug": "banana-nanica-kg-p",
+      "sku": "banana-nanica-kg",
+      "name": "Banana Nanica",
+      "brand": "Hortifruti",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=21",
+      "price": 3.99,
+      "listPrice": 4.99,
+      "categories": [
+        "Hortifruti"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.706Z"
+    },
+    {
+      "id": "racao-caes-10kg",
+      "slug": "racao-caes-10kg-p",
+      "sku": "racao-caes-10kg",
+      "name": "Ração Para Cães 10kg",
+      "brand": "PetLove",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=20",
+      "price": 149.9,
+      "listPrice": 159.9,
+      "categories": [
+        "Pet Shop",
+        "Cães"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.705Z"
+    },
+    {
+      "id": "pao-frances-1kg",
+      "slug": "pao-frances-1kg-p",
+      "sku": "pao-frances-1kg",
+      "name": "Pão Francês 1kg",
+      "brand": "Padaria",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=19",
+      "price": 16.99,
+      "listPrice": 17.99,
+      "categories": [
+        "Padaria",
+        "Pães"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.704Z"
+    },
+    {
+      "id": "queijo-mucarela-500",
+      "slug": "queijo-mucarela-500g-p",
+      "sku": "queijo-mucarela-500",
+      "name": "Queijo Muçarela 500g",
+      "brand": "Local",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=18",
+      "price": 24.99,
+      "listPrice": 26.99,
+      "categories": [
+        "Frios e Laticínios",
+        "Queijos"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.702Z"
+    },
+    {
+      "id": "shampoo-seda-325",
+      "slug": "shampoo-seda-325ml-p",
+      "sku": "shampoo-seda-325",
+      "name": "Shampoo Seda 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=17",
+      "price": 12.99,
+      "listPrice": 14.99,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.701Z"
+    },
+    {
+      "id": "sabao-liquido-omo-3l",
+      "slug": "sabao-liquido-omo-3l-p",
+      "sku": "sabao-liquido-omo-3l",
+      "name": "Sabão Líquido OMO 3L",
+      "brand": "OMO",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=16",
+      "price": 39.99,
+      "listPrice": 44.99,
+      "categories": [
+        "Limpeza",
+        "Lavanderia"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.700Z"
+    },
+    {
+      "id": "agua-sanitaria-2l",
+      "slug": "agua-sanitaria-2l-p",
+      "sku": "agua-sanitaria-2l",
+      "name": "Água Sanitária 2L",
+      "brand": "Qboa",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=15",
+      "price": 5.99,
+      "listPrice": 6.99,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.699Z"
+    },
+    {
+      "id": "detergente-ype-500",
+      "slug": "detergente-ype-500ml-p",
+      "sku": "detergente-ype-500",
+      "name": "Detergente Ypê 500ml",
+      "brand": "Ypê",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=14",
+      "price": 2.99,
+      "listPrice": 3.49,
+      "categories": [
+        "Limpeza",
+        "Cozinha"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.697Z"
+    },
+    {
+      "id": "vinho-tinto-750",
+      "slug": "vinho-tinto-seco-750ml-p",
+      "sku": "vinho-tinto-750",
+      "name": "Vinho Tinto Seco 750ml",
+      "brand": "Miolo",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=13",
+      "price": 42.9,
+      "listPrice": 49.9,
+      "categories": [
+        "Bebidas",
+        "Vinhos",
+        "Bebida Alcoólica",
+        "Tintos"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.696Z"
+    },
+    {
+      "id": "cerveja-heineken-350",
+      "slug": "cerveja-heineken-lata-350ml-p",
+      "sku": "cerveja-heineken-350",
+      "name": "Cerveja Heineken Lata 350ml",
+      "brand": "Heineken",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=12",
+      "price": 5.29,
+      "listPrice": 5.99,
+      "categories": [
+        "Bebidas",
+        "Cervejas",
+        "Bebida Alcoólica",
+        "Lager"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.694Z"
+    },
+    {
+      "id": "maionese-11",
+      "slug": "maionese-hellmanns-500g-p",
+      "sku": "maionese-11",
+      "name": "Maionese Hellmann's 500g",
+      "brand": "Hellmann's",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=11",
+      "price": 6.99,
+      "listPrice": 7.49,
+      "categories": [
+        "Mercearia",
+        "Molhos e Condimentos",
+        "Maionese"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.693Z"
+    },
+    {
+      "id": "feijao-10",
+      "slug": "feijao-kicaldo-1kg-p",
+      "sku": "feijao-10",
+      "name": "Feijão Kicaldo Carioca 1kg",
+      "brand": "Kicaldo",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=10",
+      "price": 7.99,
+      "listPrice": 8.99,
+      "categories": [
+        "Mercearia",
+        "Grãos e Cereais",
+        "Feijão"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.692Z"
+    },
+    {
+      "id": "arroz-9",
+      "slug": "arroz-tio-joao-5kg-p",
+      "sku": "arroz-9",
+      "name": "Arroz Tio João Tipo 1 5kg",
+      "brand": "Tio João",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=9",
+      "price": 23.99,
+      "listPrice": 25.99,
+      "categories": [
+        "Mercearia",
+        "Grãos e Cereais",
+        "Arroz"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.690Z"
+    },
+    {
+      "id": "coca-cola-8",
+      "slug": "coca-cola-2l-p",
+      "sku": "coca-cola-8",
+      "name": "Refrigerante Coca-Cola 2L",
+      "brand": "Coca-Cola",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=8",
+      "price": 5.89,
+      "listPrice": 6.49,
+      "categories": [
+        "Bebidas",
+        "Refrigerantes",
+        "Cola"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.689Z"
+    },
+    {
+      "id": "panettone-7",
+      "slug": "panettone-bauducco-400g-p",
+      "sku": "panettone-7",
+      "name": "Panettone Bauducco Tradicional 400g",
+      "brand": "Bauducco",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=7",
+      "price": 7.99,
+      "listPrice": 8.99,
+      "categories": [
+        "Mercearia",
+        "Doces e Sobremesas",
+        "Panettone"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.688Z"
+    },
+    {
+      "id": "peito-frango-6",
+      "slug": "peito-frango-sadia-1kg-p",
+      "sku": "peito-frango-6",
+      "name": "Peito de Frango Sadia Resfriado 1kg",
+      "brand": "Sadia",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=6",
+      "price": 11.99,
+      "listPrice": 12.99,
+      "categories": [
+        "Açougue",
+        "Frango",
+        "Peito"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.686Z"
+    },
+    {
+      "id": "leite-condensado-5",
+      "slug": "leite-condensado-nestle-395g-p",
+      "sku": "leite-condensado-5",
+      "name": "Leite Condensado Nestlé 395g",
+      "brand": "Nestle",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=5",
+      "price": 5.49,
+      "listPrice": 5.99,
+      "categories": [
+        "Mercearia",
+        "Doces e Sobremesas",
+        "Leite Condensado"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.685Z"
+    },
+    {
+      "id": "5551",
+      "slug": "hamburguer-de-frango-e-bovino-perdigao-defumado-672g-c-12-unid-p",
+      "sku": "5551",
+      "name": "Hambúrguer de Frango e Bovino Perdigão Defumado 672g c/ 12 Unid",
+      "brand": "Perdigão",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=4",
+      "price": 19.45,
+      "listPrice": 19.45,
+      "categories": [
+        "Congelados",
+        "Hambúrguer",
+        "Bovino"
+      ],
+      "collections": [
+        "Novidades"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.683Z"
+    },
+    {
+      "id": "coffee-soluble",
+      "slug": "cafe-soluv-el-200g-p",
+      "sku": "coffee-soluble",
+      "name": "Café Solúvel 200g",
+      "brand": "Café Real",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=3",
+      "price": 15.9,
+      "listPrice": 19.9,
+      "categories": [
+        "Mercearia"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.682Z"
+    },
+    {
+      "id": "mango-kg",
+      "slug": "manga-palmer-kg-p",
+      "sku": "mango-kg",
+      "name": "Manga Palmer",
+      "brand": "Hortifruti",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=2",
+      "price": 5.29,
+      "listPrice": 6.49,
+      "categories": [
+        "Hortifruti"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.680Z"
+    },
+    {
+      "id": "7348",
+      "slug": "biscoito-cream-cracker-pilar-premium-350g-281855-p",
+      "sku": "7348",
+      "name": "Biscoito Cream Cracker Pilar Premium 350g",
+      "brand": "Pilar",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/192/192?random=1",
+      "price": 4.19,
+      "listPrice": 4.65,
+      "categories": [
+        "Mercearia",
+        "Bomboniere",
+        "Biscoito Salgado"
+      ],
+      "collections": [
+        "Ofertas"
+      ],
+      "stockQuantity": 0,
+      "lowStock": true,
+      "updatedAt": "2026-03-18T22:13:42.679Z"
+    },
+    {
+      "id": "mock-0036",
+      "slug": "agua-mineral-sem-gas-galao-5l",
+      "sku": "810036",
+      "name": "Agua Mineral sem Gas 5L",
+      "brand": "Minalba",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/agua-mineral-sem-gas-galao-5l-2x/400/400",
+      "price": 10.3,
+      "listPrice": 11.12,
+      "categories": [
+        "Bebidas",
+        "Aguas",
+        "Agua sem Gas"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 30,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0034",
+      "slug": "agua-mineral-sem-gas-garrafa-1-5l",
+      "sku": "810034",
+      "name": "Agua Mineral sem Gas 1.5L",
+      "brand": "Minalba",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/agua-mineral-sem-gas-garrafa-1-5l-2x/400/400",
+      "price": 3.49,
+      "listPrice": 4.33,
+      "categories": [
+        "Bebidas",
+        "Aguas",
+        "Agua sem Gas"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 136,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0033",
+      "slug": "agua-mineral-sem-gas-garrafa-500ml",
+      "sku": "810033",
+      "name": "Agua Mineral sem Gas 500ml",
+      "brand": "Minalba",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/agua-mineral-sem-gas-garrafa-500ml-2x/400/400",
+      "price": 2.16,
+      "listPrice": 2.66,
+      "categories": [
+        "Bebidas",
+        "Aguas",
+        "Agua sem Gas"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 129,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0035",
+      "slug": "agua-mineral-sem-gas-pack-6x1-5l",
+      "sku": "810035",
+      "name": "Agua Mineral sem Gas 6x1.5L",
+      "brand": "Minalba",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/agua-mineral-sem-gas-pack-6x1-5l-2x/400/400",
+      "price": 18.15,
+      "listPrice": 22.69,
+      "categories": [
+        "Bebidas",
+        "Aguas",
+        "Agua sem Gas"
+      ],
+      "collections": [
+        "Ofertas",
+        "Estoque Limitado",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 23,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0045",
+      "slug": "agua-sanitaria-1l",
+      "sku": "810045",
+      "name": "Agua Sanitaria 1L",
+      "brand": "Qboa",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/agua-sanitaria-1l-2x/400/400",
+      "price": 3.07,
+      "listPrice": 3.59,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral",
+        "Alvejantes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 93,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0046",
+      "slug": "agua-sanitaria-2l",
+      "sku": "810046",
+      "name": "Agua Sanitaria 2L",
+      "brand": "Qboa",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/agua-sanitaria-2l-2x/400/400",
+      "price": 4.39,
+      "listPrice": 5.18,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral",
+        "Alvejantes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 100,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0047",
+      "slug": "agua-sanitaria-3l",
+      "sku": "810047",
+      "name": "Agua Sanitaria 3L",
+      "brand": "Qboa",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/agua-sanitaria-3l-2x/400/400",
+      "price": 5.49,
+      "listPrice": 6.53,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral",
+        "Alvejantes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 107,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0048",
+      "slug": "agua-sanitaria-5l",
+      "sku": "810048",
+      "name": "Agua Sanitaria 5L",
+      "brand": "Qboa",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/agua-sanitaria-5l-2x/400/400",
+      "price": 7.9,
+      "listPrice": 9.48,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral",
+        "Alvejantes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 114,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0004",
+      "slug": "arroz-tipo-1-10kg",
+      "sku": "810004",
+      "name": "Arroz Tipo 1 10kg",
+      "brand": "Tio Joao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/arroz-tipo-1-10kg-2x/400/400",
+      "price": 55.86,
+      "listPrice": 62.56,
+      "categories": [
+        "Mercearia",
+        "Graos e Cereais",
+        "Arroz"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 46,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0001",
+      "slug": "arroz-tipo-1-1kg",
+      "sku": "810001",
+      "name": "Arroz Tipo 1 1kg",
+      "brand": "Tio Joao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/arroz-tipo-1-1kg-2x/400/400",
+      "price": 11.43,
+      "listPrice": 12.46,
+      "categories": [
+        "Mercearia",
+        "Graos e Cereais",
+        "Arroz"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 25,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0002",
+      "slug": "arroz-tipo-1-2kg",
+      "sku": "810002",
+      "name": "Arroz Tipo 1 2kg",
+      "brand": "Tio Joao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/arroz-tipo-1-2kg-2x/400/400",
+      "price": 18.84,
+      "listPrice": 20.72,
+      "categories": [
+        "Mercearia",
+        "Graos e Cereais",
+        "Arroz"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 32,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0003",
+      "slug": "arroz-tipo-1-5kg",
+      "sku": "810003",
+      "name": "Arroz Tipo 1 5kg",
+      "brand": "Tio Joao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/arroz-tipo-1-5kg-2x/400/400",
+      "price": 29.88,
+      "listPrice": 33.17,
+      "categories": [
+        "Mercearia",
+        "Graos e Cereais",
+        "Arroz"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 39,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0015",
+      "slug": "cafe-torrado-moido-extraforte-500g",
+      "sku": "810015",
+      "name": "Cafe Torrado e Moido Extra Forte 500g",
+      "brand": "Pilao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/cafe-torrado-moido-extraforte-500g-2x/400/400",
+      "price": 15.39,
+      "listPrice": 18.93,
+      "categories": [
+        "Mercearia",
+        "Cafes e Chas",
+        "Cafe Torrado"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 123,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0016",
+      "slug": "cafe-torrado-moido-organico-500g",
+      "sku": "810016",
+      "name": "Cafe Torrado e Moido Organico 500g",
+      "brand": "Pilao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/cafe-torrado-moido-organico-500g-2x/400/400",
+      "price": 18.89,
+      "listPrice": 23.42,
+      "categories": [
+        "Mercearia",
+        "Cafes e Chas",
+        "Cafe Torrado"
+      ],
+      "collections": [
+        "Ofertas",
+        "Organicos",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 130,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0013",
+      "slug": "cafe-torrado-moido-tradicional-250g",
+      "sku": "810013",
+      "name": "Cafe Torrado e Moido Tradicional 250g",
+      "brand": "Pilao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/cafe-torrado-moido-tradicional-250g-2x/400/400",
+      "price": 10.35,
+      "listPrice": 12.52,
+      "categories": [
+        "Mercearia",
+        "Cafes e Chas",
+        "Cafe Torrado"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 109,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0014",
+      "slug": "cafe-torrado-moido-tradicional-500g",
+      "sku": "810014",
+      "name": "Cafe Torrado e Moido Tradicional 500g",
+      "brand": "Pilao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/cafe-torrado-moido-tradicional-500g-2x/400/400",
+      "price": 13.99,
+      "listPrice": 17.07,
+      "categories": [
+        "Mercearia",
+        "Cafes e Chas",
+        "Cafe Torrado"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 116,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0038",
+      "slug": "cerveja-pilsen-lata-350ml",
+      "sku": "810038",
+      "name": "Cerveja Pilsen Lata 350ml",
+      "brand": "Heineken",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/cerveja-pilsen-lata-350ml-2x/400/400",
+      "price": 4.89,
+      "listPrice": 5.38,
+      "categories": [
+        "Bebida Alcoolica",
+        "Lager",
+        "Pilsen"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 44,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0039",
+      "slug": "cerveja-pilsen-latao-473ml",
+      "sku": "810039",
+      "name": "Cerveja Pilsen Latao 473ml",
+      "brand": "Heineken",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/cerveja-pilsen-latao-473ml-2x/400/400",
+      "price": 6.6,
+      "listPrice": 7.33,
+      "categories": [
+        "Bebida Alcoolica",
+        "Lager",
+        "Pilsen"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 51,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0037",
+      "slug": "cerveja-pilsen-long-neck-330ml",
+      "sku": "810037",
+      "name": "Cerveja Pilsen Long Neck 330ml",
+      "brand": "Heineken",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/cerveja-pilsen-long-neck-330ml-2x/400/400",
+      "price": 4.65,
+      "listPrice": 5.07,
+      "categories": [
+        "Bebida Alcoolica",
+        "Lager",
+        "Pilsen"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 37,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0040",
+      "slug": "cerveja-pilsen-pack-12x350ml",
+      "sku": "810040",
+      "name": "Cerveja Pilsen Pack 12x350ml",
+      "brand": "Heineken",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/cerveja-pilsen-pack-12x350ml-2x/400/400",
+      "price": 56.24,
+      "listPrice": 62.99,
+      "categories": [
+        "Bebida Alcoolica",
+        "Lager",
+        "Pilsen"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 58,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0062",
+      "slug": "condicionador-hidratante-cacheados-325ml",
+      "sku": "810062",
+      "name": "Condicionador Hidratante Cacheados 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/condicionador-hidratante-cacheados-325ml-2x/400/400",
+      "price": 12.47,
+      "listPrice": 14.47,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos",
+        "Condicionador"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 92,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0063",
+      "slug": "condicionador-hidratante-danificados-325ml",
+      "sku": "810063",
+      "name": "Condicionador Hidratante Danificados 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/condicionador-hidratante-danificados-325ml-2x/400/400",
+      "price": 12.71,
+      "listPrice": 14.87,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos",
+        "Condicionador"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 99,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0061",
+      "slug": "condicionador-hidratante-lisos-325ml",
+      "sku": "810061",
+      "name": "Condicionador Hidratante Lisos 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/condicionador-hidratante-lisos-325ml-2x/400/400",
+      "price": 11.99,
+      "listPrice": 13.79,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos",
+        "Condicionador"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 85,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0064",
+      "slug": "condicionador-hidratante-nutricao-325ml",
+      "sku": "810064",
+      "name": "Condicionador Hidratante Nutricao 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/condicionador-hidratante-nutricao-325ml-2x/400/400",
+      "price": 13.43,
+      "listPrice": 15.85,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos",
+        "Condicionador"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 106,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0055",
+      "slug": "desinfetante-citricos-1l",
+      "sku": "810055",
+      "name": "Desinfetante Multiuso 1L",
+      "brand": "Pinho Sol",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/desinfetante-citricos-1l-2x/400/400",
+      "price": 8.31,
+      "listPrice": 9.06,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral",
+        "Desinfetantes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 43,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0054",
+      "slug": "desinfetante-eucalipto-1l",
+      "sku": "810054",
+      "name": "Desinfetante Multiuso 1L",
+      "brand": "Pinho Sol",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/desinfetante-eucalipto-1l-2x/400/400",
+      "price": 8.15,
+      "listPrice": 8.8,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral",
+        "Desinfetantes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 36,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0053",
+      "slug": "desinfetante-lavanda-1l",
+      "sku": "810053",
+      "name": "Desinfetante Multiuso 1L",
+      "brand": "Pinho Sol",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/desinfetante-lavanda-1l-2x/400/400",
+      "price": 7.99,
+      "listPrice": 9.99,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral",
+        "Desinfetantes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 29,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0056",
+      "slug": "desinfetante-original-2l",
+      "sku": "810056",
+      "name": "Desinfetante Multiuso 2L",
+      "brand": "Pinho Sol",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/desinfetante-original-2l-2x/400/400",
+      "price": 13.98,
+      "listPrice": 15.38,
+      "categories": [
+        "Limpeza",
+        "Casa Em Geral",
+        "Desinfetantes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 50,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0044",
+      "slug": "detergente-liquido-capim-limao-500ml",
+      "sku": "810044",
+      "name": "Detergente Liquido 500ml",
+      "brand": "Ype",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/detergente-liquido-capim-limao-500ml-2x/400/400",
+      "price": 3.06,
+      "listPrice": 3.55,
+      "categories": [
+        "Limpeza",
+        "Cozinha",
+        "Detergente"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 86,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0043",
+      "slug": "detergente-liquido-coco-500ml",
+      "sku": "810043",
+      "name": "Detergente Liquido 500ml",
+      "brand": "Ype",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/detergente-liquido-coco-500ml-2x/400/400",
+      "price": 2.98,
+      "listPrice": 3.43,
+      "categories": [
+        "Limpeza",
+        "Cozinha",
+        "Detergente"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 79,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0042",
+      "slug": "detergente-liquido-limao-500ml",
+      "sku": "810042",
+      "name": "Detergente Liquido 500ml",
+      "brand": "Ype",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/detergente-liquido-limao-500ml-2x/400/400",
+      "price": 2.95,
+      "listPrice": 3.36,
+      "categories": [
+        "Limpeza",
+        "Cozinha",
+        "Detergente"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 72,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0041",
+      "slug": "detergente-liquido-neutro-500ml",
+      "sku": "810041",
+      "name": "Detergente Liquido 500ml",
+      "brand": "Ype",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/detergente-liquido-neutro-500ml-2x/400/400",
+      "price": 2.89,
+      "listPrice": 3.27,
+      "categories": [
+        "Limpeza",
+        "Cozinha",
+        "Detergente"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 65,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0006",
+      "slug": "feijao-carioca-carioca-1kg",
+      "sku": "810006",
+      "name": "Feijao Carioca Carioca 1kg",
+      "brand": "Kicaldo",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/feijao-carioca-carioca-1kg-2x/400/400",
+      "price": 8.99,
+      "listPrice": 10.25,
+      "categories": [
+        "Mercearia",
+        "Graos e Cereais",
+        "Feijao"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 60,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0005",
+      "slug": "feijao-carioca-carioca-500g",
+      "sku": "810005",
+      "name": "Feijao Carioca Carioca 500g",
+      "brand": "Kicaldo",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/feijao-carioca-carioca-500g-2x/400/400",
+      "price": 6.47,
+      "listPrice": 7.31,
+      "categories": [
+        "Mercearia",
+        "Graos e Cereais",
+        "Feijao"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 53,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0008",
+      "slug": "feijao-carioca-fradinho-1kg",
+      "sku": "810008",
+      "name": "Feijao Carioca Fradinho 1kg",
+      "brand": "Kicaldo",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/feijao-carioca-fradinho-1kg-2x/400/400",
+      "price": 10.43,
+      "listPrice": 12.1,
+      "categories": [
+        "Mercearia",
+        "Graos e Cereais",
+        "Feijao"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 74,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0007",
+      "slug": "feijao-carioca-preto-1kg",
+      "sku": "810007",
+      "name": "Feijao Carioca Preto 1kg",
+      "brand": "Kicaldo",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/feijao-carioca-preto-1kg-2x/400/400",
+      "price": 9.71,
+      "listPrice": 11.17,
+      "categories": [
+        "Mercearia",
+        "Graos e Cereais",
+        "Feijao"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 67,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0092",
+      "slug": "file-tilapia-congelado-1-5kg",
+      "sku": "810092",
+      "name": "File de Tilapia Congelado 1.5kg",
+      "brand": "Frescatto",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/file-tilapia-congelado-1-5kg-2x/400/400",
+      "price": 44.83,
+      "listPrice": 49.31,
+      "categories": [
+        "Peixaria",
+        "Peixes",
+        "Tilapia"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 62,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0091",
+      "slug": "file-tilapia-congelado-1kg",
+      "sku": "810091",
+      "name": "File de Tilapia Congelado 1kg",
+      "brand": "Frescatto",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/file-tilapia-congelado-1kg-2x/400/400",
+      "price": 31.04,
+      "listPrice": 33.83,
+      "categories": [
+        "Peixaria",
+        "Peixes",
+        "Tilapia"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 55,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0089",
+      "slug": "file-tilapia-congelado-400g",
+      "sku": "810089",
+      "name": "File de Tilapia Congelado 400g",
+      "brand": "Frescatto",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/file-tilapia-congelado-400g-2x/400/400",
+      "price": 14.71,
+      "listPrice": 18.39,
+      "categories": [
+        "Peixaria",
+        "Peixes",
+        "Tilapia"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 41,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0090",
+      "slug": "file-tilapia-congelado-700g",
+      "sku": "810090",
+      "name": "File de Tilapia Congelado 700g",
+      "brand": "Frescatto",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/file-tilapia-congelado-700g-2x/400/400",
+      "price": 22.99,
+      "listPrice": 24.83,
+      "categories": [
+        "Peixaria",
+        "Peixes",
+        "Tilapia"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 48,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0086",
+      "slug": "hamburguer-bovino-56g-12un",
+      "sku": "810086",
+      "name": "Hamburguer Bovino 672g",
+      "brand": "Perdigao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/hamburguer-bovino-56g-12un-2x/400/400",
+      "price": 13.99,
+      "listPrice": 17.07,
+      "categories": [
+        "Congelados",
+        "Hamburguer",
+        "Bovino"
+      ],
+      "collections": [
+        "Ofertas",
+        "Estoque Limitado",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 20,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0085",
+      "slug": "hamburguer-bovino-56g-6un",
+      "sku": "810085",
+      "name": "Hamburguer Bovino 336g",
+      "brand": "Perdigao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/hamburguer-bovino-56g-6un-2x/400/400",
+      "price": 10.63,
+      "listPrice": 12.86,
+      "categories": [
+        "Congelados",
+        "Hamburguer",
+        "Bovino"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 133,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0087",
+      "slug": "hamburguer-bovino-90g-10un",
+      "sku": "810087",
+      "name": "Hamburguer Bovino 900g",
+      "brand": "Perdigao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/hamburguer-bovino-90g-10un-2x/400/400",
+      "price": 18.89,
+      "listPrice": 23.23,
+      "categories": [
+        "Congelados",
+        "Hamburguer",
+        "Bovino"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 27,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0088",
+      "slug": "hamburguer-bovino-premium-12un",
+      "sku": "810088",
+      "name": "Hamburguer Bovino 720g",
+      "brand": "Perdigao",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/hamburguer-bovino-premium-12un-2x/400/400",
+      "price": 21.26,
+      "listPrice": 26.36,
+      "categories": [
+        "Congelados",
+        "Hamburguer",
+        "Bovino"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 34,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0024",
+      "slug": "iogurte-grego-baunilha-100g",
+      "sku": "810024",
+      "name": "Iogurte Grego Baunilha 100g",
+      "brand": "Vigor",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/iogurte-grego-baunilha-100g-2x/400/400",
+      "price": 4.53,
+      "listPrice": 5.16,
+      "categories": [
+        "Frios e Laticinios",
+        "Iogurtes",
+        "Iogurte Grego"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Refrigerados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 66,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0023",
+      "slug": "iogurte-grego-maracuja-100g",
+      "sku": "810023",
+      "name": "Iogurte Grego Maracuja 100g",
+      "brand": "Vigor",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/iogurte-grego-maracuja-100g-2x/400/400",
+      "price": 4.36,
+      "listPrice": 4.93,
+      "categories": [
+        "Frios e Laticinios",
+        "Iogurtes",
+        "Iogurte Grego"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Refrigerados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 59,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0022",
+      "slug": "iogurte-grego-morango-100g",
+      "sku": "810022",
+      "name": "Iogurte Grego Morango 100g",
+      "brand": "Vigor",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/iogurte-grego-morango-100g-2x/400/400",
+      "price": 4.32,
+      "listPrice": 4.84,
+      "categories": [
+        "Frios e Laticinios",
+        "Iogurtes",
+        "Iogurte Grego"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Refrigerados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 52,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0021",
+      "slug": "iogurte-grego-tradicional-100g",
+      "sku": "810021",
+      "name": "Iogurte Grego Tradicional 100g",
+      "brand": "Vigor",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/iogurte-grego-tradicional-100g-2x/400/400",
+      "price": 4.19,
+      "listPrice": 4.65,
+      "categories": [
+        "Frios e Laticinios",
+        "Iogurtes",
+        "Iogurte Grego"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Refrigerados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 45,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0019",
+      "slug": "leite-uht-integral-desnatado-1l",
+      "sku": "810019",
+      "name": "Leite UHT Integral Desnatado 1L",
+      "brand": "Itambe",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/leite-uht-integral-desnatado-1l-2x/400/400",
+      "price": 5.86,
+      "listPrice": 6.39,
+      "categories": [
+        "Frios e Laticinios",
+        "Leites",
+        "Leite UHT"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 31,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0017",
+      "slug": "leite-uht-integral-integral-1l",
+      "sku": "810017",
+      "name": "Leite UHT Integral Integral 1L",
+      "brand": "Itambe",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/leite-uht-integral-integral-1l-2x/400/400",
+      "price": 5.69,
+      "listPrice": 7.11,
+      "categories": [
+        "Frios e Laticinios",
+        "Leites",
+        "Leite UHT"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 137,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0018",
+      "slug": "leite-uht-integral-semi-desnatado-1l",
+      "sku": "810018",
+      "name": "Leite UHT Integral Semi Desnatado 1L",
+      "brand": "Itambe",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/leite-uht-integral-semi-desnatado-1l-2x/400/400",
+      "price": 5.8,
+      "listPrice": 6.26,
+      "categories": [
+        "Frios e Laticinios",
+        "Leites",
+        "Leite UHT"
+      ],
+      "collections": [
+        "Ofertas",
+        "Estoque Limitado",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 24,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0020",
+      "slug": "leite-uht-integral-zero-lactose-1l",
+      "sku": "810020",
+      "name": "Leite UHT Integral Zero Lactose 1L",
+      "brand": "Itambe",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/leite-uht-integral-zero-lactose-1l-2x/400/400",
+      "price": 6.83,
+      "listPrice": 7.51,
+      "categories": [
+        "Frios e Laticinios",
+        "Leites",
+        "Leite UHT"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 38,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0011",
+      "slug": "macarrao-espaguete-integral-500g",
+      "sku": "810011",
+      "name": "Macarrao Espaguete Integral 500g",
+      "brand": "Renata",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/macarrao-espaguete-integral-500g-2x/400/400",
+      "price": 6.48,
+      "listPrice": 7.71,
+      "categories": [
+        "Mercearia",
+        "Massas",
+        "Espaguete"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 95,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0010",
+      "slug": "macarrao-espaguete-n7-500g",
+      "sku": "810010",
+      "name": "Macarrao Espaguete N7 500g",
+      "brand": "Renata",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/macarrao-espaguete-n7-500g-2x/400/400",
+      "price": 5.49,
+      "listPrice": 6.48,
+      "categories": [
+        "Mercearia",
+        "Massas",
+        "Espaguete"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 88,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0009",
+      "slug": "macarrao-espaguete-n8-500g",
+      "sku": "810009",
+      "name": "Macarrao Espaguete N8 500g",
+      "brand": "Renata",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-2x/400/400",
+      "price": 5.05,
+      "listPrice": 5.91,
+      "categories": [
+        "Mercearia",
+        "Massas",
+        "Espaguete"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 81,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0012",
+      "slug": "macarrao-espaguete-semola-1kg",
+      "sku": "810012",
+      "name": "Macarrao Espaguete Semola 1kg",
+      "brand": "Renata",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-2x/400/400",
+      "price": 9.44,
+      "listPrice": 11.33,
+      "categories": [
+        "Mercearia",
+        "Massas",
+        "Espaguete"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 102,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0095",
+      "slug": "pao-forma-integral-12-graos-500g",
+      "sku": "810095",
+      "name": "Pao de Forma Integral 12 Graos 500g",
+      "brand": "Pullman",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/pao-forma-integral-12-graos-500g-2x/400/400",
+      "price": 12.64,
+      "listPrice": 14.28,
+      "categories": [
+        "Padaria",
+        "Paes",
+        "Pao de Forma"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 83,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0094",
+      "slug": "pao-forma-integral-integral-500g",
+      "sku": "810094",
+      "name": "Pao de Forma Integral Integral 500g",
+      "brand": "Pullman",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/pao-forma-integral-integral-500g-2x/400/400",
+      "price": 10.99,
+      "listPrice": 12.31,
+      "categories": [
+        "Padaria",
+        "Paes",
+        "Pao de Forma"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 76,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0096",
+      "slug": "pao-forma-integral-sem-casca-450g",
+      "sku": "810096",
+      "name": "Pao de Forma Integral Sem Casca 450g",
+      "brand": "Pullman",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/pao-forma-integral-sem-casca-450g-2x/400/400",
+      "price": 12.31,
+      "listPrice": 14.03,
+      "categories": [
+        "Padaria",
+        "Paes",
+        "Pao de Forma"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 90,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0093",
+      "slug": "pao-forma-integral-tradicional-450g",
+      "sku": "810093",
+      "name": "Pao de Forma Integral Tradicional 450g",
+      "brand": "Pullman",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/pao-forma-integral-tradicional-450g-2x/400/400",
+      "price": 10.11,
+      "listPrice": 11.22,
+      "categories": [
+        "Padaria",
+        "Paes",
+        "Pao de Forma"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 69,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0067",
+      "slug": "pasta-de-dente-luminous-white-70g",
+      "sku": "810067",
+      "name": "Creme Dental Luminous White 70g",
+      "brand": "Colgate",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/pasta-de-dente-luminous-white-70g-2x/400/400",
+      "price": 8.04,
+      "listPrice": 9.73,
+      "categories": [
+        "Higiene e Beleza",
+        "Higiene Bucal",
+        "Creme Dental"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 127,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0068",
+      "slug": "pasta-de-dente-sensitive-pro-alivio-70g",
+      "sku": "810068",
+      "name": "Creme Dental Sensitive Pro Alivio 70g",
+      "brand": "Colgate",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/pasta-de-dente-sensitive-pro-alivio-70g-2x/400/400",
+      "price": 9.65,
+      "listPrice": 11.77,
+      "categories": [
+        "Higiene e Beleza",
+        "Higiene Bucal",
+        "Creme Dental"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 134,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0066",
+      "slug": "pasta-de-dente-total-12-90g",
+      "sku": "810066",
+      "name": "Creme Dental Total 12 90g",
+      "brand": "Colgate",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/pasta-de-dente-total-12-90g-2x/400/400",
+      "price": 6.99,
+      "listPrice": 8.39,
+      "categories": [
+        "Higiene e Beleza",
+        "Higiene Bucal",
+        "Creme Dental"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 120,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0065",
+      "slug": "pasta-de-dente-tripla-acao-90g",
+      "sku": "810065",
+      "name": "Creme Dental Tripla Acao 90g",
+      "brand": "Colgate",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/pasta-de-dente-tripla-acao-90g-2x/400/400",
+      "price": 6.29,
+      "listPrice": 7.49,
+      "categories": [
+        "Higiene e Beleza",
+        "Higiene Bucal",
+        "Creme Dental"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 113,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0084",
+      "slug": "peito-frango-congelado-cubos-1kg",
+      "sku": "810084",
+      "name": "Peito de Frango Congelado Cubos 1kg",
+      "brand": "Sadia",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/peito-frango-congelado-cubos-1kg-2x/400/400",
+      "price": 22.19,
+      "listPrice": 26.63,
+      "categories": [
+        "Acougue",
+        "Frango",
+        "Peito"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 126,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0081",
+      "slug": "peito-frango-congelado-file-1kg",
+      "sku": "810081",
+      "name": "Peito de Frango Congelado File 1kg",
+      "brand": "Sadia",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/peito-frango-congelado-file-1kg-2x/400/400",
+      "price": 19.99,
+      "listPrice": 23.39,
+      "categories": [
+        "Acougue",
+        "Frango",
+        "Peito"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 105,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0083",
+      "slug": "peito-frango-congelado-isca-1kg",
+      "sku": "810083",
+      "name": "Peito de Frango Congelado Isca 1kg",
+      "brand": "Sadia",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/peito-frango-congelado-isca-1kg-2x/400/400",
+      "price": 21.59,
+      "listPrice": 25.69,
+      "categories": [
+        "Acougue",
+        "Frango",
+        "Peito"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 119,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0082",
+      "slug": "peito-frango-congelado-sassami-1kg",
+      "sku": "810082",
+      "name": "Peito de Frango Congelado Sassami 1kg",
+      "brand": "Sadia",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/peito-frango-congelado-sassami-1kg-2x/400/400",
+      "price": 21.19,
+      "listPrice": 25,
+      "categories": [
+        "Acougue",
+        "Frango",
+        "Peito"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Congelados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 112,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0097",
+      "slug": "queijo-mussarela-fatiado-150g",
+      "sku": "810097",
+      "name": "Queijo Mussarela Fatiado 150g",
+      "brand": "Polenghi",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-150g-2x/400/400",
+      "price": 6.47,
+      "listPrice": 7.44,
+      "categories": [
+        "Frios e Laticinios",
+        "Queijos",
+        "Mussarela"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Refrigerados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 97,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0100",
+      "slug": "queijo-mussarela-fatiado-1kg",
+      "sku": "810100",
+      "name": "Queijo Mussarela Fatiado 1kg",
+      "brand": "Polenghi",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-1kg-2x/400/400",
+      "price": 23.37,
+      "listPrice": 27.58,
+      "categories": [
+        "Frios e Laticinios",
+        "Queijos",
+        "Mussarela"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Refrigerados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 118,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0098",
+      "slug": "queijo-mussarela-fatiado-300g",
+      "sku": "810098",
+      "name": "Queijo Mussarela Fatiado 300g",
+      "brand": "Polenghi",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-300g-2x/400/400",
+      "price": 8.99,
+      "listPrice": 10.43,
+      "categories": [
+        "Frios e Laticinios",
+        "Queijos",
+        "Mussarela"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Refrigerados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 104,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0099",
+      "slug": "queijo-mussarela-fatiado-500g",
+      "sku": "810099",
+      "name": "Queijo Mussarela Fatiado 500g",
+      "brand": "Polenghi",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/queijo-mussarela-fatiado-500g-2x/400/400",
+      "price": 13.04,
+      "listPrice": 15.26,
+      "categories": [
+        "Frios e Laticinios",
+        "Queijos",
+        "Mussarela"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Refrigerados",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 111,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0075",
+      "slug": "racao-caes-adultos-carne-arroz-15kg",
+      "sku": "810075",
+      "name": "Racao Caes Adultos 15kg",
+      "brand": "Golden",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/racao-caes-adultos-carne-arroz-15kg-2x/400/400",
+      "price": 41.17,
+      "listPrice": 45.7,
+      "categories": [
+        "Pet Shop",
+        "Caes",
+        "Racao Seca"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 63,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0074",
+      "slug": "racao-caes-adultos-frango-arroz-10kg",
+      "sku": "810074",
+      "name": "Racao Caes Adultos 10kg",
+      "brand": "Golden",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/racao-caes-adultos-frango-arroz-10kg-2x/400/400",
+      "price": 28.99,
+      "listPrice": 31.89,
+      "categories": [
+        "Pet Shop",
+        "Caes",
+        "Racao Seca"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 56,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0076",
+      "slug": "racao-caes-adultos-light-10kg",
+      "sku": "810076",
+      "name": "Racao Caes Adultos 10kg",
+      "brand": "Golden",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/racao-caes-adultos-light-10kg-2x/400/400",
+      "price": 32.47,
+      "listPrice": 36.37,
+      "categories": [
+        "Pet Shop",
+        "Caes",
+        "Racao Seca"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 70,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0073",
+      "slug": "racao-caes-adultos-mini-bits-3kg",
+      "sku": "810073",
+      "name": "Racao Caes Adultos 3kg",
+      "brand": "Golden",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/racao-caes-adultos-mini-bits-3kg-2x/400/400",
+      "price": 20.87,
+      "listPrice": 22.75,
+      "categories": [
+        "Pet Shop",
+        "Caes",
+        "Racao Seca"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 49,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0079",
+      "slug": "racao-gatos-castrados-carne-3kg",
+      "sku": "810079",
+      "name": "Racao Gatos Castrados Carne 3kg",
+      "brand": "Whiskas",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/racao-gatos-castrados-carne-3kg-2x/400/400",
+      "price": 26.24,
+      "listPrice": 30.18,
+      "categories": [
+        "Pet Shop",
+        "Gatos",
+        "Racao Seca"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 91,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0077",
+      "slug": "racao-gatos-castrados-frango-1kg",
+      "sku": "810077",
+      "name": "Racao Gatos Castrados Frango 1kg",
+      "brand": "Whiskas",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/racao-gatos-castrados-frango-1kg-2x/400/400",
+      "price": 13.49,
+      "listPrice": 15.24,
+      "categories": [
+        "Pet Shop",
+        "Gatos",
+        "Racao Seca"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 77,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0078",
+      "slug": "racao-gatos-castrados-frango-3kg",
+      "sku": "810078",
+      "name": "Racao Gatos Castrados Frango 3kg",
+      "brand": "Whiskas",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/racao-gatos-castrados-frango-3kg-2x/400/400",
+      "price": 24.99,
+      "listPrice": 28.49,
+      "categories": [
+        "Pet Shop",
+        "Gatos",
+        "Racao Seca"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 84,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0080",
+      "slug": "racao-gatos-castrados-salmao-3kg",
+      "sku": "810080",
+      "name": "Racao Gatos Castrados Salmao 3kg",
+      "brand": "Whiskas",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/racao-gatos-castrados-salmao-3kg-2x/400/400",
+      "price": 26.99,
+      "listPrice": 31.31,
+      "categories": [
+        "Pet Shop",
+        "Gatos",
+        "Racao Seca"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 98,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0025",
+      "slug": "refrigerante-cola-lata-350ml",
+      "sku": "810025",
+      "name": "Refrigerante Cola Lata 350ml",
+      "brand": "Coca-Cola",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/refrigerante-cola-lata-350ml-2x/400/400",
+      "price": 4.19,
+      "listPrice": 4.82,
+      "categories": [
+        "Bebidas",
+        "Refrigerantes",
+        "Cola"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 73,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0026",
+      "slug": "refrigerante-cola-pet-1l",
+      "sku": "810026",
+      "name": "Refrigerante Cola PET 1L",
+      "brand": "Coca-Cola",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/refrigerante-cola-pet-1l-2x/400/400",
+      "price": 6.57,
+      "listPrice": 7.62,
+      "categories": [
+        "Bebidas",
+        "Refrigerantes",
+        "Cola"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 80,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0027",
+      "slug": "refrigerante-cola-pet-2l",
+      "sku": "810027",
+      "name": "Refrigerante Cola PET 2L",
+      "brand": "Coca-Cola",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/refrigerante-cola-pet-2l-2x/400/400",
+      "price": 8.81,
+      "listPrice": 10.31,
+      "categories": [
+        "Bebidas",
+        "Refrigerantes",
+        "Cola"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 87,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0028",
+      "slug": "refrigerante-cola-zero-2l",
+      "sku": "810028",
+      "name": "Refrigerante Cola PET Zero 2L",
+      "brand": "Coca-Cola",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/refrigerante-cola-zero-2l-2x/400/400",
+      "price": 9.09,
+      "listPrice": 10.73,
+      "categories": [
+        "Bebidas",
+        "Refrigerantes",
+        "Cola"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 94,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0050",
+      "slug": "sabao-em-po-1-6kg",
+      "sku": "810050",
+      "name": "Sabao em Po Lavagem Perfeita 1.6kg",
+      "brand": "OMO",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/sabao-em-po-1-6kg-2x/400/400",
+      "price": 15.99,
+      "listPrice": 19.51,
+      "categories": [
+        "Limpeza",
+        "Lavanderia",
+        "Sabao em Po"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 128,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0051",
+      "slug": "sabao-em-po-2-2kg",
+      "sku": "810051",
+      "name": "Sabao em Po Lavagem Perfeita 2.2kg",
+      "brand": "OMO",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/sabao-em-po-2-2kg-2x/400/400",
+      "price": 20.47,
+      "listPrice": 25.18,
+      "categories": [
+        "Limpeza",
+        "Lavanderia",
+        "Sabao em Po"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 135,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0052",
+      "slug": "sabao-em-po-3kg",
+      "sku": "810052",
+      "name": "Sabao em Po Lavagem Perfeita 3kg",
+      "brand": "OMO",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/sabao-em-po-3kg-2x/400/400",
+      "price": 27.5,
+      "listPrice": 34.1,
+      "categories": [
+        "Limpeza",
+        "Lavanderia",
+        "Sabao em Po"
+      ],
+      "collections": [
+        "Ofertas",
+        "Estoque Limitado",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 22,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0049",
+      "slug": "sabao-em-po-800g",
+      "sku": "810049",
+      "name": "Sabao em Po Lavagem Perfeita 800g",
+      "brand": "OMO",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/sabao-em-po-800g-2x/400/400",
+      "price": 9.91,
+      "listPrice": 11.99,
+      "categories": [
+        "Limpeza",
+        "Lavanderia",
+        "Sabao em Po"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 121,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0070",
+      "slug": "sabonete-barra-karite-90g",
+      "sku": "810070",
+      "name": "Sabonete em Barra 90g",
+      "brand": "Dove",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/sabonete-barra-karite-90g-2x/400/400",
+      "price": 3.73,
+      "listPrice": 4.63,
+      "categories": [
+        "Higiene e Beleza",
+        "Banho",
+        "Sabonetes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 28,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0069",
+      "slug": "sabonete-barra-original-90g",
+      "sku": "810069",
+      "name": "Sabonete em Barra 90g",
+      "brand": "Dove",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/sabonete-barra-original-90g-2x/400/400",
+      "price": 3.59,
+      "listPrice": 4.42,
+      "categories": [
+        "Higiene e Beleza",
+        "Banho",
+        "Sabonetes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Estoque Limitado",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 21,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0072",
+      "slug": "sabonete-barra-pack-4x90g",
+      "sku": "810072",
+      "name": "Sabonete em Barra 4x90g",
+      "brand": "Dove",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/sabonete-barra-pack-4x90g-2x/400/400",
+      "price": 12.92,
+      "listPrice": 13.95,
+      "categories": [
+        "Higiene e Beleza",
+        "Banho",
+        "Sabonetes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 42,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0071",
+      "slug": "sabonete-barra-pepino-cha-verde-90g",
+      "sku": "810071",
+      "name": "Sabonete em Barra 90g",
+      "brand": "Dove",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/sabonete-barra-pepino-cha-verde-90g-2x/400/400",
+      "price": 3.73,
+      "listPrice": 4.66,
+      "categories": [
+        "Higiene e Beleza",
+        "Banho",
+        "Sabonetes"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 35,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0060",
+      "slug": "shampoo-hidratante-anticaspa-325ml",
+      "sku": "810060",
+      "name": "Shampoo Hidratante Anticaspa 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/shampoo-hidratante-anticaspa-325ml-2x/400/400",
+      "price": 13.41,
+      "listPrice": 15.29,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos",
+        "Shampoo"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 78,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0058",
+      "slug": "shampoo-hidratante-cacheados-325ml",
+      "sku": "810058",
+      "name": "Shampoo Hidratante Cacheados 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/shampoo-hidratante-cacheados-325ml-2x/400/400",
+      "price": 11.43,
+      "listPrice": 12.8,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos",
+        "Shampoo"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 64,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0059",
+      "slug": "shampoo-hidratante-danificados-325ml",
+      "sku": "810059",
+      "name": "Shampoo Hidratante Danificados 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/shampoo-hidratante-danificados-325ml-2x/400/400",
+      "price": 11.65,
+      "listPrice": 13.16,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos",
+        "Shampoo"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 71,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0057",
+      "slug": "shampoo-hidratante-lisos-325ml",
+      "sku": "810057",
+      "name": "Shampoo Hidratante Lisos 325ml",
+      "brand": "Seda",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/shampoo-hidratante-lisos-325ml-2x/400/400",
+      "price": 10.99,
+      "listPrice": 12.2,
+      "categories": [
+        "Higiene e Beleza",
+        "Cabelos",
+        "Shampoo"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 57,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0032",
+      "slug": "suco-uva-integral-tetra-1-5l",
+      "sku": "810032",
+      "name": "Suco de Uva Integral Tetra Pak 1.5L",
+      "brand": "Aurora",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/suco-uva-integral-tetra-1-5l-2x/400/400",
+      "price": 28.38,
+      "listPrice": 34.62,
+      "categories": [
+        "Bebidas",
+        "Sucos",
+        "Sucos Integrais"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 122,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0031",
+      "slug": "suco-uva-integral-vidro-1l",
+      "sku": "810031",
+      "name": "Suco de Uva Integral Vidro 1L",
+      "brand": "Aurora",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/suco-uva-integral-vidro-1l-2x/400/400",
+      "price": 22.58,
+      "listPrice": 27.32,
+      "categories": [
+        "Bebidas",
+        "Sucos",
+        "Sucos Integrais"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 115,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0029",
+      "slug": "suco-uva-integral-vidro-300ml",
+      "sku": "810029",
+      "name": "Suco de Uva Integral Vidro 300ml",
+      "brand": "Aurora",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/suco-uva-integral-vidro-300ml-2x/400/400",
+      "price": 8.51,
+      "listPrice": 10.13,
+      "categories": [
+        "Bebidas",
+        "Sucos",
+        "Sucos Integrais"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 101,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "mock-0030",
+      "slug": "suco-uva-integral-vidro-500ml",
+      "sku": "810030",
+      "name": "Suco de Uva Integral Vidro 500ml",
+      "brand": "Aurora",
+      "status": "active",
+      "available": true,
+      "image": "https://picsum.photos/seed/suco-uva-integral-vidro-500ml-2x/400/400",
+      "price": 12.9,
+      "listPrice": 15.48,
+      "categories": [
+        "Bebidas",
+        "Sucos",
+        "Sucos Integrais"
+      ],
+      "collections": [
+        "Ofertas",
+        "Retirada em Loja",
+        "Dia das Maes",
+        "Pascoa",
+        "Black Friday"
+      ],
+      "stockQuantity": 108,
+      "lowStock": false,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    }
+  ]
+}

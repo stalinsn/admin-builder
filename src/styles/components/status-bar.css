@@ -1,0 +1,140 @@
+.statusbar-draggable,
+.statusbar-draggable.minimized {
+  position: fixed;
+  background: rgba(30, 30, 30, 0.82);
+  color: #fff;
+  padding: 0.85rem 1.15rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+  z-index: 9999;
+  font-size: 0.97rem;
+  backdrop-filter: blur(2px);
+  min-width: 260px;
+  max-width: 420px;
+}
+.statusbar-draggable.minimized {
+  width: 340px !important;
+  min-width: 260px;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0.85rem 1.15rem;
+}
+.statusbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: grab;
+  user-select: none;
+}
+.statusbar-title,
+.statusbar-title-remaining {
+  background: none !important;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 1.08rem;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+}
+.statusbar-title {
+  display: inline-block;
+  vertical-align: middle;
+}
+.statusbar-title-remaining {
+  color: var(--accent, #00c896) !important;
+  font-weight: 500;
+  margin-left: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.statusbar-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.statusbar-flex {
+  display: flex;
+  gap: 8px;
+}
+.statusbar-section {
+  margin-bottom: 0.5em;
+  position: relative;
+}
+.statusbar-section-title {
+  margin: 0;
+}
+.statusbar-section-detail {
+  font-size: 0.82em;
+  color: #bdbdbd;
+  margin-top: 0.1em;
+}
+.statusbar-section-monospace {
+  font-family: monospace;
+}
+.statusbar-section-span {
+  color: #bdbdbd;
+  font-size: 0.93em;
+}
+.statusbar-close-btn {
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  z-index: 10001;
+  margin-left: 8px;
+  margin-right: 0;
+  box-shadow: none;
+}
+.statusbar-close-btn:hover {
+  background: var(--accent, #0070f3);
+  color: #fff;
+}
+
+.toolbar,
+.navbar-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.btn,
+.btn.btn-primary {
+  min-width: 120px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent, #00c896);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+  box-shadow: none;
+  margin: 0;
+}
+.btn.btn-primary:hover,
+.btn:hover {
+  background: #009e7a;
+}

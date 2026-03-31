@@ -1,0 +1,77 @@
+.modal-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 1.2rem 1.2rem 1rem 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.13);
+  max-width: 340px;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+  animation: modal-fade-in 0.18s;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.confirm-modal-input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 0.6rem 0.9rem;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+  font-size: 1rem;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: none;
+  display: block;
+}
+.confirm-modal-input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+.confirm-modal-error {
+  color: var(--accent);
+  margin-bottom: 6px;
+  font-size: 0.97rem;
+  font-weight: 500;
+}
+.flex {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.gap-4 {
+  gap: 0.7rem;
+}
+.justify-end {
+  justify-content: center;
+}
+
+/* Centraliza o conteúdo do modal */
+.modal-card > h2,
+.modal-card > p,
+.modal-card > .confirm-modal-error {
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 500px) {
+  .modal-card {
+    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+    max-width: 98vw;
+  }
+}

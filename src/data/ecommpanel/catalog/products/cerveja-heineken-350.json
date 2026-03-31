@@ -1,0 +1,81 @@
+{
+  "id": "cerveja-heineken-350",
+  "slug": "cerveja-heineken-lata-350ml-p",
+  "sku": "cerveja-heineken-350",
+  "name": "Cerveja Heineken Lata 350ml",
+  "brand": "Heineken",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=12",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=12",
+      "alt": "Cerveja Heineken Lata 350ml",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 5.29,
+  "listPrice": 5.99,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Bebidas",
+    "Cervejas",
+    "Bebida Alcoólica",
+    "Lager"
+  ],
+  "categoryPath": [
+    {
+      "id": "4",
+      "slug": "bebidas",
+      "name": "Bebidas"
+    },
+    {
+      "id": "19",
+      "slug": "cervejas",
+      "name": "Cervejas"
+    },
+    {
+      "id": "24",
+      "slug": "bebida-alcoolica",
+      "name": "Bebida Alcoólica"
+    },
+    {
+      "id": "96",
+      "slug": "lager",
+      "name": "Lager"
+    }
+  ],
+  "departments": [
+    "Cervejas",
+    "Bebida Alcoólica",
+    "Lager"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Cerveja Heineken Lata 350ml",
+  "longDescription": "",
+  "seo": {
+    "title": "Cerveja Heineken Lata 350ml",
+    "description": "Cerveja Heineken Lata 350ml",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.694Z",
+  "updatedAt": "2026-03-18T22:13:42.694Z"
+}

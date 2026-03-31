@@ -1,0 +1,68 @@
+{
+  "id": "file-tilapia-700",
+  "slug": "file-de-tilapia-700g-p",
+  "sku": "file-tilapia-700",
+  "name": "Filé de Tilápia 700g",
+  "brand": "Frescatto",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=25",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=25",
+      "alt": "Filé de Tilápia 700g",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 45.9,
+  "listPrice": 49.9,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Peixaria",
+    "Peixes"
+  ],
+  "categoryPath": [
+    {
+      "id": "10",
+      "slug": "peixaria",
+      "name": "Peixaria"
+    },
+    {
+      "id": "101",
+      "slug": "peixes",
+      "name": "Peixes"
+    }
+  ],
+  "departments": [
+    "Peixes",
+    "Peixes Frescos"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Filé de Tilápia 700g",
+  "longDescription": "",
+  "seo": {
+    "title": "Filé de Tilápia 700g",
+    "description": "Filé de Tilápia 700g",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.711Z",
+  "updatedAt": "2026-03-18T22:13:42.711Z"
+}

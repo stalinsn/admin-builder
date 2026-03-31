@@ -1,0 +1,125 @@
+{
+  "modules": {
+    "enabled": true,
+    "columns": true,
+    "apps": true,
+    "newsletter": true,
+    "social": true
+  },
+  "sections": [
+    {
+      "id": "institutional",
+      "title": "Institucional",
+      "enabled": true,
+      "links": [
+        {
+          "id": "who-we-are",
+          "label": "Quem somos",
+          "href": "/e-commerce/quem-somos",
+          "enabled": true
+        },
+        {
+          "id": "stores",
+          "label": "Lojas e horários",
+          "href": "/e-commerce/lojas",
+          "enabled": true
+        },
+        {
+          "id": "careers",
+          "label": "Trabalhe conosco",
+          "href": "/e-commerce/carreiras",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "support",
+      "title": "Atendimento",
+      "enabled": true,
+      "links": [
+        {
+          "id": "help-center",
+          "label": "Central de ajuda",
+          "href": "/e-commerce/ajuda",
+          "enabled": true
+        },
+        {
+          "id": "returns",
+          "label": "Trocas e devoluções",
+          "href": "/e-commerce/trocas",
+          "enabled": true
+        },
+        {
+          "id": "contact",
+          "label": "Fale conosco",
+          "href": "/e-commerce/contato",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "policies",
+      "title": "Políticas",
+      "enabled": true,
+      "links": [
+        {
+          "id": "privacy",
+          "label": "Privacidade",
+          "href": "/e-commerce/privacidade",
+          "enabled": true
+        },
+        {
+          "id": "terms",
+          "label": "Termos de uso",
+          "href": "/e-commerce/termos",
+          "enabled": true
+        },
+        {
+          "id": "cookies",
+          "label": "Cookies",
+          "href": "/e-commerce/cookies",
+          "enabled": true
+        }
+      ]
+    }
+  ],
+  "appTitle": "Baixe o app",
+  "appLinks": [
+    {
+      "id": "app-store",
+      "label": "App Store",
+      "href": "#",
+      "enabled": true
+    },
+    {
+      "id": "google-play",
+      "label": "Google Play",
+      "href": "#",
+      "enabled": true
+    }
+  ],
+  "newsletterTitle": "Receba novidades",
+  "newsletterPlaceholder": "Seu e-mail",
+  "newsletterButtonLabel": "Assinar",
+  "socialLinks": [
+    {
+      "id": "instagram",
+      "label": "IG",
+      "href": "#",
+      "enabled": true
+    },
+    {
+      "id": "facebook",
+      "label": "FB",
+      "href": "#",
+      "enabled": true
+    },
+    {
+      "id": "youtube",
+      "label": "YT",
+      "href": "#",
+      "enabled": true
+    }
+  ],
+  "copyrightText": "SuperMart • Preços e condições válidos para compras online."
+}

@@ -1,0 +1,16 @@
+@import "../tokens/colors.css";
+@import "../tokens/typography.css";
+
+/* Revisão global de responsividade para grupos específicos */
+@media (max-width: 600px) {
+  .toolbar {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--gap-sm);
+  }
+}

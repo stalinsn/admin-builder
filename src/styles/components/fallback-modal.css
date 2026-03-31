@@ -1,0 +1,39 @@
+.fallback-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100svw;
+  height: 100svh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.fallback-modal-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 400px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+}
+.fallback-modal-title {
+  margin-bottom: 16px;
+}
+.fallback-modal-text {
+  margin-bottom: 24px;
+}
+.fallback-modal-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+.fallback-modal-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+}
+.fallback-modal-btn-primary {
+  background: #0070f3;
+  color: #fff;
+}

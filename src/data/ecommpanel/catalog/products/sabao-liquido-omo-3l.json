@@ -1,0 +1,68 @@
+{
+  "id": "sabao-liquido-omo-3l",
+  "slug": "sabao-liquido-omo-3l-p",
+  "sku": "sabao-liquido-omo-3l",
+  "name": "Sabão Líquido OMO 3L",
+  "brand": "OMO",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=16",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=16",
+      "alt": "Sabão Líquido OMO 3L",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 39.99,
+  "listPrice": 44.99,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Limpeza",
+    "Lavanderia"
+  ],
+  "categoryPath": [
+    {
+      "id": "5",
+      "slug": "limpeza",
+      "name": "Limpeza"
+    },
+    {
+      "id": "32",
+      "slug": "lavanderia",
+      "name": "Lavanderia"
+    }
+  ],
+  "departments": [
+    "Lavanderia",
+    "Casa em Geral"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Sabão Líquido OMO 3L",
+  "longDescription": "",
+  "seo": {
+    "title": "Sabão Líquido OMO 3L",
+    "description": "Sabão Líquido OMO 3L",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.700Z",
+  "updatedAt": "2026-03-18T22:13:42.700Z"
+}

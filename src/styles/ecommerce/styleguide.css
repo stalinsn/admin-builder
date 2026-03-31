@@ -1,0 +1,269 @@
+/*
+  E-commerce Design System (Styleguide)
+  -------------------------------------
+  This file is the single source of truth for visual tokens used by the ecommerce.
+  Future admin/MCP integrations can update only `data-theme` and `data-campaign`
+  on `<main class="ecom">` to switch palettes without touching component CSS.
+*/
+
+.ecom,
+.ecom-tokens {
+  /* Typography */
+  --ecom-font-family-base: "Plus Jakarta Sans", system-ui, sans-serif;
+  --ecom-font-family-display: "Poppins", "Plus Jakarta Sans", system-ui, sans-serif;
+  --ecom-font-size-xs: 0.75rem;
+  --ecom-font-size-sm: 0.875rem;
+  --ecom-font-size-md: 1rem;
+  --ecom-font-size-lg: 1.125rem;
+  --ecom-font-size-xl: clamp(1.35rem, 1.1rem + 1vw, 1.9rem);
+  --ecom-font-size-2xl: clamp(1.65rem, 1.25rem + 1.4vw, 2.4rem);
+  --ecom-layout-max: 1300px;
+  --ecom-layout-gutter: clamp(12px, 2.2vw, 24px);
+
+  /* Spacing + radius */
+  --ecom-space-1: 4px;
+  --ecom-space-2: 8px;
+  --ecom-space-3: 12px;
+  --ecom-space-4: 16px;
+  --ecom-space-5: 20px;
+  --ecom-space-6: 24px;
+  --ecom-space-8: 32px;
+  --ecom-space-10: 40px;
+  --ecom-space-12: 48px;
+  --ecom-radius-sm: 8px;
+  --ecom-radius-md: 12px;
+  --ecom-radius-lg: 16px;
+  --ecom-radius-xl: 22px;
+  --ecom-touch-target: 44px;
+
+  /* Core semantic colors */
+  --ecom-color-bg: #f4f6f8;
+  --ecom-color-surface: #ffffff;
+  --ecom-color-surface-soft: #f6f8fa;
+  --ecom-color-surface-strong: #eef2f6;
+  --ecom-color-text: #101828;
+  --ecom-color-text-muted: #667085;
+  --ecom-color-border: #d9e1e8;
+  --ecom-color-border-strong: #c7d3dd;
+  --ecom-color-border-soft: #e6edf3;
+  --ecom-color-brand: #0d7a5f;
+  --ecom-color-brand-hover: #0a654f;
+  --ecom-color-brand-contrast: #ffffff;
+
+  /* Feedback/status */
+  --ecom-color-success: #0d8a4f;
+  --ecom-color-success-soft: #e7f8ef;
+  --ecom-color-warning: #b56a00;
+  --ecom-color-warning-soft: #fff5e8;
+  --ecom-color-danger: #c1272d;
+  --ecom-color-danger-soft: #fff0f1;
+  --ecom-color-danger-border: #f3bdc3;
+  --ecom-color-info: #0b66a6;
+  --ecom-color-info-strong: #085286;
+  --ecom-color-info-soft: #eaf5ff;
+
+  /* Effects */
+  --ecom-overlay: rgba(15, 23, 42, 0.56);
+  --ecom-shadow-sm: 0 2px 8px rgba(16, 24, 40, 0.08);
+  --ecom-shadow-md: 0 8px 24px rgba(16, 24, 40, 0.12);
+  --ecom-shadow-lg: 0 16px 40px rgba(16, 24, 40, 0.16);
+  --ecom-focus-ring: 0 0 0 3px rgba(13, 122, 95, 0.22);
+  --ecom-motion-fast: 160ms cubic-bezier(0.2, 0.9, 0.25, 1);
+  --ecom-motion-base: 240ms cubic-bezier(0.22, 0.8, 0.22, 1);
+  --ecom-motion-slow: 360ms cubic-bezier(0.22, 0.8, 0.22, 1);
+
+  /* Components */
+  --ecom-header-bg: rgba(255, 255, 255, 0.94);
+  --ecom-header-shadow: 0 1px 8px rgba(16, 24, 40, 0.1);
+  --ecom-header-promo-bg: linear-gradient(90deg, #0f8f6f, #35a385);
+  --ecom-header-promo-text: #f7fffc;
+  --ecom-header-util-bg: linear-gradient(180deg, rgba(236, 243, 248, 0.92) 0%, rgba(245, 248, 251, 0.96) 100%);
+
+  --ecom-card-bg: var(--ecom-color-surface);
+  --ecom-card-border: 1px solid var(--ecom-color-border);
+  --ecom-card-shadow: var(--ecom-shadow-sm);
+  --ecom-card-shadow-hover: var(--ecom-shadow-md);
+
+  --ecom-drawer-bg: var(--ecom-color-surface);
+  --ecom-drawer-muted-bg: #fafbfd;
+  --ecom-drawer-border: #e5eaf0;
+  --ecom-drawer-highlight: linear-gradient(135deg, #e6f4ff 0%, #cfe8ff 100%);
+  --ecom-image-surface: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%);
+  --ecom-sticky-offset: clamp(80px, 10vw, 108px);
+  --ecom-app-gutter: clamp(12px, 2vw, 22px);
+  --ecom-divider-dashed: 1px dashed var(--ecom-color-border);
+  --ecom-step-header-bg: linear-gradient(180deg, var(--ecom-color-surface-soft) 0%, var(--ecom-color-surface) 100%);
+  --ecom-chip-bg: var(--ecom-color-surface-soft);
+  --ecom-chip-text: var(--ecom-color-text-muted);
+  --ecom-chip-border: var(--ecom-color-border-soft);
+
+  --ecom-footer-bg: linear-gradient(180deg, rgba(247, 250, 252, 0.8) 0%, rgba(240, 245, 250, 0.95) 100%);
+  --ecom-elevation-card: var(--ecom-shadow-sm);
+  --ecom-elevation-floating: var(--ecom-shadow-md);
+  --ecom-elevation-overlay: var(--ecom-shadow-lg);
+  --ecom-page-gradient: radial-gradient(circle at 10% -30%, rgba(13, 122, 95, 0.08), transparent 42%), radial-gradient(circle at 90% -20%, rgba(11, 102, 166, 0.08), transparent 38%);
+
+  /* Legacy token mapping (keeps current components compatible) */
+  --bg: var(--ecom-color-bg);
+  --card-bg: var(--ecom-color-surface);
+  --text: var(--ecom-color-text);
+  --text-light: var(--ecom-color-text-muted);
+  --accent: var(--ecom-color-brand);
+  --accent-hover: var(--ecom-color-brand-hover);
+  --border: var(--ecom-color-border-soft);
+  --shadow: var(--ecom-shadow-sm);
+  --text-inverse: var(--ecom-color-brand-contrast);
+  --surface-soft: var(--ecom-color-surface-soft);
+  --surface-dark: #1f2937;
+  --badge-danger: var(--ecom-color-danger);
+  --accent-rgb: 13, 122, 95;
+  --radius: var(--ecom-radius-sm);
+  --radius-lg: var(--ecom-radius-lg);
+  --transition-fast: var(--ecom-motion-fast);
+  --transition-normal: var(--ecom-motion-base);
+}
+
+/* Brand presets (switch by setting data-theme) */
+.ecom[data-theme="default"],
+.ecom-tokens[data-theme="default"],
+.ecom-tokens[data-theme="default"] {
+  /* Uses base tokens declared above */
+}
+
+.ecom[data-theme="light"],
+.ecom-tokens[data-theme="light"] {
+  --ecom-color-bg: #f3f8ff;
+  --ecom-color-surface: #ffffff;
+  --ecom-color-surface-soft: #eef5ff;
+  --ecom-color-surface-strong: #e4eefc;
+  --ecom-color-text: #132033;
+  --ecom-color-text-muted: #60738a;
+  --ecom-color-border: #d6e2f0;
+  --ecom-color-border-strong: #bfd2e5;
+  --ecom-color-border-soft: #e7eef7;
+  --ecom-color-brand: #2f6fed;
+  --ecom-color-brand-hover: #2258bf;
+  --ecom-header-bg: rgba(255, 255, 255, 0.96);
+  --ecom-header-promo-bg: linear-gradient(90deg, #dcebff, #eef5ff);
+  --ecom-header-promo-text: #17365f;
+  --ecom-header-util-bg: linear-gradient(180deg, rgba(235, 243, 255, 0.96) 0%, rgba(245, 249, 255, 0.98) 100%);
+  --ecom-footer-bg: linear-gradient(180deg, rgba(246, 250, 255, 0.92) 0%, rgba(233, 241, 252, 0.98) 100%);
+  --accent-rgb: 47, 111, 237;
+  --ecom-page-gradient: radial-gradient(circle at 6% -20%, rgba(47, 111, 237, 0.12), transparent 40%), radial-gradient(circle at 88% -12%, rgba(148, 197, 255, 0.18), transparent 36%);
+}
+
+.ecom[data-theme="classic"],
+.ecom-tokens[data-theme="classic"] {
+  --ecom-color-bg: #f5f6fa;
+  --ecom-color-surface: #ffffff;
+  --ecom-color-surface-soft: #f5f7fb;
+  --ecom-color-surface-strong: #ebf0f6;
+  --ecom-color-text: #101828;
+  --ecom-color-text-muted: #5c6778;
+  --ecom-color-border: #d6dde7;
+  --ecom-color-border-strong: #bec9d8;
+  --ecom-color-border-soft: #e7edf4;
+  --ecom-color-brand: #0b3d91;
+  --ecom-color-brand-hover: #082f70;
+  --ecom-color-warning: #b98912;
+  --ecom-header-promo-bg: linear-gradient(90deg, #ab7f12, #d9b24d);
+  --ecom-header-promo-text: #1b1406;
+  --ecom-header-util-bg: linear-gradient(180deg, rgba(235, 241, 248, 0.96) 0%, rgba(245, 248, 252, 0.98) 100%);
+  --ecom-footer-bg: linear-gradient(180deg, rgba(247, 249, 252, 0.9) 0%, rgba(233, 239, 247, 0.98) 100%);
+  --accent-rgb: 11, 61, 145;
+  --ecom-page-gradient: radial-gradient(circle at 5% -25%, rgba(11, 61, 145, 0.12), transparent 42%), radial-gradient(circle at 88% -15%, rgba(217, 178, 77, 0.16), transparent 38%);
+}
+
+.ecom[data-theme="fresh"],
+.ecom-tokens[data-theme="fresh"] {
+  --ecom-color-bg: #f4fbf5;
+  --ecom-color-surface: #ffffff;
+  --ecom-color-surface-soft: #edf8ef;
+  --ecom-color-surface-strong: #e0f0e4;
+  --ecom-color-text: #102317;
+  --ecom-color-text-muted: #5b6f62;
+  --ecom-color-border: #d4e4d6;
+  --ecom-color-border-strong: #bed2c0;
+  --ecom-color-border-soft: #e7f0e8;
+  --ecom-color-brand: #2f855a;
+  --ecom-color-brand-hover: #256a48;
+  --ecom-header-promo-bg: linear-gradient(90deg, #2f855a, #6aa84f);
+  --ecom-header-promo-text: #f6fff9;
+  --ecom-header-util-bg: linear-gradient(180deg, rgba(235, 247, 236, 0.95) 0%, rgba(246, 252, 247, 0.98) 100%);
+  --ecom-footer-bg: linear-gradient(180deg, rgba(246, 251, 246, 0.92) 0%, rgba(232, 244, 235, 0.98) 100%);
+  --accent-rgb: 47, 133, 90;
+  --ecom-page-gradient: radial-gradient(circle at 8% -20%, rgba(47, 133, 90, 0.13), transparent 44%), radial-gradient(circle at 94% -18%, rgba(106, 168, 79, 0.16), transparent 40%);
+}
+
+/* Campaign presets (stack with data-theme) */
+.ecom[data-campaign="none"],
+.ecom-tokens[data-campaign="none"] {}
+
+.ecom[data-campaign="mothers-day"],
+.ecom-tokens[data-campaign="mothers-day"] {
+  --ecom-color-bg: #fff4f7;
+  --ecom-color-surface: #fffdfd;
+  --ecom-color-surface-soft: #fff0f4;
+  --ecom-color-surface-strong: #ffe3ea;
+  --ecom-color-text: #3c1624;
+  --ecom-color-text-muted: #7d5061;
+  --ecom-color-border: #f0c6d3;
+  --ecom-color-border-strong: #e5aabd;
+  --ecom-color-border-soft: #f8dce6;
+  --ecom-color-brand: #c4475d;
+  --ecom-color-brand-hover: #a63249;
+  --ecom-color-info-soft: #fff0f6;
+  --ecom-header-bg: rgba(255, 248, 250, 0.96);
+  --ecom-header-promo-bg: linear-gradient(90deg, #f9b3c5, #ffd7df);
+  --ecom-header-promo-text: #6d1830;
+  --ecom-header-util-bg: linear-gradient(180deg, rgba(255, 239, 244, 0.96) 0%, rgba(255, 248, 250, 0.98) 100%);
+  --ecom-footer-bg: linear-gradient(180deg, rgba(255, 247, 249, 0.94) 0%, rgba(255, 234, 240, 0.98) 100%);
+  --ecom-shadow-sm: 0 3px 12px rgba(151, 34, 73, 0.09);
+  --ecom-shadow-md: 0 10px 28px rgba(151, 34, 73, 0.12);
+  --accent-rgb: 196, 71, 93;
+  --ecom-page-gradient: radial-gradient(circle at 8% -20%, rgba(196, 71, 93, 0.16), transparent 42%), radial-gradient(circle at 90% -15%, rgba(255, 183, 197, 0.28), transparent 36%);
+}
+
+.ecom[data-campaign="easter"],
+.ecom-tokens[data-campaign="easter"] {
+  --ecom-color-brand: #7a4db5;
+  --ecom-color-brand-hover: #623f91;
+  --ecom-header-promo-bg: linear-gradient(90deg, #ffe8b3, #f9d7ff);
+  --ecom-header-promo-text: #5a3f10;
+  --ecom-color-surface-soft: #fffdf6;
+  --accent-rgb: 122, 77, 181;
+}
+
+.ecom[data-campaign="black-friday"],
+.ecom-tokens[data-campaign="black-friday"] {
+  --ecom-color-bg: #08090c;
+  --ecom-color-surface: #121418;
+  --ecom-color-surface-soft: #181c22;
+  --ecom-color-surface-strong: #21262e;
+  --ecom-color-text: #f7f8fa;
+  --ecom-color-text-muted: #a8b0be;
+  --ecom-color-border: #2b313c;
+  --ecom-color-border-strong: #3b4452;
+  --ecom-color-border-soft: #313948;
+  --ecom-color-brand: #f97316;
+  --ecom-color-brand-hover: #dd5f0d;
+  --ecom-color-brand-contrast: #0b0c10;
+  --ecom-color-warning: #f59e0b;
+  --ecom-color-warning-soft: #2b2110;
+  --ecom-header-bg: rgba(8, 9, 12, 0.95);
+  --ecom-header-promo-bg: linear-gradient(90deg, #050607, #151922);
+  --ecom-header-promo-text: #fbbf24;
+  --ecom-header-util-bg: linear-gradient(180deg, rgba(20, 24, 31, 0.96) 0%, rgba(10, 12, 16, 0.99) 100%);
+  --ecom-drawer-bg: #0f1116;
+  --ecom-drawer-muted-bg: #171b22;
+  --ecom-drawer-border: #2a323f;
+  --ecom-drawer-highlight: linear-gradient(135deg, #1f1508 0%, #35220c 100%);
+  --ecom-image-surface: linear-gradient(180deg, #14171d 0%, #1d222c 100%);
+  --ecom-footer-bg: linear-gradient(180deg, rgba(13, 15, 20, 0.96) 0%, rgba(6, 7, 10, 1) 100%);
+  --ecom-overlay: rgba(2, 3, 5, 0.78);
+  --ecom-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.42);
+  --ecom-shadow-md: 0 14px 34px rgba(0, 0, 0, 0.52);
+  --ecom-shadow-lg: 0 26px 58px rgba(0, 0, 0, 0.62);
+  --accent-rgb: 249, 115, 22;
+  --ecom-page-gradient: radial-gradient(circle at 12% -25%, rgba(249, 115, 22, 0.18), transparent 42%), radial-gradient(circle at 82% -15%, rgba(255, 255, 255, 0.06), transparent 38%);
+}

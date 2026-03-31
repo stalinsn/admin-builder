@@ -1,0 +1,213 @@
+{
+  "id": "mock-0011",
+  "slug": "macarrao-espaguete-integral-500g",
+  "sku": "810011",
+  "name": "Macarrao Espaguete Integral 500g",
+  "brand": "Renata",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/macarrao-espaguete-integral-500g-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/macarrao-espaguete-integral-500g-2x/400/400",
+      "alt": "Macarrao Espaguete Integral 500g",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/macarrao-espaguete-integral-500g-lifestyle/1200/800",
+      "alt": "Macarrao Espaguete Integral 500g em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 6.48,
+  "listPrice": 7.71,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Mercearia",
+    "Massas",
+    "Espaguete"
+  ],
+  "categoryPath": [
+    {
+      "id": "2",
+      "slug": "mercearia",
+      "name": "Mercearia"
+    },
+    {
+      "id": "23",
+      "slug": "massas",
+      "name": "Massas"
+    },
+    {
+      "id": "112",
+      "slug": "espaguete",
+      "name": "Espaguete"
+    }
+  ],
+  "departments": [
+    "Massas",
+    "Espaguete"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Macarrao Espaguete 500g",
+  "longDescription": "Macarrao Espaguete Integral 500g da marca Renata. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Macarrao Espaguete Integral 500g | Supermercado Mock",
+    "description": "Compre Macarrao Espaguete Integral 500g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Macarrao Espaguete",
+      "Renata",
+      "Mercearia",
+      "500g"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 95,
+    "safetyStock": 8,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 500,
+    "volumetricWeightGrams": 560,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 648,
+    "listPrice": 771,
+    "discountPercent": 19,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 648,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 324,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "macarrao-espaguete"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-macarrao-espaguete",
+    "groupName": "Macarrao Espaguete",
+    "axis": [
+      "tipo",
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0009",
+        "slug": "macarrao-espaguete-n8-500g",
+        "name": "Macarrao Espaguete N8 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 505,
+        "listPrice": 591,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "N8"
+        }
+      },
+      {
+        "id": "mock-0010",
+        "slug": "macarrao-espaguete-n7-500g",
+        "name": "Macarrao Espaguete N7 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 549,
+        "listPrice": 648,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-n7-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "N7"
+        }
+      },
+      {
+        "id": "mock-0011",
+        "slug": "macarrao-espaguete-integral-500g",
+        "name": "Macarrao Espaguete Integral 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 648,
+        "listPrice": 771,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-integral-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "Integral"
+        }
+      },
+      {
+        "id": "mock-0012",
+        "slug": "macarrao-espaguete-semola-1kg",
+        "name": "Macarrao Espaguete Semola 1kg",
+        "size": "1kg",
+        "available": true,
+        "sellingPrice": 944,
+        "listPrice": 1133,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1kg",
+          "type": "Semola"
+        }
+      }
+    ]
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

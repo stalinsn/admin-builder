@@ -1,0 +1,83 @@
+/* =====================================================================
+   DICAS E TOOLTIPS - TIPS SECTION
+   ===================================================================== */
+
+.motd-tip {
+  margin: 0;
+  padding: var(--space-lg);
+  background: var(--motd-bg);
+  border-top: 1px solid var(--motd-border);
+  font-size: var(--font-size-sm);
+  color: var(--motd-text-muted);
+  line-height: var(--line-height-loose);
+  flex-shrink: 0;
+}
+
+.tip-section {
+  margin-bottom: var(--space-md);
+}
+
+.tip-section:last-child {
+  margin-bottom: 0;
+}
+
+.motd-tip strong {
+  color: var(--text);
+  margin-bottom: var(--space-sm);
+  display: inline-block;
+  font-weight: var(--font-weight-semibold);
+}
+
+.motd-tip br {
+  margin-bottom: 4px;
+}
+
+.motd-tip kbd {
+  background: var(--accent);
+  color: white;
+  padding: 0.25rem var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow);
+  margin: 0 var(--space-xs);
+  display: inline-block;
+}
+
+/* Tooltip interativo */
+.tip-toggle {
+  cursor: pointer;
+  border-bottom: 1px dotted var(--motd-text-muted);
+  transition: color var(--transition-normal);
+  position: relative;
+  user-select: none;
+}
+
+.tip-toggle:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tip-details {
+  margin-top: var(--space-sm);
+  padding-left: var(--space-md);
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+  line-height: var(--line-height-relaxed);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+}
+
+.tip-details strong {
+  margin-bottom: var(--space-xs);
+}

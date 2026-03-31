@@ -1,0 +1,61 @@
+{
+  "id": "maca-gala-kg",
+  "slug": "maca-gala-kg-p",
+  "sku": "maca-gala-kg",
+  "name": "Maçã Gala",
+  "brand": "Hortifruti",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=22",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=22",
+      "alt": "Maçã Gala",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 6.99,
+  "listPrice": 7.99,
+  "unit": "kg",
+  "packSize": 1,
+  "categories": [
+    "Hortifruti"
+  ],
+  "categoryPath": [
+    {
+      "id": "1",
+      "slug": "hortifruti",
+      "name": "Hortifruti"
+    }
+  ],
+  "departments": [
+    "Frutas"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Maçã Gala",
+  "longDescription": "",
+  "seo": {
+    "title": "Maçã Gala",
+    "description": "Maçã Gala",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.707Z",
+  "updatedAt": "2026-03-18T22:13:42.707Z"
+}

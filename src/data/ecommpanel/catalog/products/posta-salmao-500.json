@@ -1,0 +1,68 @@
+{
+  "id": "posta-salmao-500",
+  "slug": "posta-de-salmao-500g-p",
+  "sku": "posta-salmao-500",
+  "name": "Posta de Salmão 500g",
+  "brand": "Costa Sul",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=26",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=26",
+      "alt": "Posta de Salmão 500g",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 65.9,
+  "listPrice": 69.9,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Peixaria",
+    "Peixes"
+  ],
+  "categoryPath": [
+    {
+      "id": "10",
+      "slug": "peixaria",
+      "name": "Peixaria"
+    },
+    {
+      "id": "101",
+      "slug": "peixes",
+      "name": "Peixes"
+    }
+  ],
+  "departments": [
+    "Peixes",
+    "Peixes Frescos"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Posta de Salmão 500g",
+  "longDescription": "",
+  "seo": {
+    "title": "Posta de Salmão 500g",
+    "description": "Posta de Salmão 500g",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.713Z",
+  "updatedAt": "2026-03-18T22:13:42.713Z"
+}

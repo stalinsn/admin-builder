@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-03-25T07:52:40.100Z",
+  "upload": {
+    "maxFileSizeMb": 32,
+    "allowedMimeTypes": [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ]
+  },
+  "storage": {
+    "publicBasePath": "/ecommpanel-media"
+  },
+  "presets": {
+    "productPdp": {
+      "enabled": true,
+      "maxWidth": 800,
+      "maxHeight": 800,
+      "format": "webp",
+      "quality": 84,
+      "fit": "inside",
+      "background": "#ffffff"
+    },
+    "productThumb": {
+      "enabled": true,
+      "maxWidth": 300,
+      "maxHeight": 300,
+      "format": "webp",
+      "quality": 80,
+      "fit": "cover",
+      "background": "#ffffff"
+    },
+    "productZoom": {
+      "enabled": true,
+      "maxWidth": 1600,
+      "maxHeight": 1600,
+      "format": "webp",
+      "quality": 86,
+      "fit": "inside",
+      "background": "#ffffff"
+    },
+    "contentCard": {
+      "enabled": true,
+      "maxWidth": 720,
+      "maxHeight": 720,
+      "format": "webp",
+      "quality": 82,
+      "fit": "inside",
+      "background": "#ffffff"
+    },
+    "contentHero": {
+      "enabled": true,
+      "maxWidth": 1600,
+      "maxHeight": 900,
+      "format": "webp",
+      "quality": 84,
+      "fit": "inside",
+      "background": "#ffffff"
+    }
+  }
+}

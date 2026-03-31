@@ -1,0 +1,210 @@
+{
+  "id": "mock-0058",
+  "slug": "shampoo-hidratante-cacheados-325ml",
+  "sku": "810058",
+  "name": "Shampoo Hidratante Cacheados 325ml",
+  "brand": "Seda",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/shampoo-hidratante-cacheados-325ml-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/shampoo-hidratante-cacheados-325ml-2x/400/400",
+      "alt": "Shampoo Hidratante Cacheados 325ml",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/shampoo-hidratante-cacheados-325ml-lifestyle/1200/800",
+      "alt": "Shampoo Hidratante Cacheados 325ml em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 11.43,
+  "listPrice": 12.8,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Higiene e Beleza",
+    "Cabelos",
+    "Shampoo"
+  ],
+  "categoryPath": [
+    {
+      "id": "6",
+      "slug": "higiene-e-beleza",
+      "name": "Higiene e Beleza"
+    },
+    {
+      "id": "41",
+      "slug": "cabelos",
+      "name": "Cabelos"
+    },
+    {
+      "id": "501",
+      "slug": "shampoo",
+      "name": "Shampoo"
+    }
+  ],
+  "departments": [
+    "Cabelos",
+    "Shampoo",
+    "Pele"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Shampoo Hidratante 325ml",
+  "longDescription": "Shampoo Hidratante Cacheados 325ml da marca Seda. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Shampoo Hidratante Cacheados 325ml | Supermercado Mock",
+    "description": "Compre Shampoo Hidratante Cacheados 325ml com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Shampoo Hidratante",
+      "Seda",
+      "Higiene e Beleza",
+      "325ml"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 64,
+    "safetyStock": 5,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 325,
+    "volumetricWeightGrams": 364,
+    "temperatureZone": "ambient",
+    "fragile": true,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 1143,
+    "listPrice": 1280,
+    "discountPercent": 12,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 1143,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 572,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "shampoo-hidratante"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-shampoo-hidratante",
+    "groupName": "Shampoo Hidratante",
+    "axis": [
+      "tipo-cabelo"
+    ],
+    "options": [
+      {
+        "id": "mock-0057",
+        "slug": "shampoo-hidratante-lisos-325ml",
+        "name": "Shampoo Hidratante Lisos 325ml",
+        "size": "325ml",
+        "available": true,
+        "sellingPrice": 1099,
+        "listPrice": 1220,
+        "image": "https://picsum.photos/seed/shampoo-hidratante-lisos-325ml-2x/400/400",
+        "variationAttributes": {
+          "size": "325ml",
+          "hairType": "Lisos"
+        }
+      },
+      {
+        "id": "mock-0058",
+        "slug": "shampoo-hidratante-cacheados-325ml",
+        "name": "Shampoo Hidratante Cacheados 325ml",
+        "size": "325ml",
+        "available": true,
+        "sellingPrice": 1143,
+        "listPrice": 1280,
+        "image": "https://picsum.photos/seed/shampoo-hidratante-cacheados-325ml-2x/400/400",
+        "variationAttributes": {
+          "size": "325ml",
+          "hairType": "Cacheados"
+        }
+      },
+      {
+        "id": "mock-0059",
+        "slug": "shampoo-hidratante-danificados-325ml",
+        "name": "Shampoo Hidratante Danificados 325ml",
+        "size": "325ml",
+        "available": true,
+        "sellingPrice": 1165,
+        "listPrice": 1316,
+        "image": "https://picsum.photos/seed/shampoo-hidratante-danificados-325ml-2x/400/400",
+        "variationAttributes": {
+          "size": "325ml",
+          "hairType": "Danificados"
+        }
+      },
+      {
+        "id": "mock-0060",
+        "slug": "shampoo-hidratante-anticaspa-325ml",
+        "name": "Shampoo Hidratante Anticaspa 325ml",
+        "size": "325ml",
+        "available": true,
+        "sellingPrice": 1341,
+        "listPrice": 1529,
+        "image": "https://picsum.photos/seed/shampoo-hidratante-anticaspa-325ml-2x/400/400",
+        "variationAttributes": {
+          "size": "325ml",
+          "hairType": "Anticaspa"
+        }
+      }
+    ]
+  },
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

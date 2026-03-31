@@ -1,0 +1,92 @@
+import type { NextRequest } from 'next/server';
+
+import { getApiClientById, updateApiClient, type ApiClientUpsertInput } from '@/features/ecommpanel/server/apiIntegrationStore';
+import {
+  getApiAuthContext,
+  hasPermission,
+  hasValidCsrf,
+  isTrustedOrigin,
+} from '@/features/ecommpanel/server/auth';
+import { errorNoStore, jsonNoStore } from '@/features/ecommpanel/server/http';
+import { API_INTEGRATION_SCOPES, type ApiIntegrationScope } from '@/features/public-api/integration';
+
+export const dynamic = 'force-dynamic';
+
+type ClientBody = {
+  client?: Partial<ApiClientUpsertInput> & {
+    allowedIpsText?: string;
+  };
+};
+
+function normalizeScopes(value: unknown): ApiIntegrationScope[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((entry): entry is ApiIntegrationScope => API_INTEGRATION_SCOPES.includes(entry as ApiIntegrationScope));
+}
+
+function normalizeAllowedIps(value: unknown, multiline?: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.filter((entry): entry is string => typeof entry === 'string').map((entry) => entry.trim()).filter(Boolean);
+  }
+  if (typeof multiline === 'string') {
+    return multiline
+      .split('\n')
+      .map((entry) => entry.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+async function requireIntegrationsAccess(req: NextRequest) {
+  const auth = await getApiAuthContext(req);
+  if (!auth) return { error: errorNoStore(401, 'Não autenticado.') };
+  if (!hasPermission(auth.user, 'integrations.manage') && !hasPermission(auth.user, 'api.keys.manage')) {
+    return { error: errorNoStore(403, 'Sem permissão para administrar integrações.') };
+  }
+  return { auth };
+}
+
+export async function GET(req: NextRequest, context: { params: Promise<{ clientId: string }> }) {
+  const guard = await requireIntegrationsAccess(req);
+  if ('error' in guard) return guard.error;
+
+  const { clientId } = await context.params;
+  const client = await getApiClientById(clientId);
+  if (!client) return errorNoStore(404, 'Cliente de integração não encontrado.');
+  return jsonNoStore({ client });
+}
+
+export async function PATCH(req: NextRequest, context: { params: Promise<{ clientId: string }> }) {
+  if (!isTrustedOrigin(req)) {
+    return errorNoStore(403, 'Origem não permitida.');
+  }
+
+  const guard = await requireIntegrationsAccess(req);
+  if ('error' in guard) return guard.error;
+
+  if (!hasValidCsrf(req, guard.auth.csrfToken)) {
+    return errorNoStore(403, 'Token CSRF inválido.');
+  }
+
+  const { clientId } = await context.params;
+  const body = (await req.json().catch(() => null)) as ClientBody | null;
+  const client = body?.client;
+  if (!client || typeof client.name !== 'string') {
+    return errorNoStore(400, 'Payload de cliente inválido.');
+  }
+
+  const updated = await updateApiClient({
+    clientId,
+    name: client.name,
+    description: typeof client.description === 'string' ? client.description : undefined,
+    scopes: normalizeScopes(client.scopes),
+    allowedIps: normalizeAllowedIps(client.allowedIps, client.allowedIpsText),
+    active: client.active !== false,
+    expiresAt: typeof client.expiresAt === 'string' && client.expiresAt.trim() ? client.expiresAt : undefined,
+  });
+
+  if (!updated) {
+    return errorNoStore(400, 'Não foi possível atualizar o cliente de integração.');
+  }
+
+  return jsonNoStore({ client: updated });
+}

@@ -1,0 +1,68 @@
+{
+  "id": "racao-caes-10kg",
+  "slug": "racao-caes-10kg-p",
+  "sku": "racao-caes-10kg",
+  "name": "Ração Para Cães 10kg",
+  "brand": "PetLove",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=20",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=20",
+      "alt": "Ração Para Cães 10kg",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 149.9,
+  "listPrice": 159.9,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Pet Shop",
+    "Cães"
+  ],
+  "categoryPath": [
+    {
+      "id": "9",
+      "slug": "pet-shop",
+      "name": "Pet Shop"
+    },
+    {
+      "id": "71",
+      "slug": "caes",
+      "name": "Cães"
+    }
+  ],
+  "departments": [
+    "Cães",
+    "Caes"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Ração Para Cães 10kg",
+  "longDescription": "",
+  "seo": {
+    "title": "Ração Para Cães 10kg",
+    "description": "Ração Para Cães 10kg",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.705Z",
+  "updatedAt": "2026-03-18T22:13:42.705Z"
+}

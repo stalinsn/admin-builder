@@ -1,0 +1,211 @@
+{
+  "id": "mock-0055",
+  "slug": "desinfetante-citricos-1l",
+  "sku": "810055",
+  "name": "Desinfetante Multiuso 1L",
+  "brand": "Pinho Sol",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/desinfetante-citricos-1l-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/desinfetante-citricos-1l-2x/400/400",
+      "alt": "Desinfetante Multiuso 1L",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/desinfetante-citricos-1l-lifestyle/1200/800",
+      "alt": "Desinfetante Multiuso 1L em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 8.31,
+  "listPrice": 9.06,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Limpeza",
+    "Casa Em Geral",
+    "Desinfetantes"
+  ],
+  "categoryPath": [
+    {
+      "id": "5",
+      "slug": "limpeza",
+      "name": "Limpeza"
+    },
+    {
+      "id": "33",
+      "slug": "casa-em-geral",
+      "name": "Casa Em Geral"
+    },
+    {
+      "id": "404",
+      "slug": "desinfetantes",
+      "name": "Desinfetantes"
+    }
+  ],
+  "departments": [
+    "Casa Em Geral",
+    "Desinfetantes",
+    "Banheiro",
+    "Casa em Geral"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Desinfetante Multiuso 1L",
+  "longDescription": "Desinfetante Multiuso 1L da marca Pinho Sol. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Desinfetante Multiuso 1L | Supermercado Mock",
+    "description": "Compre Desinfetante Multiuso 1L com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Desinfetante Multiuso",
+      "Pinho Sol",
+      "Limpeza",
+      "1L"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 43,
+    "safetyStock": 3,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 1000,
+    "volumetricWeightGrams": 1120,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 831,
+    "listPrice": 906,
+    "discountPercent": 9,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 831,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 416,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "desinfetante"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-desinfetante",
+    "groupName": "Desinfetante Multiuso",
+    "axis": [
+      "fragrancia"
+    ],
+    "options": [
+      {
+        "id": "mock-0053",
+        "slug": "desinfetante-lavanda-1l",
+        "name": "Desinfetante Multiuso 1L",
+        "size": "1L",
+        "available": true,
+        "sellingPrice": 799,
+        "listPrice": 999,
+        "image": "https://picsum.photos/seed/desinfetante-lavanda-1l-2x/400/400",
+        "variationAttributes": {
+          "size": "1L",
+          "fragrance": "Lavanda"
+        }
+      },
+      {
+        "id": "mock-0054",
+        "slug": "desinfetante-eucalipto-1l",
+        "name": "Desinfetante Multiuso 1L",
+        "size": "1L",
+        "available": true,
+        "sellingPrice": 815,
+        "listPrice": 880,
+        "image": "https://picsum.photos/seed/desinfetante-eucalipto-1l-2x/400/400",
+        "variationAttributes": {
+          "size": "1L",
+          "fragrance": "Eucalipto"
+        }
+      },
+      {
+        "id": "mock-0055",
+        "slug": "desinfetante-citricos-1l",
+        "name": "Desinfetante Multiuso 1L",
+        "size": "1L",
+        "available": true,
+        "sellingPrice": 831,
+        "listPrice": 906,
+        "image": "https://picsum.photos/seed/desinfetante-citricos-1l-2x/400/400",
+        "variationAttributes": {
+          "size": "1L",
+          "fragrance": "Citricos"
+        }
+      },
+      {
+        "id": "mock-0056",
+        "slug": "desinfetante-original-2l",
+        "name": "Desinfetante Multiuso 2L",
+        "size": "2L",
+        "available": true,
+        "sellingPrice": 1398,
+        "listPrice": 1538,
+        "image": "https://picsum.photos/seed/desinfetante-original-2l-2x/400/400",
+        "variationAttributes": {
+          "size": "2L",
+          "fragrance": "Original"
+        }
+      }
+    ]
+  },
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

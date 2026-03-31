@@ -1,0 +1,380 @@
+{
+  "modules": {
+    "enabled": true,
+    "promoBar": false,
+    "utilLinks": true,
+    "quickLogin": true,
+    "departmentsMenu": true,
+    "navMeta": true
+  },
+  "promoText": "Seja VIP e tenha frete grátis acima de 100 R$ em compras!",
+  "searchPlaceholder": "Pesquise aqui",
+  "utilLinks": [
+    {
+      "id": "club",
+      "label": "Clube",
+      "href": "/e-commerce",
+      "enabled": true
+    },
+    {
+      "id": "help",
+      "label": "Ajuda",
+      "href": "/e-commerce",
+      "enabled": true
+    },
+    {
+      "id": "login",
+      "label": "Entrar",
+      "href": "/e-commerce/login",
+      "enabled": true
+    }
+  ],
+  "quickLogin": {
+    "id": "quick-login",
+    "label": "Entrar",
+    "href": "/e-commerce/login",
+    "enabled": true
+  },
+  "navMetaText": "Atacado e Varejo",
+  "simpleHomeLabel": "Home",
+  "simpleCartLabel": "Carrinho",
+  "departmentsButtonLabel": "Departamentos",
+  "departmentsMenu": [
+    {
+      "id": "dept-hortifruti",
+      "label": "Hortifruti",
+      "href": "/e-commerce/plp?categoria=hortifruti",
+      "enabled": true,
+      "sections": [
+        {
+          "id": "hortifruti-categorias",
+          "title": "Categorias",
+          "links": [
+            {
+              "id": "hort-frutas",
+              "label": "Frutas frescas",
+              "href": "/e-commerce/plp?categoria=hortifruti&dept=Frutas",
+              "enabled": true
+            },
+            {
+              "id": "hort-legumes",
+              "label": "Legumes e verduras",
+              "href": "/e-commerce/plp?categoria=hortifruti&dept=Legumes",
+              "enabled": true
+            },
+            {
+              "id": "hort-organicos",
+              "label": "Orgânicos",
+              "href": "/e-commerce/plp?categoria=hortifruti&collection=Organicos",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "id": "hortifruti-destaques",
+          "title": "Destaques",
+          "links": [
+            {
+              "id": "hort-ofertas",
+              "label": "Ofertas do dia",
+              "href": "/e-commerce/plp?categoria=hortifruti&collection=Ofertas",
+              "enabled": true
+            },
+            {
+              "id": "hort-cebolas",
+              "label": "Monte sua cesta",
+              "href": "/e-commerce/plp?categoria=hortifruti&q=cesta",
+              "enabled": true
+            },
+            {
+              "id": "hort-ver-tudo",
+              "label": "Ver todos",
+              "href": "/e-commerce/plp?categoria=hortifruti",
+              "enabled": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-padaria",
+      "label": "Padaria",
+      "href": "/e-commerce/plp?categoria=padaria",
+      "enabled": true,
+      "sections": [
+        {
+          "id": "padaria-categorias",
+          "title": "Categorias",
+          "links": [
+            {
+              "id": "pad-paes",
+              "label": "Pães e baguetes",
+              "href": "/e-commerce/plp?categoria=padaria&dept=Pães",
+              "enabled": true
+            },
+            {
+              "id": "pad-bolos",
+              "label": "Bolos e doces",
+              "href": "/e-commerce/plp?categoria=padaria&dept=Bolos",
+              "enabled": true
+            },
+            {
+              "id": "pad-cafeteria",
+              "label": "Cafeteria",
+              "href": "/e-commerce/plp?categoria=padaria&q=cafe",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "id": "padaria-compre-junto",
+          "title": "Compre junto",
+          "links": [
+            {
+              "id": "pad-cafe-manha",
+              "label": "Kit café da manhã",
+              "href": "/e-commerce/plp?categoria=padaria&collection=Cafe%20da%20manha",
+              "enabled": true
+            },
+            {
+              "id": "pad-frios",
+              "label": "Pães e frios",
+              "href": "/e-commerce/plp?categoria=padaria&q=frios",
+              "enabled": true
+            },
+            {
+              "id": "pad-ver-tudo",
+              "label": "Ver todos",
+              "href": "/e-commerce/plp?categoria=padaria",
+              "enabled": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-bebidas",
+      "label": "Bebidas",
+      "href": "/e-commerce/plp?categoria=bebidas",
+      "enabled": true,
+      "sections": [
+        {
+          "id": "bebidas-categorias",
+          "title": "Categorias",
+          "links": [
+            {
+              "id": "beb-agua",
+              "label": "Água e isotônicos",
+              "href": "/e-commerce/plp?categoria=bebidas&dept=Água",
+              "enabled": true
+            },
+            {
+              "id": "beb-refrigerantes",
+              "label": "Refrigerantes",
+              "href": "/e-commerce/plp?categoria=bebidas&dept=Refrigerantes",
+              "enabled": true
+            },
+            {
+              "id": "beb-energeticos",
+              "label": "Energéticos",
+              "href": "/e-commerce/plp?categoria=bebidas&q=energ",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "id": "bebidas-destaques",
+          "title": "Destaques",
+          "links": [
+            {
+              "id": "beb-vinhos",
+              "label": "Vinhos e espumantes",
+              "href": "/e-commerce/plp?categoria=bebidas&q=vinho",
+              "enabled": true
+            },
+            {
+              "id": "beb-ofertas",
+              "label": "Ofertas geladas",
+              "href": "/e-commerce/plp?categoria=bebidas&collection=Ofertas",
+              "enabled": true
+            },
+            {
+              "id": "beb-ver-tudo",
+              "label": "Ver todos",
+              "href": "/e-commerce/plp?categoria=bebidas",
+              "enabled": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-limpeza",
+      "label": "Limpeza",
+      "href": "/e-commerce/plp?categoria=limpeza",
+      "enabled": true,
+      "sections": [
+        {
+          "id": "limpeza-casa",
+          "title": "Casa",
+          "links": [
+            {
+              "id": "lim-lava-roupas",
+              "label": "Lava roupas",
+              "href": "/e-commerce/plp?categoria=limpeza&q=lava%20roupas",
+              "enabled": true
+            },
+            {
+              "id": "lim-desinfetantes",
+              "label": "Desinfetantes",
+              "href": "/e-commerce/plp?categoria=limpeza&dept=Desinfetantes",
+              "enabled": true
+            },
+            {
+              "id": "lim-multiuso",
+              "label": "Multiuso",
+              "href": "/e-commerce/plp?categoria=limpeza&dept=Multiuso",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "id": "limpeza-organizacao",
+          "title": "Organização",
+          "links": [
+            {
+              "id": "lim-utensilios",
+              "label": "Utensílios",
+              "href": "/e-commerce/plp?categoria=limpeza&q=utensilio",
+              "enabled": true
+            },
+            {
+              "id": "lim-sacolas",
+              "label": "Sacos e descartáveis",
+              "href": "/e-commerce/plp?categoria=limpeza&q=saco",
+              "enabled": true
+            },
+            {
+              "id": "lim-ver-tudo",
+              "label": "Ver todos",
+              "href": "/e-commerce/plp?categoria=limpeza",
+              "enabled": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-cuidados",
+      "label": "Cuidados pessoais",
+      "href": "/e-commerce/plp?categoria=cuidados-pessoais",
+      "enabled": true,
+      "sections": [
+        {
+          "id": "cuidados-higiene",
+          "title": "Higiene",
+          "links": [
+            {
+              "id": "cui-shampoo",
+              "label": "Shampoo e condicionador",
+              "href": "/e-commerce/plp?categoria=cuidados-pessoais&q=shampoo",
+              "enabled": true
+            },
+            {
+              "id": "cui-sabonete",
+              "label": "Sabonetes",
+              "href": "/e-commerce/plp?categoria=cuidados-pessoais&q=sabonete",
+              "enabled": true
+            },
+            {
+              "id": "cui-oral",
+              "label": "Higiene bucal",
+              "href": "/e-commerce/plp?categoria=cuidados-pessoais&q=creme%20dental",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "id": "cuidados-beleza",
+          "title": "Beleza",
+          "links": [
+            {
+              "id": "cui-skincare",
+              "label": "Skincare",
+              "href": "/e-commerce/plp?categoria=cuidados-pessoais&q=skin",
+              "enabled": true
+            },
+            {
+              "id": "cui-masculino",
+              "label": "Cuidados masculinos",
+              "href": "/e-commerce/plp?categoria=cuidados-pessoais&q=barba",
+              "enabled": true
+            },
+            {
+              "id": "cui-ver-tudo",
+              "label": "Ver todos",
+              "href": "/e-commerce/plp?categoria=cuidados-pessoais",
+              "enabled": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dept-pet",
+      "label": "Pet shop",
+      "href": "/e-commerce/plp?categoria=pet-shop",
+      "enabled": true,
+      "sections": [
+        {
+          "id": "pet-alimentacao",
+          "title": "Alimentação",
+          "links": [
+            {
+              "id": "pet-racoes",
+              "label": "Rações",
+              "href": "/e-commerce/plp?categoria=pet-shop&q=racao",
+              "enabled": true
+            },
+            {
+              "id": "pet-petiscos",
+              "label": "Petiscos",
+              "href": "/e-commerce/plp?categoria=pet-shop&q=petisco",
+              "enabled": true
+            },
+            {
+              "id": "pet-umidos",
+              "label": "Sachês e úmidos",
+              "href": "/e-commerce/plp?categoria=pet-shop&q=sache",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "id": "pet-cuidados",
+          "title": "Cuidados",
+          "links": [
+            {
+              "id": "pet-areia",
+              "label": "Areia sanitária",
+              "href": "/e-commerce/plp?categoria=pet-shop&q=areia",
+              "enabled": true
+            },
+            {
+              "id": "pet-higiene",
+              "label": "Higiene e banho",
+              "href": "/e-commerce/plp?categoria=pet-shop&q=pet%20higiene",
+              "enabled": true
+            },
+            {
+              "id": "pet-ver-tudo",
+              "label": "Ver todos",
+              "href": "/e-commerce/plp?categoria=pet-shop",
+              "enabled": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "id": "mock-0073",
+  "slug": "racao-caes-adultos-mini-bits-3kg",
+  "sku": "810073",
+  "name": "Racao Caes Adultos 3kg",
+  "brand": "Golden",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/racao-caes-adultos-mini-bits-3kg-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/racao-caes-adultos-mini-bits-3kg-2x/400/400",
+      "alt": "Racao Caes Adultos 3kg",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/racao-caes-adultos-mini-bits-3kg-lifestyle/1200/800",
+      "alt": "Racao Caes Adultos 3kg em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 20.87,
+  "listPrice": 22.75,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Pet Shop",
+    "Caes",
+    "Racao Seca"
+  ],
+  "categoryPath": [
+    {
+      "id": "9",
+      "slug": "pet-shop",
+      "name": "Pet Shop"
+    },
+    {
+      "id": "71",
+      "slug": "caes",
+      "name": "Caes"
+    },
+    {
+      "id": "601",
+      "slug": "racao-seca",
+      "name": "Racao Seca"
+    }
+  ],
+  "departments": [
+    "Caes",
+    "Racao Seca"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Racao Caes Adultos 3kg",
+  "longDescription": "Racao Caes Adultos 3kg da marca Golden. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Racao Caes Adultos 3kg | Supermercado Mock",
+    "description": "Compre Racao Caes Adultos 3kg com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Racao Caes Adultos",
+      "Golden",
+      "Pet Shop",
+      "3kg"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 49,
+    "safetyStock": 4,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 3000,
+    "volumetricWeightGrams": 3360,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "bulky"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 2087,
+    "listPrice": 2275,
+    "discountPercent": 9,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 2087,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 1044,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "racao-caes-adultos"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-racao-caes-adultos",
+    "groupName": "Racao Caes Adultos",
+    "axis": [
+      "porte",
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0073",
+        "slug": "racao-caes-adultos-mini-bits-3kg",
+        "name": "Racao Caes Adultos 3kg",
+        "size": "3kg",
+        "available": true,
+        "sellingPrice": 2087,
+        "listPrice": 2275,
+        "image": "https://picsum.photos/seed/racao-caes-adultos-mini-bits-3kg-2x/400/400",
+        "variationAttributes": {
+          "size": "3kg",
+          "petSize": "Pequeno"
+        }
+      },
+      {
+        "id": "mock-0074",
+        "slug": "racao-caes-adultos-frango-arroz-10kg",
+        "name": "Racao Caes Adultos 10kg",
+        "size": "10kg",
+        "available": true,
+        "sellingPrice": 2899,
+        "listPrice": 3189,
+        "image": "https://picsum.photos/seed/racao-caes-adultos-frango-arroz-10kg-2x/400/400",
+        "variationAttributes": {
+          "size": "10kg",
+          "petSize": "Medio"
+        }
+      },
+      {
+        "id": "mock-0075",
+        "slug": "racao-caes-adultos-carne-arroz-15kg",
+        "name": "Racao Caes Adultos 15kg",
+        "size": "15kg",
+        "available": true,
+        "sellingPrice": 4117,
+        "listPrice": 4570,
+        "image": "https://picsum.photos/seed/racao-caes-adultos-carne-arroz-15kg-2x/400/400",
+        "variationAttributes": {
+          "size": "15kg",
+          "petSize": "Grande"
+        }
+      },
+      {
+        "id": "mock-0076",
+        "slug": "racao-caes-adultos-light-10kg",
+        "name": "Racao Caes Adultos 10kg",
+        "size": "10kg",
+        "available": true,
+        "sellingPrice": 3247,
+        "listPrice": 3637,
+        "image": "https://picsum.photos/seed/racao-caes-adultos-light-10kg-2x/400/400",
+        "variationAttributes": {
+          "size": "10kg",
+          "petSize": "Medio"
+        }
+      }
+    ]
+  },
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

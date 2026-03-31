@@ -1,0 +1,75 @@
+{
+  "id": "7348",
+  "slug": "biscoito-cream-cracker-pilar-premium-350g-281855-p",
+  "sku": "7348",
+  "name": "Biscoito Cream Cracker Pilar Premium 350g",
+  "brand": "Pilar",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=1",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=1",
+      "alt": "Biscoito Cream Cracker Pilar Premium 350g",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 4.19,
+  "listPrice": 4.65,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Mercearia",
+    "Bomboniere",
+    "Biscoito Salgado"
+  ],
+  "categoryPath": [
+    {
+      "id": "2",
+      "slug": "mercearia",
+      "name": "Mercearia"
+    },
+    {
+      "id": "68",
+      "slug": "bomboniere",
+      "name": "Bomboniere"
+    },
+    {
+      "id": "674",
+      "slug": "biscoito-salgado",
+      "name": "Biscoito Salgado"
+    }
+  ],
+  "departments": [
+    "Bomboniere",
+    "Biscoito Salgado",
+    "Doces e Sobremesas"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Biscoito Cream Cracker Pilar Premium 350g",
+  "longDescription": "",
+  "seo": {
+    "title": "Biscoito Cream Cracker Pilar Premium 350g",
+    "description": "Biscoito Cream Cracker Pilar Premium 350g",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.679Z",
+  "updatedAt": "2026-03-18T22:13:42.679Z"
+}

@@ -1,0 +1,57 @@
+/* =====================================================================
+   BUSCA - SEARCH CONTAINER
+   ===================================================================== */
+
+.search-container {
+  position: relative;
+  margin: 0;
+  padding: var(--space-md);
+  background: var(--motd-card-bg);
+  border-bottom: 1px solid var(--motd-border);
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--space-sm) 0.8rem;
+  border: 1px solid var(--motd-border);
+  border-radius: var(--radius);
+  background: var(--motd-bg);
+  color: var(--text);
+  font-size: var(--font-size-sm);
+  transition: border-color var(--transition-normal);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.1);
+}
+
+.search-input::placeholder {
+  color: var(--motd-text-muted);
+}
+
+.clear-search {
+  position: absolute;
+  right: calc(var(--space-md) + var(--space-sm));
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--motd-text-muted);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.clear-search:hover {
+  color: var(--text);
+  background: var(--motd-border);
+}

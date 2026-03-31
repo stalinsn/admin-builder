@@ -1,0 +1,69 @@
+{
+  "id": "agua-sanitaria-2l",
+  "slug": "agua-sanitaria-2l-p",
+  "sku": "agua-sanitaria-2l",
+  "name": "Água Sanitária 2L",
+  "brand": "Qboa",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=15",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=15",
+      "alt": "Água Sanitária 2L",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 5.99,
+  "listPrice": 6.99,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Limpeza",
+    "Casa Em Geral"
+  ],
+  "categoryPath": [
+    {
+      "id": "5",
+      "slug": "limpeza",
+      "name": "Limpeza"
+    },
+    {
+      "id": "33",
+      "slug": "casa-em-geral",
+      "name": "Casa Em Geral"
+    }
+  ],
+  "departments": [
+    "Casa Em Geral",
+    "Banheiro",
+    "Casa em Geral"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Água Sanitária 2L",
+  "longDescription": "",
+  "seo": {
+    "title": "Água Sanitária 2L",
+    "description": "Água Sanitária 2L",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.699Z",
+  "updatedAt": "2026-03-18T22:13:42.699Z"
+}

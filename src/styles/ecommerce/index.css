@@ -1,0 +1,24 @@
+@import "../tokens/colors.css";
+@import "../tokens/typography.css";
+@import "../tokens/spacings.css";
+
+/* Compose ecommerce CSS from modules */
+@import "./variables.css";
+@import "./styleguide.css"; /* Central design system tokens + themes/campaigns */
+@import "./theme-classic.css"; /* Classic preset */
+@import "./scroll-fix.css"; /* High-specificity scroll fixes */
+@import "./header.css";
+@import "./sections.css";
+@import "./grid-cards.css";
+@import "./buttons.css";
+@import "./drawer.css";
+@import "./services.css";
+@import "./dropdown.css";
+@import "./modal.css";
+@import "./pdp.css";
+@import "./plp.css";
+@import "./cart.css";
+@import "./checkout.css";
+@import "./account.css";
+@import "./blog.css";
+@import "./debug.css"; /* optional, applies only when .ecom[data-debug="true"] */

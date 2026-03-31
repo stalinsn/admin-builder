@@ -1,0 +1,210 @@
+{
+  "id": "mock-0065",
+  "slug": "pasta-de-dente-tripla-acao-90g",
+  "sku": "810065",
+  "name": "Creme Dental Tripla Acao 90g",
+  "brand": "Colgate",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/seed/pasta-de-dente-tripla-acao-90g-2x/400/400",
+  "images": [
+    {
+      "url": "https://picsum.photos/seed/pasta-de-dente-tripla-acao-90g-2x/400/400",
+      "alt": "Creme Dental Tripla Acao 90g",
+      "label": "frontal",
+      "isPrimary": true
+    },
+    {
+      "url": "https://picsum.photos/seed/pasta-de-dente-tripla-acao-90g-lifestyle/1200/800",
+      "alt": "Creme Dental Tripla Acao 90g em contexto de uso",
+      "label": "lifestyle",
+      "isPrimary": false
+    }
+  ],
+  "price": 6.29,
+  "listPrice": 7.49,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Higiene e Beleza",
+    "Higiene Bucal",
+    "Creme Dental"
+  ],
+  "categoryPath": [
+    {
+      "id": "6",
+      "slug": "higiene-e-beleza",
+      "name": "Higiene e Beleza"
+    },
+    {
+      "id": "42",
+      "slug": "higiene-bucal",
+      "name": "Higiene Bucal"
+    },
+    {
+      "id": "503",
+      "slug": "creme-dental",
+      "name": "Creme Dental"
+    }
+  ],
+  "departments": [
+    "Higiene Bucal",
+    "Creme Dental",
+    "Higiene Oral"
+  ],
+  "collections": [
+    "Ofertas",
+    "Retirada em Loja",
+    "Dia das Maes",
+    "Pascoa",
+    "Black Friday"
+  ],
+  "shortDescription": "Creme Dental 90g",
+  "longDescription": "Creme Dental Tripla Acao 90g da marca Colgate. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "seo": {
+    "title": "Creme Dental Tripla Acao 90g | Supermercado Mock",
+    "description": "Compre Creme Dental Tripla Acao 90g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Creme Dental",
+      "Colgate",
+      "Higiene e Beleza",
+      "90g"
+    ],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 113,
+    "safetyStock": 9,
+    "backorderable": false,
+    "leadTimeDays": 1
+  },
+  "logistics": {
+    "weightGrams": 90,
+    "volumetricWeightGrams": 101,
+    "temperatureZone": "ambient",
+    "fragile": true,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 629,
+    "listPrice": 749,
+    "discountPercent": 19,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 629,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 315,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "pasta-de-dente"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "variationGroup": {
+    "groupId": "group-pasta-de-dente",
+    "groupName": "Creme Dental",
+    "axis": [
+      "linha"
+    ],
+    "options": [
+      {
+        "id": "mock-0065",
+        "slug": "pasta-de-dente-tripla-acao-90g",
+        "name": "Creme Dental Tripla Acao 90g",
+        "size": "90g",
+        "available": true,
+        "sellingPrice": 629,
+        "listPrice": 749,
+        "image": "https://picsum.photos/seed/pasta-de-dente-tripla-acao-90g-2x/400/400",
+        "variationAttributes": {
+          "size": "90g",
+          "line": "Tripla Acao"
+        }
+      },
+      {
+        "id": "mock-0066",
+        "slug": "pasta-de-dente-total-12-90g",
+        "name": "Creme Dental Total 12 90g",
+        "size": "90g",
+        "available": true,
+        "sellingPrice": 699,
+        "listPrice": 839,
+        "image": "https://picsum.photos/seed/pasta-de-dente-total-12-90g-2x/400/400",
+        "variationAttributes": {
+          "size": "90g",
+          "line": "Total 12"
+        }
+      },
+      {
+        "id": "mock-0067",
+        "slug": "pasta-de-dente-luminous-white-70g",
+        "name": "Creme Dental Luminous White 70g",
+        "size": "70g",
+        "available": true,
+        "sellingPrice": 804,
+        "listPrice": 973,
+        "image": "https://picsum.photos/seed/pasta-de-dente-luminous-white-70g-2x/400/400",
+        "variationAttributes": {
+          "size": "70g",
+          "line": "Luminous White"
+        }
+      },
+      {
+        "id": "mock-0068",
+        "slug": "pasta-de-dente-sensitive-pro-alivio-70g",
+        "name": "Creme Dental Sensitive Pro Alivio 70g",
+        "size": "70g",
+        "available": true,
+        "sellingPrice": 965,
+        "listPrice": 1177,
+        "image": "https://picsum.photos/seed/pasta-de-dente-sensitive-pro-alivio-70g-2x/400/400",
+        "variationAttributes": {
+          "size": "70g",
+          "line": "Sensitive Pro Alivio"
+        }
+      }
+    ]
+  },
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "createdAt": "2026-03-02T12:00:00.000Z",
+  "updatedAt": "2026-03-02T12:00:00.000Z"
+}

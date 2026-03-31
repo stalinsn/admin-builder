@@ -1,0 +1,21 @@
+/* Classic brand theme overrides (enabled with data-theme="classic") */
+.ecom[data-theme="classic"] {
+  /* Brand palette */
+  --brand-primary: #0050b3;
+  --brand-primary-rgb: 0, 80, 179; /* For rgba() usage */
+  --brand-primary-600: #003f8c; /* hover/pressed */
+  --brand-secondary: #ffd100;
+  --brand-secondary-300: #ffea70; /* lighter yellow for gradients */
+
+  /* Map brand to generic tokens used by components */
+  --accent: var(--brand-primary);
+  --accent-hover: var(--brand-primary-600);
+  --cta: var(--brand-primary);
+  --cta-hover: var(--brand-primary-600);
+  --highlight: var(--brand-secondary);
+  --badge-danger: #dc2626;
+
+  /* Surfaces */
+  --surface-soft: #f7f9fc;
+  --surface-dark: #1f2937;
+}

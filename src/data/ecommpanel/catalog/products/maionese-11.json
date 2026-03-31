@@ -1,0 +1,74 @@
+{
+  "id": "maionese-11",
+  "slug": "maionese-hellmanns-500g-p",
+  "sku": "maionese-11",
+  "name": "Maionese Hellmann's 500g",
+  "brand": "Hellmann's",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=11",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=11",
+      "alt": "Maionese Hellmann's 500g",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 6.99,
+  "listPrice": 7.49,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Mercearia",
+    "Molhos e Condimentos",
+    "Maionese"
+  ],
+  "categoryPath": [
+    {
+      "id": "2",
+      "slug": "mercearia",
+      "name": "Mercearia"
+    },
+    {
+      "id": "16",
+      "slug": "molhos-e-condimentos",
+      "name": "Molhos e Condimentos"
+    },
+    {
+      "id": "94",
+      "slug": "maionese",
+      "name": "Maionese"
+    }
+  ],
+  "departments": [
+    "Molhos e Condimentos",
+    "Maionese"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Maionese Hellmann's 500g",
+  "longDescription": "",
+  "seo": {
+    "title": "Maionese Hellmann's 500g",
+    "description": "Maionese Hellmann's 500g",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.693Z",
+  "updatedAt": "2026-03-18T22:13:42.693Z"
+}

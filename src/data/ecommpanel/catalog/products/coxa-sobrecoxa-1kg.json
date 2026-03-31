@@ -1,0 +1,68 @@
+{
+  "id": "coxa-sobrecoxa-1kg",
+  "slug": "coxa-sobrecoxa-1kg-p",
+  "sku": "coxa-sobrecoxa-1kg",
+  "name": "Coxa e Sobrecoxa 1kg",
+  "brand": "Sadia",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=23",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=23",
+      "alt": "Coxa e Sobrecoxa 1kg",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 10.99,
+  "listPrice": 11.99,
+  "unit": "kg",
+  "packSize": 1,
+  "categories": [
+    "Açougue",
+    "Frango"
+  ],
+  "categoryPath": [
+    {
+      "id": "3",
+      "slug": "acougue",
+      "name": "Açougue"
+    },
+    {
+      "id": "45",
+      "slug": "frango",
+      "name": "Frango"
+    }
+  ],
+  "departments": [
+    "Frango",
+    "Aves"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Coxa e Sobrecoxa 1kg",
+  "longDescription": "",
+  "seo": {
+    "title": "Coxa e Sobrecoxa 1kg",
+    "description": "Coxa e Sobrecoxa 1kg",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.709Z",
+  "updatedAt": "2026-03-18T22:13:42.709Z"
+}

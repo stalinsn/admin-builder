@@ -1,0 +1,81 @@
+{
+  "id": "vinho-tinto-750",
+  "slug": "vinho-tinto-seco-750ml-p",
+  "sku": "vinho-tinto-750",
+  "name": "Vinho Tinto Seco 750ml",
+  "brand": "Miolo",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=13",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=13",
+      "alt": "Vinho Tinto Seco 750ml",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 42.9,
+  "listPrice": 49.9,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Bebidas",
+    "Vinhos",
+    "Bebida Alcoólica",
+    "Tintos"
+  ],
+  "categoryPath": [
+    {
+      "id": "4",
+      "slug": "bebidas",
+      "name": "Bebidas"
+    },
+    {
+      "id": "22",
+      "slug": "vinhos",
+      "name": "Vinhos"
+    },
+    {
+      "id": "24",
+      "slug": "bebida-alcoolica",
+      "name": "Bebida Alcoólica"
+    },
+    {
+      "id": "110",
+      "slug": "tintos",
+      "name": "Tintos"
+    }
+  ],
+  "departments": [
+    "Vinhos",
+    "Bebida Alcoólica",
+    "Tintos"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Vinho Tinto Seco 750ml",
+  "longDescription": "",
+  "seo": {
+    "title": "Vinho Tinto Seco 750ml",
+    "description": "Vinho Tinto Seco 750ml",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.696Z",
+  "updatedAt": "2026-03-18T22:13:42.696Z"
+}

@@ -1,0 +1,21 @@
+/* =====================================================================
+   LAYOUT PRINCIPAL - MOTD CONTAINER
+   ===================================================================== */
+
+.motd-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100svh;
+  width: 100%;
+  background: var(--motd-bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+}
+
+/* Responsividade */
+@media (max-width: 800px) {
+  .motd-container {
+    flex-direction: column;
+  }
+}

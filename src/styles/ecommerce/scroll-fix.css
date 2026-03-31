@@ -1,0 +1,16 @@
+/* 
+ * ECOMMERCE SCROLL FIX
+ * Agora muito mais simples - header e footer estão fora do container principal
+ */
+
+/* Apenas garantir que não há overflow horizontal */
+html:has(.ecom),
+body:has(.ecom) {
+  overflow-x: hidden;
+}
+
+/* Fallback para navegadores sem suporte a :has() */
+html.ecom-body-override,
+body.ecom-body-override {
+  overflow-x: hidden;
+}

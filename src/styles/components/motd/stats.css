@@ -1,0 +1,49 @@
+/* =====================================================================
+   ESTATÍSTICAS - MOTD STATS
+   ===================================================================== */
+
+.motd-stats {
+  display: flex;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  justify-content: center;
+}
+
+.stat-item {
+  text-align: center;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--motd-card-bg);
+  border: 1px solid var(--motd-border);
+  border-radius: var(--radius-lg);
+  min-width: 60px;
+  transition: all var(--transition-normal);
+}
+
+.stat-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.stat-number {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent);
+}
+
+.stat-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: var(--space-xs);
+}
+
+/* Responsividade */
+@media (max-width: 800px) {
+  .motd-stats {
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+}

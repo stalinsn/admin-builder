@@ -1,0 +1,74 @@
+{
+  "id": "leite-condensado-5",
+  "slug": "leite-condensado-nestle-395g-p",
+  "sku": "leite-condensado-5",
+  "name": "Leite Condensado Nestlé 395g",
+  "brand": "Nestle",
+  "status": "active",
+  "available": true,
+  "image": "https://picsum.photos/192/192?random=5",
+  "images": [
+    {
+      "url": "https://picsum.photos/192/192?random=5",
+      "alt": "Leite Condensado Nestlé 395g",
+      "label": "",
+      "isPrimary": true
+    }
+  ],
+  "price": 5.49,
+  "listPrice": 5.99,
+  "unit": "un",
+  "packSize": 1,
+  "categories": [
+    "Mercearia",
+    "Doces e Sobremesas",
+    "Leite Condensado"
+  ],
+  "categoryPath": [
+    {
+      "id": "2",
+      "slug": "mercearia",
+      "name": "Mercearia"
+    },
+    {
+      "id": "15",
+      "slug": "doces-e-sobremesas",
+      "name": "Doces e Sobremesas"
+    },
+    {
+      "id": "89",
+      "slug": "leite-condensado",
+      "name": "Leite Condensado"
+    }
+  ],
+  "departments": [
+    "Doces e Sobremesas",
+    "Leite Condensado"
+  ],
+  "collections": [
+    "Ofertas"
+  ],
+  "shortDescription": "Leite Condensado Nestlé 395g",
+  "longDescription": "",
+  "seo": {
+    "title": "Leite Condensado Nestlé 395g",
+    "description": "Leite Condensado Nestlé 395g",
+    "keywords": [],
+    "noIndex": false
+  },
+  "stock": {
+    "availableQuantity": 0,
+    "safetyStock": 0,
+    "backorderable": false
+  },
+  "logistics": null,
+  "pricing": null,
+  "regionalization": null,
+  "marketing": null,
+  "variationGroup": null,
+  "allergens": [],
+  "ingredients": "",
+  "storageInstructions": "",
+  "createdAt": "2026-03-18T22:13:42.685Z",
+  "updatedAt": "2026-03-18T22:13:42.685Z"
+}

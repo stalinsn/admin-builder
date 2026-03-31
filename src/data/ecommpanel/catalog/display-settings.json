@@ -1,0 +1,5 @@
+{
+  "showUnavailableProducts": true,
+  "unavailableLabel": "Esgotado",
+  "restockLabel": "Disponível em breve"
+}

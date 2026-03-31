@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-03-25T06:00:51.093Z",
+  "categories": [
+    {
+      "id": "3",
+      "slug": "acougue",
+      "name": "Açougue",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "45",
+          "slug": "frango",
+          "name": "Frango"
+        }
+      ],
+      "productIds": [
+        "coxa-sobrecoxa-1kg",
+        "peito-frango-6",
+        "mock-0084",
+        "mock-0081",
+        "mock-0083",
+        "mock-0082"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "24",
+      "slug": "bebida-alcoolica",
+      "name": "Bebida Alcoolica",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "96",
+          "slug": "lager",
+          "name": "Lager"
+        }
+      ],
+      "productIds": [
+        "mock-0038",
+        "mock-0039",
+        "mock-0037",
+        "mock-0040"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "4",
+      "slug": "bebidas",
+      "name": "Bebidas",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "22",
+          "slug": "vinhos",
+          "name": "Vinhos"
+        },
+        {
+          "id": "19",
+          "slug": "cervejas",
+          "name": "Cervejas"
+        },
+        {
+          "id": "18",
+          "slug": "refrigerantes",
+          "name": "Refrigerantes"
+        },
+        {
+          "id": "27",
+          "slug": "aguas",
+          "name": "Aguas"
+        },
+        {
+          "id": "26",
+          "slug": "sucos",
+          "name": "Sucos"
+        }
+      ],
+      "productIds": [
+        "vinho-tinto-750",
+        "cerveja-heineken-350",
+        "coca-cola-8",
+        "mock-0036",
+        "mock-0034",
+        "mock-0033",
+        "mock-0035",
+        "mock-0025",
+        "mock-0026",
+        "mock-0027",
+        "mock-0028",
+        "mock-0032",
+        "mock-0031",
+        "mock-0029",
+        "mock-0030"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "20",
+      "slug": "congelados",
+      "name": "Congelados",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "44",
+          "slug": "hamburguer",
+          "name": "Hambúrguer"
+        }
+      ],
+      "productIds": [
+        "5551",
+        "mock-0086",
+        "mock-0085",
+        "mock-0087",
+        "mock-0088"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "7",
+      "slug": "frios-e-laticinios",
+      "name": "Frios e Laticínios",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "51",
+          "slug": "queijos",
+          "name": "Queijos"
+        },
+        {
+          "id": "53",
+          "slug": "iogurtes",
+          "name": "Iogurtes"
+        },
+        {
+          "id": "52",
+          "slug": "leites",
+          "name": "Leites"
+        }
+      ],
+      "productIds": [
+        "queijo-mucarela-500",
+        "mock-0024",
+        "mock-0023",
+        "mock-0022",
+        "mock-0021",
+        "mock-0019",
+        "mock-0017",
+        "mock-0018",
+        "mock-0020",
+        "mock-0097",
+        "mock-0100",
+        "mock-0098",
+        "mock-0099"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "6",
+      "slug": "higiene-e-beleza",
+      "name": "Higiene e Beleza",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "41",
+          "slug": "cabelos",
+          "name": "Cabelos"
+        },
+        {
+          "id": "42",
+          "slug": "higiene-bucal",
+          "name": "Higiene Bucal"
+        },
+        {
+          "id": "43",
+          "slug": "banho",
+          "name": "Banho"
+        }
+      ],
+      "productIds": [
+        "shampoo-seda-325",
+        "mock-0062",
+        "mock-0063",
+        "mock-0061",
+        "mock-0064",
+        "mock-0067",
+        "mock-0068",
+        "mock-0066",
+        "mock-0065",
+        "mock-0070",
+        "mock-0069",
+        "mock-0072",
+        "mock-0071",
+        "mock-0060",
+        "mock-0058",
+        "mock-0059",
+        "mock-0057"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "1",
+      "slug": "hortifruti",
+      "name": "Hortifruti",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "dept-frutas",
+          "slug": "frutas",
+          "name": "Frutas"
+        }
+      ],
+      "productIds": [
+        "maca-gala-kg",
+        "banana-nanica-kg",
+        "mango-kg"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "5",
+      "slug": "limpeza",
+      "name": "Limpeza",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "32",
+          "slug": "lavanderia",
+          "name": "Lavanderia"
+        },
+        {
+          "id": "33",
+          "slug": "casa-em-geral",
+          "name": "Casa Em Geral"
+        },
+        {
+          "id": "31",
+          "slug": "cozinha",
+          "name": "Cozinha"
+        }
+      ],
+      "productIds": [
+        "sabao-liquido-omo-3l",
+        "agua-sanitaria-2l",
+        "detergente-ype-500",
+        "mock-0045",
+        "mock-0046",
+        "mock-0047",
+        "mock-0048",
+        "mock-0055",
+        "mock-0054",
+        "mock-0053",
+        "mock-0056",
+        "mock-0044",
+        "mock-0043",
+        "mock-0042",
+        "mock-0041",
+        "mock-0050",
+        "mock-0051",
+        "mock-0052",
+        "mock-0049"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "2",
+      "slug": "mercearia",
+      "name": "Mercearia",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "16",
+          "slug": "molhos-e-condimentos",
+          "name": "Molhos e Condimentos"
+        },
+        {
+          "id": "21",
+          "slug": "graos-e-cereais",
+          "name": "Grãos e Cereais"
+        },
+        {
+          "id": "15",
+          "slug": "doces-e-sobremesas",
+          "name": "Doces e Sobremesas"
+        },
+        {
+          "id": "68",
+          "slug": "bomboniere",
+          "name": "Bomboniere"
+        },
+        {
+          "id": "24",
+          "slug": "cafes-e-chas",
+          "name": "Cafes e Chas"
+        },
+        {
+          "id": "23",
+          "slug": "massas",
+          "name": "Massas"
+        }
+      ],
+      "productIds": [
+        "maionese-11",
+        "feijao-10",
+        "arroz-9",
+        "panettone-7",
+        "leite-condensado-5",
+        "coffee-soluble",
+        "7348",
+        "mock-0004",
+        "mock-0001",
+        "mock-0002",
+        "mock-0003",
+        "mock-0015",
+        "mock-0016",
+        "mock-0013",
+        "mock-0014",
+        "mock-0006",
+        "mock-0005",
+        "mock-0008",
+        "mock-0007",
+        "mock-0011",
+        "mock-0010",
+        "mock-0009",
+        "mock-0012"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "8",
+      "slug": "padaria",
+      "name": "Padaria",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "61",
+          "slug": "paes",
+          "name": "Pães"
+        }
+      ],
+      "productIds": [
+        "pao-forma-450",
+        "pao-frances-1kg",
+        "mock-0095",
+        "mock-0094",
+        "mock-0096",
+        "mock-0093"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "10",
+      "slug": "peixaria",
+      "name": "Peixaria",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "101",
+          "slug": "peixes",
+          "name": "Peixes"
+        }
+      ],
+      "productIds": [
+        "posta-salmao-500",
+        "file-tilapia-700",
+        "mock-0092",
+        "mock-0091",
+        "mock-0089",
+        "mock-0090"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    },
+    {
+      "id": "9",
+      "slug": "pet-shop",
+      "name": "Pet Shop",
+      "description": "",
+      "status": "active",
+      "parentId": null,
+      "children": [
+        {
+          "id": "71",
+          "slug": "caes",
+          "name": "Cães"
+        },
+        {
+          "id": "72",
+          "slug": "gatos",
+          "name": "Gatos"
+        }
+      ],
+      "productIds": [
+        "racao-caes-10kg",
+        "mock-0075",
+        "mock-0074",
+        "mock-0076",
+        "mock-0073",
+        "mock-0079",
+        "mock-0077",
+        "mock-0078",
+        "mock-0080"
+      ],
+      "metadata": null,
+      "createdAt": "2026-03-25T06:00:51.093Z",
+      "updatedAt": "2026-03-25T06:00:51.093Z"
+    }
+  ]
+}
