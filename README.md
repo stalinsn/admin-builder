@@ -29,81 +29,73 @@ Este export já inclui:
 - `scripts/bootstrap-auth-kit.ts`
 - `npm run auth-kit:bootstrap`
 
-Em um servidor novo Ubuntu/Debian, o fluxo recomendado é:
+O instalador funciona em modo interativo. Em um servidor Ubuntu/Debian, o fluxo recomendado é:
 
 ```bash
 sudo bash ./scripts/install-auth-kit-server.sh
 ```
 
-## Instalação em VPS existente
+O script pergunta passo a passo:
 
-Este projeto já pode ser usado como base de um novo admin independente, por exemplo:
+- domínio/subdomínio público;
+- porta local da aplicação;
+- nome e credenciais do banco PostgreSQL;
+- admin inicial;
+- se deve configurar PM2 automaticamente;
+- se deve criar o server block do Nginx;
+- se deve ajustar o firewall UFW.
 
-- `e-game.admin.artmeta.com.br`
+Antes de aplicar, ele mostra um resumo final e pede confirmação.
 
-Fluxo recomendado:
 
-1. clone o repositório na VPS;
-2. entre na pasta do projeto;
-3. rode o instalador com as variáveis do domínio e do admin inicial;
-4. faça o build;
-5. suba a aplicação;
-6. depois conecte o domínio no Nginx.
+## Fluxo recomendado em VPS existente
 
-Exemplo:
-
-```bash
-sudo AUTH_KIT_ADMIN_EMAIL=stalin@artmeta.com.br \
-AUTH_KIT_ADMIN_NAME="Main Admin" \
-AUTH_KIT_ADMIN_PASSWORD='DefinaUmaSenhaForteAqui' \
-AUTH_KIT_PUBLIC_URL=https://e-game.admin.artmeta.com.br \
-AUTH_KIT_INSTALL_PM2=false \
-AUTH_KIT_INSTALL_NGINX=false \
-bash ./scripts/install-auth-kit-server.sh
-```
-
-Depois:
+1. Aponte o subdomínio para a VPS.
+   Exemplo: `e-game.admin.artmeta.com.br`
+2. Clone o repositório:
 
 ```bash
-npm run build
-npm run start
+git clone git@github.com:stalinsn/admin-builder.git
+cd admin-builder
 ```
 
-## O que o instalador faz
+3. Rode o instalador:
 
-- instala dependências de sistema via `apt`;
-- garante `Node.js`;
-- garante `PostgreSQL`;
-- cria/atualiza um banco dedicado e um usuário dedicado;
-- grava `.env.local` do projeto;
-- roda `npm install`;
-- roda o bootstrap da base de auth.
+```bash
+sudo bash ./scripts/install-auth-kit-server.sh
+```
 
-## O que ele não remove
+4. Responda o passo a passo no terminal.
+5. Ao final, o script:
+   - prepara o PostgreSQL;
+   - grava `.env.local`;
+   - roda `npm install`;
+   - executa o bootstrap do auth;
+   - gera o build;
+   - opcionalmente configura PM2, Nginx e UFW.
+
+## O que o instalador não remove
 
 O instalador **não apaga**:
 
 - bancos PostgreSQL já existentes;
 - usuários PostgreSQL já existentes fora do nome configurado;
-- configurações existentes de `sites-available` do Nginx;
-- processos já rodando no PM2;
-- regras de firewall.
+- sites já existentes em `sites-available` e `sites-enabled` do Nginx;
+- processos já existentes no PM2;
+- regras atuais do firewall.
 
 ## O que ele pode alterar
 
 - instala pacotes novos no sistema;
-- reinicia o serviço do PostgreSQL;
-- se `AUTH_KIT_INSTALL_NGINX=true`, instala e reinicia o Nginx;
-- se `AUTH_KIT_INSTALL_PM2=true`, instala o PM2 globalmente;
-- atualiza a senha do usuário PostgreSQL informado em `AUTH_KIT_DB_USER` se ele já existir.
+- reinicia o PostgreSQL;
+- pode criar/atualizar o banco e o usuário PostgreSQL informados;
+- pode criar ou sobrescrever **somente** o server block configurado para este projeto;
+- pode registrar **somente** o processo PM2 configurado para este projeto;
+- pode ajustar regras do UFW para SSH, Nginx ou porta do app.
 
-## Wizard
+## Recomendação de segurança para VPS com outras aplicações
 
-Hoje a primeira instalação ainda é orientada por script, não por wizard visual no navegador.
-
-O fluxo atual é:
-
-- script de provisionamento;
-- bootstrap do auth;
-- painel disponível para login;
-- modelagem do domínio via Data Studio e APIs internas do painel.
+- use nomes exclusivos de banco e usuário PostgreSQL;
+- use um nome exclusivo para o processo PM2;
+- use um nome exclusivo para o arquivo/site do Nginx;
+- só habilite a automação de firewall se quiser que o script trate isso também.
