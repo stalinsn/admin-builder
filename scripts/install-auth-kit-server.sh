@@ -142,6 +142,84 @@ prompt_bool() {
   done
 }
 
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+detect_port_usage() {
+  local port="$1"
+
+  if command_exists ss; then
+    ss -ltnp 2>/dev/null | awk -v p=":${port}" '$4 ~ p"$" {print}'
+    return 0
+  fi
+
+  if command_exists lsof; then
+    lsof -nP -iTCP:"${port}" -sTCP:LISTEN 2>/dev/null || true
+  fi
+}
+
+detect_nginx_domain_usage() {
+  local domain="$1"
+
+  if [ ! -d /etc/nginx ]; then
+    return 0
+  fi
+
+  grep -R -n --include='*' "server_name .*${domain}" /etc/nginx/sites-available /etc/nginx/sites-enabled 2>/dev/null || true
+}
+
+warn_conflicts() {
+  derive_domain_from_public_url
+
+  local port_hits=""
+  local domain_hits=""
+  local site_available=""
+  local site_enabled=""
+  local warnings=()
+
+  port_hits="$(detect_port_usage "${AUTH_KIT_PORT}" || true)"
+  if [ -n "${port_hits}" ]; then
+    warnings+=("A porta ${AUTH_KIT_PORT} já parece estar em uso.")
+  fi
+
+  if bool_true "${AUTH_KIT_INSTALL_NGINX}"; then
+    domain_hits="$(detect_nginx_domain_usage "${AUTH_KIT_DOMAIN}" || true)"
+    if [ -n "${domain_hits}" ]; then
+      warnings+=("O domínio ${AUTH_KIT_DOMAIN} já aparece em configuração do Nginx.")
+    fi
+
+    site_available="/etc/nginx/sites-available/${AUTH_KIT_NGINX_SITE_NAME}"
+    site_enabled="/etc/nginx/sites-enabled/${AUTH_KIT_NGINX_SITE_NAME}"
+    if [ -e "${site_available}" ] || [ -L "${site_enabled}" ] || [ -e "${site_enabled}" ]; then
+      warnings+=("O arquivo/site do Nginx ${AUTH_KIT_NGINX_SITE_NAME} já existe.")
+    fi
+  fi
+
+  if [ "${#warnings[@]}" -eq 0 ]; then
+    return 0
+  fi
+
+  printf '\n[auth-kit] atenção: encontrei possíveis conflitos antes de aplicar:\n'
+  for warning in "${warnings[@]}"; do
+    printf '  - %s\n' "${warning}"
+  done
+
+  if [ -n "${port_hits}" ]; then
+    printf '\n[auth-kit] detalhes da porta %s:\n%s\n' "${AUTH_KIT_PORT}" "${port_hits}"
+  fi
+
+  if [ -n "${domain_hits}" ]; then
+    printf '\n[auth-kit] referências atuais do domínio %s no Nginx:\n%s\n' "${AUTH_KIT_DOMAIN}" "${domain_hits}"
+  fi
+
+  local proceed
+  proceed="$(prompt_bool 'Deseja continuar mesmo assim?' false)"
+  if ! bool_true "${proceed}"; then
+    fail "instalação cancelada por possível conflito de porta/domínio."
+  fi
+}
+
 require_root() {
   if [ "${EUID}" -ne 0 ]; then
     fail "execute este script como root."
@@ -291,6 +369,8 @@ interactive_setup() {
   if bool_true "${AUTH_KIT_CONFIGURE_FIREWALL}"; then
     AUTH_KIT_ENABLE_UFW="$(prompt_bool 'Se o UFW estiver inativo, habilitar automaticamente?' "${AUTH_KIT_ENABLE_UFW}")"
   fi
+
+  warn_conflicts
 
   cat <<EOF
 
@@ -491,6 +571,10 @@ main() {
 
   if [ ! -f "${AUTH_KIT_APP_DIR}/package.json" ]; then
     fail "não encontrei package.json em ${AUTH_KIT_APP_DIR}. Clone ou copie o repositório antes de rodar o instalador."
+  fi
+
+  if ! is_interactive_mode; then
+    warn_conflicts
   fi
 
   if [ -z "${AUTH_KIT_ADMIN_PASSWORD}" ]; then
