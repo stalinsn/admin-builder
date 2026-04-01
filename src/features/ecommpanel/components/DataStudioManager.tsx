@@ -266,6 +266,44 @@ function buildEntityAcronym(entity: DataEntityDefinition): string {
   return (compact.slice(0, 4) || 'ENT').toUpperCase();
 }
 
+function buildImportRowsTemplate(entity?: DataEntityDefinition | null): string {
+  if (!entity) {
+    return '[\n  {\n    "id": "rec_1"\n  }\n]';
+  }
+
+  const draftRow: Record<string, string | number | boolean | null> = {};
+  entity.fields.forEach((field, index) => {
+    if (!field.name) return;
+
+    switch (field.type) {
+      case 'number':
+        draftRow[field.name] = index + 1;
+        break;
+      case 'boolean':
+        draftRow[field.name] = false;
+        break;
+      case 'date':
+        draftRow[field.name] = new Date().toISOString().slice(0, 10);
+        break;
+      case 'datetime':
+        draftRow[field.name] = new Date().toISOString();
+        break;
+      case 'json':
+        draftRow[field.name] = null;
+        break;
+      default:
+        draftRow[field.name] = '';
+        break;
+    }
+  });
+
+  if (!Object.keys(draftRow).length) {
+    draftRow.id = 'rec_1';
+  }
+
+  return JSON.stringify([draftRow], null, 2);
+}
+
 function buildEmptyProvisioningSecrets(): ProvisioningSecretsForm {
   return {
     sshPassword: '',
@@ -295,6 +333,7 @@ export default function DataStudioManager({
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(initialSnapshot.entities[0]?.id || null);
   const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(initialSnapshot.connections[0]?.id || null);
   const [selectedDatabaseTableName, setSelectedDatabaseTableName] = useState<string | null>(initialDatabaseTables[0]?.tableName || null);
+  const [selectedImportEntityId, setSelectedImportEntityId] = useState<string | null>(initialSnapshot.entities[0]?.id || null);
   const [entityForm, setEntityForm] = useState<EntityForm>(() => cloneEntityToForm(initialSnapshot.entities[0]));
   const [connectionForm, setConnectionForm] = useState<ConnectionForm>(() => cloneConnectionToForm(initialSnapshot.connections[0]));
   const [bootstrapForm, setBootstrapForm] = useState<BootstrapForm>(() => cloneBootstrapToForm(initialSnapshot.bootstrap));
@@ -303,7 +342,7 @@ export default function DataStudioManager({
   const [success, setSuccess] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [provisioningSecrets, setProvisioningSecrets] = useState<ProvisioningSecretsForm>(() => buildEmptyProvisioningSecrets());
-  const [importRowsText, setImportRowsText] = useState('[\n  {\n    \"email\": \"cliente@exemplo.com\",\n    \"first_name\": \"Stalin\"\n  }\n]');
+  const [importRowsText, setImportRowsText] = useState(() => buildImportRowsTemplate(initialSnapshot.entities[0]));
   const [importBundleText, setImportBundleText] = useState('{\n  "entities": [],\n  "records": {}\n}');
   const [csvImportText, setCsvImportText] = useState('');
   const [csvImportMode, setCsvImportMode] = useState<DataTableCsvImportMode>('append');
@@ -324,6 +363,11 @@ export default function DataStudioManager({
   const selectedConnection = useMemo(
     () => snapshot.connections.find((connection) => connection.id === selectedConnectionId) || null,
     [selectedConnectionId, snapshot.connections],
+  );
+
+  const selectedImportEntity = useMemo(
+    () => snapshot.entities.find((entity) => entity.id === selectedImportEntityId) || null,
+    [selectedImportEntityId, snapshot.entities],
   );
 
   const activeBundleFile = useMemo(
@@ -400,6 +444,22 @@ export default function DataStudioManager({
       setSelectedDatabaseTableName(databaseTables[0].tableName);
     }
   }, [databaseTables, selectedDatabaseTableName]);
+
+  useEffect(() => {
+    if (!snapshot.entities.length) {
+      setSelectedImportEntityId(null);
+      return;
+    }
+
+    if (!selectedImportEntityId || !snapshot.entities.some((entity) => entity.id === selectedImportEntityId)) {
+      setSelectedImportEntityId(snapshot.entities[0].id);
+    }
+  }, [selectedImportEntityId, snapshot.entities]);
+
+  const importEntriesForSelectedEntity = useMemo(() => {
+    if (!selectedImportEntityId) return [];
+    return snapshot.imports.filter((entry) => entry.entityId === selectedImportEntityId).slice(0, 5);
+  }, [selectedImportEntityId, snapshot.imports]);
 
   function applyPayload(payload: DataStudioApiResponse, nextSuccess?: string) {
     if (payload.snapshot) {
@@ -723,7 +783,7 @@ export default function DataStudioManager({
 
   async function handleImportRows() {
     if (!canManageRecords) return;
-    if (!selectedEntityId) {
+    if (!selectedImportEntityId) {
       setError('Selecione uma entidade antes de importar registros.');
       return;
     }
@@ -737,7 +797,7 @@ export default function DataStudioManager({
       await requestAction(
         {
           action: 'importRows',
-          entityId: selectedEntityId,
+          entityId: selectedImportEntityId,
           sourceLabel: 'painel-manual',
           rows,
         },
@@ -1647,13 +1707,101 @@ export default function DataStudioManager({
               {activeDataModule === 'import' ? (
                 <div className="panel-data-import-grid">
                   <article className="panel-card">
-                    <h3>Registros da entidade selecionada</h3>
+                    <div className="panel-inline-between panel-inline-wrap">
+                      <div>
+                        <h3>Importação de registros</h3>
+                        <p className="panel-muted">Escolha a entidade alvo, revise o schema esperado e importe uma lista JSON de objetos.</p>
+                      </div>
+                      <div className="panel-actions">
+                        <button
+                          type="button"
+                          className="panel-btn panel-btn-secondary panel-btn-sm"
+                          onClick={() => setImportRowsText(buildImportRowsTemplate(selectedImportEntity))}
+                          disabled={!selectedImportEntity}
+                        >
+                          Gerar exemplo do schema
+                        </button>
+                      </div>
+                    </div>
+                    <div className="panel-form-grid panel-form-grid--two">
+                      <div className="panel-field">
+                        <label>Entidade alvo</label>
+                        <select
+                          className="panel-select"
+                          value={selectedImportEntityId || ''}
+                          onChange={(event) => setSelectedImportEntityId(event.target.value || null)}
+                          disabled={!snapshot.entities.length || !canManageRecords}
+                        >
+                          <option value="">Selecione</option>
+                          {snapshot.entities.map((entity) => (
+                            <option key={entity.id} value={entity.id}>
+                              {entity.label} ({entity.tableName})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="panel-field">
+                        <label>Leitura rápida</label>
+                        <div className="panel-data-connection-status">
+                          {selectedImportEntity ? (
+                            <>
+                              <strong>{selectedImportEntity.label}</strong>
+                              <span>{selectedImportEntity.tableName}</span>
+                              <small>
+                                {formatInteger(selectedImportEntity.fields.length)} campos · {selectedImportEntity.status === 'ready' ? 'entidade pronta' : 'entidade em rascunho'}
+                              </small>
+                            </>
+                          ) : (
+                            <>
+                              <strong>Nenhuma entidade selecionada</strong>
+                              <small>Escolha a entidade que receberá os registros antes de importar.</small>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    {selectedImportEntity ? (
+                      <>
+                        <div className="panel-data-csv-tags">
+                          <span className="panel-link-chip">slug: {selectedImportEntity.slug}</span>
+                          <span className="panel-link-chip">tabela: {selectedImportEntity.tableName}</span>
+                          <span className="panel-link-chip">campos: {formatInteger(selectedImportEntity.fields.length)}</span>
+                        </div>
+                        <div className="panel-data-csv-columns">
+                          {selectedImportEntity.fields.map((field) => (
+                            <div key={field.id} className="panel-data-csv-column">
+                              <div className="panel-inline-between panel-inline-wrap">
+                                <strong>{field.name}</strong>
+                                <span className="panel-muted">{field.type}</span>
+                              </div>
+                              <small>{field.label || 'Sem rótulo'} · {describeFieldRules(field)}</small>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : null}
+                    <div className="panel-data-connection-status">
+                      <strong>Formato esperado</strong>
+                      <small>Cole um array JSON. Cada item da lista vira um registro na entidade selecionada.</small>
+                    </div>
                     <textarea className="panel-textarea panel-data-codearea" value={importRowsText} onChange={(event) => setImportRowsText(event.target.value)} disabled={!canManageRecords} />
                     <div className="panel-actions">
-                      <button type="button" className="panel-btn panel-btn-secondary" onClick={handleImportRows} disabled={saving || !selectedEntityId || !canManageRecords}>
-                        Importar registros
+                      <button type="button" className="panel-btn panel-btn-primary" onClick={handleImportRows} disabled={saving || !selectedImportEntityId || !canManageRecords}>
+                        {saving ? 'Importando registros...' : 'Importar registros'}
                       </button>
                     </div>
+                    {selectedImportEntity ? (
+                      <div className="panel-data-connection-status">
+                        <strong>Feedback da população</strong>
+                        {importEntriesForSelectedEntity.length ? (
+                          <small>
+                            Última carga em {formatDateTime(importEntriesForSelectedEntity[0].importedAt)} com {formatInteger(importEntriesForSelectedEntity[0].rowsCount)} registros via {importEntriesForSelectedEntity[0].sourceLabel}.
+                          </small>
+                        ) : (
+                          <small>Nenhuma carga registrada ainda para {selectedImportEntity.label}.</small>
+                        )}
+                      </div>
+                    ) : null}
                   </article>
                   <article className="panel-card">
                     <h3>Pacote completo</h3>
@@ -1662,6 +1810,21 @@ export default function DataStudioManager({
                       <button type="button" className="panel-btn panel-btn-secondary" onClick={handleImportBundle} disabled={saving || (!canManageEntities && !canManageRecords)}>
                         Importar pacote
                       </button>
+                    </div>
+                    <div className="panel-data-import-log">
+                      {importEntriesForSelectedEntity.length ? (
+                        importEntriesForSelectedEntity.map((entry) => (
+                          <div key={entry.id} className="panel-data-import-item">
+                            <strong>{entry.entitySlug}</strong>
+                            <span>{entry.sourceLabel}</span>
+                            <small>
+                              {formatInteger(entry.rowsCount)} registros em {formatDateTime(entry.importedAt)}
+                            </small>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="panel-muted">Sem histórico recente de importação para a entidade selecionada.</p>
+                      )}
                     </div>
                   </article>
                 </div>
