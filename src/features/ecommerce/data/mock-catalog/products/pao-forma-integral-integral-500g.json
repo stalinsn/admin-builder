@@ -1,0 +1,285 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0094",
+  "slug": "pao-forma-integral-integral-500g",
+  "productId": "910094",
+  "productRefId": "810094",
+  "refId": "810094",
+  "uniqueId": "B7599365E415E4E40914F8873F8CDCEB",
+  "skuName": "Pao de Forma Integral Integral 500g",
+  "name": "Pao de Forma Integral Integral 500g",
+  "shortDescription": "Pao de Forma Integral 500g",
+  "longDescription": "Pao de Forma Integral Integral 500g da marca Pullman. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Pullman"
+  },
+  "brand": "Pullman",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/pao-forma-integral-integral-500g/p",
+  "canonicalUrl": "/e-commerce/pao-forma-integral-integral-500g/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/pao-forma-integral-integral-500g-1x/96/96",
+    "at2x": "https://picsum.photos/seed/pao-forma-integral-integral-500g-2x/400/400",
+    "at3x": "https://picsum.photos/seed/pao-forma-integral-integral-500g-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0094-image-1",
+      "url": "https://picsum.photos/seed/pao-forma-integral-integral-500g-2x/400/400",
+      "label": "frontal",
+      "alt": "Pao de Forma Integral Integral 500g",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0094-image-2",
+      "url": "https://picsum.photos/seed/pao-forma-integral-integral-500g-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Pao de Forma Integral Integral 500g em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "500g",
+  "price": 1099,
+  "sellingPrice": 1099,
+  "listPrice": 1231,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 1099,
+    "total": 1099,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 1099
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 1099,
+    "listPrice": 1231,
+    "discountPercent": 12,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 1099,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 550,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "8": "Padaria",
+    "61": "Paes",
+    "801": "Pao de Forma"
+  },
+  "productCategoryIds": "/8/61/801/",
+  "categoryPath": [
+    {
+      "id": "8",
+      "name": "Padaria"
+    },
+    {
+      "id": "61",
+      "name": "Paes"
+    },
+    {
+      "id": "801",
+      "name": "Pao de Forma"
+    }
+  ],
+  "tags": [
+    "padaria",
+    "pullman",
+    "pao-de-forma-integral"
+  ],
+  "badges": [
+    "oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 6,
+    "width": 6,
+    "length": 6
+  },
+  "weightGrams": 500,
+  "logistics": {
+    "weightGrams": 500,
+    "volumetricWeightGrams": 560,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 76,
+    "safetyStock": 6,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 42
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 34
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "pao-forma-integral"
+  },
+  "seo": {
+    "title": "Pao de Forma Integral Integral 500g | Supermercado Mock",
+    "description": "Compre Pao de Forma Integral Integral 500g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Pao de Forma Integral",
+      "Pullman",
+      "Padaria",
+      "500g"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 134,
+    "carbohydratesG": 14,
+    "proteinsG": 6,
+    "totalFatG": 5,
+    "saturatedFatG": 1,
+    "sodiumMg": 159,
+    "sugarG": 6,
+    "fiberG": 2.1
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "500g",
+    "line": "Integral"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-pao-forma-integral",
+    "groupName": "Pao de Forma Integral",
+    "axis": [
+      "linha"
+    ],
+    "options": [
+      {
+        "id": "mock-0093",
+        "slug": "pao-forma-integral-tradicional-450g",
+        "name": "Pao de Forma Integral Tradicional 450g",
+        "size": "450g",
+        "available": true,
+        "sellingPrice": 1011,
+        "listPrice": 1122,
+        "image": "https://picsum.photos/seed/pao-forma-integral-tradicional-450g-2x/400/400",
+        "variationAttributes": {
+          "size": "450g",
+          "line": "Tradicional"
+        }
+      },
+      {
+        "id": "mock-0094",
+        "slug": "pao-forma-integral-integral-500g",
+        "name": "Pao de Forma Integral Integral 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 1099,
+        "listPrice": 1231,
+        "image": "https://picsum.photos/seed/pao-forma-integral-integral-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "line": "Integral"
+        }
+      },
+      {
+        "id": "mock-0095",
+        "slug": "pao-forma-integral-12-graos-500g",
+        "name": "Pao de Forma Integral 12 Graos 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 1264,
+        "listPrice": 1428,
+        "image": "https://picsum.photos/seed/pao-forma-integral-12-graos-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "line": "12 Graos"
+        }
+      },
+      {
+        "id": "mock-0096",
+        "slug": "pao-forma-integral-sem-casca-450g",
+        "name": "Pao de Forma Integral Sem Casca 450g",
+        "size": "450g",
+        "available": true,
+        "sellingPrice": 1231,
+        "listPrice": 1403,
+        "image": "https://picsum.photos/seed/pao-forma-integral-sem-casca-450g-2x/400/400",
+        "variationAttributes": {
+          "size": "450g",
+          "line": "Sem Casca"
+        }
+      }
+    ]
+  }
+}

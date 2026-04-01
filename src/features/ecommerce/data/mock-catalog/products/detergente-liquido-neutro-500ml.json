@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0041",
+  "slug": "detergente-liquido-neutro-500ml",
+  "productId": "910041",
+  "productRefId": "810041",
+  "refId": "810041",
+  "uniqueId": "E8B3C6E21A8D9C62575C877943EEC172",
+  "skuName": "Detergente Liquido 500ml",
+  "name": "Detergente Liquido 500ml",
+  "shortDescription": "Detergente Liquido 500ml",
+  "longDescription": "Detergente Liquido 500ml da marca Ype. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Ype"
+  },
+  "brand": "Ype",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/detergente-liquido-neutro-500ml/p",
+  "canonicalUrl": "/e-commerce/detergente-liquido-neutro-500ml/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/detergente-liquido-neutro-500ml-1x/96/96",
+    "at2x": "https://picsum.photos/seed/detergente-liquido-neutro-500ml-2x/400/400",
+    "at3x": "https://picsum.photos/seed/detergente-liquido-neutro-500ml-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0041-image-1",
+      "url": "https://picsum.photos/seed/detergente-liquido-neutro-500ml-2x/400/400",
+      "label": "frontal",
+      "alt": "Detergente Liquido 500ml",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0041-image-2",
+      "url": "https://picsum.photos/seed/detergente-liquido-neutro-500ml-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Detergente Liquido 500ml em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "500ml",
+  "price": 289,
+  "sellingPrice": 289,
+  "listPrice": 327,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 289,
+    "total": 289,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 289
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 289,
+    "listPrice": 327,
+    "discountPercent": 13,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 289,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 145,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "5": "Limpeza",
+    "31": "Cozinha",
+    "401": "Detergente"
+  },
+  "productCategoryIds": "/5/31/401/",
+  "categoryPath": [
+    {
+      "id": "5",
+      "name": "Limpeza"
+    },
+    {
+      "id": "31",
+      "name": "Cozinha"
+    },
+    {
+      "id": "401",
+      "name": "Detergente"
+    }
+  ],
+  "tags": [
+    "limpeza",
+    "ype",
+    "detergente-liquido"
+  ],
+  "badges": [
+    "oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 6,
+    "width": 6,
+    "length": 6
+  },
+  "weightGrams": 500,
+  "logistics": {
+    "weightGrams": 500,
+    "volumetricWeightGrams": 560,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 65,
+    "safetyStock": 5,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 36
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 29
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "detergente-liquido"
+  },
+  "seo": {
+    "title": "Detergente Liquido 500ml | Supermercado Mock",
+    "description": "Compre Detergente Liquido 500ml com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Detergente Liquido",
+      "Ype",
+      "Limpeza",
+      "500ml"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": null,
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "500ml",
+    "fragrance": "Neutro"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-detergente-liquido",
+    "groupName": "Detergente Liquido",
+    "axis": [
+      "fragrancia"
+    ],
+    "options": [
+      {
+        "id": "mock-0041",
+        "slug": "detergente-liquido-neutro-500ml",
+        "name": "Detergente Liquido 500ml",
+        "size": "500ml",
+        "available": true,
+        "sellingPrice": 289,
+        "listPrice": 327,
+        "image": "https://picsum.photos/seed/detergente-liquido-neutro-500ml-2x/400/400",
+        "variationAttributes": {
+          "size": "500ml",
+          "fragrance": "Neutro"
+        }
+      },
+      {
+        "id": "mock-0042",
+        "slug": "detergente-liquido-limao-500ml",
+        "name": "Detergente Liquido 500ml",
+        "size": "500ml",
+        "available": true,
+        "sellingPrice": 295,
+        "listPrice": 336,
+        "image": "https://picsum.photos/seed/detergente-liquido-limao-500ml-2x/400/400",
+        "variationAttributes": {
+          "size": "500ml",
+          "fragrance": "Limao"
+        }
+      },
+      {
+        "id": "mock-0043",
+        "slug": "detergente-liquido-coco-500ml",
+        "name": "Detergente Liquido 500ml",
+        "size": "500ml",
+        "available": true,
+        "sellingPrice": 298,
+        "listPrice": 343,
+        "image": "https://picsum.photos/seed/detergente-liquido-coco-500ml-2x/400/400",
+        "variationAttributes": {
+          "size": "500ml",
+          "fragrance": "Coco"
+        }
+      },
+      {
+        "id": "mock-0044",
+        "slug": "detergente-liquido-capim-limao-500ml",
+        "name": "Detergente Liquido 500ml",
+        "size": "500ml",
+        "available": true,
+        "sellingPrice": 306,
+        "listPrice": 355,
+        "image": "https://picsum.photos/seed/detergente-liquido-capim-limao-500ml-2x/400/400",
+        "variationAttributes": {
+          "size": "500ml",
+          "fragrance": "Capim Limao"
+        }
+      }
+    ]
+  }
+}

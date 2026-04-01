@@ -1,0 +1,285 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0038",
+  "slug": "cerveja-pilsen-lata-350ml",
+  "productId": "910038",
+  "productRefId": "810038",
+  "refId": "810038",
+  "uniqueId": "9C6B55C6A029C94FDE72BAB9938F9AEE",
+  "skuName": "Cerveja Pilsen Lata 350ml",
+  "name": "Cerveja Pilsen Lata 350ml",
+  "shortDescription": "Cerveja Pilsen 350ml",
+  "longDescription": "Cerveja Pilsen Lata 350ml da marca Heineken. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Heineken"
+  },
+  "brand": "Heineken",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/cerveja-pilsen-lata-350ml/p",
+  "canonicalUrl": "/e-commerce/cerveja-pilsen-lata-350ml/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/cerveja-pilsen-lata-350ml-1x/96/96",
+    "at2x": "https://picsum.photos/seed/cerveja-pilsen-lata-350ml-2x/400/400",
+    "at3x": "https://picsum.photos/seed/cerveja-pilsen-lata-350ml-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0038-image-1",
+      "url": "https://picsum.photos/seed/cerveja-pilsen-lata-350ml-2x/400/400",
+      "label": "frontal",
+      "alt": "Cerveja Pilsen Lata 350ml",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0038-image-2",
+      "url": "https://picsum.photos/seed/cerveja-pilsen-lata-350ml-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Cerveja Pilsen Lata 350ml em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "350ml",
+  "price": 489,
+  "sellingPrice": 489,
+  "listPrice": 538,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 489,
+    "total": 489,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 489
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 489,
+    "listPrice": 538,
+    "discountPercent": 10,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 489,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 245,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "24": "Bebida Alcoolica",
+    "96": "Lager",
+    "301": "Pilsen"
+  },
+  "productCategoryIds": "/24/96/301/",
+  "categoryPath": [
+    {
+      "id": "24",
+      "name": "Bebida Alcoolica"
+    },
+    {
+      "id": "96",
+      "name": "Lager"
+    },
+    {
+      "id": "301",
+      "name": "Pilsen"
+    }
+  ],
+  "tags": [
+    "bebida-alcoolica",
+    "heineken",
+    "cerveja-pilsen"
+  ],
+  "badges": [
+    "oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 6,
+    "width": 6,
+    "length": 6
+  },
+  "weightGrams": 350,
+  "logistics": {
+    "weightGrams": 350,
+    "volumetricWeightGrams": 392,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 44,
+    "safetyStock": 4,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 24
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 20
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "cerveja-pilsen"
+  },
+  "seo": {
+    "title": "Cerveja Pilsen Lata 350ml | Supermercado Mock",
+    "description": "Compre Cerveja Pilsen Lata 350ml com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Cerveja Pilsen",
+      "Heineken",
+      "Bebida Alcoolica",
+      "350ml"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": true,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 148,
+    "carbohydratesG": 13,
+    "proteinsG": 4,
+    "totalFatG": 4,
+    "saturatedFatG": 1,
+    "sodiumMg": 103,
+    "sugarG": 4,
+    "fiberG": 1.7
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "350ml",
+    "package": "Lata"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-cerveja-pilsen",
+    "groupName": "Cerveja Pilsen",
+    "axis": [
+      "embalagem"
+    ],
+    "options": [
+      {
+        "id": "mock-0037",
+        "slug": "cerveja-pilsen-long-neck-330ml",
+        "name": "Cerveja Pilsen Long Neck 330ml",
+        "size": "330ml",
+        "available": true,
+        "sellingPrice": 465,
+        "listPrice": 507,
+        "image": "https://picsum.photos/seed/cerveja-pilsen-long-neck-330ml-2x/400/400",
+        "variationAttributes": {
+          "size": "330ml",
+          "package": "Long Neck"
+        }
+      },
+      {
+        "id": "mock-0038",
+        "slug": "cerveja-pilsen-lata-350ml",
+        "name": "Cerveja Pilsen Lata 350ml",
+        "size": "350ml",
+        "available": true,
+        "sellingPrice": 489,
+        "listPrice": 538,
+        "image": "https://picsum.photos/seed/cerveja-pilsen-lata-350ml-2x/400/400",
+        "variationAttributes": {
+          "size": "350ml",
+          "package": "Lata"
+        }
+      },
+      {
+        "id": "mock-0039",
+        "slug": "cerveja-pilsen-latao-473ml",
+        "name": "Cerveja Pilsen Latao 473ml",
+        "size": "473ml",
+        "available": true,
+        "sellingPrice": 660,
+        "listPrice": 733,
+        "image": "https://picsum.photos/seed/cerveja-pilsen-latao-473ml-2x/400/400",
+        "variationAttributes": {
+          "size": "473ml",
+          "package": "Latao"
+        }
+      },
+      {
+        "id": "mock-0040",
+        "slug": "cerveja-pilsen-pack-12x350ml",
+        "name": "Cerveja Pilsen Pack 12x350ml",
+        "size": "12x350ml",
+        "available": true,
+        "sellingPrice": 5624,
+        "listPrice": 6299,
+        "image": "https://picsum.photos/seed/cerveja-pilsen-pack-12x350ml-2x/400/400",
+        "variationAttributes": {
+          "size": "12x350ml",
+          "package": "Pack"
+        }
+      }
+    ]
+  }
+}

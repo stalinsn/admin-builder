@@ -1,0 +1,286 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0024",
+  "slug": "iogurte-grego-baunilha-100g",
+  "productId": "910024",
+  "productRefId": "810024",
+  "refId": "810024",
+  "uniqueId": "6C9DEE728E71AA6B6D2442295DE2B8AE",
+  "skuName": "Iogurte Grego Baunilha 100g",
+  "name": "Iogurte Grego Baunilha 100g",
+  "shortDescription": "Iogurte Grego 100g",
+  "longDescription": "Iogurte Grego Baunilha 100g da marca Vigor. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Vigor"
+  },
+  "brand": "Vigor",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/iogurte-grego-baunilha-100g/p",
+  "canonicalUrl": "/e-commerce/iogurte-grego-baunilha-100g/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/iogurte-grego-baunilha-100g-1x/96/96",
+    "at2x": "https://picsum.photos/seed/iogurte-grego-baunilha-100g-2x/400/400",
+    "at3x": "https://picsum.photos/seed/iogurte-grego-baunilha-100g-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0024-image-1",
+      "url": "https://picsum.photos/seed/iogurte-grego-baunilha-100g-2x/400/400",
+      "label": "frontal",
+      "alt": "Iogurte Grego Baunilha 100g",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0024-image-2",
+      "url": "https://picsum.photos/seed/iogurte-grego-baunilha-100g-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Iogurte Grego Baunilha 100g em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "100g",
+  "price": 453,
+  "sellingPrice": 453,
+  "listPrice": 516,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 453,
+    "total": 453,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 453
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 453,
+    "listPrice": 516,
+    "discountPercent": 14,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 453,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 227,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "7": "Frios e Laticinios",
+    "53": "Iogurtes",
+    "205": "Iogurte Grego"
+  },
+  "productCategoryIds": "/7/53/205/",
+  "categoryPath": [
+    {
+      "id": "7",
+      "name": "Frios e Laticinios"
+    },
+    {
+      "id": "53",
+      "name": "Iogurtes"
+    },
+    {
+      "id": "205",
+      "name": "Iogurte Grego"
+    }
+  ],
+  "tags": [
+    "frios-e-laticinios",
+    "vigor",
+    "iogurte-grego",
+    "baunilha"
+  ],
+  "badges": [
+    "oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 6,
+    "width": 6,
+    "length": 6
+  },
+  "weightGrams": 100,
+  "logistics": {
+    "weightGrams": 100,
+    "volumetricWeightGrams": 112,
+    "temperatureZone": "chilled",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 66,
+    "safetyStock": 5,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 36
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 30
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "iogurte-grego"
+  },
+  "seo": {
+    "title": "Iogurte Grego Baunilha 100g | Supermercado Mock",
+    "description": "Compre Iogurte Grego Baunilha 100g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Iogurte Grego",
+      "Vigor",
+      "Frios e Laticinios",
+      "100g"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": true,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 134,
+    "carbohydratesG": 10,
+    "proteinsG": 2,
+    "totalFatG": 5,
+    "saturatedFatG": 0.4,
+    "sodiumMg": 89,
+    "sugarG": 8,
+    "fiberG": 2.1
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Manter refrigerado entre 1C e 8C.",
+  "variationAttributes": {
+    "size": "100g",
+    "flavor": "Baunilha"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-iogurte-grego",
+    "groupName": "Iogurte Grego",
+    "axis": [
+      "sabor"
+    ],
+    "options": [
+      {
+        "id": "mock-0021",
+        "slug": "iogurte-grego-tradicional-100g",
+        "name": "Iogurte Grego Tradicional 100g",
+        "size": "100g",
+        "available": true,
+        "sellingPrice": 419,
+        "listPrice": 465,
+        "image": "https://picsum.photos/seed/iogurte-grego-tradicional-100g-2x/400/400",
+        "variationAttributes": {
+          "size": "100g",
+          "flavor": "Tradicional"
+        }
+      },
+      {
+        "id": "mock-0022",
+        "slug": "iogurte-grego-morango-100g",
+        "name": "Iogurte Grego Morango 100g",
+        "size": "100g",
+        "available": true,
+        "sellingPrice": 432,
+        "listPrice": 484,
+        "image": "https://picsum.photos/seed/iogurte-grego-morango-100g-2x/400/400",
+        "variationAttributes": {
+          "size": "100g",
+          "flavor": "Morango"
+        }
+      },
+      {
+        "id": "mock-0023",
+        "slug": "iogurte-grego-maracuja-100g",
+        "name": "Iogurte Grego Maracuja 100g",
+        "size": "100g",
+        "available": true,
+        "sellingPrice": 436,
+        "listPrice": 493,
+        "image": "https://picsum.photos/seed/iogurte-grego-maracuja-100g-2x/400/400",
+        "variationAttributes": {
+          "size": "100g",
+          "flavor": "Maracuja"
+        }
+      },
+      {
+        "id": "mock-0024",
+        "slug": "iogurte-grego-baunilha-100g",
+        "name": "Iogurte Grego Baunilha 100g",
+        "size": "100g",
+        "available": true,
+        "sellingPrice": 453,
+        "listPrice": 516,
+        "image": "https://picsum.photos/seed/iogurte-grego-baunilha-100g-2x/400/400",
+        "variationAttributes": {
+          "size": "100g",
+          "flavor": "Baunilha"
+        }
+      }
+    ]
+  }
+}

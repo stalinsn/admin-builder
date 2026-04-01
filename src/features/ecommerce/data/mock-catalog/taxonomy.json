@@ -1,0 +1,126 @@
+{
+  "categories": [
+    {
+      "slug": "hortifruti",
+      "aliases": ["horti-fruti"],
+      "subcategories": [
+        {
+          "slug": "frutas",
+          "name": "Frutas",
+          "keywords": ["banana", "manga", "maca", "mamao", "pera", "uva", "morango", "laranja", "abacaxi", "melancia"]
+        },
+        {
+          "slug": "legumes",
+          "name": "Legumes",
+          "keywords": ["batata", "cenoura", "tomate", "pepino", "abobrinha", "cebola", "alho", "beterraba"]
+        },
+        {
+          "slug": "verduras",
+          "name": "Verduras",
+          "keywords": ["alface", "couve", "espinafre", "rucula", "brocolis", "acelga", "repolho"]
+        },
+        {
+          "slug": "organicos",
+          "name": "Organicos",
+          "keywords": ["organico", "organica"]
+        }
+      ]
+    },
+    {
+      "slug": "acougue",
+      "subcategories": [
+        { "slug": "bovino", "name": "Bovino", "keywords": ["patinho", "acem", "coxao", "alcatra", "picanha"] },
+        { "slug": "aves", "name": "Aves", "keywords": ["frango", "coxa", "sobrecoxa", "peito"] },
+        { "slug": "suino", "name": "Suino", "keywords": ["lombo", "pernil", "costela suina"] },
+        { "slug": "embutidos", "name": "Embutidos", "keywords": ["linguica", "salsicha", "calabresa"] }
+      ]
+    },
+    {
+      "slug": "mercearia",
+      "subcategories": [
+        { "slug": "graos-e-cereais", "name": "Graos e Cereais", "keywords": ["arroz", "feijao", "grao", "lentilha"] },
+        { "slug": "massas", "name": "Massas", "keywords": ["macarrao", "espaguete", "penne", "lasanha"] },
+        { "slug": "molhos-e-condimentos", "name": "Molhos e Condimentos", "keywords": ["maionese", "ketchup", "mostarda", "molho"] },
+        { "slug": "doces-e-sobremesas", "name": "Doces e Sobremesas", "keywords": ["chocolate", "biscoito", "sobremesa", "condensado"] }
+      ]
+    },
+    {
+      "slug": "bebidas",
+      "subcategories": [
+        { "slug": "aguas", "name": "Aguas", "keywords": ["agua", "mineral"] },
+        { "slug": "sucos", "name": "Sucos", "keywords": ["suco"] },
+        { "slug": "refrigerantes", "name": "Refrigerantes", "keywords": ["refrigerante", "cola", "guarana"] },
+        { "slug": "energeticos", "name": "Energeticos", "keywords": ["energetico", "isotonico"] }
+      ]
+    },
+    {
+      "slug": "bebida-alcoolica",
+      "subcategories": [
+        { "slug": "cervejas", "name": "Cervejas", "keywords": ["cerveja", "lager", "pilsen", "ipa"] },
+        { "slug": "vinhos", "name": "Vinhos", "keywords": ["vinho", "tinto", "branco", "rose"] },
+        { "slug": "destilados", "name": "Destilados", "keywords": ["vodka", "whisky", "gin", "rum", "tequila"] }
+      ]
+    },
+    {
+      "slug": "congelados",
+      "subcategories": [
+        { "slug": "hamburguer", "name": "Hamburguer", "keywords": ["hamburguer", "burger"] },
+        { "slug": "pizzas", "name": "Pizzas", "keywords": ["pizza"] },
+        { "slug": "pratos-prontos", "name": "Pratos Prontos", "keywords": ["lasanha", "prato pronto"] },
+        { "slug": "vegetais-congelados", "name": "Vegetais Congelados", "keywords": ["congelado", "brocolis", "ervilha"] }
+      ]
+    },
+    {
+      "slug": "limpeza",
+      "subcategories": [
+        { "slug": "lavanderia", "name": "Lavanderia", "keywords": ["sabao", "amaciante", "lavanderia"] },
+        { "slug": "cozinha", "name": "Cozinha", "keywords": ["detergente", "desengordurante", "cozinha"] },
+        { "slug": "banheiro", "name": "Banheiro", "keywords": ["sanitaria", "limpa banheiro", "desinfetante"] },
+        { "slug": "casa-em-geral", "name": "Casa em Geral", "keywords": ["multiuso", "limpeza"] }
+      ]
+    },
+    {
+      "slug": "higiene-e-beleza",
+      "subcategories": [
+        { "slug": "cabelos", "name": "Cabelos", "keywords": ["shampoo", "condicionador", "mascara capilar"] },
+        { "slug": "pele", "name": "Pele", "keywords": ["sabonete", "hidratante", "protetor"] },
+        { "slug": "higiene-oral", "name": "Higiene Oral", "keywords": ["creme dental", "escova", "enxaguante"] },
+        { "slug": "infantil", "name": "Infantil", "keywords": ["fralda", "lenço umedecido", "infantil"] }
+      ]
+    },
+    {
+      "slug": "frios-e-laticinios",
+      "aliases": ["frios-e-laticinios"],
+      "subcategories": [
+        { "slug": "queijos", "name": "Queijos", "keywords": ["queijo", "mucarela", "parmesao"] },
+        { "slug": "iogurtes", "name": "Iogurtes", "keywords": ["iogurte", "yogurt"] },
+        { "slug": "leites", "name": "Leites", "keywords": ["leite"] },
+        { "slug": "frios-fatiados", "name": "Frios Fatiados", "keywords": ["presunto", "peito de peru", "salame"] }
+      ]
+    },
+    {
+      "slug": "padaria",
+      "subcategories": [
+        { "slug": "paes", "name": "Paes", "keywords": ["pao", "frances", "forma"] },
+        { "slug": "bolos", "name": "Bolos", "keywords": ["bolo", "bolo pronto"] },
+        { "slug": "biscoitos", "name": "Biscoitos", "keywords": ["biscoito", "cookie"] }
+      ]
+    },
+    {
+      "slug": "peixaria",
+      "subcategories": [
+        { "slug": "peixes-frescos", "name": "Peixes Frescos", "keywords": ["tilapia", "salmao", "file", "posta"] },
+        { "slug": "frutos-do-mar", "name": "Frutos do Mar", "keywords": ["camarao", "lula", "mexilhao"] }
+      ]
+    },
+    {
+      "slug": "pet",
+      "aliases": ["pet-shop"],
+      "subcategories": [
+        { "slug": "caes", "name": "Caes", "keywords": ["cao", "caes", "cachorro"] },
+        { "slug": "gatos", "name": "Gatos", "keywords": ["gato", "gatos"] },
+        { "slug": "higiene-pet", "name": "Higiene Pet", "keywords": ["areia", "tapete higienico", "higiene pet"] }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { bootstrapAuthKitRuntime } from '../src/features/auth-kit/server/bootstrap.ts';
+import { bootstrapAuthKitRuntime } from '../src/features/auth-kit/server/bootstrap';
 
 function parseArgs(argv: string[]) {
   const args = new Map<string, string | boolean>();

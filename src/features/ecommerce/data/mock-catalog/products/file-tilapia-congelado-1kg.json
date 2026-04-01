@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0091",
+  "slug": "file-tilapia-congelado-1kg",
+  "productId": "910091",
+  "productRefId": "810091",
+  "refId": "810091",
+  "uniqueId": "7E4372F42BCC2A3CAA92946460F0F857",
+  "skuName": "File de Tilapia Congelado 1kg",
+  "name": "File de Tilapia Congelado 1kg",
+  "shortDescription": "File de Tilapia Congelado 1kg",
+  "longDescription": "File de Tilapia Congelado 1kg da marca Frescatto. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Frescatto"
+  },
+  "brand": "Frescatto",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/file-tilapia-congelado-1kg/p",
+  "canonicalUrl": "/e-commerce/file-tilapia-congelado-1kg/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/file-tilapia-congelado-1kg-1x/96/96",
+    "at2x": "https://picsum.photos/seed/file-tilapia-congelado-1kg-2x/400/400",
+    "at3x": "https://picsum.photos/seed/file-tilapia-congelado-1kg-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0091-image-1",
+      "url": "https://picsum.photos/seed/file-tilapia-congelado-1kg-2x/400/400",
+      "label": "frontal",
+      "alt": "File de Tilapia Congelado 1kg",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0091-image-2",
+      "url": "https://picsum.photos/seed/file-tilapia-congelado-1kg-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "File de Tilapia Congelado 1kg em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "kg",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "1kg",
+  "price": 3104,
+  "sellingPrice": 3104,
+  "listPrice": 3383,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 3104,
+    "total": 3104,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 3104
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 3104,
+    "listPrice": 3383,
+    "discountPercent": 9,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 3104,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 1552,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "10": "Peixaria",
+    "101": "Peixes",
+    "701": "Tilapia"
+  },
+  "productCategoryIds": "/10/101/701/",
+  "categoryPath": [
+    {
+      "id": "10",
+      "name": "Peixaria"
+    },
+    {
+      "id": "101",
+      "name": "Peixes"
+    },
+    {
+      "id": "701",
+      "name": "Tilapia"
+    }
+  ],
+  "tags": [
+    "peixaria",
+    "frescatto",
+    "file-de-tilapia-congelado"
+  ],
+  "badges": [
+    "oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 7,
+    "width": 8,
+    "length": 10
+  },
+  "weightGrams": 1000,
+  "logistics": {
+    "weightGrams": 1000,
+    "volumetricWeightGrams": 1120,
+    "temperatureZone": "frozen",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 55,
+    "safetyStock": 4,
+    "backorderable": false,
+    "leadTimeDays": 2,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 30
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 25
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "file-tilapia-congelado"
+  },
+  "seo": {
+    "title": "File de Tilapia Congelado 1kg | Supermercado Mock",
+    "description": "Compre File de Tilapia Congelado 1kg com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "File de Tilapia Congelado",
+      "Frescatto",
+      "Peixaria",
+      "1kg"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": true,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 131,
+    "carbohydratesG": 11,
+    "proteinsG": 3,
+    "totalFatG": 2,
+    "saturatedFatG": 1.3,
+    "sodiumMg": 156,
+    "sugarG": 3,
+    "fiberG": 0.9
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Manter congelado a -12C ou mais frio.",
+  "variationAttributes": {
+    "size": "1kg"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-file-tilapia-congelado",
+    "groupName": "File de Tilapia Congelado",
+    "axis": [
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0089",
+        "slug": "file-tilapia-congelado-400g",
+        "name": "File de Tilapia Congelado 400g",
+        "size": "400g",
+        "available": true,
+        "sellingPrice": 1471,
+        "listPrice": 1839,
+        "image": "https://picsum.photos/seed/file-tilapia-congelado-400g-2x/400/400",
+        "variationAttributes": {
+          "size": "400g"
+        }
+      },
+      {
+        "id": "mock-0090",
+        "slug": "file-tilapia-congelado-700g",
+        "name": "File de Tilapia Congelado 700g",
+        "size": "700g",
+        "available": true,
+        "sellingPrice": 2299,
+        "listPrice": 2483,
+        "image": "https://picsum.photos/seed/file-tilapia-congelado-700g-2x/400/400",
+        "variationAttributes": {
+          "size": "700g"
+        }
+      },
+      {
+        "id": "mock-0091",
+        "slug": "file-tilapia-congelado-1kg",
+        "name": "File de Tilapia Congelado 1kg",
+        "size": "1kg",
+        "available": true,
+        "sellingPrice": 3104,
+        "listPrice": 3383,
+        "image": "https://picsum.photos/seed/file-tilapia-congelado-1kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1kg"
+        }
+      },
+      {
+        "id": "mock-0092",
+        "slug": "file-tilapia-congelado-1-5kg",
+        "name": "File de Tilapia Congelado 1.5kg",
+        "size": "1.5kg",
+        "available": true,
+        "sellingPrice": 4483,
+        "listPrice": 4931,
+        "image": "https://picsum.photos/seed/file-tilapia-congelado-1-5kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1.5kg"
+        }
+      }
+    ]
+  }
+}

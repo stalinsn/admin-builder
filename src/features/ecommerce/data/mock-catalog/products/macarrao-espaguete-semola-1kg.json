@@ -1,0 +1,286 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0012",
+  "slug": "macarrao-espaguete-semola-1kg",
+  "productId": "910012",
+  "productRefId": "810012",
+  "refId": "810012",
+  "uniqueId": "E9EF87BC466865667537DB28227A709D",
+  "skuName": "Macarrao Espaguete Semola 1kg",
+  "name": "Macarrao Espaguete Semola 1kg",
+  "shortDescription": "Macarrao Espaguete 1kg",
+  "longDescription": "Macarrao Espaguete Semola 1kg da marca Renata. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Renata"
+  },
+  "brand": "Renata",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/macarrao-espaguete-semola-1kg/p",
+  "canonicalUrl": "/e-commerce/macarrao-espaguete-semola-1kg/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-1x/96/96",
+    "at2x": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-2x/400/400",
+    "at3x": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0012-image-1",
+      "url": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-2x/400/400",
+      "label": "frontal",
+      "alt": "Macarrao Espaguete Semola 1kg",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0012-image-2",
+      "url": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Macarrao Espaguete Semola 1kg em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "1kg",
+  "price": 944,
+  "sellingPrice": 944,
+  "listPrice": 1133,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 944,
+    "total": 944,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 944
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 944,
+    "listPrice": 1133,
+    "discountPercent": 20,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 944,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 472,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "2": "Mercearia",
+    "23": "Massas",
+    "112": "Espaguete"
+  },
+  "productCategoryIds": "/2/23/112/",
+  "categoryPath": [
+    {
+      "id": "2",
+      "name": "Mercearia"
+    },
+    {
+      "id": "23",
+      "name": "Massas"
+    },
+    {
+      "id": "112",
+      "name": "Espaguete"
+    }
+  ],
+  "tags": [
+    "mercearia",
+    "renata",
+    "macarrao-espaguete"
+  ],
+  "badges": [
+    "super-oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 7,
+    "width": 8,
+    "length": 10
+  },
+  "weightGrams": 1000,
+  "logistics": {
+    "weightGrams": 1000,
+    "volumetricWeightGrams": 1120,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 102,
+    "safetyStock": 8,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 56
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 46
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "macarrao-espaguete"
+  },
+  "seo": {
+    "title": "Macarrao Espaguete Semola 1kg | Supermercado Mock",
+    "description": "Compre Macarrao Espaguete Semola 1kg com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Macarrao Espaguete",
+      "Renata",
+      "Mercearia",
+      "1kg"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 122,
+    "carbohydratesG": 9,
+    "proteinsG": 2,
+    "totalFatG": 3,
+    "saturatedFatG": 0.4,
+    "sodiumMg": 77,
+    "sugarG": 5,
+    "fiberG": 1.3
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "1kg",
+    "type": "Semola"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-macarrao-espaguete",
+    "groupName": "Macarrao Espaguete",
+    "axis": [
+      "tipo",
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0009",
+        "slug": "macarrao-espaguete-n8-500g",
+        "name": "Macarrao Espaguete N8 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 505,
+        "listPrice": 591,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "N8"
+        }
+      },
+      {
+        "id": "mock-0010",
+        "slug": "macarrao-espaguete-n7-500g",
+        "name": "Macarrao Espaguete N7 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 549,
+        "listPrice": 648,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-n7-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "N7"
+        }
+      },
+      {
+        "id": "mock-0011",
+        "slug": "macarrao-espaguete-integral-500g",
+        "name": "Macarrao Espaguete Integral 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 648,
+        "listPrice": 771,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-integral-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "Integral"
+        }
+      },
+      {
+        "id": "mock-0012",
+        "slug": "macarrao-espaguete-semola-1kg",
+        "name": "Macarrao Espaguete Semola 1kg",
+        "size": "1kg",
+        "available": true,
+        "sellingPrice": 944,
+        "listPrice": 1133,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1kg",
+          "type": "Semola"
+        }
+      }
+    ]
+  }
+}

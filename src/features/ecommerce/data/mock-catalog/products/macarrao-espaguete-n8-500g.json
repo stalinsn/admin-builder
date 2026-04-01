@@ -1,0 +1,286 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0009",
+  "slug": "macarrao-espaguete-n8-500g",
+  "productId": "910009",
+  "productRefId": "810009",
+  "refId": "810009",
+  "uniqueId": "E1003ADAAA2A0E9A7C7156A7FFE54233",
+  "skuName": "Macarrao Espaguete N8 500g",
+  "name": "Macarrao Espaguete N8 500g",
+  "shortDescription": "Macarrao Espaguete 500g",
+  "longDescription": "Macarrao Espaguete N8 500g da marca Renata. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Renata"
+  },
+  "brand": "Renata",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/macarrao-espaguete-n8-500g/p",
+  "canonicalUrl": "/e-commerce/macarrao-espaguete-n8-500g/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-1x/96/96",
+    "at2x": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-2x/400/400",
+    "at3x": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0009-image-1",
+      "url": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-2x/400/400",
+      "label": "frontal",
+      "alt": "Macarrao Espaguete N8 500g",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0009-image-2",
+      "url": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Macarrao Espaguete N8 500g em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "500g",
+  "price": 505,
+  "sellingPrice": 505,
+  "listPrice": 591,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 505,
+    "total": 505,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 505
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 505,
+    "listPrice": 591,
+    "discountPercent": 17,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 505,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 253,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "2": "Mercearia",
+    "23": "Massas",
+    "112": "Espaguete"
+  },
+  "productCategoryIds": "/2/23/112/",
+  "categoryPath": [
+    {
+      "id": "2",
+      "name": "Mercearia"
+    },
+    {
+      "id": "23",
+      "name": "Massas"
+    },
+    {
+      "id": "112",
+      "name": "Espaguete"
+    }
+  ],
+  "tags": [
+    "mercearia",
+    "renata",
+    "macarrao-espaguete"
+  ],
+  "badges": [
+    "super-oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 6,
+    "width": 6,
+    "length": 6
+  },
+  "weightGrams": 500,
+  "logistics": {
+    "weightGrams": 500,
+    "volumetricWeightGrams": 560,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 81,
+    "safetyStock": 6,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 45
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 36
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "macarrao-espaguete"
+  },
+  "seo": {
+    "title": "Macarrao Espaguete N8 500g | Supermercado Mock",
+    "description": "Compre Macarrao Espaguete N8 500g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Macarrao Espaguete",
+      "Renata",
+      "Mercearia",
+      "500g"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 119,
+    "carbohydratesG": 17,
+    "proteinsG": 5,
+    "totalFatG": 5,
+    "saturatedFatG": 0.7,
+    "sodiumMg": 74,
+    "sugarG": 2,
+    "fiberG": 2.1
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "500g",
+    "type": "N8"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-macarrao-espaguete",
+    "groupName": "Macarrao Espaguete",
+    "axis": [
+      "tipo",
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0009",
+        "slug": "macarrao-espaguete-n8-500g",
+        "name": "Macarrao Espaguete N8 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 505,
+        "listPrice": 591,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-n8-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "N8"
+        }
+      },
+      {
+        "id": "mock-0010",
+        "slug": "macarrao-espaguete-n7-500g",
+        "name": "Macarrao Espaguete N7 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 549,
+        "listPrice": 648,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-n7-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "N7"
+        }
+      },
+      {
+        "id": "mock-0011",
+        "slug": "macarrao-espaguete-integral-500g",
+        "name": "Macarrao Espaguete Integral 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 648,
+        "listPrice": 771,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-integral-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "type": "Integral"
+        }
+      },
+      {
+        "id": "mock-0012",
+        "slug": "macarrao-espaguete-semola-1kg",
+        "name": "Macarrao Espaguete Semola 1kg",
+        "size": "1kg",
+        "available": true,
+        "sellingPrice": 944,
+        "listPrice": 1133,
+        "image": "https://picsum.photos/seed/macarrao-espaguete-semola-1kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1kg",
+          "type": "Semola"
+        }
+      }
+    ]
+  }
+}

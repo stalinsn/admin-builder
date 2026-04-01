@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0035",
+  "slug": "agua-mineral-sem-gas-pack-6x1-5l",
+  "productId": "910035",
+  "productRefId": "810035",
+  "refId": "810035",
+  "uniqueId": "DFB1E9832764428102AFC9C71A42FB5E",
+  "skuName": "Agua Mineral sem Gas 6x1.5L",
+  "name": "Agua Mineral sem Gas 6x1.5L",
+  "shortDescription": "Agua Mineral sem Gas 6x1.5L",
+  "longDescription": "Agua Mineral sem Gas 6x1.5L da marca Minalba. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Minalba"
+  },
+  "brand": "Minalba",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/agua-mineral-sem-gas-pack-6x1-5l/p",
+  "canonicalUrl": "/e-commerce/agua-mineral-sem-gas-pack-6x1-5l/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/agua-mineral-sem-gas-pack-6x1-5l-1x/96/96",
+    "at2x": "https://picsum.photos/seed/agua-mineral-sem-gas-pack-6x1-5l-2x/400/400",
+    "at3x": "https://picsum.photos/seed/agua-mineral-sem-gas-pack-6x1-5l-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0035-image-1",
+      "url": "https://picsum.photos/seed/agua-mineral-sem-gas-pack-6x1-5l-2x/400/400",
+      "label": "frontal",
+      "alt": "Agua Mineral sem Gas 6x1.5L",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0035-image-2",
+      "url": "https://picsum.photos/seed/agua-mineral-sem-gas-pack-6x1-5l-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Agua Mineral sem Gas 6x1.5L em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 6,
+  "packSizeLabel": "6x1.5L",
+  "price": 1815,
+  "sellingPrice": 1815,
+  "listPrice": 2269,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 1815,
+    "total": 10890,
+    "sellingPrices": [
+      {
+        "quantity": 6,
+        "value": 1815
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 1815,
+    "listPrice": 2269,
+    "discountPercent": 25,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 1815,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 908,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "4": "Bebidas",
+    "27": "Aguas",
+    "145": "Agua sem Gas"
+  },
+  "productCategoryIds": "/4/27/145/",
+  "categoryPath": [
+    {
+      "id": "4",
+      "name": "Bebidas"
+    },
+    {
+      "id": "27",
+      "name": "Aguas"
+    },
+    {
+      "id": "145",
+      "name": "Agua sem Gas"
+    }
+  ],
+  "tags": [
+    "bebidas",
+    "minalba",
+    "agua-mineral-sem-gas"
+  ],
+  "badges": [
+    "super-oferta",
+    "estoque-limitado"
+  ],
+  "dimensionsCm": {
+    "height": 6,
+    "width": 6,
+    "length": 6
+  },
+  "weightGrams": 360,
+  "logistics": {
+    "weightGrams": 360,
+    "volumetricWeightGrams": 403,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 23,
+    "safetyStock": 3,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 13
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 10
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "agua-mineral-sem-gas"
+  },
+  "seo": {
+    "title": "Agua Mineral sem Gas 6x1.5L | Supermercado Mock",
+    "description": "Compre Agua Mineral sem Gas 6x1.5L com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Agua Mineral sem Gas",
+      "Minalba",
+      "Bebidas",
+      "6x1.5L"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 145,
+    "carbohydratesG": 10,
+    "proteinsG": 7,
+    "totalFatG": 1,
+    "saturatedFatG": 1.3,
+    "sodiumMg": 100,
+    "sugarG": 10,
+    "fiberG": 0.5
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "6x1.5L"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-agua-mineral-sem-gas",
+    "groupName": "Agua Mineral sem Gas",
+    "axis": [
+      "volume"
+    ],
+    "options": [
+      {
+        "id": "mock-0033",
+        "slug": "agua-mineral-sem-gas-garrafa-500ml",
+        "name": "Agua Mineral sem Gas 500ml",
+        "size": "500ml",
+        "available": true,
+        "sellingPrice": 216,
+        "listPrice": 266,
+        "image": "https://picsum.photos/seed/agua-mineral-sem-gas-garrafa-500ml-2x/400/400",
+        "variationAttributes": {
+          "size": "500ml"
+        }
+      },
+      {
+        "id": "mock-0034",
+        "slug": "agua-mineral-sem-gas-garrafa-1-5l",
+        "name": "Agua Mineral sem Gas 1.5L",
+        "size": "1.5L",
+        "available": true,
+        "sellingPrice": 349,
+        "listPrice": 433,
+        "image": "https://picsum.photos/seed/agua-mineral-sem-gas-garrafa-1-5l-2x/400/400",
+        "variationAttributes": {
+          "size": "1.5L"
+        }
+      },
+      {
+        "id": "mock-0035",
+        "slug": "agua-mineral-sem-gas-pack-6x1-5l",
+        "name": "Agua Mineral sem Gas 6x1.5L",
+        "size": "6x1.5L",
+        "available": true,
+        "sellingPrice": 1815,
+        "listPrice": 2269,
+        "image": "https://picsum.photos/seed/agua-mineral-sem-gas-pack-6x1-5l-2x/400/400",
+        "variationAttributes": {
+          "size": "6x1.5L"
+        }
+      },
+      {
+        "id": "mock-0036",
+        "slug": "agua-mineral-sem-gas-galao-5l",
+        "name": "Agua Mineral sem Gas 5L",
+        "size": "5L",
+        "available": true,
+        "sellingPrice": 1030,
+        "listPrice": 1112,
+        "image": "https://picsum.photos/seed/agua-mineral-sem-gas-galao-5l-2x/400/400",
+        "variationAttributes": {
+          "size": "5L"
+        }
+      }
+    ]
+  }
+}

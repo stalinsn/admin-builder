@@ -1,0 +1,240 @@
+export const API_INTEGRATION_SCOPES = [
+  'catalog.read',
+  'content.read',
+  'logistics.read',
+  'health.read',
+  'orders.public.read',
+  'customers.read',
+] as const;
+
+export type ApiIntegrationScope = (typeof API_INTEGRATION_SCOPES)[number];
+
+export type ApiExposure = 'public' | 'integration';
+
+export type ApiReferenceItem = {
+  id: string;
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  route: string;
+  exposure: ApiExposure;
+  scope?: ApiIntegrationScope;
+  domain: 'catalog' | 'content' | 'logistics' | 'system' | 'orders' | 'customers';
+  description: string;
+};
+
+export const API_REFERENCE_ITEMS: ApiReferenceItem[] = [
+  {
+    id: 'public-index',
+    method: 'GET',
+    route: '/api/v1',
+    exposure: 'public',
+    domain: 'system',
+    description: 'Índice público da API versionada.',
+  },
+  {
+    id: 'public-pages',
+    method: 'GET',
+    route: '/api/v1/content/pages',
+    exposure: 'public',
+    domain: 'content',
+    description: 'Lista páginas públicas publicadas.',
+  },
+  {
+    id: 'public-page-detail',
+    method: 'GET',
+    route: '/api/v1/content/pages/[...slug]',
+    exposure: 'public',
+    domain: 'content',
+    description: 'Carrega uma página dinâmica pública por slug.',
+  },
+  {
+    id: 'public-blog-posts',
+    method: 'GET',
+    route: '/api/v1/content/blog/posts',
+    exposure: 'public',
+    domain: 'content',
+    description: 'Lista posts públicos do blog.',
+  },
+  {
+    id: 'public-blog-post',
+    method: 'GET',
+    route: '/api/v1/content/blog/posts/[slug]',
+    exposure: 'public',
+    domain: 'content',
+    description: 'Carrega um post público do blog.',
+  },
+  {
+    id: 'public-products',
+    method: 'GET',
+    route: '/api/v1/catalog/products',
+    exposure: 'public',
+    domain: 'catalog',
+    description: 'Lista pública de produtos para storefront.',
+  },
+  {
+    id: 'public-product',
+    method: 'GET',
+    route: '/api/v1/catalog/products/[slug]',
+    exposure: 'public',
+    domain: 'catalog',
+    description: 'Detalhe público de produto.',
+  },
+  {
+    id: 'public-categories',
+    method: 'GET',
+    route: '/api/v1/catalog/categories',
+    exposure: 'public',
+    domain: 'catalog',
+    description: 'Lista pública de categorias.',
+  },
+  {
+    id: 'public-collections',
+    method: 'GET',
+    route: '/api/v1/catalog/collections',
+    exposure: 'public',
+    domain: 'catalog',
+    description: 'Lista pública de coleções.',
+  },
+  {
+    id: 'public-order-tracking',
+    method: 'GET',
+    route: '/api/v1/orders/[publicToken]',
+    exposure: 'public',
+    domain: 'orders',
+    description: 'Rastreio público de pedido por token.',
+  },
+  {
+    id: 'public-logistics-simulate',
+    method: 'POST',
+    route: '/api/v1/logistics/simulate',
+    exposure: 'public',
+    domain: 'logistics',
+    description: 'Simula cobertura, prazo e retirada por CEP ou endereço para produtos selecionados.',
+  },
+  {
+    id: 'public-health',
+    method: 'GET',
+    route: '/api/v1/system/health',
+    exposure: 'public',
+    domain: 'system',
+    description: 'Healthcheck público resumido.',
+  },
+  {
+    id: 'integration-index',
+    method: 'GET',
+    route: '/api/integration/v1',
+    exposure: 'integration',
+    domain: 'system',
+    description: 'Índice da API autenticada de integração.',
+  },
+  {
+    id: 'integration-auth-token',
+    method: 'POST',
+    route: '/api/integration/v1/auth/token',
+    exposure: 'integration',
+    domain: 'system',
+    description: 'Troca key id + secret por bearer token temporário.',
+  },
+  {
+    id: 'integration-products',
+    method: 'GET',
+    route: '/api/integration/v1/catalog/products',
+    exposure: 'integration',
+    scope: 'catalog.read',
+    domain: 'catalog',
+    description: 'Lista de produtos para integrações autenticadas.',
+  },
+  {
+    id: 'integration-pages',
+    method: 'GET',
+    route: '/api/integration/v1/content/pages',
+    exposure: 'integration',
+    scope: 'content.read',
+    domain: 'content',
+    description: 'Lista páginas publicadas para integrações autenticadas.',
+  },
+  {
+    id: 'integration-page',
+    method: 'GET',
+    route: '/api/integration/v1/content/pages/[...slug]',
+    exposure: 'integration',
+    scope: 'content.read',
+    domain: 'content',
+    description: 'Detalhe de página publicada em contexto autenticado.',
+  },
+  {
+    id: 'integration-blog-posts',
+    method: 'GET',
+    route: '/api/integration/v1/content/blog/posts',
+    exposure: 'integration',
+    scope: 'content.read',
+    domain: 'content',
+    description: 'Lista posts publicados do blog para integrações autenticadas.',
+  },
+  {
+    id: 'integration-blog-post',
+    method: 'GET',
+    route: '/api/integration/v1/content/blog/posts/[slug]',
+    exposure: 'integration',
+    scope: 'content.read',
+    domain: 'content',
+    description: 'Detalhe de post publicado em contexto autenticado.',
+  },
+  {
+    id: 'integration-product',
+    method: 'GET',
+    route: '/api/integration/v1/catalog/products/[slug]',
+    exposure: 'integration',
+    scope: 'catalog.read',
+    domain: 'catalog',
+    description: 'Detalhe de produto para integrações autenticadas.',
+  },
+  {
+    id: 'integration-categories',
+    method: 'GET',
+    route: '/api/integration/v1/catalog/categories',
+    exposure: 'integration',
+    scope: 'catalog.read',
+    domain: 'catalog',
+    description: 'Categorias via integração autenticada.',
+  },
+  {
+    id: 'integration-collections',
+    method: 'GET',
+    route: '/api/integration/v1/catalog/collections',
+    exposure: 'integration',
+    scope: 'catalog.read',
+    domain: 'catalog',
+    description: 'Coleções via integração autenticada.',
+  },
+  {
+    id: 'integration-logistics-simulate',
+    method: 'POST',
+    route: '/api/integration/v1/logistics/simulate',
+    exposure: 'integration',
+    scope: 'logistics.read',
+    domain: 'logistics',
+    description: 'Simulação autenticada de frete, retirada e cobertura logística.',
+  },
+  {
+    id: 'integration-order-tracking',
+    method: 'GET',
+    route: '/api/integration/v1/orders/[publicToken]',
+    exposure: 'integration',
+    scope: 'orders.public.read',
+    domain: 'orders',
+    description: 'Rastreio público de pedido via token, sob autenticação de integração.',
+  },
+  {
+    id: 'integration-health',
+    method: 'GET',
+    route: '/api/integration/v1/system/health',
+    exposure: 'integration',
+    scope: 'health.read',
+    domain: 'system',
+    description: 'Healthcheck autenticado para integrações e monitoramento.',
+  },
+];
+
+export function listReferenceByExposure(exposure: ApiExposure) {
+  return API_REFERENCE_ITEMS.filter((item) => item.exposure === exposure);
+}

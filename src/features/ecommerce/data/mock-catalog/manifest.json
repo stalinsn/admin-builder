@@ -1,0 +1,821 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-03-02T12:00:00.000Z",
+  "source": "mock-catalog-generator",
+  "totalFiles": 100,
+  "categories": [
+    "Mercearia",
+    "Frios e Laticinios",
+    "Bebidas",
+    "Bebida Alcoolica",
+    "Limpeza",
+    "Higiene e Beleza",
+    "Pet Shop",
+    "Acougue",
+    "Congelados",
+    "Peixaria",
+    "Padaria"
+  ],
+  "files": [
+    {
+      "file": "products/arroz-tipo-1-1kg.json",
+      "id": "mock-0001",
+      "slug": "arroz-tipo-1-1kg",
+      "name": "Arroz Tipo 1 1kg",
+      "category": "Mercearia",
+      "brand": "Tio Joao"
+    },
+    {
+      "file": "products/arroz-tipo-1-2kg.json",
+      "id": "mock-0002",
+      "slug": "arroz-tipo-1-2kg",
+      "name": "Arroz Tipo 1 2kg",
+      "category": "Mercearia",
+      "brand": "Tio Joao"
+    },
+    {
+      "file": "products/arroz-tipo-1-5kg.json",
+      "id": "mock-0003",
+      "slug": "arroz-tipo-1-5kg",
+      "name": "Arroz Tipo 1 5kg",
+      "category": "Mercearia",
+      "brand": "Tio Joao"
+    },
+    {
+      "file": "products/arroz-tipo-1-10kg.json",
+      "id": "mock-0004",
+      "slug": "arroz-tipo-1-10kg",
+      "name": "Arroz Tipo 1 10kg",
+      "category": "Mercearia",
+      "brand": "Tio Joao"
+    },
+    {
+      "file": "products/feijao-carioca-carioca-500g.json",
+      "id": "mock-0005",
+      "slug": "feijao-carioca-carioca-500g",
+      "name": "Feijao Carioca Carioca 500g",
+      "category": "Mercearia",
+      "brand": "Kicaldo"
+    },
+    {
+      "file": "products/feijao-carioca-carioca-1kg.json",
+      "id": "mock-0006",
+      "slug": "feijao-carioca-carioca-1kg",
+      "name": "Feijao Carioca Carioca 1kg",
+      "category": "Mercearia",
+      "brand": "Kicaldo"
+    },
+    {
+      "file": "products/feijao-carioca-preto-1kg.json",
+      "id": "mock-0007",
+      "slug": "feijao-carioca-preto-1kg",
+      "name": "Feijao Carioca Preto 1kg",
+      "category": "Mercearia",
+      "brand": "Kicaldo"
+    },
+    {
+      "file": "products/feijao-carioca-fradinho-1kg.json",
+      "id": "mock-0008",
+      "slug": "feijao-carioca-fradinho-1kg",
+      "name": "Feijao Carioca Fradinho 1kg",
+      "category": "Mercearia",
+      "brand": "Kicaldo"
+    },
+    {
+      "file": "products/macarrao-espaguete-n8-500g.json",
+      "id": "mock-0009",
+      "slug": "macarrao-espaguete-n8-500g",
+      "name": "Macarrao Espaguete N8 500g",
+      "category": "Mercearia",
+      "brand": "Renata"
+    },
+    {
+      "file": "products/macarrao-espaguete-n7-500g.json",
+      "id": "mock-0010",
+      "slug": "macarrao-espaguete-n7-500g",
+      "name": "Macarrao Espaguete N7 500g",
+      "category": "Mercearia",
+      "brand": "Renata"
+    },
+    {
+      "file": "products/macarrao-espaguete-integral-500g.json",
+      "id": "mock-0011",
+      "slug": "macarrao-espaguete-integral-500g",
+      "name": "Macarrao Espaguete Integral 500g",
+      "category": "Mercearia",
+      "brand": "Renata"
+    },
+    {
+      "file": "products/macarrao-espaguete-semola-1kg.json",
+      "id": "mock-0012",
+      "slug": "macarrao-espaguete-semola-1kg",
+      "name": "Macarrao Espaguete Semola 1kg",
+      "category": "Mercearia",
+      "brand": "Renata"
+    },
+    {
+      "file": "products/cafe-torrado-moido-tradicional-250g.json",
+      "id": "mock-0013",
+      "slug": "cafe-torrado-moido-tradicional-250g",
+      "name": "Cafe Torrado e Moido Tradicional 250g",
+      "category": "Mercearia",
+      "brand": "Pilao"
+    },
+    {
+      "file": "products/cafe-torrado-moido-tradicional-500g.json",
+      "id": "mock-0014",
+      "slug": "cafe-torrado-moido-tradicional-500g",
+      "name": "Cafe Torrado e Moido Tradicional 500g",
+      "category": "Mercearia",
+      "brand": "Pilao"
+    },
+    {
+      "file": "products/cafe-torrado-moido-extraforte-500g.json",
+      "id": "mock-0015",
+      "slug": "cafe-torrado-moido-extraforte-500g",
+      "name": "Cafe Torrado e Moido Extra Forte 500g",
+      "category": "Mercearia",
+      "brand": "Pilao"
+    },
+    {
+      "file": "products/cafe-torrado-moido-organico-500g.json",
+      "id": "mock-0016",
+      "slug": "cafe-torrado-moido-organico-500g",
+      "name": "Cafe Torrado e Moido Organico 500g",
+      "category": "Mercearia",
+      "brand": "Pilao"
+    },
+    {
+      "file": "products/leite-uht-integral-integral-1l.json",
+      "id": "mock-0017",
+      "slug": "leite-uht-integral-integral-1l",
+      "name": "Leite UHT Integral Integral 1L",
+      "category": "Frios e Laticinios",
+      "brand": "Itambe"
+    },
+    {
+      "file": "products/leite-uht-integral-semi-desnatado-1l.json",
+      "id": "mock-0018",
+      "slug": "leite-uht-integral-semi-desnatado-1l",
+      "name": "Leite UHT Integral Semi Desnatado 1L",
+      "category": "Frios e Laticinios",
+      "brand": "Itambe"
+    },
+    {
+      "file": "products/leite-uht-integral-desnatado-1l.json",
+      "id": "mock-0019",
+      "slug": "leite-uht-integral-desnatado-1l",
+      "name": "Leite UHT Integral Desnatado 1L",
+      "category": "Frios e Laticinios",
+      "brand": "Itambe"
+    },
+    {
+      "file": "products/leite-uht-integral-zero-lactose-1l.json",
+      "id": "mock-0020",
+      "slug": "leite-uht-integral-zero-lactose-1l",
+      "name": "Leite UHT Integral Zero Lactose 1L",
+      "category": "Frios e Laticinios",
+      "brand": "Itambe"
+    },
+    {
+      "file": "products/iogurte-grego-tradicional-100g.json",
+      "id": "mock-0021",
+      "slug": "iogurte-grego-tradicional-100g",
+      "name": "Iogurte Grego Tradicional 100g",
+      "category": "Frios e Laticinios",
+      "brand": "Vigor"
+    },
+    {
+      "file": "products/iogurte-grego-morango-100g.json",
+      "id": "mock-0022",
+      "slug": "iogurte-grego-morango-100g",
+      "name": "Iogurte Grego Morango 100g",
+      "category": "Frios e Laticinios",
+      "brand": "Vigor"
+    },
+    {
+      "file": "products/iogurte-grego-maracuja-100g.json",
+      "id": "mock-0023",
+      "slug": "iogurte-grego-maracuja-100g",
+      "name": "Iogurte Grego Maracuja 100g",
+      "category": "Frios e Laticinios",
+      "brand": "Vigor"
+    },
+    {
+      "file": "products/iogurte-grego-baunilha-100g.json",
+      "id": "mock-0024",
+      "slug": "iogurte-grego-baunilha-100g",
+      "name": "Iogurte Grego Baunilha 100g",
+      "category": "Frios e Laticinios",
+      "brand": "Vigor"
+    },
+    {
+      "file": "products/refrigerante-cola-lata-350ml.json",
+      "id": "mock-0025",
+      "slug": "refrigerante-cola-lata-350ml",
+      "name": "Refrigerante Cola Lata 350ml",
+      "category": "Bebidas",
+      "brand": "Coca-Cola"
+    },
+    {
+      "file": "products/refrigerante-cola-pet-1l.json",
+      "id": "mock-0026",
+      "slug": "refrigerante-cola-pet-1l",
+      "name": "Refrigerante Cola PET 1L",
+      "category": "Bebidas",
+      "brand": "Coca-Cola"
+    },
+    {
+      "file": "products/refrigerante-cola-pet-2l.json",
+      "id": "mock-0027",
+      "slug": "refrigerante-cola-pet-2l",
+      "name": "Refrigerante Cola PET 2L",
+      "category": "Bebidas",
+      "brand": "Coca-Cola"
+    },
+    {
+      "file": "products/refrigerante-cola-zero-2l.json",
+      "id": "mock-0028",
+      "slug": "refrigerante-cola-zero-2l",
+      "name": "Refrigerante Cola PET Zero 2L",
+      "category": "Bebidas",
+      "brand": "Coca-Cola"
+    },
+    {
+      "file": "products/suco-uva-integral-vidro-300ml.json",
+      "id": "mock-0029",
+      "slug": "suco-uva-integral-vidro-300ml",
+      "name": "Suco de Uva Integral Vidro 300ml",
+      "category": "Bebidas",
+      "brand": "Aurora"
+    },
+    {
+      "file": "products/suco-uva-integral-vidro-500ml.json",
+      "id": "mock-0030",
+      "slug": "suco-uva-integral-vidro-500ml",
+      "name": "Suco de Uva Integral Vidro 500ml",
+      "category": "Bebidas",
+      "brand": "Aurora"
+    },
+    {
+      "file": "products/suco-uva-integral-vidro-1l.json",
+      "id": "mock-0031",
+      "slug": "suco-uva-integral-vidro-1l",
+      "name": "Suco de Uva Integral Vidro 1L",
+      "category": "Bebidas",
+      "brand": "Aurora"
+    },
+    {
+      "file": "products/suco-uva-integral-tetra-1-5l.json",
+      "id": "mock-0032",
+      "slug": "suco-uva-integral-tetra-1-5l",
+      "name": "Suco de Uva Integral Tetra Pak 1.5L",
+      "category": "Bebidas",
+      "brand": "Aurora"
+    },
+    {
+      "file": "products/agua-mineral-sem-gas-garrafa-500ml.json",
+      "id": "mock-0033",
+      "slug": "agua-mineral-sem-gas-garrafa-500ml",
+      "name": "Agua Mineral sem Gas 500ml",
+      "category": "Bebidas",
+      "brand": "Minalba"
+    },
+    {
+      "file": "products/agua-mineral-sem-gas-garrafa-1-5l.json",
+      "id": "mock-0034",
+      "slug": "agua-mineral-sem-gas-garrafa-1-5l",
+      "name": "Agua Mineral sem Gas 1.5L",
+      "category": "Bebidas",
+      "brand": "Minalba"
+    },
+    {
+      "file": "products/agua-mineral-sem-gas-pack-6x1-5l.json",
+      "id": "mock-0035",
+      "slug": "agua-mineral-sem-gas-pack-6x1-5l",
+      "name": "Agua Mineral sem Gas 6x1.5L",
+      "category": "Bebidas",
+      "brand": "Minalba"
+    },
+    {
+      "file": "products/agua-mineral-sem-gas-galao-5l.json",
+      "id": "mock-0036",
+      "slug": "agua-mineral-sem-gas-galao-5l",
+      "name": "Agua Mineral sem Gas 5L",
+      "category": "Bebidas",
+      "brand": "Minalba"
+    },
+    {
+      "file": "products/cerveja-pilsen-long-neck-330ml.json",
+      "id": "mock-0037",
+      "slug": "cerveja-pilsen-long-neck-330ml",
+      "name": "Cerveja Pilsen Long Neck 330ml",
+      "category": "Bebida Alcoolica",
+      "brand": "Heineken"
+    },
+    {
+      "file": "products/cerveja-pilsen-lata-350ml.json",
+      "id": "mock-0038",
+      "slug": "cerveja-pilsen-lata-350ml",
+      "name": "Cerveja Pilsen Lata 350ml",
+      "category": "Bebida Alcoolica",
+      "brand": "Heineken"
+    },
+    {
+      "file": "products/cerveja-pilsen-latao-473ml.json",
+      "id": "mock-0039",
+      "slug": "cerveja-pilsen-latao-473ml",
+      "name": "Cerveja Pilsen Latao 473ml",
+      "category": "Bebida Alcoolica",
+      "brand": "Heineken"
+    },
+    {
+      "file": "products/cerveja-pilsen-pack-12x350ml.json",
+      "id": "mock-0040",
+      "slug": "cerveja-pilsen-pack-12x350ml",
+      "name": "Cerveja Pilsen Pack 12x350ml",
+      "category": "Bebida Alcoolica",
+      "brand": "Heineken"
+    },
+    {
+      "file": "products/detergente-liquido-neutro-500ml.json",
+      "id": "mock-0041",
+      "slug": "detergente-liquido-neutro-500ml",
+      "name": "Detergente Liquido 500ml",
+      "category": "Limpeza",
+      "brand": "Ype"
+    },
+    {
+      "file": "products/detergente-liquido-limao-500ml.json",
+      "id": "mock-0042",
+      "slug": "detergente-liquido-limao-500ml",
+      "name": "Detergente Liquido 500ml",
+      "category": "Limpeza",
+      "brand": "Ype"
+    },
+    {
+      "file": "products/detergente-liquido-coco-500ml.json",
+      "id": "mock-0043",
+      "slug": "detergente-liquido-coco-500ml",
+      "name": "Detergente Liquido 500ml",
+      "category": "Limpeza",
+      "brand": "Ype"
+    },
+    {
+      "file": "products/detergente-liquido-capim-limao-500ml.json",
+      "id": "mock-0044",
+      "slug": "detergente-liquido-capim-limao-500ml",
+      "name": "Detergente Liquido 500ml",
+      "category": "Limpeza",
+      "brand": "Ype"
+    },
+    {
+      "file": "products/agua-sanitaria-1l.json",
+      "id": "mock-0045",
+      "slug": "agua-sanitaria-1l",
+      "name": "Agua Sanitaria 1L",
+      "category": "Limpeza",
+      "brand": "Qboa"
+    },
+    {
+      "file": "products/agua-sanitaria-2l.json",
+      "id": "mock-0046",
+      "slug": "agua-sanitaria-2l",
+      "name": "Agua Sanitaria 2L",
+      "category": "Limpeza",
+      "brand": "Qboa"
+    },
+    {
+      "file": "products/agua-sanitaria-3l.json",
+      "id": "mock-0047",
+      "slug": "agua-sanitaria-3l",
+      "name": "Agua Sanitaria 3L",
+      "category": "Limpeza",
+      "brand": "Qboa"
+    },
+    {
+      "file": "products/agua-sanitaria-5l.json",
+      "id": "mock-0048",
+      "slug": "agua-sanitaria-5l",
+      "name": "Agua Sanitaria 5L",
+      "category": "Limpeza",
+      "brand": "Qboa"
+    },
+    {
+      "file": "products/sabao-em-po-800g.json",
+      "id": "mock-0049",
+      "slug": "sabao-em-po-800g",
+      "name": "Sabao em Po Lavagem Perfeita 800g",
+      "category": "Limpeza",
+      "brand": "OMO"
+    },
+    {
+      "file": "products/sabao-em-po-1-6kg.json",
+      "id": "mock-0050",
+      "slug": "sabao-em-po-1-6kg",
+      "name": "Sabao em Po Lavagem Perfeita 1.6kg",
+      "category": "Limpeza",
+      "brand": "OMO"
+    },
+    {
+      "file": "products/sabao-em-po-2-2kg.json",
+      "id": "mock-0051",
+      "slug": "sabao-em-po-2-2kg",
+      "name": "Sabao em Po Lavagem Perfeita 2.2kg",
+      "category": "Limpeza",
+      "brand": "OMO"
+    },
+    {
+      "file": "products/sabao-em-po-3kg.json",
+      "id": "mock-0052",
+      "slug": "sabao-em-po-3kg",
+      "name": "Sabao em Po Lavagem Perfeita 3kg",
+      "category": "Limpeza",
+      "brand": "OMO"
+    },
+    {
+      "file": "products/desinfetante-lavanda-1l.json",
+      "id": "mock-0053",
+      "slug": "desinfetante-lavanda-1l",
+      "name": "Desinfetante Multiuso 1L",
+      "category": "Limpeza",
+      "brand": "Pinho Sol"
+    },
+    {
+      "file": "products/desinfetante-eucalipto-1l.json",
+      "id": "mock-0054",
+      "slug": "desinfetante-eucalipto-1l",
+      "name": "Desinfetante Multiuso 1L",
+      "category": "Limpeza",
+      "brand": "Pinho Sol"
+    },
+    {
+      "file": "products/desinfetante-citricos-1l.json",
+      "id": "mock-0055",
+      "slug": "desinfetante-citricos-1l",
+      "name": "Desinfetante Multiuso 1L",
+      "category": "Limpeza",
+      "brand": "Pinho Sol"
+    },
+    {
+      "file": "products/desinfetante-original-2l.json",
+      "id": "mock-0056",
+      "slug": "desinfetante-original-2l",
+      "name": "Desinfetante Multiuso 2L",
+      "category": "Limpeza",
+      "brand": "Pinho Sol"
+    },
+    {
+      "file": "products/shampoo-hidratante-lisos-325ml.json",
+      "id": "mock-0057",
+      "slug": "shampoo-hidratante-lisos-325ml",
+      "name": "Shampoo Hidratante Lisos 325ml",
+      "category": "Higiene e Beleza",
+      "brand": "Seda"
+    },
+    {
+      "file": "products/shampoo-hidratante-cacheados-325ml.json",
+      "id": "mock-0058",
+      "slug": "shampoo-hidratante-cacheados-325ml",
+      "name": "Shampoo Hidratante Cacheados 325ml",
+      "category": "Higiene e Beleza",
+      "brand": "Seda"
+    },
+    {
+      "file": "products/shampoo-hidratante-danificados-325ml.json",
+      "id": "mock-0059",
+      "slug": "shampoo-hidratante-danificados-325ml",
+      "name": "Shampoo Hidratante Danificados 325ml",
+      "category": "Higiene e Beleza",
+      "brand": "Seda"
+    },
+    {
+      "file": "products/shampoo-hidratante-anticaspa-325ml.json",
+      "id": "mock-0060",
+      "slug": "shampoo-hidratante-anticaspa-325ml",
+      "name": "Shampoo Hidratante Anticaspa 325ml",
+      "category": "Higiene e Beleza",
+      "brand": "Seda"
+    },
+    {
+      "file": "products/condicionador-hidratante-lisos-325ml.json",
+      "id": "mock-0061",
+      "slug": "condicionador-hidratante-lisos-325ml",
+      "name": "Condicionador Hidratante Lisos 325ml",
+      "category": "Higiene e Beleza",
+      "brand": "Seda"
+    },
+    {
+      "file": "products/condicionador-hidratante-cacheados-325ml.json",
+      "id": "mock-0062",
+      "slug": "condicionador-hidratante-cacheados-325ml",
+      "name": "Condicionador Hidratante Cacheados 325ml",
+      "category": "Higiene e Beleza",
+      "brand": "Seda"
+    },
+    {
+      "file": "products/condicionador-hidratante-danificados-325ml.json",
+      "id": "mock-0063",
+      "slug": "condicionador-hidratante-danificados-325ml",
+      "name": "Condicionador Hidratante Danificados 325ml",
+      "category": "Higiene e Beleza",
+      "brand": "Seda"
+    },
+    {
+      "file": "products/condicionador-hidratante-nutricao-325ml.json",
+      "id": "mock-0064",
+      "slug": "condicionador-hidratante-nutricao-325ml",
+      "name": "Condicionador Hidratante Nutricao 325ml",
+      "category": "Higiene e Beleza",
+      "brand": "Seda"
+    },
+    {
+      "file": "products/pasta-de-dente-tripla-acao-90g.json",
+      "id": "mock-0065",
+      "slug": "pasta-de-dente-tripla-acao-90g",
+      "name": "Creme Dental Tripla Acao 90g",
+      "category": "Higiene e Beleza",
+      "brand": "Colgate"
+    },
+    {
+      "file": "products/pasta-de-dente-total-12-90g.json",
+      "id": "mock-0066",
+      "slug": "pasta-de-dente-total-12-90g",
+      "name": "Creme Dental Total 12 90g",
+      "category": "Higiene e Beleza",
+      "brand": "Colgate"
+    },
+    {
+      "file": "products/pasta-de-dente-luminous-white-70g.json",
+      "id": "mock-0067",
+      "slug": "pasta-de-dente-luminous-white-70g",
+      "name": "Creme Dental Luminous White 70g",
+      "category": "Higiene e Beleza",
+      "brand": "Colgate"
+    },
+    {
+      "file": "products/pasta-de-dente-sensitive-pro-alivio-70g.json",
+      "id": "mock-0068",
+      "slug": "pasta-de-dente-sensitive-pro-alivio-70g",
+      "name": "Creme Dental Sensitive Pro Alivio 70g",
+      "category": "Higiene e Beleza",
+      "brand": "Colgate"
+    },
+    {
+      "file": "products/sabonete-barra-original-90g.json",
+      "id": "mock-0069",
+      "slug": "sabonete-barra-original-90g",
+      "name": "Sabonete em Barra 90g",
+      "category": "Higiene e Beleza",
+      "brand": "Dove"
+    },
+    {
+      "file": "products/sabonete-barra-karite-90g.json",
+      "id": "mock-0070",
+      "slug": "sabonete-barra-karite-90g",
+      "name": "Sabonete em Barra 90g",
+      "category": "Higiene e Beleza",
+      "brand": "Dove"
+    },
+    {
+      "file": "products/sabonete-barra-pepino-cha-verde-90g.json",
+      "id": "mock-0071",
+      "slug": "sabonete-barra-pepino-cha-verde-90g",
+      "name": "Sabonete em Barra 90g",
+      "category": "Higiene e Beleza",
+      "brand": "Dove"
+    },
+    {
+      "file": "products/sabonete-barra-pack-4x90g.json",
+      "id": "mock-0072",
+      "slug": "sabonete-barra-pack-4x90g",
+      "name": "Sabonete em Barra 4x90g",
+      "category": "Higiene e Beleza",
+      "brand": "Dove"
+    },
+    {
+      "file": "products/racao-caes-adultos-mini-bits-3kg.json",
+      "id": "mock-0073",
+      "slug": "racao-caes-adultos-mini-bits-3kg",
+      "name": "Racao Caes Adultos 3kg",
+      "category": "Pet Shop",
+      "brand": "Golden"
+    },
+    {
+      "file": "products/racao-caes-adultos-frango-arroz-10kg.json",
+      "id": "mock-0074",
+      "slug": "racao-caes-adultos-frango-arroz-10kg",
+      "name": "Racao Caes Adultos 10kg",
+      "category": "Pet Shop",
+      "brand": "Golden"
+    },
+    {
+      "file": "products/racao-caes-adultos-carne-arroz-15kg.json",
+      "id": "mock-0075",
+      "slug": "racao-caes-adultos-carne-arroz-15kg",
+      "name": "Racao Caes Adultos 15kg",
+      "category": "Pet Shop",
+      "brand": "Golden"
+    },
+    {
+      "file": "products/racao-caes-adultos-light-10kg.json",
+      "id": "mock-0076",
+      "slug": "racao-caes-adultos-light-10kg",
+      "name": "Racao Caes Adultos 10kg",
+      "category": "Pet Shop",
+      "brand": "Golden"
+    },
+    {
+      "file": "products/racao-gatos-castrados-frango-1kg.json",
+      "id": "mock-0077",
+      "slug": "racao-gatos-castrados-frango-1kg",
+      "name": "Racao Gatos Castrados Frango 1kg",
+      "category": "Pet Shop",
+      "brand": "Whiskas"
+    },
+    {
+      "file": "products/racao-gatos-castrados-frango-3kg.json",
+      "id": "mock-0078",
+      "slug": "racao-gatos-castrados-frango-3kg",
+      "name": "Racao Gatos Castrados Frango 3kg",
+      "category": "Pet Shop",
+      "brand": "Whiskas"
+    },
+    {
+      "file": "products/racao-gatos-castrados-carne-3kg.json",
+      "id": "mock-0079",
+      "slug": "racao-gatos-castrados-carne-3kg",
+      "name": "Racao Gatos Castrados Carne 3kg",
+      "category": "Pet Shop",
+      "brand": "Whiskas"
+    },
+    {
+      "file": "products/racao-gatos-castrados-salmao-3kg.json",
+      "id": "mock-0080",
+      "slug": "racao-gatos-castrados-salmao-3kg",
+      "name": "Racao Gatos Castrados Salmao 3kg",
+      "category": "Pet Shop",
+      "brand": "Whiskas"
+    },
+    {
+      "file": "products/peito-frango-congelado-file-1kg.json",
+      "id": "mock-0081",
+      "slug": "peito-frango-congelado-file-1kg",
+      "name": "Peito de Frango Congelado File 1kg",
+      "category": "Acougue",
+      "brand": "Sadia"
+    },
+    {
+      "file": "products/peito-frango-congelado-sassami-1kg.json",
+      "id": "mock-0082",
+      "slug": "peito-frango-congelado-sassami-1kg",
+      "name": "Peito de Frango Congelado Sassami 1kg",
+      "category": "Acougue",
+      "brand": "Sadia"
+    },
+    {
+      "file": "products/peito-frango-congelado-isca-1kg.json",
+      "id": "mock-0083",
+      "slug": "peito-frango-congelado-isca-1kg",
+      "name": "Peito de Frango Congelado Isca 1kg",
+      "category": "Acougue",
+      "brand": "Sadia"
+    },
+    {
+      "file": "products/peito-frango-congelado-cubos-1kg.json",
+      "id": "mock-0084",
+      "slug": "peito-frango-congelado-cubos-1kg",
+      "name": "Peito de Frango Congelado Cubos 1kg",
+      "category": "Acougue",
+      "brand": "Sadia"
+    },
+    {
+      "file": "products/hamburguer-bovino-56g-6un.json",
+      "id": "mock-0085",
+      "slug": "hamburguer-bovino-56g-6un",
+      "name": "Hamburguer Bovino 336g",
+      "category": "Congelados",
+      "brand": "Perdigao"
+    },
+    {
+      "file": "products/hamburguer-bovino-56g-12un.json",
+      "id": "mock-0086",
+      "slug": "hamburguer-bovino-56g-12un",
+      "name": "Hamburguer Bovino 672g",
+      "category": "Congelados",
+      "brand": "Perdigao"
+    },
+    {
+      "file": "products/hamburguer-bovino-90g-10un.json",
+      "id": "mock-0087",
+      "slug": "hamburguer-bovino-90g-10un",
+      "name": "Hamburguer Bovino 900g",
+      "category": "Congelados",
+      "brand": "Perdigao"
+    },
+    {
+      "file": "products/hamburguer-bovino-premium-12un.json",
+      "id": "mock-0088",
+      "slug": "hamburguer-bovino-premium-12un",
+      "name": "Hamburguer Bovino 720g",
+      "category": "Congelados",
+      "brand": "Perdigao"
+    },
+    {
+      "file": "products/file-tilapia-congelado-400g.json",
+      "id": "mock-0089",
+      "slug": "file-tilapia-congelado-400g",
+      "name": "File de Tilapia Congelado 400g",
+      "category": "Peixaria",
+      "brand": "Frescatto"
+    },
+    {
+      "file": "products/file-tilapia-congelado-700g.json",
+      "id": "mock-0090",
+      "slug": "file-tilapia-congelado-700g",
+      "name": "File de Tilapia Congelado 700g",
+      "category": "Peixaria",
+      "brand": "Frescatto"
+    },
+    {
+      "file": "products/file-tilapia-congelado-1kg.json",
+      "id": "mock-0091",
+      "slug": "file-tilapia-congelado-1kg",
+      "name": "File de Tilapia Congelado 1kg",
+      "category": "Peixaria",
+      "brand": "Frescatto"
+    },
+    {
+      "file": "products/file-tilapia-congelado-1-5kg.json",
+      "id": "mock-0092",
+      "slug": "file-tilapia-congelado-1-5kg",
+      "name": "File de Tilapia Congelado 1.5kg",
+      "category": "Peixaria",
+      "brand": "Frescatto"
+    },
+    {
+      "file": "products/pao-forma-integral-tradicional-450g.json",
+      "id": "mock-0093",
+      "slug": "pao-forma-integral-tradicional-450g",
+      "name": "Pao de Forma Integral Tradicional 450g",
+      "category": "Padaria",
+      "brand": "Pullman"
+    },
+    {
+      "file": "products/pao-forma-integral-integral-500g.json",
+      "id": "mock-0094",
+      "slug": "pao-forma-integral-integral-500g",
+      "name": "Pao de Forma Integral Integral 500g",
+      "category": "Padaria",
+      "brand": "Pullman"
+    },
+    {
+      "file": "products/pao-forma-integral-12-graos-500g.json",
+      "id": "mock-0095",
+      "slug": "pao-forma-integral-12-graos-500g",
+      "name": "Pao de Forma Integral 12 Graos 500g",
+      "category": "Padaria",
+      "brand": "Pullman"
+    },
+    {
+      "file": "products/pao-forma-integral-sem-casca-450g.json",
+      "id": "mock-0096",
+      "slug": "pao-forma-integral-sem-casca-450g",
+      "name": "Pao de Forma Integral Sem Casca 450g",
+      "category": "Padaria",
+      "brand": "Pullman"
+    },
+    {
+      "file": "products/queijo-mussarela-fatiado-150g.json",
+      "id": "mock-0097",
+      "slug": "queijo-mussarela-fatiado-150g",
+      "name": "Queijo Mussarela Fatiado 150g",
+      "category": "Frios e Laticinios",
+      "brand": "Polenghi"
+    },
+    {
+      "file": "products/queijo-mussarela-fatiado-300g.json",
+      "id": "mock-0098",
+      "slug": "queijo-mussarela-fatiado-300g",
+      "name": "Queijo Mussarela Fatiado 300g",
+      "category": "Frios e Laticinios",
+      "brand": "Polenghi"
+    },
+    {
+      "file": "products/queijo-mussarela-fatiado-500g.json",
+      "id": "mock-0099",
+      "slug": "queijo-mussarela-fatiado-500g",
+      "name": "Queijo Mussarela Fatiado 500g",
+      "category": "Frios e Laticinios",
+      "brand": "Polenghi"
+    },
+    {
+      "file": "products/queijo-mussarela-fatiado-1kg.json",
+      "id": "mock-0100",
+      "slug": "queijo-mussarela-fatiado-1kg",
+      "name": "Queijo Mussarela Fatiado 1kg",
+      "category": "Frios e Laticinios",
+      "brand": "Polenghi"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0026",
+  "slug": "refrigerante-cola-pet-1l",
+  "productId": "910026",
+  "productRefId": "810026",
+  "refId": "810026",
+  "uniqueId": "09A7C941083DB050A1DED08EE92F64BD",
+  "skuName": "Refrigerante Cola PET 1L",
+  "name": "Refrigerante Cola PET 1L",
+  "shortDescription": "Refrigerante Cola 1L",
+  "longDescription": "Refrigerante Cola PET 1L da marca Coca-Cola. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Coca-Cola"
+  },
+  "brand": "Coca-Cola",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/refrigerante-cola-pet-1l/p",
+  "canonicalUrl": "/e-commerce/refrigerante-cola-pet-1l/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/refrigerante-cola-pet-1l-1x/96/96",
+    "at2x": "https://picsum.photos/seed/refrigerante-cola-pet-1l-2x/400/400",
+    "at3x": "https://picsum.photos/seed/refrigerante-cola-pet-1l-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0026-image-1",
+      "url": "https://picsum.photos/seed/refrigerante-cola-pet-1l-2x/400/400",
+      "label": "frontal",
+      "alt": "Refrigerante Cola PET 1L",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0026-image-2",
+      "url": "https://picsum.photos/seed/refrigerante-cola-pet-1l-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Refrigerante Cola PET 1L em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "1L",
+  "price": 657,
+  "sellingPrice": 657,
+  "listPrice": 762,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 657,
+    "total": 657,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 657
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 657,
+    "listPrice": 762,
+    "discountPercent": 16,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 657,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 329,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "4": "Bebidas",
+    "18": "Refrigerantes",
+    "95": "Cola"
+  },
+  "productCategoryIds": "/4/18/95/",
+  "categoryPath": [
+    {
+      "id": "4",
+      "name": "Bebidas"
+    },
+    {
+      "id": "18",
+      "name": "Refrigerantes"
+    },
+    {
+      "id": "95",
+      "name": "Cola"
+    }
+  ],
+  "tags": [
+    "bebidas",
+    "coca-cola",
+    "refrigerante-cola"
+  ],
+  "badges": [
+    "super-oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 7,
+    "width": 8,
+    "length": 10
+  },
+  "weightGrams": 1000,
+  "logistics": {
+    "weightGrams": 1000,
+    "volumetricWeightGrams": 1120,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 80,
+    "safetyStock": 6,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 44
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 36
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "refrigerante-cola"
+  },
+  "seo": {
+    "title": "Refrigerante Cola PET 1L | Supermercado Mock",
+    "description": "Compre Refrigerante Cola PET 1L com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Refrigerante Cola",
+      "Coca-Cola",
+      "Bebidas",
+      "1L"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 136,
+    "carbohydratesG": 12,
+    "proteinsG": 4,
+    "totalFatG": 2,
+    "saturatedFatG": 1,
+    "sodiumMg": 91,
+    "sugarG": 10,
+    "fiberG": 0.9
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "1L",
+    "package": "PET"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-refrigerante-cola",
+    "groupName": "Refrigerante Cola",
+    "axis": [
+      "embalagem"
+    ],
+    "options": [
+      {
+        "id": "mock-0025",
+        "slug": "refrigerante-cola-lata-350ml",
+        "name": "Refrigerante Cola Lata 350ml",
+        "size": "350ml",
+        "available": true,
+        "sellingPrice": 419,
+        "listPrice": 482,
+        "image": "https://picsum.photos/seed/refrigerante-cola-lata-350ml-2x/400/400",
+        "variationAttributes": {
+          "size": "350ml",
+          "package": "Lata"
+        }
+      },
+      {
+        "id": "mock-0026",
+        "slug": "refrigerante-cola-pet-1l",
+        "name": "Refrigerante Cola PET 1L",
+        "size": "1L",
+        "available": true,
+        "sellingPrice": 657,
+        "listPrice": 762,
+        "image": "https://picsum.photos/seed/refrigerante-cola-pet-1l-2x/400/400",
+        "variationAttributes": {
+          "size": "1L",
+          "package": "PET"
+        }
+      },
+      {
+        "id": "mock-0027",
+        "slug": "refrigerante-cola-pet-2l",
+        "name": "Refrigerante Cola PET 2L",
+        "size": "2L",
+        "available": true,
+        "sellingPrice": 881,
+        "listPrice": 1031,
+        "image": "https://picsum.photos/seed/refrigerante-cola-pet-2l-2x/400/400",
+        "variationAttributes": {
+          "size": "2L",
+          "package": "PET"
+        }
+      },
+      {
+        "id": "mock-0028",
+        "slug": "refrigerante-cola-zero-2l",
+        "name": "Refrigerante Cola PET Zero 2L",
+        "size": "2L",
+        "available": true,
+        "sellingPrice": 909,
+        "listPrice": 1073,
+        "image": "https://picsum.photos/seed/refrigerante-cola-zero-2l-2x/400/400",
+        "variationAttributes": {
+          "size": "2L",
+          "package": "PET Zero"
+        }
+      }
+    ]
+  }
+}

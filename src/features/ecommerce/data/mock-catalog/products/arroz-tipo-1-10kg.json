@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0004",
+  "slug": "arroz-tipo-1-10kg",
+  "productId": "910004",
+  "productRefId": "810004",
+  "refId": "810004",
+  "uniqueId": "A737883649D575E01FEA4455BB86AE64",
+  "skuName": "Arroz Tipo 1 10kg",
+  "name": "Arroz Tipo 1 10kg",
+  "shortDescription": "Arroz Tipo 1 10kg",
+  "longDescription": "Arroz Tipo 1 10kg da marca Tio Joao. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Tio Joao"
+  },
+  "brand": "Tio Joao",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/arroz-tipo-1-10kg/p",
+  "canonicalUrl": "/e-commerce/arroz-tipo-1-10kg/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/arroz-tipo-1-10kg-1x/96/96",
+    "at2x": "https://picsum.photos/seed/arroz-tipo-1-10kg-2x/400/400",
+    "at3x": "https://picsum.photos/seed/arroz-tipo-1-10kg-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0004-image-1",
+      "url": "https://picsum.photos/seed/arroz-tipo-1-10kg-2x/400/400",
+      "label": "frontal",
+      "alt": "Arroz Tipo 1 10kg",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0004-image-2",
+      "url": "https://picsum.photos/seed/arroz-tipo-1-10kg-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Arroz Tipo 1 10kg em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "10kg",
+  "price": 5586,
+  "sellingPrice": 5586,
+  "listPrice": 6256,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 5586,
+    "total": 5586,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 5586
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 5586,
+    "listPrice": 6256,
+    "discountPercent": 12,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 5586,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 2793,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "2": "Mercearia",
+    "21": "Graos e Cereais",
+    "87": "Arroz"
+  },
+  "productCategoryIds": "/2/21/87/",
+  "categoryPath": [
+    {
+      "id": "2",
+      "name": "Mercearia"
+    },
+    {
+      "id": "21",
+      "name": "Graos e Cereais"
+    },
+    {
+      "id": "87",
+      "name": "Arroz"
+    }
+  ],
+  "tags": [
+    "mercearia",
+    "tio-joao",
+    "arroz-tipo-1"
+  ],
+  "badges": [
+    "oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 71,
+    "width": 83,
+    "length": 100
+  },
+  "weightGrams": 10000,
+  "logistics": {
+    "weightGrams": 10000,
+    "volumetricWeightGrams": 11200,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "bulky"
+  },
+  "stock": {
+    "availableQuantity": 46,
+    "safetyStock": 4,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 25
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 21
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "arroz-tipo-1"
+  },
+  "seo": {
+    "title": "Arroz Tipo 1 10kg | Supermercado Mock",
+    "description": "Compre Arroz Tipo 1 10kg com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Arroz Tipo 1",
+      "Tio Joao",
+      "Mercearia",
+      "10kg"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 114,
+    "carbohydratesG": 12,
+    "proteinsG": 6,
+    "totalFatG": 5,
+    "saturatedFatG": 0.4,
+    "sodiumMg": 69,
+    "sugarG": 6,
+    "fiberG": 2.1
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "10kg"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-arroz-tipo-1",
+    "groupName": "Arroz Tipo 1",
+    "axis": [
+      "tamanho"
+    ],
+    "options": [
+      {
+        "id": "mock-0001",
+        "slug": "arroz-tipo-1-1kg",
+        "name": "Arroz Tipo 1 1kg",
+        "size": "1kg",
+        "available": true,
+        "sellingPrice": 1143,
+        "listPrice": 1246,
+        "image": "https://picsum.photos/seed/arroz-tipo-1-1kg-2x/400/400",
+        "variationAttributes": {
+          "size": "1kg"
+        }
+      },
+      {
+        "id": "mock-0002",
+        "slug": "arroz-tipo-1-2kg",
+        "name": "Arroz Tipo 1 2kg",
+        "size": "2kg",
+        "available": true,
+        "sellingPrice": 1884,
+        "listPrice": 2072,
+        "image": "https://picsum.photos/seed/arroz-tipo-1-2kg-2x/400/400",
+        "variationAttributes": {
+          "size": "2kg"
+        }
+      },
+      {
+        "id": "mock-0003",
+        "slug": "arroz-tipo-1-5kg",
+        "name": "Arroz Tipo 1 5kg",
+        "size": "5kg",
+        "available": true,
+        "sellingPrice": 2988,
+        "listPrice": 3317,
+        "image": "https://picsum.photos/seed/arroz-tipo-1-5kg-2x/400/400",
+        "variationAttributes": {
+          "size": "5kg"
+        }
+      },
+      {
+        "id": "mock-0004",
+        "slug": "arroz-tipo-1-10kg",
+        "name": "Arroz Tipo 1 10kg",
+        "size": "10kg",
+        "available": true,
+        "sellingPrice": 5586,
+        "listPrice": 6256,
+        "image": "https://picsum.photos/seed/arroz-tipo-1-10kg-2x/400/400",
+        "variationAttributes": {
+          "size": "10kg"
+        }
+      }
+    ]
+  }
+}

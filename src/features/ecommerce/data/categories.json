@@ -1,0 +1,170 @@
+[
+  {
+    "id": "1",
+    "slug": "hortifruti",
+    "name": "Hortifruti",
+    "parentId": null,
+    "children": [],
+    "productIds": ["mango-kg", "banana-nanica-kg", "maca-gala-kg"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 100, "step": 5 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Hortifruti"] }
+    ]
+  },
+  {
+    "id": "3",
+    "slug": "acougue",
+    "name": "Açougue",
+    "parentId": null,
+    "children": [
+      { "id": "45", "slug": "frango", "name": "Frango" }
+    ],
+  "productIds": ["peito-frango-6", "coxa-sobrecoxa-1kg"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 100, "step": 5 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Sadia"] },
+      { "type": "multi", "key": "dept", "label": "Cortes", "options": ["Frango"] }
+    ]
+  },
+  {
+    "id": "2",
+    "slug": "mercearia",
+    "name": "Mercearia",
+    "parentId": null,
+    "children": [
+      { "id": "68", "slug": "bomboniere", "name": "Bomboniere" },
+      { "id": "15", "slug": "doces-e-sobremesas", "name": "Doces e Sobremesas" },
+      { "id": "21", "slug": "graos-e-cereais", "name": "Grãos e Cereais" },
+      { "id": "16", "slug": "molhos-e-condimentos", "name": "Molhos e Condimentos" }
+    ],
+    "productIds": ["7348", "coffee-soluble", "leite-condensado-5", "panettone-7", "arroz-9", "feijao-10", "maionese-11"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 100, "step": 5 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Pilar", "Café Real", "Nestle", "Bauducco", "Tio João", "Kicaldo", "Hellmann's"] },
+      { "type": "multi", "key": "dept", "label": "Subcategoria", "options": ["Bomboniere", "Doces e Sobremesas", "Grãos e Cereais", "Molhos e Condimentos"] }
+    ]
+  },
+  {
+    "id": "4",
+    "slug": "bebidas",
+    "name": "Bebidas",
+    "parentId": null,
+    "children": [
+      { "id": "18", "slug": "refrigerantes", "name": "Refrigerantes" },
+      { "id": "19", "slug": "cervejas", "name": "Cervejas" },
+      { "id": "22", "slug": "vinhos", "name": "Vinhos" }
+    ],
+    "productIds": ["coca-cola-8", "cerveja-heineken-350", "vinho-tinto-750"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 100, "step": 5 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Coca-Cola", "Heineken"] },
+      { "type": "multi", "key": "dept", "label": "Subcategoria", "options": ["Refrigerantes", "Cervejas", "Vinhos"] }
+    ]
+  },
+  {
+    "id": "24",
+    "slug": "bebida-alcoolica",
+    "name": "Bebida Alcoólica",
+    "parentId": null,
+    "children": [ { "id": "96", "slug": "lager", "name": "Lager" }, { "id": "110", "slug": "tintos", "name": "Tintos" } ],
+    "productIds": ["cerveja-heineken-350", "vinho-tinto-750"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 200, "step": 10 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Heineken"] },
+      { "type": "multi", "key": "dept", "label": "Estilo", "options": ["Lager", "Tintos"] }
+    ]
+  },
+  {
+    "id": "20",
+    "slug": "congelados",
+    "name": "Congelados",
+    "parentId": null,
+    "children": [
+      { "id": "44", "slug": "hamburguer", "name": "Hambúrguer" }
+    ],
+    "productIds": ["5551"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 200, "step": 10 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Perdigão"] },
+      { "type": "multi", "key": "dept", "label": "Subcategoria", "options": ["Hambúrguer"] }
+    ]
+  },
+  {
+    "id": "5",
+    "slug": "limpeza",
+    "name": "Limpeza",
+    "parentId": null,
+    "children": [ { "id": "33", "slug": "casa-geral", "name": "Casa Em Geral" }, { "id": "31", "slug": "cozinha", "name": "Cozinha" }, { "id": "32", "slug": "lavanderia", "name": "Lavanderia" } ],
+    "productIds": ["detergente-ype-500", "agua-sanitaria-2l", "sabao-liquido-omo-3l"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 100, "step": 5 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Ypê", "OMO"] },
+      { "type": "multi", "key": "dept", "label": "Seção", "options": ["Casa Em Geral", "Cozinha", "Lavanderia"] }
+    ]
+  },
+  {
+    "id": "6",
+    "slug": "higiene-e-beleza",
+    "name": "Higiene e Beleza",
+    "parentId": null,
+    "children": [ { "id": "41", "slug": "cabelos", "name": "Cabelos" } ],
+    "productIds": ["shampoo-seda-325"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 100, "step": 5 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Seda"] },
+      { "type": "multi", "key": "dept", "label": "Seção", "options": ["Cabelos"] }
+    ]
+  },
+  {
+    "id": "7",
+    "slug": "frios-e-laticinios",
+    "name": "Frios e Laticínios",
+    "parentId": null,
+    "children": [ { "id": "51", "slug": "queijos", "name": "Queijos" } ],
+    "productIds": ["queijo-mucarela-500"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 100, "step": 5 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Local"] },
+      { "type": "multi", "key": "dept", "label": "Seção", "options": ["Queijos"] }
+    ]
+  },
+  {
+    "id": "8",
+    "slug": "padaria",
+    "name": "Padaria",
+    "parentId": null,
+    "children": [ { "id": "61", "slug": "paes", "name": "Pães" } ],
+    "productIds": ["pao-frances-1kg", "pao-forma-450"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 100, "step": 5 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Padaria"] },
+      { "type": "multi", "key": "dept", "label": "Seção", "options": ["Pães"] }
+    ]
+  },
+  {
+    "id": "10",
+    "slug": "peixaria",
+    "name": "Peixaria",
+    "parentId": null,
+    "children": [ { "id": "101", "slug": "peixes", "name": "Peixes" } ],
+    "productIds": ["file-tilapia-700", "posta-salmao-500"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 200, "step": 10 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["Frescatto", "Costa Sul"] },
+      { "type": "multi", "key": "dept", "label": "Seção", "options": ["Peixes"] }
+    ]
+  },
+  {
+    "id": "9",
+    "slug": "pet",
+    "name": "Pet Shop",
+    "parentId": null,
+    "children": [ { "id": "71", "slug": "caes", "name": "Cães" } ],
+    "productIds": ["racao-caes-10kg"],
+    "facets": [
+      { "type": "range", "key": "price", "label": "Faixa de preço", "min": 0, "max": 200, "step": 10 },
+      { "type": "multi", "key": "brand", "label": "Marca", "options": ["PetLove"] },
+      { "type": "multi", "key": "dept", "label": "Seção", "options": ["Cães"] }
+    ]
+  }
+]

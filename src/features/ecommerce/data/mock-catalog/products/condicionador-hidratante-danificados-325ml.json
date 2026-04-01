@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0063",
+  "slug": "condicionador-hidratante-danificados-325ml",
+  "productId": "910063",
+  "productRefId": "810063",
+  "refId": "810063",
+  "uniqueId": "118385BEEBBBC1245BBF3EC8A10A485E",
+  "skuName": "Condicionador Hidratante Danificados 325ml",
+  "name": "Condicionador Hidratante Danificados 325ml",
+  "shortDescription": "Condicionador Hidratante 325ml",
+  "longDescription": "Condicionador Hidratante Danificados 325ml da marca Seda. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Seda"
+  },
+  "brand": "Seda",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/condicionador-hidratante-danificados-325ml/p",
+  "canonicalUrl": "/e-commerce/condicionador-hidratante-danificados-325ml/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/condicionador-hidratante-danificados-325ml-1x/96/96",
+    "at2x": "https://picsum.photos/seed/condicionador-hidratante-danificados-325ml-2x/400/400",
+    "at3x": "https://picsum.photos/seed/condicionador-hidratante-danificados-325ml-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0063-image-1",
+      "url": "https://picsum.photos/seed/condicionador-hidratante-danificados-325ml-2x/400/400",
+      "label": "frontal",
+      "alt": "Condicionador Hidratante Danificados 325ml",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0063-image-2",
+      "url": "https://picsum.photos/seed/condicionador-hidratante-danificados-325ml-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Condicionador Hidratante Danificados 325ml em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "325ml",
+  "price": 1271,
+  "sellingPrice": 1271,
+  "listPrice": 1487,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 1271,
+    "total": 1271,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 1271
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 1271,
+    "listPrice": 1487,
+    "discountPercent": 17,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 1271,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 636,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "6": "Higiene e Beleza",
+    "41": "Cabelos",
+    "502": "Condicionador"
+  },
+  "productCategoryIds": "/6/41/502/",
+  "categoryPath": [
+    {
+      "id": "6",
+      "name": "Higiene e Beleza"
+    },
+    {
+      "id": "41",
+      "name": "Cabelos"
+    },
+    {
+      "id": "502",
+      "name": "Condicionador"
+    }
+  ],
+  "tags": [
+    "higiene-e-beleza",
+    "seda",
+    "condicionador-hidratante"
+  ],
+  "badges": [
+    "super-oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 6,
+    "width": 6,
+    "length": 6
+  },
+  "weightGrams": 325,
+  "logistics": {
+    "weightGrams": 325,
+    "volumetricWeightGrams": 364,
+    "temperatureZone": "ambient",
+    "fragile": true,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 99,
+    "safetyStock": 8,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 54
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 45
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "condicionador-hidratante"
+  },
+  "seo": {
+    "title": "Condicionador Hidratante Danificados 325ml | Supermercado Mock",
+    "description": "Compre Condicionador Hidratante Danificados 325ml com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Condicionador Hidratante",
+      "Seda",
+      "Higiene e Beleza",
+      "325ml"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": null,
+  "allergens": [],
+  "ingredients": "Formula mock para simulacao de composicao do produto.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "325ml",
+    "hairType": "Danificados"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-condicionador-hidratante",
+    "groupName": "Condicionador Hidratante",
+    "axis": [
+      "tipo-cabelo"
+    ],
+    "options": [
+      {
+        "id": "mock-0061",
+        "slug": "condicionador-hidratante-lisos-325ml",
+        "name": "Condicionador Hidratante Lisos 325ml",
+        "size": "325ml",
+        "available": true,
+        "sellingPrice": 1199,
+        "listPrice": 1379,
+        "image": "https://picsum.photos/seed/condicionador-hidratante-lisos-325ml-2x/400/400",
+        "variationAttributes": {
+          "size": "325ml",
+          "hairType": "Lisos"
+        }
+      },
+      {
+        "id": "mock-0062",
+        "slug": "condicionador-hidratante-cacheados-325ml",
+        "name": "Condicionador Hidratante Cacheados 325ml",
+        "size": "325ml",
+        "available": true,
+        "sellingPrice": 1247,
+        "listPrice": 1447,
+        "image": "https://picsum.photos/seed/condicionador-hidratante-cacheados-325ml-2x/400/400",
+        "variationAttributes": {
+          "size": "325ml",
+          "hairType": "Cacheados"
+        }
+      },
+      {
+        "id": "mock-0063",
+        "slug": "condicionador-hidratante-danificados-325ml",
+        "name": "Condicionador Hidratante Danificados 325ml",
+        "size": "325ml",
+        "available": true,
+        "sellingPrice": 1271,
+        "listPrice": 1487,
+        "image": "https://picsum.photos/seed/condicionador-hidratante-danificados-325ml-2x/400/400",
+        "variationAttributes": {
+          "size": "325ml",
+          "hairType": "Danificados"
+        }
+      },
+      {
+        "id": "mock-0064",
+        "slug": "condicionador-hidratante-nutricao-325ml",
+        "name": "Condicionador Hidratante Nutricao 325ml",
+        "size": "325ml",
+        "available": true,
+        "sellingPrice": 1343,
+        "listPrice": 1585,
+        "image": "https://picsum.photos/seed/condicionador-hidratante-nutricao-325ml-2x/400/400",
+        "variationAttributes": {
+          "size": "325ml",
+          "hairType": "Nutricao"
+        }
+      }
+    ]
+  }
+}

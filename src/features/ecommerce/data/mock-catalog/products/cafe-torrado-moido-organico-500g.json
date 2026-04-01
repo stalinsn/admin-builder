@@ -1,0 +1,286 @@
+{
+  "schemaVersion": "1.0.0",
+  "mockType": "supermarket-product",
+  "source": "mock-catalog-generator",
+  "id": "mock-0016",
+  "slug": "cafe-torrado-moido-organico-500g",
+  "productId": "910016",
+  "productRefId": "810016",
+  "refId": "810016",
+  "uniqueId": "1C5A85789B80D8A2CC0F4C1170FE0282",
+  "skuName": "Cafe Torrado e Moido Organico 500g",
+  "name": "Cafe Torrado e Moido Organico 500g",
+  "shortDescription": "Cafe Torrado e Moido 500g",
+  "longDescription": "Cafe Torrado e Moido Organico 500g da marca Pilao. Produto mock para simulacao de catalogo de supermercado com dados completos para PLP, PDP, carrinho e checkout.",
+  "additionalInfo": {
+    "brandName": "Pilao"
+  },
+  "brand": "Pilao",
+  "availability": "available",
+  "status": "active",
+  "isGift": false,
+  "seller": "1",
+  "sellerName": "Loja Principal",
+  "detailUrl": "/cafe-torrado-moido-organico-500g/p",
+  "canonicalUrl": "/e-commerce/cafe-torrado-moido-organico-500g/p",
+  "imageUrls": {
+    "at1x": "https://picsum.photos/seed/cafe-torrado-moido-organico-500g-1x/96/96",
+    "at2x": "https://picsum.photos/seed/cafe-torrado-moido-organico-500g-2x/400/400",
+    "at3x": "https://picsum.photos/seed/cafe-torrado-moido-organico-500g-3x/800/800"
+  },
+  "images": [
+    {
+      "id": "mock-0016-image-1",
+      "url": "https://picsum.photos/seed/cafe-torrado-moido-organico-500g-2x/400/400",
+      "label": "frontal",
+      "alt": "Cafe Torrado e Moido Organico 500g",
+      "isPrimary": true,
+      "width": 400,
+      "height": 400
+    },
+    {
+      "id": "mock-0016-image-2",
+      "url": "https://picsum.photos/seed/cafe-torrado-moido-organico-500g-lifestyle/1200/800",
+      "label": "lifestyle",
+      "alt": "Cafe Torrado e Moido Organico 500g em contexto de uso",
+      "isPrimary": false,
+      "width": 1200,
+      "height": 800
+    }
+  ],
+  "measurementUnit": "un",
+  "unitMultiplier": 1,
+  "quantity": 1,
+  "packSizeLabel": "500g",
+  "price": 1889,
+  "sellingPrice": 1889,
+  "listPrice": 2342,
+  "currencyCode": "BRL",
+  "priceDefinition": {
+    "calculatedSellingPrice": 1889,
+    "total": 1889,
+    "sellingPrices": [
+      {
+        "quantity": 1,
+        "value": 1889
+      }
+    ]
+  },
+  "pricing": {
+    "currency": "BRL",
+    "sellingPrice": 1889,
+    "listPrice": 2342,
+    "discountPercent": 24,
+    "installmentOptions": [
+      {
+        "count": 1,
+        "value": 1889,
+        "interestRate": 0
+      },
+      {
+        "count": 2,
+        "value": 945,
+        "interestRate": 0
+      }
+    ],
+    "pixDiscountPercent": 3
+  },
+  "productCategories": {
+    "2": "Mercearia",
+    "24": "Cafes e Chas",
+    "116": "Cafe Torrado"
+  },
+  "productCategoryIds": "/2/24/116/",
+  "categoryPath": [
+    {
+      "id": "2",
+      "name": "Mercearia"
+    },
+    {
+      "id": "24",
+      "name": "Cafes e Chas"
+    },
+    {
+      "id": "116",
+      "name": "Cafe Torrado"
+    }
+  ],
+  "tags": [
+    "mercearia",
+    "pilao",
+    "cafe-torrado-e-moido"
+  ],
+  "badges": [
+    "super-oferta",
+    "pronta-entrega"
+  ],
+  "dimensionsCm": {
+    "height": 6,
+    "width": 6,
+    "length": 6
+  },
+  "weightGrams": 500,
+  "logistics": {
+    "weightGrams": 500,
+    "volumetricWeightGrams": 560,
+    "temperatureZone": "ambient",
+    "fragile": false,
+    "hazardous": false,
+    "shippingClass": "standard"
+  },
+  "stock": {
+    "availableQuantity": 130,
+    "safetyStock": 10,
+    "backorderable": false,
+    "leadTimeDays": 1,
+    "warehouses": [
+      {
+        "code": "CD-SP",
+        "quantity": 72
+      },
+      {
+        "code": "CD-RJ",
+        "quantity": 59
+      }
+    ]
+  },
+  "regionalization": {
+    "availableRegions": [
+      "sudeste",
+      "sul",
+      "centro-oeste"
+    ],
+    "preferredPostalCodePrefixes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05"
+    ],
+    "pickupEligible": true,
+    "deliveryModes": [
+      "delivery",
+      "pickup"
+    ],
+    "substitutionGroup": "cafe-torrado-moido"
+  },
+  "seo": {
+    "title": "Cafe Torrado e Moido Organico 500g | Supermercado Mock",
+    "description": "Compre Cafe Torrado e Moido Organico 500g com preco competitivo e entrega rapida. Produto mock para homologacao de catalogo.",
+    "keywords": [
+      "Cafe Torrado e Moido",
+      "Pilao",
+      "Mercearia",
+      "500g"
+    ]
+  },
+  "compliance": {
+    "ageRestricted": false,
+    "requiresColdChain": false,
+    "requiresAdultSignature": false
+  },
+  "nutrition": {
+    "servingSize": "30g",
+    "caloriesKcal": 126,
+    "carbohydratesG": 13,
+    "proteinsG": 6,
+    "totalFatG": 2,
+    "saturatedFatG": 0.4,
+    "sodiumMg": 81,
+    "sugarG": 9,
+    "fiberG": 0.9
+  },
+  "allergens": [
+    "pode conter leite",
+    "pode conter soja"
+  ],
+  "ingredients": "Ingredientes mock para simulacao de leitura de rotulo no ecommerce.",
+  "storageInstructions": "Armazenar em local seco e arejado.",
+  "variationAttributes": {
+    "size": "500g",
+    "intensity": "Organico"
+  },
+  "marketing": {
+    "highlights": [
+      "Produto mock para homologacao",
+      "Dados completos para multiplas telas",
+      "Compativel com estrutura de catalogo VTEX-like"
+    ],
+    "campaignEligibility": [
+      "mothers-day",
+      "easter",
+      "black-friday"
+    ]
+  },
+  "audit": {
+    "createdAt": "2026-03-02T12:00:00.000Z",
+    "updatedAt": "2026-03-02T12:00:00.000Z",
+    "generatedBy": "codex-gpt5"
+  },
+  "variationGroup": {
+    "groupId": "group-cafe-torrado-moido",
+    "groupName": "Cafe Torrado e Moido",
+    "axis": [
+      "intensidade",
+      "peso"
+    ],
+    "options": [
+      {
+        "id": "mock-0013",
+        "slug": "cafe-torrado-moido-tradicional-250g",
+        "name": "Cafe Torrado e Moido Tradicional 250g",
+        "size": "250g",
+        "available": true,
+        "sellingPrice": 1035,
+        "listPrice": 1252,
+        "image": "https://picsum.photos/seed/cafe-torrado-moido-tradicional-250g-2x/400/400",
+        "variationAttributes": {
+          "size": "250g",
+          "intensity": "Tradicional"
+        }
+      },
+      {
+        "id": "mock-0014",
+        "slug": "cafe-torrado-moido-tradicional-500g",
+        "name": "Cafe Torrado e Moido Tradicional 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 1399,
+        "listPrice": 1707,
+        "image": "https://picsum.photos/seed/cafe-torrado-moido-tradicional-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "intensity": "Tradicional"
+        }
+      },
+      {
+        "id": "mock-0015",
+        "slug": "cafe-torrado-moido-extraforte-500g",
+        "name": "Cafe Torrado e Moido Extra Forte 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 1539,
+        "listPrice": 1893,
+        "image": "https://picsum.photos/seed/cafe-torrado-moido-extraforte-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "intensity": "Extra Forte"
+        }
+      },
+      {
+        "id": "mock-0016",
+        "slug": "cafe-torrado-moido-organico-500g",
+        "name": "Cafe Torrado e Moido Organico 500g",
+        "size": "500g",
+        "available": true,
+        "sellingPrice": 1889,
+        "listPrice": 2342,
+        "image": "https://picsum.photos/seed/cafe-torrado-moido-organico-500g-2x/400/400",
+        "variationAttributes": {
+          "size": "500g",
+          "intensity": "Organico"
+        }
+      }
+    ]
+  }
+}
