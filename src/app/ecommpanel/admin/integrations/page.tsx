@@ -3,7 +3,8 @@ import { redirect } from 'next/navigation';
 import ApiIntegrationsManager from '@/features/ecommpanel/components/ApiIntegrationsManager';
 import { getPanelUserFromCookies, hasPermission } from '@/features/ecommpanel/server/auth';
 import { listApiClients, listApiLogs } from '@/features/ecommpanel/server/apiIntegrationStore';
-import { listReferenceByExposure } from '@/features/public-api/integration';
+import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
+import { getApiIntegrationScopeOptions, listReferenceByExposure } from '@/features/public-api/integration';
 
 export default async function PanelIntegrationsPage() {
   const user = await getPanelUserFromCookies();
@@ -24,11 +25,14 @@ export default async function PanelIntegrationsPage() {
     );
   }
 
+  const snapshot = getDataStudioSnapshot();
+
   return (
     <ApiIntegrationsManager
       initialClients={await listApiClients()}
       initialLogs={await listApiLogs(60)}
-      referenceItems={listReferenceByExposure('integration')}
+      referenceItems={listReferenceByExposure('integration', snapshot)}
+      availableScopes={getApiIntegrationScopeOptions(snapshot)}
       canManage={canManage}
     />
   );

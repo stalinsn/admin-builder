@@ -4,7 +4,7 @@ import type { FormEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
-  API_INTEGRATION_SCOPES,
+  type ApiIntegrationScopeOption,
   type ApiIntegrationScope,
   type ApiReferenceItem,
 } from '@/features/public-api/integration';
@@ -63,6 +63,7 @@ type ApiIntegrationsManagerProps = {
   initialClients: ApiClientRecord[];
   initialLogs: ApiRequestLogItem[];
   referenceItems: ApiReferenceItem[];
+  availableScopes: ApiIntegrationScopeOption[];
   canManage: boolean;
 };
 
@@ -76,61 +77,11 @@ type ClientFormState = {
   expiresAt: string;
 };
 
-const SCOPE_COPY: Record<
-  ApiIntegrationScope,
-  {
-    label: string;
-    description: string;
-    availability: 'active' | 'reserved';
-  }
-> = {
-  'catalog.read': {
-    label: 'Catálogo',
-    description: 'Produtos, categorias e coleções para apps, headless e parceiros.',
-    availability: 'active',
-  },
-  'content.read': {
-    label: 'Conteúdo',
-    description: 'Páginas dinâmicas e blog publicados para apps e integrações externas.',
-    availability: 'active',
-  },
-  'logistics.read': {
-    label: 'Logística',
-    description: 'Simulação de prazo, cobertura, retirada e malha operacional para apps e parceiros.',
-    availability: 'active',
-  },
-  'health.read': {
-    label: 'Health',
-    description: 'Snapshot de saúde do ecossistema para monitoramento autenticado.',
-    availability: 'active',
-  },
-  'orders.public.read': {
-    label: 'Pedidos públicos',
-    description: 'Consulta de rastreio por token público em contexto autenticado.',
-    availability: 'active',
-  },
-  'customers.read': {
-    label: 'Clientes',
-    description: 'Reservado para integrações futuras de CRM e app autenticado.',
-    availability: 'reserved',
-  },
-  'data.records.read': {
-    label: 'Registros modelados',
-    description: 'Leitura de contratos, entidades modeladas e registros do Data Studio para apps externos.',
-    availability: 'active',
-  },
-  'data.records.write': {
-    label: 'Escrita de registros',
-    description: 'Criação, atualização e remoção autenticada de registros modelados via API de integração.',
-    availability: 'active',
-  },
-};
-
-function buildEmptyForm(): ClientFormState {
+function buildEmptyForm(availableScopes: ApiIntegrationScope[]): ClientFormState {
   return {
     name: '',
     description: '',
-    scopes: ['catalog.read'],
+    scopes: availableScopes.includes('data.records.read') ? ['data.records.read'] : availableScopes.slice(0, 1),
     allowedIpsText: '',
     active: true,
     expiresAt: '',
@@ -175,12 +126,14 @@ export default function ApiIntegrationsManager({
   initialClients,
   initialLogs,
   referenceItems,
+  availableScopes,
   canManage,
 }: ApiIntegrationsManagerProps) {
+  const scopeIds = useMemo(() => availableScopes.map((scope) => scope.scope), [availableScopes]);
   const [csrfToken, setCsrfToken] = useState('');
   const [clients, setClients] = useState<ApiClientRecord[]>(initialClients);
   const [logs, setLogs] = useState<ApiRequestLogItem[]>(initialLogs);
-  const [form, setForm] = useState<ClientFormState>(buildEmptyForm());
+  const [form, setForm] = useState<ClientFormState>(buildEmptyForm(scopeIds));
   const [selectedClientId, setSelectedClientId] = useState<string | null>(initialClients[0]?.id || null);
   const [logClientFilter, setLogClientFilter] = useState<string>('all');
   const [loadingLogs, setLoadingLogs] = useState(false);
@@ -204,24 +157,26 @@ export default function ApiIntegrationsManager({
 
   useEffect(() => {
     if (!selectedClientId) {
-      setForm((current) => (current.clientId ? buildEmptyForm() : current));
+      setForm((current) => (current.clientId ? buildEmptyForm(scopeIds) : current));
       return;
     }
     const selected = clients.find((item) => item.id === selectedClientId);
     if (selected) setForm(mapClientToForm(selected));
-  }, [clients, selectedClientId]);
+  }, [clients, selectedClientId, scopeIds]);
 
   const stats = useMemo(() => {
     const activeClients = clients.filter((client) => client.active).length;
-    const reservedScopes = API_INTEGRATION_SCOPES.filter((scope) => SCOPE_COPY[scope].availability === 'reserved').length;
+    const reservedScopes = availableScopes.filter((scope) => scope.availability === 'reserved').length;
+    const entityScopes = availableScopes.filter((scope) => scope.group === 'entity').length;
     return {
       totalClients: clients.length,
       activeClients,
       totalLogs: logs.length,
       totalRoutes: referenceItems.length,
       reservedScopes,
+      entityScopes,
     };
-  }, [clients, logs.length, referenceItems.length]);
+  }, [availableScopes, clients, logs.length, referenceItems.length]);
 
   const selectedClient = useMemo(
     () => clients.find((item) => item.id === (selectedClientId || form.clientId)) || null,
@@ -342,7 +297,7 @@ export default function ApiIntegrationsManager({
 
   function handleCreateNew() {
     setSelectedClientId(null);
-    setForm(buildEmptyForm());
+    setForm(buildEmptyForm(scopeIds));
     setError(null);
     setSuccess(null);
     setRevealedSecret(null);
@@ -354,12 +309,12 @@ export default function ApiIntegrationsManager({
         <p className="panel-kicker">APIs e integrações</p>
         <h1 id="api-integrations-title">Controle de acesso da camada headless</h1>
         <p className="panel-muted">
-          Gere clientes de API, distribua escopos por domínio, rotacione segredos, acompanhe chamadas autenticadas e documente o contrato usado por apps e integrações externas.
+          Gere clientes de API, distribua escopos por entidade ou domínio técnico, rotacione segredos, acompanhe chamadas autenticadas e documente o contrato exposto para apps e serviços externos.
         </p>
         <div className="panel-catalog-architecture">
           <div>
             <strong>Separação de superfícies</strong>
-            <span>`/api/v1` continua pública e cacheável. `/api/integration/v1` exige autenticação e deixa trilha operacional.</span>
+            <span>`/api/v1` fica como superfície pública resumida. `/api/integration/v1` exige autenticação e registra trilha operacional.</span>
           </div>
           <div>
             <strong>Fluxo recomendado</strong>
@@ -385,9 +340,9 @@ export default function ApiIntegrationsManager({
           <span>Últimas chamadas rastreadas</span>
         </article>
         <article className="panel-stat">
-          <span className="panel-muted">Escopos reservados</span>
-          <strong>{stats.reservedScopes}</strong>
-          <span>Preparados para módulos futuros</span>
+          <span className="panel-muted">Escopos por entidade</span>
+          <strong>{stats.entityScopes}</strong>
+          <span>{stats.reservedScopes} reservados para expansão</span>
         </article>
       </div>
 
@@ -411,7 +366,7 @@ export default function ApiIntegrationsManager({
           <div className="panel-card-header">
             <div className="panel-card-header__copy">
               <h2>{form.clientId ? 'Editar cliente de API' : 'Novo cliente de API'}</h2>
-              <p className="panel-muted">Distribua escopos por domínio, limite IPs quando fizer sentido e defina se a credencial expira.</p>
+              <p className="panel-muted">Distribua escopos por entidade ou por domínio técnico, limite IPs quando fizer sentido e defina se a credencial expira.</p>
             </div>
             <button type="button" className="panel-button panel-button-secondary" onClick={handleCreateNew}>
               Novo cliente
@@ -460,11 +415,16 @@ export default function ApiIntegrationsManager({
             <div className="panel-field">
               <span className="panel-field-label">Escopos</span>
               <div className="panel-api-scope-grid">
-                {API_INTEGRATION_SCOPES.map((scope) => {
-                  const copy = SCOPE_COPY[scope];
-                  const checked = form.scopes.includes(scope);
+                {availableScopes.map((scopeOption) => {
+                  const checked = form.scopes.includes(scopeOption.scope);
+                  const groupLabel =
+                    scopeOption.group === 'entity'
+                      ? `entidade • ${scopeOption.entitySlug}`
+                      : scopeOption.group === 'data'
+                        ? 'dados'
+                        : 'sistema';
                   return (
-                    <label key={scope} className={`panel-api-scope-card ${checked ? 'is-selected' : ''}`}>
+                    <label key={scopeOption.scope} className={`panel-api-scope-card ${checked ? 'is-selected' : ''}`}>
                       <input
                         type="checkbox"
                         checked={checked}
@@ -472,18 +432,19 @@ export default function ApiIntegrationsManager({
                           setForm((current) => ({
                             ...current,
                             scopes: event.target.checked
-                              ? Array.from(new Set([...current.scopes, scope]))
-                              : current.scopes.filter((entry) => entry !== scope),
+                              ? Array.from(new Set([...current.scopes, scopeOption.scope]))
+                              : current.scopes.filter((entry) => entry !== scopeOption.scope),
                           }))
                         }
                         disabled={!canManage}
                       />
                       <div>
-                        <strong>{copy.label}</strong>
-                        <span>{copy.description}</span>
+                        <strong>{scopeOption.label}</strong>
+                        <span>{scopeOption.description}</span>
                         <small>
-                          <code>{scope}</code>
-                          {copy.availability === 'reserved' ? ' • reservado' : ' • disponível agora'}
+                          <code>{scopeOption.scope}</code>
+                          {` • ${groupLabel}`}
+                          {scopeOption.availability === 'reserved' ? ' • reservado' : ' • disponível agora'}
                         </small>
                       </div>
                     </label>
@@ -607,7 +568,7 @@ export default function ApiIntegrationsManager({
           <div className="panel-card-header">
             <div className="panel-card-header__copy">
               <h2>Referência da API de integração</h2>
-              <p className="panel-muted">Contrato autenticado atualmente disponível para apps, middlewares e parceiros técnicos.</p>
+              <p className="panel-muted">Contrato autenticado disponível para apps, middlewares e parceiros técnicos, refletindo as entidades modeladas nesta instância.</p>
             </div>
           </div>
           <div className="panel-table-wrap">

@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   return withIntegrationAccess(req, {
-    scope: 'data.records.read',
+    scope: 'data.contracts.read',
     handler: async () =>
       jsonIntegration({
         ok: true,

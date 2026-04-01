@@ -64,6 +64,7 @@ export async function withIntegrationAccess(
   req: NextRequest,
   options: {
     scope?: ApiIntegrationScope;
+    scopes?: ApiIntegrationScope[];
     handler: (context: IntegrationAuthContext) => Promise<Response>;
   },
 ): Promise<Response> {
@@ -100,10 +101,14 @@ export async function withIntegrationAccess(
     return errorIntegration(401, 'Token expirado, inválido ou revogado.');
   }
 
-  if (options.scope && !auth.scopes.includes(options.scope)) {
+  const requiredScopes = [options.scope, ...(options.scopes || [])].filter(
+    (scope): scope is ApiIntegrationScope => typeof scope === 'string' && scope.length > 0,
+  );
+
+  if (requiredScopes.length > 0 && !requiredScopes.some((scope) => auth.scopes.includes(scope))) {
     await logAttempt(req, {
       statusCode: 403,
-      scope: options.scope,
+      scope: requiredScopes[0],
       authMode: 'token',
       clientId: auth.client.id,
       keyId: auth.client.keyId,
@@ -124,7 +129,7 @@ export async function withIntegrationAccess(
 
     await logAttempt(req, {
       statusCode: response.status,
-      scope: options.scope,
+      scope: requiredScopes[0],
       authMode: 'token',
       clientId: auth.client.id,
       keyId: auth.client.keyId,
@@ -134,7 +139,7 @@ export async function withIntegrationAccess(
   } catch (error) {
     await logAttempt(req, {
       statusCode: 500,
-      scope: options.scope,
+      scope: requiredScopes[0],
       authMode: 'token',
       clientId: auth.client.id,
       keyId: auth.client.keyId,

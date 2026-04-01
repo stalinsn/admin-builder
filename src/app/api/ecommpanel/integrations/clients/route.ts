@@ -11,8 +11,9 @@ import {
   hasValidCsrf,
   isTrustedOrigin,
 } from '@/features/ecommpanel/server/auth';
+import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
 import { errorNoStore, jsonNoStore } from '@/features/ecommpanel/server/http';
-import { API_INTEGRATION_SCOPES, type ApiIntegrationScope } from '@/features/public-api/integration';
+import { isKnownApiIntegrationScope, type ApiIntegrationScope } from '@/features/public-api/integration';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,7 +25,8 @@ type ClientBody = {
 
 function normalizeScopes(value: unknown): ApiIntegrationScope[] {
   if (!Array.isArray(value)) return [];
-  return value.filter((entry): entry is ApiIntegrationScope => API_INTEGRATION_SCOPES.includes(entry as ApiIntegrationScope));
+  const snapshot = getDataStudioSnapshot();
+  return value.filter((entry): entry is ApiIntegrationScope => isKnownApiIntegrationScope(entry, snapshot));
 }
 
 function normalizeAllowedIps(value: unknown, multiline?: unknown): string[] {
