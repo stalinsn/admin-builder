@@ -1,4 +1,24 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 import { bootstrapAuthKitRuntime } from '../src/features/auth-kit/server/bootstrap';
+
+function loadDotEnvFile() {
+  const envPath = path.resolve(process.cwd(), '.env.local');
+  if (!fs.existsSync(envPath)) return;
+
+  const content = fs.readFileSync(envPath, 'utf8');
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+    const separatorIndex = line.indexOf('=');
+    if (separatorIndex <= 0) continue;
+    const key = line.slice(0, separatorIndex).trim();
+    const value = line.slice(separatorIndex + 1).trim();
+    if (!key || process.env[key] !== undefined) continue;
+    process.env[key] = value.replace(/^['"]|['"]$/g, '');
+  }
+}
 
 function parseArgs(argv: string[]) {
   const args = new Map<string, string | boolean>();
@@ -15,6 +35,7 @@ function parseArgs(argv: string[]) {
 }
 
 async function main() {
+  loadDotEnvFile();
   const args = parseArgs(process.argv.slice(2));
 
   const adminEmail = String(args.get('admin-email') || process.env.AUTH_KIT_ADMIN_EMAIL || '').trim();
