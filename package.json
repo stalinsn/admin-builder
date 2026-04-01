@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "build:fast": "NEXT_LINT=false NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production next build",
-    "auth-kit:bootstrap": "ts-node --esm ./scripts/bootstrap-auth-kit.ts"
+    "auth-kit:bootstrap": "tsx ./scripts/bootstrap-auth-kit.ts"
   },
   "dependencies": {
     "@types/dompurify": "^3.0.5",
@@ -22,6 +22,7 @@
     "pg": "^8.20.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "server-only": "^0.0.1",
     "sharp": "^0.34.5",
     "ssh2": "^1.17.0"
   },
@@ -42,6 +43,7 @@
     "start-server-and-test": "^2.0.3",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

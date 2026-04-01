@@ -58,30 +58,3 @@ npm run dev
 ```
 
 > Observação: no export voltado para VPS/produção, o caminho principal continua sendo o shell de instalação.
-
-
-## Fluxo recomendado em VPS existente
-
-1. Aponte o subdomínio para a VPS.
-   Exemplo: `e-game.admin.artmeta.com.br`
-2. Clone o repositório:
-
-```bash
-git clone git@github.com:stalinsn/admin-builder.git
-cd admin-builder
-```
-
-3. Rode o instalador:
-
-```bash
-sudo bash ./scripts/install-auth-kit-server.sh
-```
-
-4. Responda o passo a passo no terminal.
-5. Ao final, o script:
-   - prepara o PostgreSQL;
-   - grava `.env.local`;
-   - roda `npm install`;
-   - executa o bootstrap do auth;
-   - gera o build;
-   - opcionalmente configura PM2, Nginx e UFW.
