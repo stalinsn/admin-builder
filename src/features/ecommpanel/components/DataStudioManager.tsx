@@ -17,6 +17,7 @@ import {
   type DataTableCsvImportMode,
   type DataTableCsvImportResult,
 } from '@/features/ecommpanel/types/dataStudio';
+import DataEntityRecordsWorkspace from '@/features/ecommpanel/components/DataEntityRecordsWorkspace';
 
 type MeApiResponse = {
   csrfToken?: string;
@@ -326,7 +327,7 @@ export default function DataStudioManager({
   const [csvImportSummary, setCsvImportSummary] = useState<DataTableCsvImportResult | null>(null);
   const [activeBundlePath, setActiveBundlePath] = useState<string>(initialBundle.files[0]?.path || '');
   const [currentProvisioningStep, setCurrentProvisioningStep] = useState<1 | 2 | 3 | 4>(1);
-  const [activeDataModule, setActiveDataModule] = useState<'modeling' | 'connections' | 'bootstrap' | 'import' | 'csv' | 'bundle' | null>(null);
+  const [activeDataModule, setActiveDataModule] = useState<'modeling' | 'connections' | 'bootstrap' | 'records' | 'import' | 'csv' | 'bundle' | null>(null);
   const [isEntityViewerOpen, setIsEntityViewerOpen] = useState(false);
   const [isEntityEditorOpen, setIsEntityEditorOpen] = useState(false);
   const [expandedFieldId, setExpandedFieldId] = useState<string | null>(null);
@@ -981,6 +982,23 @@ export default function DataStudioManager({
             <article className="panel-data-wizard-quick-step">
               <header>
                 <span className="panel-data-wizard-quick-step__index">4</span>
+                <strong>Operar registros</strong>
+              </header>
+              <p className="panel-muted">Leia a entidade em formato de tabela, edite registros e valide rapidamente o conteúdo já populado.</p>
+              <div className="panel-data-wizard-quick-step__meta">
+                <span>Modifica: registros persistidos nas entidades prontas</span>
+                <span>Resultado: leitura operacional e edição rápida no painel</span>
+              </div>
+              <div className="panel-actions">
+                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('records')}>
+                  Abrir registros
+                </button>
+              </div>
+            </article>
+
+            <article className="panel-data-wizard-quick-step">
+              <header>
+                <span className="panel-data-wizard-quick-step__index">5</span>
                 <strong>Carregar dados</strong>
               </header>
               <p className="panel-muted">Importa registros JSON ou pacotes de estrutura para acelerar preenchimento inicial.</p>
@@ -997,7 +1015,7 @@ export default function DataStudioManager({
 
             <article className="panel-data-wizard-quick-step">
               <header>
-                <span className="panel-data-wizard-quick-step__index">5</span>
+                <span className="panel-data-wizard-quick-step__index">6</span>
                 <strong>Sincronizar CSV</strong>
               </header>
               <p className="panel-muted">Exporta para auditoria e importa CSV em tabelas físicas com controle de modo.</p>
@@ -1014,7 +1032,7 @@ export default function DataStudioManager({
 
             <article className="panel-data-wizard-quick-step">
               <header>
-                <span className="panel-data-wizard-quick-step__index">6</span>
+                <span className="panel-data-wizard-quick-step__index">7</span>
                 <strong>Gerar pacote base</strong>
               </header>
               <p className="panel-muted">Consolida boilerplate e artefatos para implantação e versionamento de estrutura.</p>
@@ -1146,6 +1164,8 @@ export default function DataStudioManager({
                     ? 'Perfis de conexão'
                     : activeDataModule === 'bootstrap'
                       ? 'Assistente de implantação'
+                      : activeDataModule === 'records'
+                        ? 'Registros por entidade'
                       : activeDataModule === 'import'
                         ? 'Importação manual'
                         : activeDataModule === 'csv'
@@ -1159,6 +1179,8 @@ export default function DataStudioManager({
                     ? 'Cadastre, revise e teste as conexões do painel com toda a largura disponível.'
                     : activeDataModule === 'bootstrap'
                       ? 'Siga as etapas do provisionamento sem competir por espaço com a navegação lateral.'
+                      : activeDataModule === 'records'
+                        ? 'Leia, edite e popule os registros das entidades em um workspace compacto e visível.'
                       : activeDataModule === 'import'
                         ? 'Importe registros ou pacotes completos em um espaço de trabalho dedicado.'
                         : activeDataModule === 'csv'
@@ -1680,6 +1702,15 @@ export default function DataStudioManager({
                     </div>
                   </article>
                 </div>
+              ) : null}
+
+              {activeDataModule === 'records' ? (
+                <DataEntityRecordsWorkspace
+                  entities={snapshot.entities}
+                  csrfToken={csrfToken}
+                  canManageRecords={canManageRecords}
+                  initialEntityId={selectedEntityId}
+                />
               ) : null}
 
               {activeDataModule === 'csv' && canManageDatabaseTables ? (
