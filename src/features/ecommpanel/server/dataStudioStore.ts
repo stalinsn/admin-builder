@@ -190,6 +190,11 @@ function getDefaultConnectionUser(): string {
   return sanitizeLine(process.env.APP_DB_USER || 'admin_builder') || 'admin_builder';
 }
 
+function shouldHydrateSeedConnectionValue(value: string | undefined): boolean {
+  const normalized = sanitizeLine(String(value || '')).toLowerCase();
+  return normalized === '' || normalized === 'app_hub' || normalized === 'admin_builder';
+}
+
 function createSeedSnapshot(): PersistedSnapshot {
   const now = nowIso();
   const localConnection: DataConnectionProfile = {
@@ -254,18 +259,26 @@ function loadSnapshot(): PersistedSnapshot {
       })),
       imports: Array.isArray(stored.imports) ? stored.imports : [],
       connections: Array.isArray(stored.connections)
-        ? stored.connections.map((connection) => ({
-            id: connection.id || `conn-${randomToken(6)}`,
-            label: sanitizeLine(connection.label || 'Conexão sem nome') || 'Conexão sem nome',
-            engine: sanitizeEngine(connection.engine),
-            host: sanitizeHost(connection.host || '127.0.0.1') || '127.0.0.1',
-            port: Number.isFinite(connection.port)
-              ? Number(connection.port)
-              : sanitizeEngine(connection.engine) === 'mysql'
-                ? 3306
-                : 5432,
-            database: sanitizeTableName(connection.database || getDefaultConnectionDatabase()) || getDefaultConnectionDatabase(),
-            username: sanitizeLine(connection.username || getDefaultConnectionUser()) || getDefaultConnectionUser(),
+        ? stored.connections.map((connection) => {
+            const engine = sanitizeEngine(connection.engine);
+            const isLocalSeedConnection = connection.id === 'conn-local-postgres' && engine === 'postgresql';
+            const resolvedDatabase =
+              isLocalSeedConnection && shouldHydrateSeedConnectionValue(connection.database)
+                ? getDefaultConnectionDatabase()
+                : sanitizeTableName(connection.database || getDefaultConnectionDatabase()) || getDefaultConnectionDatabase();
+            const resolvedUsername =
+              isLocalSeedConnection && shouldHydrateSeedConnectionValue(connection.username)
+                ? getDefaultConnectionUser()
+                : sanitizeLine(connection.username || getDefaultConnectionUser()) || getDefaultConnectionUser();
+
+            return {
+              id: connection.id || `conn-${randomToken(6)}`,
+              label: sanitizeLine(connection.label || 'Conexão sem nome') || 'Conexão sem nome',
+              engine,
+              host: sanitizeHost(connection.host || getDefaultConnectionHost()) || getDefaultConnectionHost(),
+              port: Number.isFinite(connection.port) ? Number(connection.port) : getDefaultConnectionPort(engine),
+              database: resolvedDatabase,
+              username: resolvedUsername,
             passwordReference: sanitizeLine(connection.passwordReference || 'APP_DB_PASSWORD') || 'APP_DB_PASSWORD',
             appHostPattern: sanitizeUserHostPattern(connection.appHostPattern || 'localhost'),
             sslMode: connection.sslMode === 'require' ? 'require' : connection.sslMode === 'prefer' ? 'prefer' : 'disable',
@@ -303,7 +316,8 @@ function loadSnapshot(): PersistedSnapshot {
             lastProvisionMessage: connection.lastProvisionMessage,
             createdAt: connection.createdAt || nowIso(),
             updatedAt: connection.updatedAt || nowIso(),
-          }))
+          };
+        })
         : [],
       bootstrap: {
         activeConnectionId: sanitizeLine(stored.bootstrap?.activeConnectionId || '') || undefined,
