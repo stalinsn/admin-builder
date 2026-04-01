@@ -19,6 +19,8 @@ AUTH_KIT_PUBLIC_URL="${AUTH_KIT_PUBLIC_URL:-http://127.0.0.1:${AUTH_KIT_PORT}}"
 AUTH_KIT_SEED_DEFAULT_PANEL_USERS="${AUTH_KIT_SEED_DEFAULT_PANEL_USERS:-false}"
 AUTH_KIT_INSTALL_PM2="${AUTH_KIT_INSTALL_PM2:-false}"
 AUTH_KIT_INSTALL_NGINX="${AUTH_KIT_INSTALL_NGINX:-false}"
+AUTH_KIT_INSTALL_CERTBOT="${AUTH_KIT_INSTALL_CERTBOT:-false}"
+AUTH_KIT_CERTBOT_EMAIL="${AUTH_KIT_CERTBOT_EMAIL:-}"
 AUTH_KIT_CONFIGURE_FIREWALL="${AUTH_KIT_CONFIGURE_FIREWALL:-false}"
 AUTH_KIT_ENABLE_UFW="${AUTH_KIT_ENABLE_UFW:-false}"
 AUTH_KIT_INTERACTIVE="${AUTH_KIT_INTERACTIVE:-auto}"
@@ -362,6 +364,10 @@ interactive_setup() {
 
   if bool_true "${AUTH_KIT_INSTALL_NGINX}"; then
     AUTH_KIT_NGINX_SITE_NAME="$(prompt_text 'Nome do arquivo do site no Nginx' "${AUTH_KIT_NGINX_SITE_NAME}")"
+    AUTH_KIT_INSTALL_CERTBOT="$(prompt_bool 'Emitir SSL com Certbot para este domínio?' "${AUTH_KIT_INSTALL_CERTBOT}")"
+    if bool_true "${AUTH_KIT_INSTALL_CERTBOT}"; then
+      AUTH_KIT_CERTBOT_EMAIL="$(prompt_text 'E-mail do Certbot' "${AUTH_KIT_CERTBOT_EMAIL:-${AUTH_KIT_ADMIN_EMAIL}}")"
+    fi
   fi
 
   AUTH_KIT_CONFIGURE_FIREWALL="$(prompt_bool 'Configurar regras do firewall UFW automaticamente?' "${AUTH_KIT_CONFIGURE_FIREWALL}")"
@@ -397,6 +403,7 @@ Automação:
   seed usuários padrão: ${AUTH_KIT_SEED_DEFAULT_PANEL_USERS}
   PM2: ${AUTH_KIT_INSTALL_PM2}$( bool_true "${AUTH_KIT_INSTALL_PM2}" && printf ' (%s)' "${AUTH_KIT_PM2_APP_NAME}" )
   Nginx: ${AUTH_KIT_INSTALL_NGINX}$( bool_true "${AUTH_KIT_INSTALL_NGINX}" && printf ' (%s)' "${AUTH_KIT_NGINX_SITE_NAME}" )
+  Certbot: ${AUTH_KIT_INSTALL_CERTBOT}$( bool_true "${AUTH_KIT_INSTALL_CERTBOT}" && printf ' (%s)' "${AUTH_KIT_CERTBOT_EMAIL}" )
   Firewall UFW: ${AUTH_KIT_CONFIGURE_FIREWALL}$( bool_true "${AUTH_KIT_CONFIGURE_FIREWALL}" && printf ' (enable=%s)' "${AUTH_KIT_ENABLE_UFW}" )
 
 EOF
@@ -500,6 +507,29 @@ EOF
   systemctl reload nginx || systemctl restart nginx
 }
 
+ensure_certbot() {
+  if ! bool_true "${AUTH_KIT_INSTALL_CERTBOT}"; then
+    return 0
+  fi
+
+  if ! bool_true "${AUTH_KIT_INSTALL_NGINX}"; then
+    fail "o Certbot automático exige a configuração do Nginx habilitada."
+  fi
+
+  local certbot_email="${AUTH_KIT_CERTBOT_EMAIL:-${AUTH_KIT_ADMIN_EMAIL}}"
+
+  log "Instalando Certbot"
+  apt-get install -y certbot python3-certbot-nginx
+
+  log "Emitindo certificado SSL para ${AUTH_KIT_DOMAIN}"
+  certbot --nginx \
+    -d "${AUTH_KIT_DOMAIN}" \
+    --non-interactive \
+    --agree-tos \
+    -m "${certbot_email}" \
+    --redirect
+}
+
 configure_firewall() {
   if ! bool_true "${AUTH_KIT_CONFIGURE_FIREWALL}"; then
     return 0
@@ -549,6 +579,7 @@ Admin inicial:
 Automação:
   pm2: ${AUTH_KIT_INSTALL_PM2}$( bool_true "${AUTH_KIT_INSTALL_PM2}" && printf ' (%s)' "${AUTH_KIT_PM2_APP_NAME}" )
   nginx: ${AUTH_KIT_INSTALL_NGINX}$( bool_true "${AUTH_KIT_INSTALL_NGINX}" && printf ' (%s)' "${AUTH_KIT_NGINX_SITE_NAME}" )
+  certbot: ${AUTH_KIT_INSTALL_CERTBOT}$( bool_true "${AUTH_KIT_INSTALL_CERTBOT}" && printf ' (%s)' "${AUTH_KIT_CERTBOT_EMAIL:-${AUTH_KIT_ADMIN_EMAIL}}" )
   firewall: ${AUTH_KIT_CONFIGURE_FIREWALL}
 
 Próximos passos sugeridos:
@@ -591,6 +622,7 @@ main() {
   build_app
   ensure_pm2
   ensure_nginx
+  ensure_certbot
   configure_firewall
   print_summary
 }
