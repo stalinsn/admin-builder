@@ -84,7 +84,7 @@ export default function PanelAdminNav({
       id: 'dashboard',
       href: '/ecommpanel/admin',
       label: 'Dashboard',
-      description: 'Resumo executivo da operação, publicações, alertas e prioridades.',
+      description: 'Resumo do orquestrador, base ativa, governança e trilha operacional.',
     },
   ];
 
@@ -95,119 +95,26 @@ export default function PanelAdminNav({
             id: 'analytics',
             href: '/ecommpanel/admin/analytics',
             label: 'Analytics',
-            description: 'Sessões, buscas, cliques, compras e comportamento recente da loja.',
+            description: 'Sessões internas, uso de recursos, eventos e leitura operacional do sistema.',
           },
         ]
       : []),
     ...(canReadOrders
       ? [
           {
-            id: 'orders',
-            href: '/ecommpanel/admin/orders',
-            label: 'Pedidos',
-            description: 'Fila operacional, andamento comercial e manutenção dos pedidos.',
-          },
-          {
             id: 'customers',
             href: '/ecommpanel/admin/customers',
-            label: 'Clientes',
-            description: 'Cadastro completo, documentos, contatos e múltiplos endereços.',
+            label: 'Usuários do sistema',
+            description: 'Cadastro completo, contatos, perfis e dados operacionais das contas cadastradas.',
           },
           {
             id: 'customers-lgpd',
             href: '/ecommpanel/admin/customers/lgpd',
             label: 'LGPD e dados',
-            description: 'Exportação, revisão e anonimização controlada das contas.',
-          },
-          {
-            id: 'logistics',
-            href: '/ecommpanel/admin/logistics',
-            label: 'Logística',
-            description: 'Origens, docas, cobertura, SLA e disponibilidade por operação.',
+            description: 'Exportação, revisão, retenção e anonimização controlada das contas.',
           },
         ]
       : []),
-  ];
-
-  const merchandisingLinks: NavItem[] = [
-    ...(canReadCatalog
-      ? [
-          {
-            id: 'catalog',
-            label: 'Catálogo',
-            description: 'Produtos, preço, disponibilidade, taxonomia e mídia comercial.',
-            children: [
-              {
-                id: 'catalog-overview',
-                href: '/ecommpanel/admin/catalog',
-                label: 'Visão geral',
-                description: 'Mapa executivo do catálogo, pendências e trilhas operacionais.',
-              },
-              {
-                id: 'catalog-products',
-                href: '/ecommpanel/admin/catalog/products',
-                label: 'Produtos',
-                description: 'Cadastro, preço, estoque, variações, imagens e disponibilidade.',
-              },
-              {
-                id: 'catalog-taxonomy',
-                href: '/ecommpanel/admin/catalog/taxonomy',
-                label: 'Taxonomia',
-                description: 'Categorias, coleções e organização comercial da loja.',
-              },
-              {
-                id: 'catalog-media',
-                href: '/ecommpanel/admin/catalog/media',
-                label: 'Mídia',
-                description: 'Biblioteca operacional de imagens, uploads e reutilização de assets.',
-              },
-            ],
-          },
-        ]
-      : []),
-    {
-      id: 'theme',
-      label: 'Tema',
-      description: 'Identidade visual, cores, acabamentos e leitura geral da loja.',
-      children: [
-        { id: 'theme-overview', href: '/ecommpanel/admin/site/theme', label: 'Visão geral', description: 'Resumo do visual publicado e do estilo ativo.' },
-        { id: 'theme-preset', href: '/ecommpanel/admin/site/theme/preset', label: 'Tema base', description: 'Tema principal e campanha ativa da loja.' },
-        { id: 'theme-overrides', href: '/ecommpanel/admin/site/theme/overrides', label: 'Ajustes finos', description: 'Mudanças pontuais de cor e refinamentos visuais.' },
-      ],
-    },
-    {
-      id: 'template',
-      label: 'Template',
-      description: 'Header, home, footer e estrutura fixa da experiência.',
-      children: [
-        { id: 'template-overview', href: '/ecommpanel/admin/site/template', label: 'Visão geral', description: 'Resumo das partes fixas e do estado publicado.' },
-        { id: 'template-header', href: '/ecommpanel/admin/site/template/header', label: 'Header', description: 'Marca, busca, atalhos e acesso principal da loja.' },
-        { id: 'template-home', href: '/ecommpanel/admin/site/template/home', label: 'Home', description: 'Mensagem principal, vitrines, serviços e entrada comercial.' },
-        { id: 'template-footer', href: '/ecommpanel/admin/site/template/footer', label: 'Footer', description: 'Colunas, contato, apps, redes e texto institucional.' },
-      ],
-    },
-    {
-      id: 'blog',
-      label: 'Blog',
-      description: 'Posts, comentários, publicação e operação editorial.',
-      children: [
-        { id: 'blog-overview', href: '/ecommpanel/admin/blog', label: 'Visão geral', description: 'Cadastro, revisão e estado atual dos posts.' },
-        { id: 'blog-editor', href: '/ecommpanel/admin/blog/editor', label: 'Editor', description: 'Texto, imagens, SEO, comentários e publicação.' },
-      ],
-    },
-    {
-      id: 'mega-menu',
-      label: 'Mega Menu',
-      description: 'Estrutura de departamentos, grupos e navegação da loja.',
-      children: [
-        { id: 'mega-menu-overview', href: '/ecommpanel/admin/site/mega-menu', label: 'Visão geral', description: 'Resumo do menu publicado e do fluxo atual.' },
-        { id: 'mega-menu-base', href: '/ecommpanel/admin/site/mega-menu/base', label: 'Base', description: 'Botão, abertura e contexto de uso do menu.' },
-        { id: 'mega-menu-tree', href: '/ecommpanel/admin/site/mega-menu/tree', label: 'Estrutura', description: 'Departamentos, grupos e links exibidos na loja.' },
-      ],
-    },
-    { id: 'routes', href: '/ecommpanel/admin/site/routes', label: 'Rotas', description: 'Criar, revisar, remover e restaurar páginas publicáveis.' },
-    { id: 'editor', href: '/ecommpanel/admin/site/editor', label: 'Editor', description: 'Montar páginas, seções e revisar rascunhos visuais.' },
-    { id: 'blocks', href: '/ecommpanel/admin/site/blocks', label: 'Blocos', description: 'Peças reutilizáveis para páginas, campanhas e editor.' },
   ];
 
   const platformLinks: NavItem[] = [
@@ -231,6 +138,16 @@ export default function PanelAdminNav({
                 description: 'Tabelas, campos, tipos e finalidade funcional da base.',
               },
             ],
+          },
+        ]
+      : []),
+    ...(canReadCatalog
+      ? [
+          {
+            id: 'catalog-media',
+            href: '/ecommpanel/admin/catalog/media',
+            label: 'Mídia',
+            description: 'Biblioteca operacional de imagens, uploads e reutilização de assets.',
           },
         ]
       : []),
@@ -265,16 +182,9 @@ export default function PanelAdminNav({
       : []),
   ];
 
-  const externalLinks: NavItem[] = [{ id: 'storefront', href: '/e-commerce', label: 'Loja', description: 'Abrir a vitrine pública' }];
-
   const filteredAccessLinks = useMemo(() => filterNavItems(accessLinks, searchQuery), [accessLinks, searchQuery]);
   const filteredOperationsLinks = useMemo(() => filterNavItems(operationsLinks, searchQuery), [operationsLinks, searchQuery]);
-  const filteredMerchandisingLinks = useMemo(
-    () => filterNavItems(merchandisingLinks, searchQuery),
-    [merchandisingLinks, searchQuery],
-  );
   const filteredPlatformLinks = useMemo(() => filterNavItems(platformLinks, searchQuery), [platformLinks, searchQuery]);
-  const filteredExternalLinks = useMemo(() => filterNavItems(externalLinks, searchQuery), [externalLinks, searchQuery]);
 
   useEffect(() => {
     const uiState = safeJsonGet<NavUiState>(PANEL_NAV_STORAGE_KEY, { expanded: {} });
@@ -379,8 +289,8 @@ export default function PanelAdminNav({
       <div className="panel-nav-header">
         <div className="panel-nav-header__copy">
           <span className="panel-nav-header__eyebrow">Navegação</span>
-          <strong>Painel operacional</strong>
-          <small>Abra só o módulo necessário e filtre o menu quando estiver procurando algo específico.</small>
+          <strong>Admin Builder</strong>
+          <small>Foque em dados, usuários, mídia, autenticação e integrações do sistema.</small>
         </div>
         <div className="panel-nav-searchbox">
           <input
@@ -400,10 +310,8 @@ export default function PanelAdminNav({
       </div>
 
       {renderLinks('Visão', filteredAccessLinks, 'group:access')}
-      {renderLinks('Operação comercial', filteredOperationsLinks, 'group:operations')}
-      {renderLinks('Loja e conteúdo', filteredMerchandisingLinks, 'group:merchandising')}
+      {renderLinks('Usuários e governança', filteredOperationsLinks, 'group:operations')}
       {renderLinks('Plataforma', filteredPlatformLinks, 'group:platform')}
-      {renderLinks('Acesso externo', filteredExternalLinks, 'group:external')}
     </nav>
   );
 }

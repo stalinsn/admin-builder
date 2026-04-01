@@ -25,8 +25,8 @@ type AuthMode = 'password' | 'code';
 export default function LoginForm() {
   const router = useRouter();
   const [form, setForm] = useState<LoginState>({
-    email: 'demo@ecommpanel.local',
-    password: 'Demo@123456',
+    email: '',
+    password: '',
   });
   const [authMode, setAuthMode] = useState<AuthMode>('password');
   const [tokenCode, setTokenCode] = useState('');
@@ -158,7 +158,7 @@ export default function LoginForm() {
     <section className="panel-auth" aria-labelledby="panel-login-title">
       <header className="panel-auth-header">
         <h2 id="panel-login-title">Entrar no painel</h2>
-        <p>Acesse o painel administrativo para operar sua loja com segurança.</p>
+        <p>Acesse o admin builder para orquestrar dados, mídia, APIs e usuários com segurança.</p>
       </header>
 
       <form className="panel-form" onSubmit={authMode === 'password' ? onSubmit : submitLoginCode} noValidate>
