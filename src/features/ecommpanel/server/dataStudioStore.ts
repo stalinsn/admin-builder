@@ -130,12 +130,14 @@ function sanitizeFieldName(value: string): string {
   const normalized = value
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-zA-Z0-9_]+/g, '_')
+    .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+    .toLowerCase()
+    .replace(/[^a-z0-9_]+/g, '_')
     .replace(/^_+|_+$/g, '')
     .replace(/_{2,}/g, '_');
 
   if (!normalized) return '';
-  if (/^[a-zA-Z_]/.test(normalized)) return normalized;
+  if (/^[a-z_]/.test(normalized)) return normalized;
   return `field_${normalized}`;
 }
 
