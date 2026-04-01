@@ -135,7 +135,7 @@ function fieldize(value: string): string {
     .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
     .toLowerCase()
     .replace(/[^a-z0-9_]+/g, '_')
-    .replace(/^_+|_+$/g, '')
+    .replace(/^_+/g, '')
     .replace(/_{2,}/g, '_');
 
   if (!normalized) return '';
