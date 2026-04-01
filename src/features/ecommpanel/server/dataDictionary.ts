@@ -1,5 +1,6 @@
 import 'server-only';
 
+import { getAdminBuilderSettings } from '@/features/ecommpanel/server/adminBuilderSettingsStore';
 import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
 import type { DataFieldDefinition } from '@/features/ecommpanel/types/dataStudio';
 
@@ -29,10 +30,9 @@ export type InternalDataDictionary = {
     panelUsers: string;
     panelSettings: string;
     analyticsEvents: string;
-    siteBuilder: string;
-    storefront: string;
-    blog: string;
-    catalog: string;
+    dataStudio: string;
+    accountWorkspace: string;
+    integrationApi: string;
   };
   modeledEntities: Array<{
     id: string;
@@ -65,8 +65,28 @@ function getMode(name: string, fallback = 'hybrid'): string {
   return value === 'files' || value === 'database' ? value : fallback;
 }
 
+const ADMIN_BUILDER_SYSTEM_TABLE_IDS = new Set([
+  'panel-users',
+  'panel-sessions',
+  'panel-reset-tokens',
+  'panel-login-tokens',
+  'panel-audit',
+  'panel-settings',
+  'analytics-events',
+  'customer-accounts',
+  'customer-addresses',
+  'customer-login-tokens',
+  'customer-pending-registrations',
+  'customer-sessions',
+  'customer-audit',
+  'api-integration-clients',
+  'api-integration-tokens',
+  'api-integration-request-logs',
+]);
+
 export function getInternalDataDictionary(): InternalDataDictionary {
   const snapshot = getDataStudioSnapshot();
+  const settings = getAdminBuilderSettings(snapshot);
 
   return {
     generatedAt: new Date().toISOString(),
@@ -74,10 +94,9 @@ export function getInternalDataDictionary(): InternalDataDictionary {
       panelUsers: process.env.ECOMMPANEL_DB_RUNTIME_MODE?.trim() || 'auto',
       panelSettings: getMode('ECOM_PANEL_SETTINGS_PERSISTENCE_MODE'),
       analyticsEvents: getMode('ECOM_ANALYTICS_EVENTS_PERSISTENCE_MODE'),
-      siteBuilder: getMode('ECOM_SITE_PERSISTENCE_MODE'),
-      storefront: getMode('ECOM_STOREFRONT_PERSISTENCE_MODE'),
-      blog: getMode('ECOM_BLOG_PERSISTENCE_MODE'),
-      catalog: getMode('ECOM_CATALOG_PERSISTENCE_MODE'),
+      dataStudio: 'files',
+      accountWorkspace: settings.accountWorkspace.mode === 'entity' ? `entity:${settings.accountWorkspace.entitySlug}` : 'native',
+      integrationApi: 'database',
     },
     modeledEntities: snapshot.entities.map((entity) => ({
       id: entity.id,
@@ -219,10 +238,10 @@ export function getInternalDataDictionary(): InternalDataDictionary {
       },
       {
         id: 'customer-accounts',
-        domain: 'Clientes',
-        label: 'Contas de clientes',
+        domain: 'Contas',
+        label: 'Contas nativas do auth kit',
         tableName: 'customer_accounts',
-        description: 'Cadastro principal de clientes do ecommerce, separado do acesso administrativo.',
+        description: 'Base nativa de contas do sistema quando o workspace de contas opera no modo interno do auth kit.',
         columns: [
           column('id', 'text', 'Identificador da conta.', { required: true, primaryKey: true }),
           column('email', 'text', 'Login principal do cliente.', { required: true, unique: true, indexed: true }),
@@ -257,15 +276,15 @@ export function getInternalDataDictionary(): InternalDataDictionary {
         ],
         notes: [
           'Dados sensíveis ficam cifrados em repouso; o painel opera a projeção já decifrada apenas no backend autorizado.',
-          'A conta do cliente é independente de panel_users e serve tanto storefront quanto app mobile futuro.',
+          'Essas contas são independentes de panel_users e podem servir qualquer aplicação que reutilize o kit de autenticação.',
         ],
       },
       {
         id: 'customer-addresses',
-        domain: 'Clientes',
-        label: 'Endereços de clientes',
+        domain: 'Contas',
+        label: 'Endereços das contas nativas',
         tableName: 'customer_addresses',
-        description: 'Múltiplos endereços por cliente para entrega e cobrança.',
+        description: 'Endereços vinculados às contas nativas quando a aplicação precisa armazenar localização, cobrança ou perfis de entrega.',
         columns: [
           column('id', 'text', 'Identificador do endereço.', { required: true, primaryKey: true }),
           column('account_id', 'text', 'Conta dona do endereço.', { required: true, indexed: true }),
@@ -290,8 +309,8 @@ export function getInternalDataDictionary(): InternalDataDictionary {
       },
       {
         id: 'customer-login-tokens',
-        domain: 'Clientes',
-        label: 'Códigos de login do cliente',
+        domain: 'Contas',
+        label: 'Códigos de login das contas nativas',
         tableName: 'customer_login_tokens',
         description: 'Códigos temporários por e-mail usados em Minha conta.',
         columns: [
@@ -306,8 +325,8 @@ export function getInternalDataDictionary(): InternalDataDictionary {
       },
       {
         id: 'customer-pending-registrations',
-        domain: 'Clientes',
-        label: 'Cadastros pendentes do cliente',
+        domain: 'Contas',
+        label: 'Cadastros pendentes das contas nativas',
         tableName: 'customer_pending_registrations',
         description: 'Cadastros ainda não confirmados por e-mail antes de ativar a conta.',
         columns: [
@@ -329,8 +348,8 @@ export function getInternalDataDictionary(): InternalDataDictionary {
       },
       {
         id: 'customer-sessions',
-        domain: 'Clientes',
-        label: 'Sessões do cliente',
+        domain: 'Contas',
+        label: 'Sessões das contas nativas',
         tableName: 'customer_sessions',
         description: 'Sessões autenticadas da área Minha conta.',
         columns: [
@@ -347,10 +366,10 @@ export function getInternalDataDictionary(): InternalDataDictionary {
       },
       {
         id: 'customer-audit',
-        domain: 'Clientes',
-        label: 'Auditoria do cliente',
+        domain: 'Contas',
+        label: 'Auditoria das contas nativas',
         tableName: 'customer_audit_events',
-        description: 'Eventos sensíveis de autenticação, cadastro e manutenção da conta do cliente.',
+        description: 'Eventos sensíveis de autenticação, cadastro e manutenção das contas nativas.',
         columns: [
           column('id', 'text', 'Identificador do evento.', { required: true, primaryKey: true }),
           column('account_id', 'text', 'Conta envolvida no evento.', { indexed: true }),
@@ -361,6 +380,66 @@ export function getInternalDataDictionary(): InternalDataDictionary {
           column('ip_hash', 'text', 'Hash do IP associado.'),
           column('user_agent_hash', 'text', 'Hash do agente associado.'),
           column('created_at', 'timestamptz', 'Registro do evento.', { required: true, indexed: true }),
+        ],
+      },
+      {
+        id: 'api-integration-clients',
+        domain: 'Integrações',
+        label: 'Clientes de integração',
+        tableName: 'api_integration_clients',
+        description: 'Aplicações externas autorizadas a consumir contratos e registros expostos pelo Admin Builder.',
+        columns: [
+          column('id', 'text', 'Identificador interno do cliente.', { required: true, primaryKey: true }),
+          column('key_id', 'text', 'Identificador público da chave.', { required: true, unique: true, indexed: true }),
+          column('name', 'text', 'Nome operacional da integração.', { required: true }),
+          column('description', 'text', 'Descrição do uso previsto.'),
+          column('scopes_json', 'jsonb', 'Escopos liberados para a integração.', { required: true }),
+          column('allowed_ips_json', 'jsonb', 'Allowlist opcional de IPs.', { required: true }),
+          column('active', 'boolean', 'Ativa ou bloqueia a integração.', { required: true, indexed: true }),
+          column('expires_at', 'timestamptz', 'Validade opcional da credencial.'),
+          column('last_used_at', 'timestamptz', 'Último uso conhecido.'),
+          column('last_used_ip_hash', 'text', 'Hash do último IP utilizado.'),
+          column('secret_hash', 'text', 'Hash do segredo principal.', { required: true }),
+          column('secret_hint', 'text', 'Dica operacional do segredo.'),
+          column('created_at', 'timestamptz', 'Criação da credencial.', { required: true }),
+          column('updated_at', 'timestamptz', 'Última atualização.', { required: true }),
+        ],
+      },
+      {
+        id: 'api-integration-tokens',
+        domain: 'Integrações',
+        label: 'Tokens de integração',
+        tableName: 'api_integration_tokens',
+        description: 'Tokens emitidos para clientes de integração com escopo e expiração próprios.',
+        columns: [
+          column('id', 'text', 'Identificador do token.', { required: true, primaryKey: true }),
+          column('client_id', 'text', 'Cliente dono do token.', { required: true, indexed: true }),
+          column('token_hash', 'text', 'Hash único do token emitido.', { required: true, unique: true }),
+          column('scopes_json', 'jsonb', 'Escopos efetivos do token.', { required: true }),
+          column('issued_at', 'timestamptz', 'Data de emissão.', { required: true }),
+          column('expires_at', 'timestamptz', 'Expiração do token.', { required: true, indexed: true }),
+          column('revoked_at', 'timestamptz', 'Revogação manual, quando ocorrer.'),
+          column('last_used_at', 'timestamptz', 'Último uso do token.'),
+        ],
+      },
+      {
+        id: 'api-integration-request-logs',
+        domain: 'Integrações',
+        label: 'Logs de requisição autenticada',
+        tableName: 'api_integration_request_logs',
+        description: 'Trilha de chamadas autenticadas para auditoria, troubleshooting e rate limiting.',
+        columns: [
+          column('id', 'text', 'Identificador do log.', { required: true, primaryKey: true }),
+          column('client_id', 'text', 'Cliente associado à chamada.', { indexed: true }),
+          column('key_id', 'text', 'Key id apresentado na requisição.', { indexed: true }),
+          column('route', 'text', 'Rota acessada.', { required: true }),
+          column('method', 'text', 'Método HTTP.', { required: true }),
+          column('status_code', 'integer', 'Status devolvido pela API.', { required: true }),
+          column('scope', 'text', 'Escopo principal exercido na chamada.'),
+          column('auth_mode', 'text', 'Modo de autenticação usado.', { required: true }),
+          column('ip_hash', 'text', 'Hash do IP de origem.'),
+          column('user_agent_hash', 'text', 'Hash do agente cliente.'),
+          column('created_at', 'timestamptz', 'Momento do registro.', { required: true, indexed: true }),
         ],
       },
       {
@@ -643,6 +722,6 @@ export function getInternalDataDictionary(): InternalDataDictionary {
           column('updated_at', 'timestamptz', 'Última atualização.', { required: true }),
         ],
       },
-    ],
+    ].filter((table) => ADMIN_BUILDER_SYSTEM_TABLE_IDS.has(table.id)),
   };
 }

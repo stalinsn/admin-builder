@@ -85,14 +85,14 @@ export default async function DataDictionaryAdminPage() {
         <div className="panel-data-dictionary-modes">
           <span className="panel-chip">Usuários/admin: {dictionary.persistence.panelUsers}</span>
           <span className="panel-chip">Configurações do painel: {dictionary.persistence.panelSettings}</span>
-          <span className="panel-chip">Site builder: {dictionary.persistence.siteBuilder}</span>
-          <span className="panel-chip">Storefront estrutural: {dictionary.persistence.storefront}</span>
-          <span className="panel-chip">Blog: {dictionary.persistence.blog}</span>
-          <span className="panel-chip">Catálogo: {dictionary.persistence.catalog}</span>
+          <span className="panel-chip">Eventos analíticos: {dictionary.persistence.analyticsEvents}</span>
+          <span className="panel-chip">Snapshot do Data Studio: {dictionary.persistence.dataStudio}</span>
+          <span className="panel-chip">Workspace de contas: {dictionary.persistence.accountWorkspace}</span>
+          <span className="panel-chip">Integrações autenticadas: {dictionary.persistence.integrationApi}</span>
         </div>
         <p className="panel-muted">
-          Em `database`, o PostgreSQL é a fonte administrativa. Em `hybrid`, o banco é preferido e os arquivos ficam
-          como rede de segurança ou projeção. Em `files`, o domínio ainda está local.
+          O Admin Builder separa o que vive no PostgreSQL, o que ainda está em snapshot local e como a camada de contas
+          está operando no momento.
         </p>
         <p className="panel-muted">
           Leitura das linhas do dicionário: <strong>campo</strong> = nome físico na base, <strong>tipo</strong> = tipo do

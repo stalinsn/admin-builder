@@ -172,16 +172,34 @@ function sanitizeField(field: Partial<DataFieldDefinition>, fallbackName: string
   };
 }
 
+function getDefaultConnectionHost(): string {
+  return sanitizeHost(process.env.APP_DB_HOST || '127.0.0.1') || '127.0.0.1';
+}
+
+function getDefaultConnectionPort(engine: DataConnectionProfile['engine'] = 'postgresql'): number {
+  const fallback = engine === 'mysql' ? 3306 : 5432;
+  const raw = Number(process.env.APP_DB_PORT || '');
+  return Number.isFinite(raw) && raw > 0 ? raw : fallback;
+}
+
+function getDefaultConnectionDatabase(): string {
+  return sanitizeTableName(process.env.APP_DB_NAME || 'admin_builder') || 'admin_builder';
+}
+
+function getDefaultConnectionUser(): string {
+  return sanitizeLine(process.env.APP_DB_USER || 'admin_builder') || 'admin_builder';
+}
+
 function createSeedSnapshot(): PersistedSnapshot {
   const now = nowIso();
   const localConnection: DataConnectionProfile = {
     id: 'conn-local-postgres',
-    label: 'Postgres local padrão',
+    label: 'Postgres principal do builder',
     engine: 'postgresql',
-    host: '127.0.0.1',
-    port: 5432,
-    database: 'app_hub',
-    username: 'app_hub',
+    host: getDefaultConnectionHost(),
+    port: getDefaultConnectionPort(),
+    database: getDefaultConnectionDatabase(),
+    username: getDefaultConnectionUser(),
     passwordReference: 'APP_DB_PASSWORD',
     appHostPattern: 'localhost',
     sslMode: 'disable',
@@ -193,113 +211,40 @@ function createSeedSnapshot(): PersistedSnapshot {
     adminUsername: 'postgres',
     adminPasswordReference: 'APP_DB_ADMIN_PASSWORD',
     active: true,
-    notes: 'Perfil inicial para desenvolvimento e primeiro bootstrap local.',
+    notes: 'Conexão inicial do Admin Builder para bootstrap e operação do runtime administrativo.',
     reachability: 'unknown',
     credentialStatus: 'unknown',
     createdAt: now,
     updatedAt: now,
   };
 
-  const customers: DataEntityDefinition = {
-    id: 'ent-customers',
-    slug: 'customers',
-    label: 'Clientes',
-    tableName: 'customer_accounts',
-    description: 'Base principal de clientes com PF/PJ, documentos, consentimentos e status da conta.',
-    status: 'ready',
-    createdAt: now,
-    updatedAt: now,
-    fields: [
-      sanitizeField({ id: 'fld-customers-email', name: 'email', label: 'E-mail', type: 'email', required: true, unique: true, indexed: true }, 'email'),
-      sanitizeField({ id: 'fld-customers-kind', name: 'kind', label: 'Tipo de cadastro', required: true, indexed: true, defaultValue: 'individual' }, 'kind'),
-      sanitizeField({ id: 'fld-customers-first-name', name: 'first_name', label: 'Primeiro nome', required: true, indexed: true }, 'first_name'),
-      sanitizeField({ id: 'fld-customers-last-name', name: 'last_name', label: 'Sobrenome', indexed: true }, 'last_name'),
-      sanitizeField({ id: 'fld-customers-full-name', name: 'full_name', label: 'Nome completo / razão social', required: true, indexed: true }, 'full_name'),
-      sanitizeField({ id: 'fld-customers-phone', name: 'phone', label: 'Telefone', indexed: true }, 'phone'),
-      sanitizeField({ id: 'fld-customers-alt-phone', name: 'alternate_phone', label: 'Telefone alternativo' }, 'alternate_phone'),
-      sanitizeField({ id: 'fld-customers-birth-date', name: 'birth_date_encrypted', label: 'Nascimento', type: 'date' }, 'birth_date_encrypted'),
-      sanitizeField({ id: 'fld-customers-tax-type', name: 'tax_document_type', label: 'Tipo de documento', required: true, indexed: true, defaultValue: 'cpf' }, 'tax_document_type'),
-      sanitizeField({ id: 'fld-customers-tax-doc', name: 'tax_document_encrypted', label: 'CPF / CNPJ', required: true }, 'tax_document_encrypted'),
-      sanitizeField({ id: 'fld-customers-rg-ie', name: 'secondary_document_encrypted', label: 'RG / documento secundário' }, 'secondary_document_encrypted'),
-      sanitizeField({ id: 'fld-customers-company-name', name: 'company_name', label: 'Razão social' }, 'company_name'),
-      sanitizeField({ id: 'fld-customers-trade-name', name: 'trade_name', label: 'Nome fantasia' }, 'trade_name'),
-      sanitizeField({ id: 'fld-customers-state-registration', name: 'state_registration_encrypted', label: 'Inscrição estadual' }, 'state_registration_encrypted'),
-      sanitizeField({ id: 'fld-customers-marketing', name: 'marketing_opt_in', label: 'Aceita marketing', type: 'boolean', defaultValue: 'false' }, 'marketing_opt_in'),
-      sanitizeField({ id: 'fld-customers-accepted-privacy', name: 'accepted_privacy_at', label: 'Privacidade aceita', type: 'date' }, 'accepted_privacy_at'),
-      sanitizeField({ id: 'fld-customers-accepted-terms', name: 'accepted_terms_at', label: 'Termos aceitos', type: 'date' }, 'accepted_terms_at'),
-      sanitizeField({ id: 'fld-customers-active', name: 'active', label: 'Conta ativa', type: 'boolean', required: true, indexed: true, defaultValue: 'true' }, 'active'),
-    ],
-  };
-
-  const blogPosts: DataEntityDefinition = {
-    id: 'ent-blog-posts',
-    slug: 'blog-posts',
-    label: 'Posts do Blog',
-    tableName: 'app_blog_posts',
-    description: 'Estrutura editorial para posts, resumo, SEO e estado de publicação.',
-    status: 'ready',
-    createdAt: now,
-    updatedAt: now,
-    fields: [
-      sanitizeField({ id: 'fld-blog-title', name: 'title', label: 'Título', required: true, indexed: true }, 'title'),
-      sanitizeField({ id: 'fld-blog-slug', name: 'slug', label: 'Slug', type: 'slug', required: true, unique: true, indexed: true }, 'slug'),
-      sanitizeField({ id: 'fld-blog-excerpt', name: 'excerpt', label: 'Resumo', type: 'rich_text' }, 'excerpt'),
-      sanitizeField({ id: 'fld-blog-status', name: 'status', label: 'Status', required: true, indexed: true, defaultValue: 'draft' }, 'status'),
-      sanitizeField({ id: 'fld-blog-seo', name: 'seo', label: 'SEO', type: 'json' }, 'seo'),
-    ],
-  };
-
-  const catalogProducts: DataEntityDefinition = {
-    id: 'ent-catalog-products',
-    slug: 'catalog-products',
-    label: 'Produtos',
-    tableName: 'app_catalog_products',
-    description: 'Produto pai com venda por unidade/peso, embalagem, merchandising e estrutura para variações por segmento.',
-    status: 'draft',
-    createdAt: now,
-    updatedAt: now,
-    fields: [
-      sanitizeField({ id: 'fld-products-name', name: 'name', label: 'Nome', required: true, indexed: true }, 'name'),
-      sanitizeField({ id: 'fld-products-slug', name: 'slug', label: 'Slug', type: 'slug', required: true, unique: true, indexed: true }, 'slug'),
-      sanitizeField({ id: 'fld-products-sku', name: 'sku', label: 'SKU', required: true, indexed: true }, 'sku'),
-      sanitizeField({ id: 'fld-products-status', name: 'status', label: 'Status', required: true, indexed: true, defaultValue: 'draft' }, 'status'),
-      sanitizeField({ id: 'fld-products-active', name: 'is_active', label: 'Ativo', type: 'boolean', defaultValue: 'true', indexed: true }, 'is_active'),
-      sanitizeField({ id: 'fld-products-brand', name: 'brand', label: 'Marca', indexed: true }, 'brand'),
-      sanitizeField({ id: 'fld-products-category-id', name: 'category_id', label: 'Categoria principal', indexed: true }, 'category_id'),
-      sanitizeField({ id: 'fld-products-collections', name: 'collections', label: 'Coleções', type: 'json' }, 'collections'),
-      sanitizeField({ id: 'fld-products-description', name: 'description', label: 'Descrição', type: 'rich_text' }, 'description'),
-      sanitizeField({ id: 'fld-products-commercial-unit', name: 'commercial_unit', label: 'Unidade comercial', type: 'json' }, 'commercial_unit'),
-      sanitizeField({ id: 'fld-products-packaging', name: 'packaging', label: 'Embalagem', type: 'json' }, 'packaging'),
-      sanitizeField({ id: 'fld-products-merchandising', name: 'merchandising', label: 'Merchandising', type: 'json' }, 'merchandising'),
-      sanitizeField({ id: 'fld-products-variants', name: 'variants', label: 'Variações', type: 'json' }, 'variants'),
-      sanitizeField({ id: 'fld-products-attributes', name: 'attributes', label: 'Atributos', type: 'json' }, 'attributes'),
-      sanitizeField({ id: 'fld-products-stock', name: 'stock', label: 'Estoque', type: 'json' }, 'stock'),
-      sanitizeField({ id: 'fld-products-pricing', name: 'pricing', label: 'Preço e promoções', type: 'json' }, 'pricing'),
-      sanitizeField({ id: 'fld-products-metadata', name: 'metadata', label: 'Metadados', type: 'json' }, 'metadata'),
-    ],
-  };
-
   return {
     schemaVersion: 1,
     updatedAt: now,
-    entities: [customers, blogPosts, catalogProducts],
+    entities: [],
     imports: [],
     connections: [localConnection],
-      bootstrap: {
-        activeConnectionId: localConnection.id,
-        credentialsVerified: false,
-        databaseProvisioned: false,
-        seedAdminProvisioned: false,
-        boilerplateProvisioned: false,
-        notes: 'O painel começa com um perfil local padrão. Ajuste host, banco e referência da senha quando necessário.',
-      },
+    bootstrap: {
+      activeConnectionId: localConnection.id,
+      credentialsVerified: false,
+      databaseProvisioned: false,
+      seedAdminProvisioned: false,
+      boilerplateProvisioned: false,
+      notes: 'O builder começa limpo. Configure a conexão principal e modele as entidades do projeto conforme o domínio da aplicação.',
+    },
   };
 }
 
 function loadSnapshot(): PersistedSnapshot {
   ensureDirs();
   const stored = readJsonFile<PersistedSnapshot>(SNAPSHOT_FILE);
-  if (stored?.entities?.length) {
+  const hasStoredSnapshot =
+    Boolean(stored) &&
+    (Array.isArray(stored?.entities) ||
+      Array.isArray(stored?.connections) ||
+      Array.isArray(stored?.imports) ||
+      typeof stored?.bootstrap === 'object');
+  if (hasStoredSnapshot) {
     return {
       schemaVersion: 1,
       updatedAt: stored.updatedAt || nowIso(),
@@ -319,8 +264,8 @@ function loadSnapshot(): PersistedSnapshot {
               : sanitizeEngine(connection.engine) === 'mysql'
                 ? 3306
                 : 5432,
-            database: sanitizeTableName(connection.database || 'app_hub') || 'app_hub',
-            username: sanitizeLine(connection.username || 'app_hub') || 'app_hub',
+            database: sanitizeTableName(connection.database || getDefaultConnectionDatabase()) || getDefaultConnectionDatabase(),
+            username: sanitizeLine(connection.username || getDefaultConnectionUser()) || getDefaultConnectionUser(),
             passwordReference: sanitizeLine(connection.passwordReference || 'APP_DB_PASSWORD') || 'APP_DB_PASSWORD',
             appHostPattern: sanitizeUserHostPattern(connection.appHostPattern || 'localhost'),
             sslMode: connection.sslMode === 'require' ? 'require' : connection.sslMode === 'prefer' ? 'prefer' : 'disable',

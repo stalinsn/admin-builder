@@ -52,6 +52,21 @@ function pgIdentifier(value: string): string {
   return `"${value.replace(/"/g, '""')}"`;
 }
 
+function sanitizeEnvDbName(value: string | undefined): string {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+}
+
+function sanitizeEnvDbUser(value: string | undefined): string {
+  return String(value || '')
+    .trim()
+    .replace(/\s+/g, '_')
+    .replace(/[^a-zA-Z0-9_]+/g, '');
+}
+
 function mysqlCommandPrefix(connection: DataConnectionProfile, adminPassword: string): string {
   const host = connection.host || '127.0.0.1';
   const port = connection.port || 3306;
@@ -512,8 +527,8 @@ function buildPostgresProvisionScript(input: {
   mainAdminEmail: string;
   mainAdminPasswordHash: string;
 }): string {
-  const connectionDatabase = connectionOrDefault(input.connection.database, 'app_hub');
-  const connectionUser = connectionOrDefault(input.connection.username, 'app_hub');
+  const connectionDatabase = connectionOrDefault(input.connection.database, sanitizeEnvDbName(process.env.APP_DB_NAME) || 'admin_builder');
+  const connectionUser = connectionOrDefault(input.connection.username, sanitizeEnvDbUser(process.env.APP_DB_USER) || 'admin_builder');
   const bootstrapSql = buildPostgresPanelBootstrapSql({
     mainAdminName: input.mainAdminName,
     mainAdminEmail: input.mainAdminEmail,
