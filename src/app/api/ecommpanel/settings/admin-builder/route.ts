@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
   const auth = await getApiAuthContext(req);
   if (!auth) return errorNoStore(401, 'Não autenticado.');
   if (!canReadSettings(auth.user.permissions)) {
-    return errorNoStore(403, 'Sem permissão para ler as preferências do Admin Builder.');
+    return errorNoStore(403, 'Sem permissão para ler as preferências do Artmeta Panel.');
   }
 
   return jsonNoStore({
@@ -36,7 +36,7 @@ export async function PUT(req: NextRequest) {
   const auth = await getApiAuthContext(req);
   if (!auth) return errorNoStore(401, 'Não autenticado.');
   if (!canWriteSettings(auth.user.permissions)) {
-    return errorNoStore(403, 'Sem permissão para alterar as preferências do Admin Builder.');
+    return errorNoStore(403, 'Sem permissão para alterar as preferências do Artmeta Panel.');
   }
   if (!hasValidCsrf(req, auth.csrfToken)) {
     return errorNoStore(403, 'Token CSRF inválido.');

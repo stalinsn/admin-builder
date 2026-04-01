@@ -76,7 +76,7 @@ export default async function AdminBuilderDashboardPage() {
     return (
       <section className="panel-dashboard panel-grid" aria-labelledby="panel-dashboard-title">
         <article className="panel-card panel-card-hero">
-          <p className="panel-kicker">Admin Builder</p>
+          <p className="panel-kicker">Artmeta Panel</p>
           <h1 id="panel-dashboard-title">Acesso restrito ao dashboard</h1>
           <p className="panel-muted">
             Seu perfil está autenticado, mas ainda não tem acesso a esta visão inicial. Use as telas liberadas para o seu perfil ou ajuste os acessos do usuário.
@@ -93,7 +93,7 @@ export default async function AdminBuilderDashboardPage() {
       <article className="panel-card panel-card-hero panel-dashboard-hero">
         <div className="panel-dashboard-hero__header">
           <div>
-            <p className="panel-kicker">Admin Builder</p>
+            <p className="panel-kicker">Artmeta Panel</p>
             <h1 id="panel-dashboard-title">Centro de orquestração da base e da plataforma</h1>
             <p className="panel-muted">
               Esta visão inicial serve para administrar estrutura de dados, autenticação, mídia e integrações do sistema, sem dependência de fluxo comercial.

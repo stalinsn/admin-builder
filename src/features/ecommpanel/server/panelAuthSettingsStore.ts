@@ -81,7 +81,7 @@ export function createDefaultPanelAuthSettings(): PanelAuthSettings {
       tlsInsecure: ['1', 'true', 'yes', 'on'].includes((process.env.PANEL_SMTP_TLS_INSECURE || '').trim().toLowerCase()),
     },
     identity: {
-      fromName: process.env.PANEL_MAIL_FROM_NAME?.trim() || 'EcommPanel',
+      fromName: process.env.PANEL_MAIL_FROM_NAME?.trim() || 'Artmeta Panel',
       fromEmail: process.env.PANEL_MAIL_FROM_EMAIL?.trim() || process.env.PANEL_SMTP_USER?.trim() || '',
     },
     links: {
@@ -142,7 +142,7 @@ export function normalizePanelAuthSettings(input: unknown): PanelAuthSettings {
       tlsInsecure: normalizeBoolean(transport.tlsInsecure, fallback.transport.tlsInsecure),
     },
     identity: {
-      fromName: normalizeString(identity.fromName, fallback.identity.fromName, 80) || 'EcommPanel',
+      fromName: normalizeString(identity.fromName, fallback.identity.fromName, 80) || 'Artmeta Panel',
       fromEmail: normalizeString(identity.fromEmail, fallback.identity.fromEmail, 160).toLowerCase(),
     },
     links: {

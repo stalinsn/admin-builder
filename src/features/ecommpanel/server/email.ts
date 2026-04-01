@@ -52,7 +52,7 @@ async function getPanelMailRuntime(): Promise<PanelMailRuntime> {
     const passwordReference = settings.transport.smtpPasswordReference || process.env.PANEL_SMTP_PASSWORD_REFERENCE?.trim() || 'PANEL_SMTP_PASSWORD';
     const password = process.env[passwordReference]?.trim() || process.env.PANEL_SMTP_PASSWORD?.trim() || undefined;
     const tlsInsecure = settings.transport.tlsInsecure ?? parseBoolean(process.env.PANEL_SMTP_TLS_INSECURE, false);
-    const fromName = settings.identity.fromName || process.env.PANEL_MAIL_FROM_NAME?.trim() || 'EcommPanel';
+    const fromName = settings.identity.fromName || process.env.PANEL_MAIL_FROM_NAME?.trim() || 'Artmeta Panel';
     const fromEmail = settings.identity.fromEmail || process.env.PANEL_MAIL_FROM_EMAIL?.trim() || user || '';
 
     return {
@@ -77,7 +77,7 @@ async function getPanelMailRuntime(): Promise<PanelMailRuntime> {
       user,
       password: process.env.PANEL_SMTP_PASSWORD?.trim() || undefined,
       tlsInsecure: parseBoolean(process.env.PANEL_SMTP_TLS_INSECURE, false),
-      fromName: process.env.PANEL_MAIL_FROM_NAME?.trim() || 'EcommPanel',
+      fromName: process.env.PANEL_MAIL_FROM_NAME?.trim() || 'Artmeta Panel',
       fromEmail,
     };
   }
@@ -155,7 +155,7 @@ export async function sendPanelResetPasswordEmail(input: {
   await transporter.sendMail({
     from: buildFromAddress(runtime),
     to: input.to,
-    subject: 'Recuperação de acesso ao EcommPanel',
+    subject: 'Recuperação de acesso ao Artmeta Panel',
     text: [
       `Olá, ${input.name || input.to}.`,
       '',
@@ -197,7 +197,7 @@ export async function sendPanelLoginTokenEmail(input: {
   await transporter.sendMail({
     from: buildFromAddress(runtime),
     to: input.to,
-    subject: 'Seu código de acesso ao EcommPanel',
+    subject: 'Seu código de acesso ao Artmeta Panel',
     text: [
       `Olá, ${input.name || input.to}.`,
       '',
@@ -211,7 +211,7 @@ export async function sendPanelLoginTokenEmail(input: {
     html: [
       '<div style="font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;padding:32px;">',
       '<div style="max-width:620px;margin:0 auto;background:#ffffff;border-radius:20px;padding:32px;border:1px solid #dbe2ea;">',
-      '<p style="margin:0 0 12px;color:#3a4b61;font-size:15px;">EcommPanel</p>',
+      '<p style="margin:0 0 12px;color:#3a4b61;font-size:15px;">Artmeta Panel</p>',
       `<h1 style="margin:0 0 16px;font-size:28px;line-height:1.1;color:#101828;">Olá, ${safeName}</h1>`,
       '<p style="margin:0 0 20px;color:#475467;font-size:16px;line-height:1.6;">Use este código para concluir seu acesso administrativo.</p>',
       `<div style="margin:28px 0;padding:24px 20px;border-radius:18px;background:linear-gradient(135deg,#102a5c,#2158a8);text-align:center;">`,

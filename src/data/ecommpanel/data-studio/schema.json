@@ -23,7 +23,7 @@
       "adminUsername": "postgres",
       "adminPasswordReference": "APP_DB_ADMIN_PASSWORD",
       "active": true,
-      "notes": "Conexão inicial do Admin Builder para bootstrap e operação do runtime administrativo.",
+      "notes": "Conexão inicial do Artmeta Panel para bootstrap e operação do runtime administrativo.",
       "reachability": "unknown",
       "credentialStatus": "unknown",
       "databaseExists": false,

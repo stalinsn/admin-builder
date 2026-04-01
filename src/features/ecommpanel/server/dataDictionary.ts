@@ -387,7 +387,7 @@ export function getInternalDataDictionary(): InternalDataDictionary {
         domain: 'Integrações',
         label: 'Clientes de integração',
         tableName: 'api_integration_clients',
-        description: 'Aplicações externas autorizadas a consumir contratos e registros expostos pelo Admin Builder.',
+        description: 'Aplicações externas autorizadas a consumir contratos e registros expostos pelo Artmeta Panel.',
         columns: [
           column('id', 'text', 'Identificador interno do cliente.', { required: true, primaryKey: true }),
           column('key_id', 'text', 'Identificador público da chave.', { required: true, unique: true, indexed: true }),

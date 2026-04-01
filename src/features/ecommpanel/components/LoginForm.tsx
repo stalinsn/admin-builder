@@ -158,7 +158,7 @@ export default function LoginForm() {
     <section className="panel-auth" aria-labelledby="panel-login-title">
       <header className="panel-auth-header">
         <h2 id="panel-login-title">Entrar no painel</h2>
-        <p>Acesse o admin builder para orquestrar dados, mídia, APIs e usuários com segurança.</p>
+        <p>Acesse o Artmeta Panel para orquestrar dados, mídia, APIs e usuários com segurança.</p>
       </header>
 
       <form className="panel-form" onSubmit={authMode === 'password' ? onSubmit : submitLoginCode} noValidate>

@@ -289,7 +289,7 @@ export default function PanelAdminNav({
       <div className="panel-nav-header">
         <div className="panel-nav-header__copy">
           <span className="panel-nav-header__eyebrow">Navegação</span>
-          <strong>Admin Builder</strong>
+          <strong>Artmeta Panel</strong>
           <small>Foque em dados, usuários, mídia, autenticação e integrações do sistema.</small>
         </div>
         <div className="panel-nav-searchbox">

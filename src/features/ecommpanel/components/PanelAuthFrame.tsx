@@ -12,7 +12,7 @@ export default function PanelAuthFrame({ title, subtitle, highlights, children }
     <div className="panel-shell panel-shell--auth">
       <div className="panel-auth-layout">
         <aside className="panel-auth-aside" aria-label="Resumo de segurança">
-          <span className="panel-auth-kicker">EcommPanel</span>
+          <span className="panel-auth-kicker">Artmeta Panel</span>
           <h1>{title}</h1>
           <p>{subtitle}</p>
 

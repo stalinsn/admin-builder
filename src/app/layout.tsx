@@ -1,4 +1,4 @@
-export const metadata = { title: 'EcommPanel' };
+export const metadata = { title: 'Artmeta Panel' };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-br">

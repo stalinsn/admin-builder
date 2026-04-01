@@ -91,7 +91,7 @@ export default async function DataDictionaryAdminPage() {
           <span className="panel-chip">Integrações autenticadas: {dictionary.persistence.integrationApi}</span>
         </div>
         <p className="panel-muted">
-          O Admin Builder separa o que vive no PostgreSQL, o que ainda está em snapshot local e como a camada de contas
+          O Artmeta Panel separa o que vive no PostgreSQL, o que ainda está em snapshot local e como a camada de contas
           está operando no momento.
         </p>
         <p className="panel-muted">

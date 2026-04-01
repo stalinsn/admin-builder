@@ -11,7 +11,7 @@
     "tlsInsecure": false
   },
   "identity": {
-    "fromName": "EcommPanel",
+    "fromName": "Artmeta Panel",
     "fromEmail": "auth@artmeta.com.br"
   },
   "links": {

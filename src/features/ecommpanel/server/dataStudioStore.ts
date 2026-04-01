@@ -216,7 +216,7 @@ function createSeedSnapshot(): PersistedSnapshot {
     adminUsername: 'postgres',
     adminPasswordReference: 'APP_DB_ADMIN_PASSWORD',
     active: true,
-    notes: 'Conexão inicial do Admin Builder para bootstrap e operação do runtime administrativo.',
+    notes: 'Conexão inicial do Artmeta Panel para bootstrap e operação do runtime administrativo.',
     reachability: 'unknown',
     credentialStatus: 'unknown',
     createdAt: now,
@@ -493,7 +493,7 @@ function buildBootstrapReadme(snapshot: PersistedSnapshot): string {
   const lines = [
     '# Pacote Base de Dados',
     '',
-    'Este pacote foi gerado pelo Data Studio do EcommPanel.',
+    'Este pacote foi gerado pelo Data Studio do Artmeta Panel.',
     '',
     '## Conteudo',
     '',

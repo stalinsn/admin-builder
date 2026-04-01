@@ -58,10 +58,10 @@ export const apps: AppEntry[] = [
   },
   {
     slug: 'ecommpanel',
-    title: 'EcommPanel',
+    title: 'Artmeta Panel',
     path: '/ecommpanel/login',
     description:
-      'Painel administrativo mock para operação do e-commerce com autenticação, RBAC, gestão de usuários e base de segurança em camadas.',
+      'Painel administrativo para operação de dados, autenticação, integrações e controle de acesso com base de segurança em camadas.',
     image: '/window.svg',
     previewImage: '/previews/ecommpanel.jpg',
     accent: '#0b7a5a',

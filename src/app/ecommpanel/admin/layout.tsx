@@ -29,7 +29,7 @@ export default async function EcommPanelAdminLayout({ children }: { children: Re
       <header className="panel-topbar">
         <div className="panel-topbar-content">
           <div className="panel-brand">
-            <strong>Admin Builder</strong>
+            <strong>Artmeta Panel</strong>
             <span>Orquestração administrativa, base de dados e integrações</span>
           </div>
 
