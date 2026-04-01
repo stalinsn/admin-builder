@@ -128,6 +128,19 @@ function tableize(value: string): string {
     .replace(/_{2,}/g, '_');
 }
 
+function identifierize(value: string): string {
+  const normalized = value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9_]+/g, '_')
+    .replace(/^_+|_+$/g, '')
+    .replace(/_{2,}/g, '_');
+
+  if (!normalized) return '';
+  if (/^[a-zA-Z_]/.test(normalized)) return normalized;
+  return `field_${normalized}`;
+}
+
 function downloadTextFile(file: DataStudioBundleFile) {
   downloadNamedTextFile(file.path.split('/').pop() || 'arquivo.txt', file.content);
 }
@@ -2053,7 +2066,7 @@ export default function DataStudioManager({
                               <input
                                 className="panel-input"
                                 value={field.name}
-                                onChange={(event) => updateField(field.id, 'name', tableize(event.target.value))}
+                                onChange={(event) => updateField(field.id, 'name', identifierize(event.target.value))}
                                 disabled={!canManageEntities}
                                 placeholder={`campo_${index + 1}`}
                               />

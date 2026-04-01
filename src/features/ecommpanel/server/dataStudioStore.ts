@@ -126,6 +126,27 @@ function sanitizeTableName(value: string): string {
     .replace(/_{2,}/g, '_');
 }
 
+function sanitizeFieldName(value: string): string {
+  const normalized = value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9_]+/g, '_')
+    .replace(/^_+|_+$/g, '')
+    .replace(/_{2,}/g, '_');
+
+  if (!normalized) return '';
+  if (/^[a-zA-Z_]/.test(normalized)) return normalized;
+  return `field_${normalized}`;
+}
+
+function humanizeFieldName(value: string): string {
+  return value
+    .replace(/_/g, ' ')
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function sanitizeHost(value: string): string {
   return value.replace(/\s+/g, '').trim();
 }
@@ -151,8 +172,8 @@ function isFieldType(value: string): value is DataFieldType {
 function sanitizeField(field: Partial<DataFieldDefinition>, fallbackName: string): DataFieldDefinition {
   const createdAt = field.createdAt || nowIso();
   const updatedAt = nowIso();
-  const normalizedName = sanitizeTableName(field.name || fallbackName || `field_${randomToken(4)}`) || `field_${randomToken(4)}`;
-  const label = sanitizeLine(field.label || normalizedName.replace(/_/g, ' ')) || normalizedName;
+  const normalizedName = sanitizeFieldName(field.name || fallbackName || `field_${randomToken(4)}`) || `field_${randomToken(4)}`;
+  const label = sanitizeLine(field.label || humanizeFieldName(normalizedName)) || normalizedName;
   const rawType = sanitizeLine(String(field.type || 'text'));
 
   return {
@@ -395,9 +416,26 @@ function escapeSqlLiteral(value: string): string {
   return value.replace(/'/g, "''");
 }
 
+function quotePostgresIdentifier(value: string): string {
+  if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(value)) {
+    throw new Error(`Identificador SQL inválido: ${value}`);
+  }
+
+  return `"${value.replace(/"/g, '""')}"`;
+}
+
+function quoteMysqlIdentifier(value: string): string {
+  if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(value)) {
+    throw new Error(`Identificador SQL inválido: ${value}`);
+  }
+
+  return `\`${value.replace(/`/g, '``')}\``;
+}
+
 function buildEntitySql(entity: DataEntityDefinition): string {
+  const tableName = quotePostgresIdentifier(entity.tableName);
   const columns = [
-    '  id TEXT PRIMARY KEY',
+    `  ${quotePostgresIdentifier('id')} TEXT PRIMARY KEY`,
     ...entity.fields.map((field) => {
       const baseType = mapFieldToSqlType(field);
       const nullable = field.required ? ' NOT NULL' : '';
@@ -410,23 +448,29 @@ function buildEntitySql(entity: DataEntityDefinition): string {
               ? ` DEFAULT '${escapeSqlLiteral(field.defaultValue)}'`
               : '';
 
-      return `  ${field.name} ${baseType}${nullable}${defaultValue}`;
+      return `  ${quotePostgresIdentifier(field.name)} ${baseType}${nullable}${defaultValue}`;
     }),
-    '  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()',
-    '  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()',
+    `  ${quotePostgresIdentifier('created_at')} TIMESTAMPTZ NOT NULL DEFAULT NOW()`,
+    `  ${quotePostgresIdentifier('updated_at')} TIMESTAMPTZ NOT NULL DEFAULT NOW()`,
   ];
 
   const uniqueIndexes = entity.fields.filter((field) => field.unique);
   const indexes = entity.fields.filter((field) => field.indexed && !field.unique);
 
   return [
-    `CREATE TABLE IF NOT EXISTS ${entity.tableName} (`,
+    `CREATE TABLE IF NOT EXISTS ${tableName} (`,
     columns.join(',\n'),
     ');',
     ...uniqueIndexes.map(
-      (field) => `CREATE UNIQUE INDEX IF NOT EXISTS idx_${entity.tableName}_${field.name}_uniq ON ${entity.tableName} (${field.name});`,
+      (field) =>
+        `CREATE UNIQUE INDEX IF NOT EXISTS ${quotePostgresIdentifier(
+          sanitizeTableName(`idx_${entity.tableName}_${field.name}_uniq`),
+        )} ON ${tableName} (${quotePostgresIdentifier(field.name)});`,
     ),
-    ...indexes.map((field) => `CREATE INDEX IF NOT EXISTS idx_${entity.tableName}_${field.name} ON ${entity.tableName} (${field.name});`),
+    ...indexes.map(
+      (field) =>
+        `CREATE INDEX IF NOT EXISTS ${quotePostgresIdentifier(sanitizeTableName(`idx_${entity.tableName}_${field.name}`))} ON ${tableName} (${quotePostgresIdentifier(field.name)});`,
+    ),
   ].join('\n');
 }
 
@@ -454,8 +498,9 @@ function mapFieldToMysqlType(field: DataFieldDefinition): string {
 }
 
 function buildEntitySqlMysql(entity: DataEntityDefinition): string {
+  const tableName = quoteMysqlIdentifier(entity.tableName);
   const columns = [
-    '  id VARCHAR(64) PRIMARY KEY',
+    `  ${quoteMysqlIdentifier('id')} VARCHAR(64) PRIMARY KEY`,
     ...entity.fields.map((field) => {
       const baseType = mapFieldToMysqlType(field);
       const nullable = field.required ? ' NOT NULL' : '';
@@ -468,23 +513,27 @@ function buildEntitySqlMysql(entity: DataEntityDefinition): string {
               ? ` DEFAULT '${escapeSqlLiteral(field.defaultValue)}'`
               : '';
 
-      return `  ${field.name} ${baseType}${nullable}${defaultValue}`;
+      return `  ${quoteMysqlIdentifier(field.name)} ${baseType}${nullable}${defaultValue}`;
     }),
-    '  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
-    '  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+    `  ${quoteMysqlIdentifier('created_at')} DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP`,
+    `  ${quoteMysqlIdentifier('updated_at')} DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`,
   ];
 
   const uniqueIndexes = entity.fields.filter((field) => field.unique);
   const indexes = entity.fields.filter((field) => field.indexed && !field.unique);
 
   return [
-    `CREATE TABLE IF NOT EXISTS ${entity.tableName} (`,
+    `CREATE TABLE IF NOT EXISTS ${tableName} (`,
     columns.join(',\n'),
     ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;',
     ...uniqueIndexes.map(
-      (field) => `CREATE UNIQUE INDEX idx_${entity.tableName}_${field.name}_uniq ON ${entity.tableName} (${field.name}(191));`,
+      (field) =>
+        `CREATE UNIQUE INDEX ${quoteMysqlIdentifier(sanitizeTableName(`idx_${entity.tableName}_${field.name}_uniq`))} ON ${tableName} (${quoteMysqlIdentifier(field.name)}(191));`,
     ),
-    ...indexes.map((field) => `CREATE INDEX idx_${entity.tableName}_${field.name} ON ${entity.tableName} (${field.name}(191));`),
+    ...indexes.map(
+      (field) =>
+        `CREATE INDEX ${quoteMysqlIdentifier(sanitizeTableName(`idx_${entity.tableName}_${field.name}`))} ON ${tableName} (${quoteMysqlIdentifier(field.name)}(191));`,
+    ),
   ].join('\n');
 }
 
