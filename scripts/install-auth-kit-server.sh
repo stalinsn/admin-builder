@@ -81,20 +81,20 @@ prompt_text() {
   while true; do
     if bool_true "${secret}"; then
       if [ -n "${current}" ]; then
-        printf '%s [%s]: ' "${label}" 'preenchido'
+        printf '%s [%s]: ' "${label}" 'preenchido' >&2
       else
-        printf '%s: ' "${label}"
+        printf '%s: ' "${label}" >&2
       fi
       read -rs value
-      printf '\n'
+      printf '\n' >&2
       if [ -z "${value}" ]; then
         value="${current}"
       fi
     else
       if [ -n "${current}" ]; then
-        printf '%s [%s]: ' "${label}" "${current}"
+        printf '%s [%s]: ' "${label}" "${current}" >&2
       else
-        printf '%s: ' "${label}"
+        printf '%s: ' "${label}" >&2
       fi
       read -r value
       if [ -z "${value}" ]; then
@@ -107,7 +107,7 @@ prompt_text() {
       return 0
     fi
 
-    printf '[auth-kit] valor obrigatório.\n'
+    printf '[auth-kit] valor obrigatório.\n' >&2
   done
 }
 
@@ -124,7 +124,7 @@ prompt_bool() {
   fi
 
   while true; do
-    printf '%s [%s]: ' "${label}" "${suffix}"
+    printf '%s [%s]: ' "${label}" "${suffix}" >&2
     read -r answer
     answer="${answer:-}"
 
@@ -138,7 +138,7 @@ prompt_bool() {
       n|N|no|NO|nao|NAO|não|NÃO) printf 'false'; return 0 ;;
     esac
 
-    printf '[auth-kit] responda com y/n.\n'
+    printf '[auth-kit] responda com y/n.\n' >&2
   done
 }
 
