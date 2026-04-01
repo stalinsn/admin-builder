@@ -70,6 +70,7 @@ O bootstrap atual:
 
 - garante a base administrativa
 - cria o primeiro admin quando não existir nenhum usuário
+- atribui ao admin inicial os papéis `main_admin` e `store_owner`
 - garante a base de clientes e endereços
 - garante as políticas iniciais de retenção LGPD
 
@@ -90,6 +91,8 @@ O script:
 - grava `.env.local`
 - roda `npm install`
 - roda o bootstrap do auth kit
+- pode configurar PM2, Nginx, UFW e Certbot para o domínio novo
+- mostra sugestões práticas nas perguntas e um resumo final antes de aplicar
 
 Variáveis opcionais para customização:
 
@@ -103,6 +106,8 @@ AUTH_KIT_ADMIN_PASSWORD='Senha@Forte123'
 AUTH_KIT_PUBLIC_URL=https://seu-dominio.com
 AUTH_KIT_INSTALL_PM2=true
 AUTH_KIT_INSTALL_NGINX=true
+AUTH_KIT_INSTALL_CERTBOT=true
+AUTH_KIT_CERTBOT_EMAIL=owner@dominio.com
 AUTH_KIT_SEED_DEFAULT_PANEL_USERS=false
 ```
 
@@ -115,6 +120,18 @@ AUTH_KIT_ADMIN_PASSWORD='Senha@Forte123' \
 AUTH_KIT_PUBLIC_URL=https://portal.escola.com.br \
 bash ./scripts/install-auth-kit-server.sh
 ```
+
+Fluxo interativo sugerido:
+
+- domínio/subdomínio: `game.artmeta.com.br`
+- porta local: `3003`
+- host local: `0.0.0.0`
+- banco: `game_panel`
+- usuário do banco: `game_panel`
+- PM2 automático: `sim`
+- Nginx automático: `sim`
+- Certbot automático: `sim`
+- UFW automático: depende se a VPS já usa UFW
 
 ## Observações
 

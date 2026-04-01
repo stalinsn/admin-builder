@@ -480,7 +480,7 @@ async function ensureInitialAdmin(
       must_change_password = FALSE,
       password_hash = EXCLUDED.password_hash,
       updated_at = NOW()`,
-    [adminId, adminEmail, adminName, JSON.stringify(['main_admin']), adminPasswordHash],
+    [adminId, adminEmail, adminName, JSON.stringify(['main_admin', 'store_owner']), adminPasswordHash],
   );
 
   await client.query(

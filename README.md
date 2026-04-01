@@ -29,7 +29,7 @@ O instalador funciona em modo interativo. Em um servidor Ubuntu/Debian, o fluxo 
 sudo bash ./scripts/install-auth-kit-server.sh
 ```
 
-O script pergunta passo a passo:
+O script pergunta passo a passo, com sugestões práticas de preenchimento e revisão final:
 
 - domínio/subdomínio público;
 - porta local da aplicação;
@@ -37,9 +37,10 @@ O script pergunta passo a passo:
 - admin inicial;
 - se deve configurar PM2 automaticamente;
 - se deve criar o server block do Nginx;
+- se deve emitir SSL com Certbot para o domínio novo;
 - se deve ajustar o firewall UFW.
 
-Antes de aplicar, ele mostra um resumo final e pede confirmação.
+Antes de aplicar, ele mostra um resumo final e pede confirmação. O admin inicial já nasce com os papéis `main_admin` e `store_owner`.
 
 ## Rodar em desenvolvimento
 

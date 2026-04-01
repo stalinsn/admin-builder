@@ -28,13 +28,49 @@ AUTH_KIT_ENV_FILE="${AUTH_KIT_ENV_FILE:-${AUTH_KIT_APP_DIR}/.env.local}"
 AUTH_KIT_DOMAIN="${AUTH_KIT_DOMAIN:-}"
 AUTH_KIT_PM2_APP_NAME="${AUTH_KIT_PM2_APP_NAME:-}"
 AUTH_KIT_NGINX_SITE_NAME="${AUTH_KIT_NGINX_SITE_NAME:-}"
+AUTH_KIT_USE_COLORS="${AUTH_KIT_USE_COLORS:-auto}"
+
+CURRENT_STEP=0
+TOTAL_STEPS=11
+
+if [ "${AUTH_KIT_USE_COLORS}" = "auto" ] && [ -t 1 ]; then
+  AUTH_KIT_USE_COLORS=true
+fi
+
+case "${AUTH_KIT_USE_COLORS:-false}" in
+  1|true|TRUE|yes|YES|on|ON)
+  COLOR_RESET="$(printf '\033[0m')"
+  COLOR_DIM="$(printf '\033[2m')"
+  COLOR_CYAN="$(printf '\033[36m')"
+  COLOR_GREEN="$(printf '\033[32m')"
+  COLOR_YELLOW="$(printf '\033[33m')"
+  COLOR_RED="$(printf '\033[31m')"
+  COLOR_BLUE="$(printf '\033[34m')"
+  ;;
+*)
+  COLOR_RESET=""
+  COLOR_DIM=""
+  COLOR_CYAN=""
+  COLOR_GREEN=""
+  COLOR_YELLOW=""
+  COLOR_RED=""
+  COLOR_BLUE=""
+  ;;
+esac
+
+spinner_pid=""
+spinner_message=""
+
+format_hint() {
+  printf '%s%s%s' "${COLOR_DIM}" "$1" "${COLOR_RESET}"
+}
 
 log() {
-  printf '[auth-kit] %s\n' "$1"
+  printf '%s[auth-kit]%s %s\n' "${COLOR_CYAN}" "${COLOR_RESET}" "$1"
 }
 
 fail() {
-  printf '[auth-kit] erro: %s\n' "$1" >&2
+  printf '%s[auth-kit] erro:%s %s\n' "${COLOR_RED}" "${COLOR_RESET}" "$1" >&2
   exit 1
 }
 
@@ -47,6 +83,68 @@ bool_true() {
 
 supports_interactive() {
   [ -t 0 ] && [ -t 1 ]
+}
+
+next_step() {
+  CURRENT_STEP=$((CURRENT_STEP + 1))
+  printf '\n%s[%s/%s]%s %s%s%s\n' \
+    "${COLOR_BLUE}" \
+    "${CURRENT_STEP}" \
+    "${TOTAL_STEPS}" \
+    "${COLOR_RESET}" \
+    "${COLOR_GREEN}" \
+    "$1" \
+    "${COLOR_RESET}"
+}
+
+start_spinner() {
+  if ! [ -t 1 ]; then
+    return 0
+  fi
+
+  spinner_message="$1"
+  (
+    while true; do
+      for frame in '⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏'; do
+        printf '\r%s%s%s %s' "${COLOR_CYAN}" "${frame}" "${COLOR_RESET}" "${spinner_message}"
+        sleep 0.12
+      done
+    done
+  ) &
+  spinner_pid=$!
+}
+
+stop_spinner() {
+  if [ -n "${spinner_pid}" ]; then
+    kill "${spinner_pid}" >/dev/null 2>&1 || true
+    wait "${spinner_pid}" 2>/dev/null || true
+    spinner_pid=""
+    printf '\r\033[K'
+  fi
+}
+
+run_with_spinner() {
+  local message="$1"
+  shift
+  local temp_log=""
+
+  temp_log="$(mktemp)"
+  start_spinner "${message}"
+  if "$@" >"${temp_log}" 2>&1; then
+    stop_spinner
+    printf '%s[ok]%s %s\n' "${COLOR_GREEN}" "${COLOR_RESET}" "${message}"
+    rm -f "${temp_log}"
+  else
+    local exit_code=$?
+    stop_spinner
+    printf '%s[falhou]%s %s\n' "${COLOR_RED}" "${COLOR_RESET}" "${message}" >&2
+    if [ -s "${temp_log}" ]; then
+      printf '%s[auth-kit] últimos logs:%s\n' "${COLOR_YELLOW}" "${COLOR_RESET}" >&2
+      tail -n 40 "${temp_log}" >&2 || true
+    fi
+    rm -f "${temp_log}"
+    return "${exit_code}"
+  fi
 }
 
 is_interactive_mode() {
@@ -78,14 +176,20 @@ prompt_text() {
   local current="$2"
   local allow_blank="${3:-false}"
   local secret="${4:-false}"
+  local example="${5:-}"
   local value=""
+  local prompt_label="${label}"
+
+  if [ -n "${example}" ]; then
+    prompt_label="${label} $(format_hint "ex.: ${example}")"
+  fi
 
   while true; do
     if bool_true "${secret}"; then
       if [ -n "${current}" ]; then
-        printf '%s [%s]: ' "${label}" 'preenchido' >&2
+        printf '%s [%s]: ' "${prompt_label}" 'preenchido' >&2
       else
-        printf '%s: ' "${label}" >&2
+        printf '%s: ' "${prompt_label}" >&2
       fi
       read -rs value
       printf '\n' >&2
@@ -94,9 +198,9 @@ prompt_text() {
       fi
     else
       if [ -n "${current}" ]; then
-        printf '%s [%s]: ' "${label}" "${current}" >&2
+        printf '%s [%s]: ' "${prompt_label}" "${current}" >&2
       else
-        printf '%s: ' "${label}" >&2
+        printf '%s: ' "${prompt_label}" >&2
       fi
       read -r value
       if [ -z "${value}" ]; then
@@ -116,17 +220,23 @@ prompt_text() {
 prompt_bool() {
   local label="$1"
   local current="$2"
+  local suggestion="${3:-}"
   local normalized="false"
   local suffix='y/N'
   local answer=""
+  local prompt_label="${label}"
 
   if bool_true "${current}"; then
     normalized="true"
     suffix='Y/n'
   fi
 
+  if [ -n "${suggestion}" ]; then
+    prompt_label="${label} $(format_hint "sugestão: ${suggestion}")"
+  fi
+
   while true; do
-    printf '%s [%s]: ' "${label}" "${suffix}" >&2
+    printf '%s [%s]: ' "${prompt_label}" "${suffix}" >&2
     read -r answer
     answer="${answer:-}"
 
@@ -340,40 +450,41 @@ interactive_setup() {
     AUTH_KIT_NGINX_SITE_NAME="${AUTH_KIT_DOMAIN:-$(slugify_name "$(basename "${AUTH_KIT_APP_DIR}")")}"
   fi
 
-  printf '\n[auth-kit] instalador interativo\n\n'
+  printf '\n%s[auth-kit]%s instalador interativo\n' "${COLOR_CYAN}" "${COLOR_RESET}"
+  printf '%sCada pergunta mostra uma sugestão prática. Você pode aceitar com Enter e revisar tudo antes de aplicar.%s\n\n' "${COLOR_DIM}" "${COLOR_RESET}"
 
-  AUTH_KIT_APP_DIR="$(prompt_text 'Diretório da aplicação' "${AUTH_KIT_APP_DIR}")"
-  AUTH_KIT_DOMAIN="$(prompt_text 'Domínio ou subdomínio público' "${AUTH_KIT_DOMAIN}")"
-  AUTH_KIT_PORT="$(prompt_text 'Porta local da aplicação' "${AUTH_KIT_PORT}")"
-  AUTH_KIT_HOST="$(prompt_text 'Host local da aplicação' "${AUTH_KIT_HOST}")"
+  AUTH_KIT_APP_DIR="$(prompt_text 'Diretório da aplicação' "${AUTH_KIT_APP_DIR}" false false '/var/www/admin-builder')"
+  AUTH_KIT_DOMAIN="$(prompt_text 'Domínio ou subdomínio público' "${AUTH_KIT_DOMAIN}" false false 'game.artmeta.com.br')"
+  AUTH_KIT_PORT="$(prompt_text 'Porta local da aplicação' "${AUTH_KIT_PORT}" false false '3003')"
+  AUTH_KIT_HOST="$(prompt_text 'Host local da aplicação' "${AUTH_KIT_HOST}" false false '0.0.0.0')"
   AUTH_KIT_PUBLIC_URL="https://${AUTH_KIT_DOMAIN}"
-  AUTH_KIT_DB_NAME="$(prompt_text 'Nome do banco PostgreSQL' "${AUTH_KIT_DB_NAME}")"
-  AUTH_KIT_DB_USER="$(prompt_text 'Usuário PostgreSQL do projeto' "${AUTH_KIT_DB_USER}")"
-  AUTH_KIT_DB_PASSWORD="$(prompt_text 'Senha do usuário PostgreSQL (vazio = gerar automática)' "${AUTH_KIT_DB_PASSWORD}" true true)"
-  AUTH_KIT_ADMIN_EMAIL="$(prompt_text 'E-mail do admin inicial' "${AUTH_KIT_ADMIN_EMAIL}")"
-  AUTH_KIT_ADMIN_NAME="$(prompt_text 'Nome do admin inicial' "${AUTH_KIT_ADMIN_NAME}")"
-  AUTH_KIT_ADMIN_PASSWORD="$(prompt_text 'Senha do admin inicial (vazio = gerar automática)' "${AUTH_KIT_ADMIN_PASSWORD}" true true)"
-  AUTH_KIT_SEED_DEFAULT_PANEL_USERS="$(prompt_bool 'Criar usuários padrão do painel?' "${AUTH_KIT_SEED_DEFAULT_PANEL_USERS}")"
-  AUTH_KIT_INSTALL_PM2="$(prompt_bool 'Configurar PM2 automaticamente?' "${AUTH_KIT_INSTALL_PM2}")"
+  AUTH_KIT_DB_NAME="$(prompt_text 'Nome do banco PostgreSQL' "${AUTH_KIT_DB_NAME}" false false 'game_panel')"
+  AUTH_KIT_DB_USER="$(prompt_text 'Usuário PostgreSQL do projeto' "${AUTH_KIT_DB_USER}" false false 'game_panel')"
+  AUTH_KIT_DB_PASSWORD="$(prompt_text 'Senha do usuário PostgreSQL (vazio = gerar automática)' "${AUTH_KIT_DB_PASSWORD}" true true 'deixe vazio para gerar')"
+  AUTH_KIT_ADMIN_EMAIL="$(prompt_text 'E-mail do admin inicial' "${AUTH_KIT_ADMIN_EMAIL}" false false 'owner@seudominio.com')"
+  AUTH_KIT_ADMIN_NAME="$(prompt_text 'Nome do admin inicial' "${AUTH_KIT_ADMIN_NAME}" false false 'Main Owner')"
+  AUTH_KIT_ADMIN_PASSWORD="$(prompt_text 'Senha do admin inicial (vazio = gerar automática)' "${AUTH_KIT_ADMIN_PASSWORD}" true true 'deixe vazio para gerar')"
+  AUTH_KIT_SEED_DEFAULT_PANEL_USERS="$(prompt_bool 'Criar usuários padrão do painel?' "${AUTH_KIT_SEED_DEFAULT_PANEL_USERS}" 'não')"
+  AUTH_KIT_INSTALL_PM2="$(prompt_bool 'Configurar PM2 automaticamente?' "${AUTH_KIT_INSTALL_PM2}" 'sim')"
 
   if bool_true "${AUTH_KIT_INSTALL_PM2}"; then
-    AUTH_KIT_PM2_APP_NAME="$(prompt_text 'Nome do processo no PM2' "${AUTH_KIT_PM2_APP_NAME}")"
+    AUTH_KIT_PM2_APP_NAME="$(prompt_text 'Nome do processo no PM2' "${AUTH_KIT_PM2_APP_NAME}" false false 'game-panel')"
   fi
 
-  AUTH_KIT_INSTALL_NGINX="$(prompt_bool 'Criar server block do Nginx automaticamente?' "${AUTH_KIT_INSTALL_NGINX}")"
+  AUTH_KIT_INSTALL_NGINX="$(prompt_bool 'Criar server block do Nginx automaticamente?' "${AUTH_KIT_INSTALL_NGINX}" 'sim')"
 
   if bool_true "${AUTH_KIT_INSTALL_NGINX}"; then
-    AUTH_KIT_NGINX_SITE_NAME="$(prompt_text 'Nome do arquivo do site no Nginx' "${AUTH_KIT_NGINX_SITE_NAME}")"
-    AUTH_KIT_INSTALL_CERTBOT="$(prompt_bool 'Emitir SSL com Certbot para este domínio?' "${AUTH_KIT_INSTALL_CERTBOT}")"
+    AUTH_KIT_NGINX_SITE_NAME="$(prompt_text 'Nome do arquivo do site no Nginx' "${AUTH_KIT_NGINX_SITE_NAME}" false false 'game-artmeta-admin')"
+    AUTH_KIT_INSTALL_CERTBOT="$(prompt_bool 'Emitir SSL com Certbot para este domínio?' "${AUTH_KIT_INSTALL_CERTBOT}" 'sim')"
     if bool_true "${AUTH_KIT_INSTALL_CERTBOT}"; then
-      AUTH_KIT_CERTBOT_EMAIL="$(prompt_text 'E-mail do Certbot' "${AUTH_KIT_CERTBOT_EMAIL:-${AUTH_KIT_ADMIN_EMAIL}}")"
+      AUTH_KIT_CERTBOT_EMAIL="$(prompt_text 'E-mail do Certbot' "${AUTH_KIT_CERTBOT_EMAIL:-${AUTH_KIT_ADMIN_EMAIL}}" false false 'stalinsn@hotmail.com')"
     fi
   fi
 
-  AUTH_KIT_CONFIGURE_FIREWALL="$(prompt_bool 'Configurar regras do firewall UFW automaticamente?' "${AUTH_KIT_CONFIGURE_FIREWALL}")"
+  AUTH_KIT_CONFIGURE_FIREWALL="$(prompt_bool 'Configurar regras do firewall UFW automaticamente?' "${AUTH_KIT_CONFIGURE_FIREWALL}" 'sim, se a VPS usar UFW')"
 
   if bool_true "${AUTH_KIT_CONFIGURE_FIREWALL}"; then
-    AUTH_KIT_ENABLE_UFW="$(prompt_bool 'Se o UFW estiver inativo, habilitar automaticamente?' "${AUTH_KIT_ENABLE_UFW}")"
+    AUTH_KIT_ENABLE_UFW="$(prompt_bool 'Se o UFW estiver inativo, habilitar automaticamente?' "${AUTH_KIT_ENABLE_UFW}" 'não em VPS já compartilhada')"
   fi
 
   warn_conflicts
@@ -416,19 +527,19 @@ EOF
 }
 
 install_app_dependencies() {
-  log "Instalando dependências npm do projeto"
+  next_step "Instalando dependências npm do projeto"
   cd "${AUTH_KIT_APP_DIR}"
-  npm install --no-fund
+  run_with_spinner "npm install" npm install --no-fund
 }
 
 build_app() {
-  log "Gerando build de produção"
+  next_step "Gerando build de produção"
   cd "${AUTH_KIT_APP_DIR}"
-  npm run build
+  run_with_spinner "npm run build" npm run build
 }
 
 run_auth_bootstrap() {
-  log "Executando bootstrap do auth kit"
+  next_step "Executando bootstrap do auth kit"
   cd "${AUTH_KIT_APP_DIR}"
 
   local args=(
@@ -442,7 +553,7 @@ run_auth_bootstrap() {
     args+=("--seed-default-panel-users")
   fi
 
-  npm "${args[@]}"
+  run_with_spinner "bootstrap do auth kit" npm "${args[@]}"
 }
 
 ensure_pm2() {
@@ -450,9 +561,9 @@ ensure_pm2() {
     return 0
   fi
 
-  log "Instalando PM2"
+  next_step "Configurando PM2"
   if ! command -v pm2 >/dev/null 2>&1; then
-    npm install -g pm2
+    run_with_spinner "instalação global do PM2" npm install -g pm2
   fi
 
   log "Registrando aplicação no PM2"
@@ -470,8 +581,8 @@ ensure_nginx() {
     return 0
   fi
 
-  log "Instalando Nginx"
-  apt-get install -y nginx
+  next_step "Configurando Nginx"
+  run_with_spinner "instalação do Nginx" apt-get install -y nginx
 
   local site_available="/etc/nginx/sites-available/${AUTH_KIT_NGINX_SITE_NAME}"
   local site_enabled="/etc/nginx/sites-enabled/${AUTH_KIT_NGINX_SITE_NAME}"
@@ -518,16 +629,17 @@ ensure_certbot() {
 
   local certbot_email="${AUTH_KIT_CERTBOT_EMAIL:-${AUTH_KIT_ADMIN_EMAIL}}"
 
-  log "Instalando Certbot"
-  apt-get install -y certbot python3-certbot-nginx
+  next_step "Configurando SSL com Certbot"
+  run_with_spinner "instalação do Certbot" apt-get install -y certbot python3-certbot-nginx
 
   log "Emitindo certificado SSL para ${AUTH_KIT_DOMAIN}"
-  certbot --nginx \
-    -d "${AUTH_KIT_DOMAIN}" \
-    --non-interactive \
-    --agree-tos \
-    -m "${certbot_email}" \
-    --redirect
+  run_with_spinner "certificado para ${AUTH_KIT_DOMAIN}" \
+    certbot --nginx \
+      -d "${AUTH_KIT_DOMAIN}" \
+      --non-interactive \
+      --agree-tos \
+      -m "${certbot_email}" \
+      --redirect
 }
 
 configure_firewall() {
@@ -535,8 +647,8 @@ configure_firewall() {
     return 0
   fi
 
-  log "Configurando regras do UFW"
-  apt-get install -y ufw
+  next_step "Configurando firewall UFW"
+  run_with_spinner "instalação do UFW" apt-get install -y ufw
 
   ufw allow OpenSSH >/dev/null 2>&1 || true
   if bool_true "${AUTH_KIT_INSTALL_NGINX}"; then
@@ -612,11 +724,16 @@ main() {
     AUTH_KIT_ADMIN_PASSWORD="$(random_secret)"
   fi
 
-  ensure_system_packages
-  ensure_node
-  ensure_postgres_service
-  ensure_database
-  ensure_env_file
+  next_step "Instalando dependências base do sistema"
+  run_with_spinner "pacotes base do sistema" ensure_system_packages
+  next_step "Garantindo Node.js"
+  run_with_spinner "Node.js ${AUTH_KIT_NODE_MAJOR}" ensure_node
+  next_step "Garantindo PostgreSQL"
+  run_with_spinner "serviço do PostgreSQL" ensure_postgres_service
+  next_step "Provisionando banco e usuário"
+  run_with_spinner "database ${AUTH_KIT_DB_NAME}" ensure_database
+  next_step "Gravando variáveis de ambiente"
+  run_with_spinner "arquivo .env.local" ensure_env_file
   install_app_dependencies
   run_auth_bootstrap
   build_app
