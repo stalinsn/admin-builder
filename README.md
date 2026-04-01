@@ -2,21 +2,15 @@
 
 Esta pasta contém uma extração do app `EcommPanel` como projeto Next.js independente.
 
-## Rodar
+## Primeiro uso em servidor
 
-1) Instale dependências antes de iniciar:
-
-```bash
-npm install
-```
-
-2) Suba o dev server:
+Se a intenção é instalar este admin em uma VPS, o fluxo principal é o instalador interativo:
 
 ```bash
-npm run dev
+sudo bash ./scripts/install-auth-kit-server.sh
 ```
 
-> Observação: sempre rode `npm install` antes de subir o projeto exportado, para garantir que os plugins do PostCSS e dependências do Next estejam completos.
+Ele prepara banco, variáveis de ambiente, dependências, bootstrap do auth, build e pode configurar PM2, Nginx e UFW.
 
 Rota principal: /.
 Rota original (ainda disponível): /ecommpanel
@@ -46,6 +40,24 @@ O script pergunta passo a passo:
 - se deve ajustar o firewall UFW.
 
 Antes de aplicar, ele mostra um resumo final e pede confirmação.
+
+## Rodar em desenvolvimento
+
+Se você quer só abrir o projeto localmente para desenvolvimento:
+
+1) instale dependências:
+
+```bash
+npm install
+```
+
+2) suba o dev server:
+
+```bash
+npm run dev
+```
+
+> Observação: no export voltado para VPS/produção, o caminho principal continua sendo o shell de instalação.
 
 
 ## Fluxo recomendado em VPS existente
