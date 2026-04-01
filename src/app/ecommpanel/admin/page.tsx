@@ -59,7 +59,7 @@ const QUICK_ACTIONS = [
     description: 'Gerenciar clientes de API, escopos, segredos e contratos autenticados.',
   },
   {
-    href: '/ecommpanel/admin/catalog/media',
+    href: '/ecommpanel/admin/media',
     title: 'Operar mídia',
     description: 'Enviar imagens, reutilizar assets e revisar processamento.',
   },

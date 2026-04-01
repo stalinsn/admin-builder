@@ -103,13 +103,13 @@ export default function PanelAdminNav({
       ? [
           {
             id: 'customers',
-            href: '/ecommpanel/admin/customers',
+            href: '/ecommpanel/admin/accounts',
             label: 'Contas',
             description: 'Fonte principal de contas do sistema, nativas ou baseadas em entidade modelada.',
           },
           {
             id: 'customers-lgpd',
-            href: '/ecommpanel/admin/customers/lgpd',
+            href: '/ecommpanel/admin/accounts/lgpd',
             label: 'LGPD e dados',
             description: 'Exportação, revisão, retenção e anonimização controlada das contas.',
           },
@@ -144,8 +144,8 @@ export default function PanelAdminNav({
     ...(canReadCatalog
       ? [
           {
-            id: 'catalog-media',
-            href: '/ecommpanel/admin/catalog/media',
+            id: 'media-library',
+            href: '/ecommpanel/admin/media',
             label: 'Mídia',
             description: 'Biblioteca operacional de imagens, uploads e reutilização de assets.',
           },

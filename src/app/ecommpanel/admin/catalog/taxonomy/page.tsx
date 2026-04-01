@@ -1,26 +1,10 @@
-import { redirect } from 'next/navigation';
-
-import CatalogTaxonomyManager from '@/features/ecommpanel/components/CatalogTaxonomyManager';
-import { canAccessCatalogWorkspace } from '@/features/catalog/server/permissions';
-import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
+import BuilderModuleUnavailable from '@/features/ecommpanel/components/BuilderModuleUnavailable';
 
 export default async function CatalogTaxonomyAdminPage() {
-  const user = await getPanelUserFromCookies();
-
-  if (!user) {
-    redirect('/ecommpanel/login');
-  }
-
-  if (!canAccessCatalogWorkspace(user)) {
-    return (
-      <section className="panel-grid">
-        <article className="panel-card">
-          <h1>Acesso restrito</h1>
-          <p className="panel-muted">Seu perfil atual não possui acesso à taxonomia do catálogo.</p>
-        </article>
-      </section>
-    );
-  }
-
-  return <CatalogTaxonomyManager />;
+  return (
+    <BuilderModuleUnavailable
+      title="Taxonomia comercial indisponível"
+      description="Categorias e coleções do catálogo eram parte do produto de e-commerce anterior. Nesta instância, use entidades modeladas para estruturar o domínio do jogo."
+    />
+  );
 }

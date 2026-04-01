@@ -1,26 +1,10 @@
-import { redirect } from 'next/navigation';
-
-import BlogEditorManager from '@/features/ecommpanel/components/BlogEditorManager';
-import { canAccessBlogWorkspace } from '@/features/blog/server/permissions';
-import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
+import BuilderModuleUnavailable from '@/features/ecommpanel/components/BuilderModuleUnavailable';
 
 export default async function BlogEditorAdminPage() {
-  const user = await getPanelUserFromCookies();
-
-  if (!user) {
-    redirect('/ecommpanel/login');
-  }
-
-  if (!canAccessBlogWorkspace(user)) {
-    return (
-      <section className="panel-grid">
-        <article className="panel-card">
-          <h1>Acesso restrito</h1>
-          <p className="panel-muted">Seu perfil atual não possui acesso à operação editorial do blog.</p>
-        </article>
-      </section>
-    );
-  }
-
-  return <BlogEditorManager />;
+  return (
+    <BuilderModuleUnavailable
+      title="Editor de blog desativado"
+      description="Esta instância do Artmeta Panel não usa fluxo editorial de site. O editor de blog foi mantido apenas por compatibilidade histórica e não deve mais ser usado."
+    />
+  );
 }
