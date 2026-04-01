@@ -114,6 +114,16 @@ const SCOPE_COPY: Record<
     description: 'Reservado para integrações futuras de CRM e app autenticado.',
     availability: 'reserved',
   },
+  'data.records.read': {
+    label: 'Registros modelados',
+    description: 'Leitura de contratos, entidades modeladas e registros do Data Studio para apps externos.',
+    availability: 'active',
+  },
+  'data.records.write': {
+    label: 'Escrita de registros',
+    description: 'Criação, atualização e remoção autenticada de registros modelados via API de integração.',
+    availability: 'active',
+  },
 };
 
 function buildEmptyForm(): ClientFormState {

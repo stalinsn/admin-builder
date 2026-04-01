@@ -5825,6 +5825,42 @@ summary:hover .panel-accordion-chevron {
   align-items: center;
 }
 
+.panel-list {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.panel-list-card {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.125rem;
+  border-radius: 1rem;
+  border: 1px solid var(--panel-border);
+  background: var(--panel-surface);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.panel-list-card:hover,
+.panel-list-card:focus-visible {
+  border-color: rgba(23, 140, 92, 0.36);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 32px rgba(12, 18, 14, 0.08);
+}
+
+.panel-list-card.is-active {
+  border-color: rgba(23, 140, 92, 0.4);
+  background: linear-gradient(180deg, rgba(242, 248, 245, 0.98), rgba(236, 244, 240, 0.94));
+}
+
+.panel-record-grid {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--panel-text-muted);
+  font-size: 0.93rem;
+}
+
 .panel-button-small {
   min-height: 36px;
   padding: 0.45rem 0.8rem;

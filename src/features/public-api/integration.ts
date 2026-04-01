@@ -5,6 +5,8 @@ export const API_INTEGRATION_SCOPES = [
   'health.read',
   'orders.public.read',
   'customers.read',
+  'data.records.read',
+  'data.records.write',
 ] as const;
 
 export type ApiIntegrationScope = (typeof API_INTEGRATION_SCOPES)[number];
@@ -17,7 +19,7 @@ export type ApiReferenceItem = {
   route: string;
   exposure: ApiExposure;
   scope?: ApiIntegrationScope;
-  domain: 'catalog' | 'content' | 'logistics' | 'system' | 'orders' | 'customers';
+  domain: 'catalog' | 'content' | 'logistics' | 'system' | 'orders' | 'customers' | 'data';
   description: string;
 };
 
@@ -232,6 +234,60 @@ export const API_REFERENCE_ITEMS: ApiReferenceItem[] = [
     scope: 'health.read',
     domain: 'system',
     description: 'Healthcheck autenticado para integrações e monitoramento.',
+  },
+  {
+    id: 'integration-data-contracts',
+    method: 'GET',
+    route: '/api/integration/v1/data/contracts',
+    exposure: 'integration',
+    scope: 'data.records.read',
+    domain: 'data',
+    description: 'Bundle de JSON Schema e OpenAPI gerado pelo Data Studio para entidades modeladas.',
+  },
+  {
+    id: 'integration-data-records',
+    method: 'GET',
+    route: '/api/integration/v1/data/entities/[entitySlug]/records',
+    exposure: 'integration',
+    scope: 'data.records.read',
+    domain: 'data',
+    description: 'Lista paginada de registros de uma entidade modelada no Data Studio.',
+  },
+  {
+    id: 'integration-data-records-create',
+    method: 'POST',
+    route: '/api/integration/v1/data/entities/[entitySlug]/records',
+    exposure: 'integration',
+    scope: 'data.records.write',
+    domain: 'data',
+    description: 'Cria registros em uma entidade modelada no Data Studio.',
+  },
+  {
+    id: 'integration-data-record',
+    method: 'GET',
+    route: '/api/integration/v1/data/entities/[entitySlug]/records/[recordId]',
+    exposure: 'integration',
+    scope: 'data.records.read',
+    domain: 'data',
+    description: 'Lê um registro específico de uma entidade modelada.',
+  },
+  {
+    id: 'integration-data-record-update',
+    method: 'PUT',
+    route: '/api/integration/v1/data/entities/[entitySlug]/records/[recordId]',
+    exposure: 'integration',
+    scope: 'data.records.write',
+    domain: 'data',
+    description: 'Atualiza um registro específico de uma entidade modelada.',
+  },
+  {
+    id: 'integration-data-record-delete',
+    method: 'DELETE',
+    route: '/api/integration/v1/data/entities/[entitySlug]/records/[recordId]',
+    exposure: 'integration',
+    scope: 'data.records.write',
+    domain: 'data',
+    description: 'Remove um registro específico de uma entidade modelada.',
   },
 ];
 

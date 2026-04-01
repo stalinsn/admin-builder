@@ -8,6 +8,71 @@ import { getDataStudioSnapshot } from './dataStudioStore';
 import { withPostgresClient } from './postgresRuntime';
 
 type DataEntityRecord = Record<string, unknown>;
+type CsvImportMode = 'append' | 'upsert';
+
+function csvEscape(value: string): string {
+  if (/[",\n\r]/.test(value)) {
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+  return value;
+}
+
+function normalizeCell(value: unknown): string {
+  if (value === null || value === undefined) return '';
+  if (value instanceof Date) return value.toISOString();
+  if (typeof value === 'object') return JSON.stringify(value);
+  return String(value);
+}
+
+function parseCsv(content: string): string[][] {
+  const rows: string[][] = [];
+  let currentRow: string[] = [];
+  let currentCell = '';
+  let inQuotes = false;
+
+  for (let index = 0; index < content.length; index += 1) {
+    const char = content[index];
+    const next = content[index + 1];
+
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        currentCell += '"';
+        index += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+
+    if (!inQuotes && char === ',') {
+      currentRow.push(currentCell);
+      currentCell = '';
+      continue;
+    }
+
+    if (!inQuotes && (char === '\n' || char === '\r')) {
+      if (char === '\r' && next === '\n') {
+        index += 1;
+      }
+      currentRow.push(currentCell);
+      if (currentRow.some((cell) => cell.length > 0)) {
+        rows.push(currentRow);
+      }
+      currentRow = [];
+      currentCell = '';
+      continue;
+    }
+
+    currentCell += char;
+  }
+
+  currentRow.push(currentCell);
+  if (currentRow.some((cell) => cell.length > 0)) {
+    rows.push(currentRow);
+  }
+
+  return rows;
+}
 
 function quoteIdentifier(value: string): string {
   if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(value)) {
@@ -312,5 +377,85 @@ export async function deleteEntityRecord(entitySlug: string, recordId: string) {
   return {
     entity,
     deletedId: result.value.id,
+  };
+}
+
+export async function exportEntityRecordsCsv(entitySlug: string) {
+  const entity = assertEntity(entitySlug);
+  const listing = await listEntityRecords(entitySlug, { limit: 2000, offset: 0 });
+  const headers = ['id', ...entity.fields.map((field) => field.name), 'created_at', 'updated_at'];
+  const csv = [
+    headers.map(csvEscape).join(','),
+    ...listing.records.map((record) =>
+      headers.map((header) => csvEscape(normalizeCell(record[header]))).join(','),
+    ),
+  ].join('\n');
+
+  return {
+    entitySlug,
+    entityLabel: entity.label,
+    fileName: `${entity.slug}-records.csv`,
+    rowCount: listing.records.length,
+    generatedAt: nowIso(),
+    csv,
+  };
+}
+
+export async function importEntityRecordsCsv(
+  entitySlug: string,
+  input: { csvContent: string; mode: CsvImportMode },
+) {
+  const entity = assertEntity(entitySlug);
+  await ensureTableExists(entity);
+
+  const rows = parseCsv(input.csvContent.trim());
+  if (rows.length < 2) {
+    throw new Error('O CSV precisa conter cabeçalho e ao menos uma linha.');
+  }
+
+  const [headers, ...dataRows] = rows;
+  const processedHeaders = headers.map((header) => header.trim());
+  if (!processedHeaders.length) {
+    throw new Error('Cabeçalho CSV inválido.');
+  }
+
+  let insertedRows = 0;
+  let updatedRows = 0;
+
+  for (const row of dataRows) {
+    const record = Object.fromEntries(
+      processedHeaders.map((header, index) => [header, row[index] ?? '']),
+    );
+    const recordId =
+      typeof record.id === 'string' && record.id.trim() ? record.id.trim() : '';
+    const payload = Object.fromEntries(
+      entity.fields
+        .filter((field) => processedHeaders.includes(field.name))
+        .map((field) => [field.name, record[field.name]]),
+    );
+
+    if (input.mode === 'upsert' && recordId) {
+      try {
+        await getEntityRecord(entitySlug, recordId);
+        await updateEntityRecord(entitySlug, recordId, payload);
+        updatedRows += 1;
+        continue;
+      } catch {
+        // segue para criação quando o id não existir
+      }
+    }
+
+    await createEntityRecord(entitySlug, recordId ? { id: recordId, ...payload } : payload);
+    insertedRows += 1;
+  }
+
+  return {
+    entitySlug,
+    entityLabel: entity.label,
+    mode: input.mode,
+    processedRows: dataRows.length,
+    insertedRows,
+    updatedRows,
+    importedAt: nowIso(),
   };
 }

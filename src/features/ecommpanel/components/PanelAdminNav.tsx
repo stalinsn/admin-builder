@@ -104,8 +104,8 @@ export default function PanelAdminNav({
           {
             id: 'customers',
             href: '/ecommpanel/admin/customers',
-            label: 'Usuários do sistema',
-            description: 'Cadastro completo, contatos, perfis e dados operacionais das contas cadastradas.',
+            label: 'Contas',
+            description: 'Fonte principal de contas do sistema, nativas ou baseadas em entidade modelada.',
           },
           {
             id: 'customers-lgpd',

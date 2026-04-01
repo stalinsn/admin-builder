@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation';
 
-import CustomerOperationsManager from '@/features/ecommpanel/components/CustomerOperationsManager';
+import AccountWorkspaceManager from '@/features/ecommpanel/components/AccountWorkspaceManager';
+import { getAdminBuilderSettings } from '@/features/ecommpanel/server/adminBuilderSettingsStore';
 import { canAccessCustomerWorkspace } from '@/features/ecommerce/server/orderPermissions';
 import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
+import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
 
 export default async function EcommPanelCustomersPage() {
   const user = await getPanelUserFromCookies();
@@ -22,5 +24,7 @@ export default async function EcommPanelCustomersPage() {
     );
   }
 
-  return <CustomerOperationsManager />;
+  const snapshot = getDataStudioSnapshot();
+
+  return <AccountWorkspaceManager initialSettings={getAdminBuilderSettings(snapshot)} entities={snapshot.entities} />;
 }
