@@ -529,6 +529,37 @@ export function updateUser(input: {
   return sanitizeUser(found);
 }
 
+export function deleteUser(input: { userId: string; actorUserId?: string }): boolean {
+  const db = getDb();
+  const found = db.users.get(input.userId);
+  if (!found) return false;
+
+  db.users.delete(input.userId);
+
+  for (const [sessionId, session] of db.sessions.entries()) {
+    if (session.userId === input.userId) db.sessions.delete(sessionId);
+  }
+  for (const [tokenId, token] of db.resetTokens.entries()) {
+    if (token.userId === input.userId) db.resetTokens.delete(tokenId);
+  }
+  for (const [tokenId, token] of db.loginTokens.entries()) {
+    if (token.userId === input.userId) db.loginTokens.delete(tokenId);
+  }
+
+  pushAudit(db, {
+    actorUserId: input.actorUserId,
+    event: 'user.deleted',
+    outcome: 'success',
+    target: found.email,
+    details: {
+      userId: input.userId,
+    },
+  });
+
+  persistDb(db);
+  return true;
+}
+
 export function setUserPassword(userId: string, passwordHash: string): void {
   const db = getDb();
   const found = db.users.get(userId);

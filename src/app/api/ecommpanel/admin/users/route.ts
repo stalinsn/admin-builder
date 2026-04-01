@@ -11,6 +11,7 @@ import { errorNoStore, jsonNoStore } from '@/features/ecommpanel/server/http';
 import {
   addAuditEvent,
   createUser,
+  deleteUser,
   getUserById,
   getUserByEmail,
   listUsers,
@@ -43,6 +44,10 @@ type UpdateUserBody = CreateUserBody & {
   userId?: string;
 };
 
+type DeleteUserBody = {
+  userId?: string;
+};
+
 function normalizeRoleIds(value: string[] | undefined): PanelRoleId[] {
   if (!Array.isArray(value)) return [];
   const allowed = new Set(PANEL_ROLES);
@@ -64,6 +69,11 @@ function generateTemporaryPassword(): string {
 
 function listAvailableRoles() {
   return PANEL_ROLES.map((roleId) => PANEL_ROLES_MAP[roleId]);
+}
+
+async function countActiveMainAdmins(): Promise<number> {
+  const users = await listUsers();
+  return users.filter((user) => user.active && user.roleIds.includes('main_admin')).length;
 }
 
 async function getAuthorizedContext(req: NextRequest) {
@@ -268,6 +278,19 @@ export async function PATCH(req: NextRequest) {
     return errorNoStore(403, 'Apenas superusuário pode alterar um Main Admin.');
   }
 
+  if (targetUser.id === auth.user.id && !active) {
+    return errorNoStore(400, 'Você não pode desativar a própria conta.');
+  }
+
+  const removingMainAdminRole = targetUser.roleIds.includes('main_admin') && !roleIds.includes('main_admin');
+  const deactivatingMainAdmin = targetUser.roleIds.includes('main_admin') && !active;
+  if (removingMainAdminRole || deactivatingMainAdmin) {
+    const activeMainAdmins = await countActiveMainAdmins();
+    if (activeMainAdmins <= 1) {
+      return errorNoStore(400, 'Não é possível remover ou desativar o último Main Admin.');
+    }
+  }
+
   if (!canGrantPermissions(auth.user, [...permissionsAllow, ...permissionsDeny])) {
     return errorNoStore(403, 'Você tentou delegar permissões que não possui.');
   }
@@ -315,5 +338,85 @@ export async function PATCH(req: NextRequest) {
     ok: true,
     user: updatedUser,
     temporaryPassword: temporaryPassword || undefined,
+  });
+}
+
+export async function DELETE(req: NextRequest) {
+  if (!isTrustedOrigin(req)) {
+    return errorNoStore(403, 'Origem não permitida.');
+  }
+
+  const rate = checkRateLimit(
+    `admin:users:${getRequestFingerprint(req)}`,
+    PANEL_SECURITY.rateLimits.adminMutations.limit,
+    PANEL_SECURITY.rateLimits.adminMutations.windowMs,
+  );
+
+  if (!rate.allowed) {
+    const response = errorNoStore(429, 'Muitas operações administrativas. Tente novamente em instantes.');
+    response.headers.set('Retry-After', String(rate.retryAfterSeconds));
+    return response;
+  }
+
+  const context = await getAuthorizedContext(req);
+  if ('error' in context) return context.error;
+
+  const { auth } = context;
+
+  if (!hasPermission(auth.user, 'permissions.grant')) {
+    return errorNoStore(403, 'Sem permissão para remover usuários.');
+  }
+
+  if (!hasValidCsrf(req, auth.csrfToken)) {
+    return errorNoStore(403, 'Token CSRF inválido.');
+  }
+
+  const body = (await req.json().catch(() => null)) as DeleteUserBody | null;
+  const userId = body?.userId?.trim() || '';
+  if (!userId) {
+    return errorNoStore(400, 'Usuário alvo não informado.');
+  }
+
+  const targetUser = await getUserById(userId);
+  if (!targetUser) {
+    return errorNoStore(404, 'Usuário não encontrado.');
+  }
+
+  if (targetUser.id === auth.user.id) {
+    return errorNoStore(400, 'Você não pode excluir a própria conta.');
+  }
+
+  if (targetUser.roleIds.includes('main_admin')) {
+    if (!hasPermission(auth.user, 'security.superuser')) {
+      return errorNoStore(403, 'Apenas superusuário pode excluir um Main Admin.');
+    }
+
+    const activeMainAdmins = await countActiveMainAdmins();
+    if (activeMainAdmins <= 1) {
+      return errorNoStore(400, 'Não é possível excluir o último Main Admin.');
+    }
+  }
+
+  const deleted = await deleteUser({
+    userId,
+    actorUserId: auth.user.id,
+  });
+
+  if (!deleted) {
+    return errorNoStore(404, 'Usuário não encontrado.');
+  }
+
+  addAuditEvent({
+    actorUserId: auth.user.id,
+    event: 'admin.users.delete',
+    outcome: 'success',
+    target: targetUser.email,
+    details: {
+      userId,
+    },
+  });
+
+  return jsonNoStore({
+    ok: true,
   });
 }

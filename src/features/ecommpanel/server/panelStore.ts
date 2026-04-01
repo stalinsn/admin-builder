@@ -518,6 +518,30 @@ export async function updateUser(input: {
   return result.available ? result.value : mockStore.updateUser(input);
 }
 
+export async function deleteUser(input: { userId: string; actorUserId?: string }): Promise<boolean> {
+  const result = await withDbClient(async (client) => {
+    const existing = await client.query<PanelUserRow>('SELECT * FROM panel_users WHERE id = $1 LIMIT 1', [input.userId]);
+    const target = existing.rows[0];
+    if (!target) return false;
+
+    await client.query('DELETE FROM panel_users WHERE id = $1', [input.userId]);
+
+    await insertAuditEvent(client, {
+      actorUserId: input.actorUserId,
+      event: 'user.deleted',
+      outcome: 'success',
+      target: target.email,
+      details: {
+        userId: input.userId,
+      },
+    });
+
+    return true;
+  });
+
+  return result.available ? result.value : mockStore.deleteUser(input);
+}
+
 export async function setUserPassword(userId: string, passwordHash: string): Promise<void> {
   const result = await withDbClient(async (client) => {
     await client.query(

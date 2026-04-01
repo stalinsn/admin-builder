@@ -2058,7 +2058,7 @@ summary:hover .panel-accordion-chevron {
 }
 
 .panel-workspace--users {
-  grid-template-columns: minmax(360px, 440px) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   align-items: start;
 }
 
@@ -2132,6 +2132,13 @@ summary:hover .panel-accordion-chevron {
 
 .panel-users-actions-cell {
   min-width: 0;
+}
+
+.panel-users-actions-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-start;
 }
 
 .panel-workspace--orders {
@@ -4137,10 +4144,10 @@ summary:hover .panel-accordion-chevron {
 }
 
 .panel-users-form-card {
-  position: sticky;
-  top: 86px;
-  max-height: calc(100dvh - 98px);
-  overflow: auto;
+  position: static;
+  top: auto;
+  max-height: none;
+  overflow: visible;
   display: grid;
   gap: 1rem;
 }

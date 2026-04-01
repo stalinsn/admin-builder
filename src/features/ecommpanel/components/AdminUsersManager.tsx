@@ -352,6 +352,7 @@ function roleCoversOtherRole(candidate: PanelRole, target: PanelRole): boolean {
 export default function AdminUsersManager() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [actionUserId, setActionUserId] = useState<string | null>(null);
   const [users, setUsers] = useState<PanelUser[]>([]);
   const [roles, setRoles] = useState<PanelRole[]>([]);
   const [permissions, setPermissions] = useState<PanelPermission[]>([]);
@@ -409,6 +410,7 @@ export default function AdminUsersManager() {
       .map((role) => getRolePresentation(role).label);
   }, [form.roleIds, rolesById]);
   const canGrantPermissions = permissions.includes('permissions.grant');
+  const actingOnUser = useMemo(() => users.find((user) => user.id === actionUserId) || null, [actionUserId, users]);
 
   const resetEditor = useCallback(() => {
     setForm(INITIAL_FORM);
@@ -519,6 +521,99 @@ export default function AdminUsersManager() {
     }
   }
 
+  async function toggleUserActive(user: PanelUser) {
+    if (!canGrantPermissions || actionUserId) return;
+
+    const nextActive = !user.active;
+    const confirmed = window.confirm(
+      nextActive
+        ? `Deseja liberar novamente o acesso de ${user.name}?`
+        : `Deseja bloquear o acesso de ${user.name}? O usuário deixará de entrar no painel até ser reativado.`,
+    );
+    if (!confirmed) return;
+
+    setActionUserId(user.id);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const request = await fetch('/api/ecommpanel/admin/users', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken,
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          name: user.name,
+          email: user.email,
+          active: nextActive,
+          roleIds: user.roleIds,
+          permissionsAllow: user.permissionsAllow,
+          permissionsDeny: user.permissionsDeny,
+        }),
+      });
+
+      const payload = (await request.json().catch(() => null)) as { error?: string } | null;
+      if (!request.ok) {
+        setError(payload?.error || 'Não foi possível atualizar o status do usuário.');
+        return;
+      }
+
+      setSuccess(nextActive ? 'Usuário reativado com sucesso.' : 'Usuário bloqueado com sucesso.');
+      if (editingUserId === user.id) {
+        setForm((prev) => ({ ...prev, active: nextActive }));
+      }
+      await loadData();
+    } catch {
+      setError('Erro de rede ao atualizar o status do usuário.');
+    } finally {
+      setActionUserId(null);
+    }
+  }
+
+  async function removeUser(user: PanelUser) {
+    if (!canGrantPermissions || actionUserId) return;
+
+    const confirmed = window.confirm(
+      `Deseja excluir ${user.name}? Essa ação remove o acesso administrativo e limpa sessões/tokens associados.`,
+    );
+    if (!confirmed) return;
+
+    setActionUserId(user.id);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const request = await fetch('/api/ecommpanel/admin/users', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken,
+        },
+        body: JSON.stringify({
+          userId: user.id,
+        }),
+      });
+
+      const payload = (await request.json().catch(() => null)) as { error?: string } | null;
+      if (!request.ok) {
+        setError(payload?.error || 'Não foi possível excluir o usuário.');
+        return;
+      }
+
+      if (editingUserId === user.id) {
+        resetEditor();
+      }
+      setSuccess('Usuário excluído com sucesso.');
+      await loadData();
+    } catch {
+      setError('Erro de rede ao excluir o usuário.');
+    } finally {
+      setActionUserId(null);
+    }
+  }
+
   return (
     <section className="panel-users panel-grid panel-users--rework" aria-labelledby="panel-users-title">
       <div className="panel-card panel-card-hero panel-card-hero--compact">
@@ -550,6 +645,141 @@ export default function AdminUsersManager() {
       </div>
 
       <div className="panel-workspace panel-workspace--users">
+        <div className="panel-card panel-workspace__main panel-users-list-card">
+          <div className="panel-toolbar">
+            <div className="panel-toolbar__top">
+              <div className="panel-toolbar__copy">
+                <h2>Usuários existentes</h2>
+                <p className="panel-muted">Busque rapidamente, revise perfis aplicados e entre na edição individual quando necessário.</p>
+              </div>
+              <div className="panel-toolbar__filters">
+                <input
+                  className="panel-search"
+                  type="search"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder="Buscar por nome, e-mail ou perfil"
+                  aria-label="Buscar usuários"
+                />
+              </div>
+            </div>
+          </div>
+
+          {loading ? <p className="panel-muted">Carregando usuários...</p> : null}
+
+          {!loading && filteredUsers.length === 0 ? <p className="panel-table-empty">Nenhum usuário encontrado para o filtro atual.</p> : null}
+
+          {!loading && filteredUsers.length > 0 ? (
+            <div className="panel-table-wrap panel-users-table-wrap">
+              <table className="panel-table panel-users-table" aria-label="Tabela de usuários">
+                <thead>
+                  <tr>
+                    <th>Usuário</th>
+                    <th>Perfis</th>
+                    <th>Ajustes extras</th>
+                    <th>Bloqueios</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredUsers.map((user) => {
+                    const busy = actionUserId === user.id;
+                    return (
+                      <tr key={user.id} className={editingUserId === user.id ? 'panel-users-row-active' : undefined}>
+                        <td>
+                          <div className="panel-users-identity">
+                            <strong>{user.name}</strong>
+                            <span className="panel-muted">{user.email}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="panel-users-chip-stack">
+                            {user.roleIds.map((roleId) => {
+                              const role = rolesById.get(roleId as PanelRoleId);
+                              const label = role ? getRolePresentation(role).label : roleId;
+                              const description = role ? getRolePresentation(role).description : roleId;
+
+                              return (
+                                <span className="panel-badge" key={`${user.id}-${roleId}`} title={description}>
+                                  {label}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="panel-users-chip-stack">
+                            {user.permissionsAllow.length ? (
+                              user.permissionsAllow.map((permission) => {
+                                const permissionMeta = getPermissionPresentation(permission);
+                                return (
+                                  <span className="panel-badge" key={`${user.id}-allow-${permission}`} title={permissionMeta.description}>
+                                    {permissionMeta.label}
+                                  </span>
+                                );
+                              })
+                            ) : (
+                              <span className="panel-muted">Nenhum</span>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="panel-users-chip-stack">
+                            {user.permissionsDeny.length ? (
+                              user.permissionsDeny.map((permission) => {
+                                const permissionMeta = getPermissionPresentation(permission);
+                                return (
+                                  <span className="panel-badge panel-badge-neutral" key={`${user.id}-deny-${permission}`} title={permissionMeta.description}>
+                                    {permissionMeta.label}
+                                  </span>
+                                );
+                              })
+                            ) : (
+                              <span className="panel-muted">Nenhum</span>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <span className={`panel-badge ${user.active ? 'panel-badge-success' : 'panel-badge-neutral'}`}>{user.active ? 'Ativo' : 'Bloqueado'}</span>
+                        </td>
+                        <td className="panel-users-actions-cell">
+                          <div className="panel-users-actions-stack">
+                            <button
+                              type="button"
+                              className={`panel-btn panel-btn-sm panel-table-action ${editingUserId === user.id ? 'panel-btn-primary is-primary' : 'panel-btn-secondary'}`}
+                              onClick={() => startEditing(user)}
+                              disabled={busy}
+                            >
+                              {editingUserId === user.id ? 'Editando' : 'Editar'}
+                            </button>
+                            <button
+                              type="button"
+                              className="panel-btn panel-btn-sm panel-btn-secondary"
+                              onClick={() => toggleUserActive(user)}
+                              disabled={busy || !canGrantPermissions}
+                            >
+                              {busy && actingOnUser?.id === user.id ? 'Salvando...' : user.active ? 'Bloquear' : 'Reativar'}
+                            </button>
+                            <button
+                              type="button"
+                              className="panel-btn panel-btn-sm panel-btn-danger"
+                              onClick={() => removeUser(user)}
+                              disabled={busy || !canGrantPermissions}
+                            >
+                              {busy && actingOnUser?.id === user.id ? 'Excluindo...' : 'Excluir'}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
+        </div>
+
         <aside className="panel-card panel-users-form-card panel-users-editor-card panel-workspace__sidebar">
           <div className="panel-card-header panel-card-header--users-editor">
             <div className="panel-card-header__copy">
@@ -818,118 +1048,6 @@ export default function AdminUsersManager() {
           ) : null}
         </aside>
 
-        <div className="panel-card panel-workspace__main panel-users-list-card">
-          <div className="panel-toolbar">
-            <div className="panel-toolbar__top">
-              <div className="panel-toolbar__copy">
-                <h2>Usuários existentes</h2>
-                <p className="panel-muted">Busque rapidamente, revise perfis aplicados e entre na edição individual quando necessário.</p>
-              </div>
-              <div className="panel-toolbar__filters">
-                <input
-                  className="panel-search"
-                  type="search"
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  placeholder="Buscar por nome, e-mail ou perfil"
-                  aria-label="Buscar usuários"
-                />
-              </div>
-            </div>
-          </div>
-
-          {loading ? <p className="panel-muted">Carregando usuários...</p> : null}
-
-          {!loading && filteredUsers.length === 0 ? <p className="panel-table-empty">Nenhum usuário encontrado para o filtro atual.</p> : null}
-
-          {!loading && filteredUsers.length > 0 ? (
-            <div className="panel-table-wrap panel-users-table-wrap">
-              <table className="panel-table panel-users-table" aria-label="Tabela de usuários">
-                <thead>
-                  <tr>
-                    <th>Usuário</th>
-                    <th>Perfis</th>
-                    <th>Ajustes extras</th>
-                    <th>Bloqueios</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredUsers.map((user) => (
-                    <tr key={user.id} className={editingUserId === user.id ? 'panel-users-row-active' : undefined}>
-                      <td>
-                        <div className="panel-users-identity">
-                          <strong>{user.name}</strong>
-                          <span className="panel-muted">{user.email}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="panel-users-chip-stack">
-                          {user.roleIds.map((roleId) => {
-                            const role = rolesById.get(roleId as PanelRoleId);
-                            const label = role ? getRolePresentation(role).label : roleId;
-                            const description = role ? getRolePresentation(role).description : roleId;
-
-                            return (
-                              <span className="panel-badge" key={`${user.id}-${roleId}`} title={description}>
-                                {label}
-                              </span>
-                            );
-                          })}
-                        </div>
-                      </td>
-                      <td>
-                        <div className="panel-users-chip-stack">
-                          {user.permissionsAllow.length ? (
-                            user.permissionsAllow.map((permission) => {
-                              const permissionMeta = getPermissionPresentation(permission);
-                              return (
-                                <span className="panel-badge" key={`${user.id}-allow-${permission}`} title={permissionMeta.description}>
-                                  {permissionMeta.label}
-                                </span>
-                              );
-                            })
-                          ) : (
-                            <span className="panel-muted">Nenhum</span>
-                          )}
-                        </div>
-                      </td>
-                      <td>
-                        <div className="panel-users-chip-stack">
-                          {user.permissionsDeny.length ? (
-                            user.permissionsDeny.map((permission) => {
-                              const permissionMeta = getPermissionPresentation(permission);
-                              return (
-                                <span className="panel-badge panel-badge-neutral" key={`${user.id}-deny-${permission}`} title={permissionMeta.description}>
-                                  {permissionMeta.label}
-                                </span>
-                              );
-                            })
-                          ) : (
-                            <span className="panel-muted">Nenhum</span>
-                          )}
-                        </div>
-                      </td>
-                      <td>
-                        <span className={`panel-badge ${user.active ? 'panel-badge-success' : 'panel-badge-neutral'}`}>{user.active ? 'Ativo' : 'Inativo'}</span>
-                      </td>
-                      <td className="panel-users-actions-cell">
-                        <button
-                          type="button"
-                          className={`panel-btn panel-btn-sm panel-table-action ${editingUserId === user.id ? 'panel-btn-primary is-primary' : 'panel-btn-secondary'}`}
-                          onClick={() => startEditing(user)}
-                        >
-                          {editingUserId === user.id ? 'Editando' : 'Editar'}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
-        </div>
       </div>
     </section>
   );
