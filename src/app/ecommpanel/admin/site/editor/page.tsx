@@ -1,24 +1,10 @@
-import { redirect } from 'next/navigation';
-import SiteEditorManager from '@/features/ecommpanel/components/SiteEditorManager';
-import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
+import BuilderModuleUnavailable from '@/features/ecommpanel/components/BuilderModuleUnavailable';
 
 export default async function SiteEditorAdminPage() {
-  const user = await getPanelUserFromCookies();
-
-  if (!user) {
-    redirect('/ecommpanel/login');
-  }
-
-  if (!user.permissions.includes('site.content.manage')) {
-    return (
-      <section className="panel-grid">
-        <article className="panel-card">
-          <h1>Acesso restrito</h1>
-          <p className="panel-muted">Seu perfil atual não possui a permissão `site.content.manage`.</p>
-        </article>
-      </section>
-    );
-  }
-
-  return <SiteEditorManager />;
+  return (
+    <BuilderModuleUnavailable
+      title="Editor de site desativado"
+      description="A edição de páginas do storefront foi removida do fluxo principal deste produto. Use o Data Studio para estruturar a aplicação do jogo."
+    />
+  );
 }

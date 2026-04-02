@@ -1,24 +1,10 @@
-import { redirect } from 'next/navigation';
-import StorefrontMegaMenuManager from '@/features/ecommpanel/components/StorefrontMegaMenuManager';
-import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
+import BuilderModuleUnavailable from '@/features/ecommpanel/components/BuilderModuleUnavailable';
 
 export default async function SiteMegaMenuAdminPage() {
-  const user = await getPanelUserFromCookies();
-
-  if (!user) {
-    redirect('/ecommpanel/login');
-  }
-
-  if (!user.permissions.includes('site.layout.manage')) {
-    return (
-      <section className="panel-grid">
-        <article className="panel-card">
-          <h1>Acesso restrito</h1>
-          <p className="panel-muted">Seu perfil atual não possui a permissão `site.layout.manage`.</p>
-        </article>
-      </section>
-    );
-  }
-
-  return <StorefrontMegaMenuManager />;
+  return (
+    <BuilderModuleUnavailable
+      title="Mega menu indisponível"
+      description="Navegação de storefront não faz parte do escopo do Artmeta Panel do jogo."
+    />
+  );
 }

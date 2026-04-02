@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 
 import { listApiClients } from '@/features/ecommpanel/server/apiIntegrationStore';
 import { getAdminBuilderSettings } from '@/features/ecommpanel/server/adminBuilderSettingsStore';
-import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
+import { getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
 import { listUsers } from '@/features/ecommpanel/server/panelStore';
 import { jsonIntegration, withIntegrationAccess } from '@/features/public-api/integrationAuth';
 
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   return withIntegrationAccess(req, {
     scope: 'system.health.read',
     handler: async () => {
-      const snapshot = getDataStudioSnapshot();
+      const snapshot = await getDataStudioSnapshotResolved();
       const settings = getAdminBuilderSettings(snapshot);
       const users = await listUsers();
       const apiClients = await listApiClients();

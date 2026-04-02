@@ -1,24 +1,10 @@
-import { redirect } from 'next/navigation';
-import StorefrontTemplateManager from '@/features/ecommpanel/components/StorefrontTemplateManager';
-import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
+import BuilderModuleUnavailable from '@/features/ecommpanel/components/BuilderModuleUnavailable';
 
 export default async function SiteTemplateAdminPage() {
-  const user = await getPanelUserFromCookies();
-
-  if (!user) {
-    redirect('/ecommpanel/login');
-  }
-
-  if (!user.permissions.includes('site.layout.manage')) {
-    return (
-      <section className="panel-grid">
-        <article className="panel-card">
-          <h1>Acesso restrito</h1>
-          <p className="panel-muted">Seu perfil atual não possui a permissão `site.layout.manage`.</p>
-        </article>
-      </section>
-    );
-  }
-
-  return <StorefrontTemplateManager />;
+  return (
+    <BuilderModuleUnavailable
+      title="Template de storefront desativado"
+      description="A composição visual de loja/site não faz parte desta instalação do Artmeta Panel."
+    />
+  );
 }

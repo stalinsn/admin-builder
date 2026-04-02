@@ -11,7 +11,7 @@ import {
   hasValidCsrf,
   isTrustedOrigin,
 } from '@/features/ecommpanel/server/auth';
-import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
+import { getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
 import { errorNoStore, jsonNoStore } from '@/features/ecommpanel/server/http';
 import { isKnownApiIntegrationScope, type ApiIntegrationScope } from '@/features/public-api/integration';
 
@@ -23,9 +23,9 @@ type ClientBody = {
   };
 };
 
-function normalizeScopes(value: unknown): ApiIntegrationScope[] {
+async function normalizeScopes(value: unknown): Promise<ApiIntegrationScope[]> {
   if (!Array.isArray(value)) return [];
-  const snapshot = getDataStudioSnapshot();
+  const snapshot = await getDataStudioSnapshotResolved();
   return value.filter((entry): entry is ApiIntegrationScope => isKnownApiIntegrationScope(entry, snapshot));
 }
 
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
   const created = await createApiClient({
     name: client.name,
     description: typeof client.description === 'string' ? client.description : undefined,
-    scopes: normalizeScopes(client.scopes),
+    scopes: await normalizeScopes(client.scopes),
     allowedIps: normalizeAllowedIps(client.allowedIps, client.allowedIpsText),
     active: client.active !== false,
     expiresAt: typeof client.expiresAt === 'string' && client.expiresAt.trim() ? client.expiresAt : undefined,

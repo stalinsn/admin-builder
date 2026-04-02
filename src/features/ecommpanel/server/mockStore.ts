@@ -36,6 +36,14 @@ type SerializedMockDb = {
 };
 
 const MOCK_DB_PATH = join(process.cwd(), 'tmp', 'ecommpanel', 'panel-auth-store.json');
+const LEGACY_PANEL_SEED_IDS = [
+  'usr-demo-001',
+  'usr-author-001',
+  'usr-editor-001',
+  'usr-publisher-001',
+  'usr-moderator-001',
+  'usr-catalog-manager-001',
+] as const;
 
 function createEmptyDb(): MockDb {
   return {
@@ -171,14 +179,17 @@ function pushAudit(db: MockDb, event: Omit<PanelAuditEvent, 'id' | 'createdAt'>)
 
 export async function ensureSeededUsers(): Promise<void> {
   const db = getDb();
-  if (db.seeded && db.users.has('usr-demo-001')) return;
+  const hasLegacySeeds = LEGACY_PANEL_SEED_IDS.some((id) => db.users.has(id));
+  if (db.seeded && !hasLegacySeeds) return;
 
   const now = nowIso();
   const mainPasswordHash = await hashPassword('Admin@123456');
   const ownerPasswordHash = await hashPassword('Lojista@123456');
-  const demoPasswordHash = await hashPassword('Demo@123456');
-  const editorialPasswordHash = await hashPassword('Conteudo@123456');
   const dataPasswordHash = await hashPassword('Dados@123456');
+
+  for (const legacyId of LEGACY_PANEL_SEED_IDS) {
+    db.users.delete(legacyId);
+  }
 
   const seedUsers: PanelUserRecord[] = [
     {
@@ -198,7 +209,7 @@ export async function ensureSeededUsers(): Promise<void> {
     {
       id: 'usr-owner-001',
       email: 'stalinsn@hotmail.com',
-      name: 'Dono da Loja',
+      name: 'Owner da Plataforma',
       roleIds: ['store_owner'],
       permissionsAllow: [],
       permissionsDeny: [],
@@ -207,90 +218,6 @@ export async function ensureSeededUsers(): Promise<void> {
       createdAt: now,
       updatedAt: now,
       passwordHash: ownerPasswordHash,
-      failedAttempts: 0,
-    },
-    {
-      id: 'usr-demo-001',
-      email: 'demo@ecommpanel.local',
-      name: 'Acesso Demo',
-      roleIds: ['demo_operator'],
-      permissionsAllow: [],
-      permissionsDeny: [],
-      active: true,
-      mustChangePassword: false,
-      createdAt: now,
-      updatedAt: now,
-      passwordHash: demoPasswordHash,
-      failedAttempts: 0,
-    },
-    {
-      id: 'usr-author-001',
-      email: 'author@ecommpanel.local',
-      name: 'Autora Editorial',
-      roleIds: ['content_author'],
-      permissionsAllow: [],
-      permissionsDeny: [],
-      active: true,
-      mustChangePassword: false,
-      createdAt: now,
-      updatedAt: now,
-      passwordHash: editorialPasswordHash,
-      failedAttempts: 0,
-    },
-    {
-      id: 'usr-editor-001',
-      email: 'editor@ecommpanel.local',
-      name: 'Editor de Conteúdo',
-      roleIds: ['content_editor'],
-      permissionsAllow: [],
-      permissionsDeny: [],
-      active: true,
-      mustChangePassword: false,
-      createdAt: now,
-      updatedAt: now,
-      passwordHash: editorialPasswordHash,
-      failedAttempts: 0,
-    },
-    {
-      id: 'usr-publisher-001',
-      email: 'publisher@ecommpanel.local',
-      name: 'Publicador do Site',
-      roleIds: ['content_publisher'],
-      permissionsAllow: [],
-      permissionsDeny: [],
-      active: true,
-      mustChangePassword: false,
-      createdAt: now,
-      updatedAt: now,
-      passwordHash: editorialPasswordHash,
-      failedAttempts: 0,
-    },
-    {
-      id: 'usr-moderator-001',
-      email: 'moderator@ecommpanel.local',
-      name: 'Moderadora de Comentários',
-      roleIds: ['comment_moderator'],
-      permissionsAllow: [],
-      permissionsDeny: [],
-      active: true,
-      mustChangePassword: false,
-      createdAt: now,
-      updatedAt: now,
-      passwordHash: editorialPasswordHash,
-      failedAttempts: 0,
-    },
-    {
-      id: 'usr-catalog-manager-001',
-      email: 'catalog@ecommpanel.local',
-      name: 'Gestora de Catálogo',
-      roleIds: ['catalog_manager'],
-      permissionsAllow: [],
-      permissionsDeny: [],
-      active: true,
-      mustChangePassword: false,
-      createdAt: now,
-      updatedAt: now,
-      passwordHash: await hashPassword('Catalogo@123456'),
       failedAttempts: 0,
     },
     {
@@ -351,45 +278,9 @@ export async function ensureSeededUsers(): Promise<void> {
     });
     pushAudit(db, {
       actorUserId: 'usr-main-001',
-      event: 'seed.store-owner-created',
+      event: 'seed.platform-owner-created',
       outcome: 'success',
       target: 'stalinsn@hotmail.com',
-    });
-    pushAudit(db, {
-      actorUserId: 'usr-main-001',
-      event: 'seed.demo-user-created',
-      outcome: 'success',
-      target: 'demo@ecommpanel.local',
-    });
-    pushAudit(db, {
-      actorUserId: 'usr-main-001',
-      event: 'seed.editorial-author-created',
-      outcome: 'success',
-      target: 'author@ecommpanel.local',
-    });
-    pushAudit(db, {
-      actorUserId: 'usr-main-001',
-      event: 'seed.editorial-editor-created',
-      outcome: 'success',
-      target: 'editor@ecommpanel.local',
-    });
-    pushAudit(db, {
-      actorUserId: 'usr-main-001',
-      event: 'seed.editorial-publisher-created',
-      outcome: 'success',
-      target: 'publisher@ecommpanel.local',
-    });
-    pushAudit(db, {
-      actorUserId: 'usr-main-001',
-      event: 'seed.editorial-moderator-created',
-      outcome: 'success',
-      target: 'moderator@ecommpanel.local',
-    });
-    pushAudit(db, {
-      actorUserId: 'usr-main-001',
-      event: 'seed.catalog-manager-created',
-      outcome: 'success',
-      target: 'catalog@ecommpanel.local',
     });
     pushAudit(db, {
       actorUserId: 'usr-main-001',

@@ -82,7 +82,16 @@ declare global {
   var __ECOMMPANEL_DB_SCHEMA_READY_KEYS__: Set<string> | undefined;
 }
 
-const PANEL_SEED_VERSION = 'panel-users-v2';
+const PANEL_SEED_VERSION = 'panel-users-v3';
+
+const LEGACY_PANEL_SEED_IDS = [
+  'usr-demo-001',
+  'usr-author-001',
+  'usr-editor-001',
+  'usr-publisher-001',
+  'usr-moderator-001',
+  'usr-catalog-manager-001',
+] as const;
 
 function toIso(value: string | Date | null | undefined): string | undefined {
   if (!value) return undefined;
@@ -228,13 +237,7 @@ function getSeedUsers(): Array<{
 }> {
   return [
     { id: 'usr-main-001', email: 'main@ecommpanel.local', name: 'Main Admin', roleIds: ['main_admin'], password: 'Admin@123456' },
-    { id: 'usr-owner-001', email: 'stalinsn@hotmail.com', name: 'Dono da Loja', roleIds: ['store_owner'], password: 'Lojista@123456' },
-    { id: 'usr-demo-001', email: 'demo@ecommpanel.local', name: 'Acesso Demo', roleIds: ['demo_operator'], password: 'Demo@123456' },
-    { id: 'usr-author-001', email: 'author@ecommpanel.local', name: 'Autora Editorial', roleIds: ['content_author'], password: 'Conteudo@123456' },
-    { id: 'usr-editor-001', email: 'editor@ecommpanel.local', name: 'Editor de Conteúdo', roleIds: ['content_editor'], password: 'Conteudo@123456' },
-    { id: 'usr-publisher-001', email: 'publisher@ecommpanel.local', name: 'Publicador do Site', roleIds: ['content_publisher'], password: 'Conteudo@123456' },
-    { id: 'usr-moderator-001', email: 'moderator@ecommpanel.local', name: 'Moderadora de Comentários', roleIds: ['comment_moderator'], password: 'Conteudo@123456' },
-    { id: 'usr-catalog-manager-001', email: 'catalog@ecommpanel.local', name: 'Gestora de Catálogo', roleIds: ['catalog_manager'], password: 'Catalogo@123456' },
+    { id: 'usr-owner-001', email: 'stalinsn@hotmail.com', name: 'Owner da Plataforma', roleIds: ['store_owner'], password: 'Lojista@123456' },
     { id: 'usr-data-manager-001', email: 'data.manager@ecommpanel.local', name: 'Gestor de Dados', roleIds: ['data_manager'], password: 'Dados@123456' },
     { id: 'usr-data-editor-001', email: 'data.editor@ecommpanel.local', name: 'Operador de Dados', roleIds: ['data_editor'], password: 'Dados@123456' },
     { id: 'usr-data-viewer-001', email: 'data.viewer@ecommpanel.local', name: 'Leitora de Dados', roleIds: ['data_viewer'], password: 'Dados@123456' },
@@ -330,15 +333,27 @@ export async function ensureSeededUsers(): Promise<void> {
     const existing = await client.query<{ id: string; email: string }>('SELECT id, email FROM panel_users');
     const existingIds = new Set(existing.rows.map((row) => row.id));
     const existingEmails = new Set(existing.rows.map((row) => row.email.trim().toLowerCase()));
+    const legacyIds = LEGACY_PANEL_SEED_IDS.filter((id) => existingIds.has(id));
     const missingSeeds = getSeedUsers().filter((seed) => !existingIds.has(seed.id) && !existingEmails.has(seed.email));
 
-    if (missingSeeds.length === 0) {
+    if (missingSeeds.length === 0 && legacyIds.length === 0) {
       seededKeys.add(seededKey);
       return;
     }
 
     await client.query('BEGIN');
     try {
+      let removedCount = 0;
+      if (legacyIds.length > 0) {
+        const removeResult = await client.query(
+          `DELETE FROM panel_users
+           WHERE id = ANY($1::text[])
+             AND email LIKE '%@ecommpanel.local'`,
+          [legacyIds],
+        );
+        removedCount = removeResult.rowCount || 0;
+      }
+
       let insertedCount = 0;
       for (const seed of missingSeeds) {
         const passwordHash = await hashPassword(seed.password);
@@ -361,6 +376,7 @@ export async function ensureSeededUsers(): Promise<void> {
         target: 'panel_users',
         details: {
           inserted: insertedCount,
+          removed: removedCount,
         },
       });
 

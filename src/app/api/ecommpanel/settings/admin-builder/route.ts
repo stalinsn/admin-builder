@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 
 import { getApiAuthContext, hasValidCsrf, isTrustedOrigin } from '@/features/ecommpanel/server/auth';
 import { getAdminBuilderSettings, updateAdminBuilderSettings } from '@/features/ecommpanel/server/adminBuilderSettingsStore';
-import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
+import { getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
 import { errorNoStore, jsonNoStore } from '@/features/ecommpanel/server/http';
 
 export const dynamic = 'force-dynamic';
@@ -22,9 +22,11 @@ export async function GET(req: NextRequest) {
     return errorNoStore(403, 'Sem permissão para ler as preferências do Artmeta Panel.');
   }
 
+  const snapshot = await getDataStudioSnapshotResolved();
+
   return jsonNoStore({
     ok: true,
-    settings: getAdminBuilderSettings(getDataStudioSnapshot()),
+    settings: getAdminBuilderSettings(snapshot),
   });
 }
 
@@ -43,9 +45,10 @@ export async function PUT(req: NextRequest) {
   }
 
   const body = (await req.json().catch(() => null)) as { settings?: unknown } | null;
+  const snapshot = await getDataStudioSnapshotResolved();
 
   return jsonNoStore({
     ok: true,
-    settings: updateAdminBuilderSettings(body?.settings, getDataStudioSnapshot()),
+    settings: updateAdminBuilderSettings(body?.settings, snapshot),
   });
 }
