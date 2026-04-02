@@ -4,6 +4,7 @@ import {
   deleteDataEntity,
   deleteDataConnection,
   generateDataStudioBundleResolved,
+  getDataStudioRuntimeResolved,
   getDataStudioSnapshotResolved,
   importDataRows,
   importDataStudioBundle,
@@ -177,6 +178,10 @@ type DataStudioActionBody =
   | {
       action: 'rebuildEntitiesFromDatabase';
       replaceExisting?: boolean;
+    }
+  | {
+      action: 'syncEntityStructure';
+      entityId?: string;
     };
 
 async function requireAccess(req: NextRequest) {
@@ -195,9 +200,11 @@ export async function GET(req: NextRequest) {
   const canUseDatabaseTables = canManageDatabaseTables(guard.auth.user.permissions);
   const databaseTables = canUseDatabaseTables ? await listDatabaseTables() : { available: false, tables: [] };
   const snapshot = await getDataStudioSnapshotResolved();
+  const runtime = await getDataStudioRuntimeResolved(snapshot);
 
   return jsonNoStore({
     snapshot,
+    runtime,
     bundle: await generateDataStudioBundleResolved(snapshot),
     contracts: generateDataStudioContracts(snapshot),
     databaseTables: databaseTables.tables,
@@ -256,6 +263,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -281,6 +289,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -315,6 +324,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -340,6 +350,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -362,6 +373,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -411,6 +423,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -436,6 +449,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -461,6 +475,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -491,6 +506,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -555,6 +571,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
         });
       }
@@ -582,6 +599,39 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
+          contracts: generateDataStudioContracts(snapshot),
+        });
+      }
+
+      case 'syncEntityStructure': {
+        if (!canManageEntities(guard.auth.user.permissions)) {
+          return errorNoStore(403, 'Sem permissão para sincronizar a estrutura da entidade.');
+        }
+
+        if (!body.entityId) {
+          return errorNoStore(400, 'Entidade é obrigatória para sincronização.');
+        }
+
+        const currentSnapshot = await getDataStudioSnapshotResolved();
+        const entity = currentSnapshot.entities.find((candidate) => candidate.id === body.entityId);
+        if (!entity) {
+          return errorNoStore(404, 'Entidade não encontrada para sincronização.');
+        }
+
+        const snapshot = await saveDataEntity(entity);
+        addAuditEvent({
+          actorUserId: guard.auth.user.id,
+          event: 'data-studio.entity.synced',
+          outcome: 'success',
+          target: entity.slug,
+        });
+
+        return jsonNoStore({
+          ok: true,
+          snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
@@ -610,6 +660,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
           databaseTables: databaseTables.tables,
@@ -644,6 +695,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
           databaseTables: databaseTables.tables,
@@ -686,6 +738,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
           databaseTables: databaseTables.tables,

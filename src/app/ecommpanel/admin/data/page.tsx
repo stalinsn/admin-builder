@@ -1,7 +1,11 @@
 import { redirect } from 'next/navigation';
 
 import DataStudioManager from '@/features/ecommpanel/components/DataStudioManager';
-import { generateDataStudioBundleResolved, getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
+import {
+  generateDataStudioBundleResolved,
+  getDataStudioRuntimeResolved,
+  getDataStudioSnapshotResolved,
+} from '@/features/ecommpanel/server/dataStudioStore';
 import { listDatabaseTables } from '@/features/ecommpanel/server/dataTableCsvStore';
 import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
 
@@ -30,10 +34,12 @@ export default async function EcommPanelDataStudioPage() {
   const canManageDatabaseTables = hasDataPermission(user.permissions, 'data.admin.manage');
   const databaseTables = canManageDatabaseTables ? await listDatabaseTables() : { available: false, tables: [] };
   const snapshot = await getDataStudioSnapshotResolved();
+  const runtime = await getDataStudioRuntimeResolved(snapshot);
 
   return (
     <DataStudioManager
       initialSnapshot={snapshot}
+      initialRuntime={runtime}
       initialBundle={await generateDataStudioBundleResolved(snapshot)}
       canManageConnections={hasDataPermission(user.permissions, 'data.connection.manage')}
       canManageBootstrap={hasDataPermission(user.permissions, 'data.bootstrap.manage')}

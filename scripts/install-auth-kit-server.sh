@@ -31,7 +31,7 @@ AUTH_KIT_NGINX_SITE_NAME="${AUTH_KIT_NGINX_SITE_NAME:-}"
 AUTH_KIT_USE_COLORS="${AUTH_KIT_USE_COLORS:-auto}"
 
 CURRENT_STEP=0
-TOTAL_STEPS=11
+TOTAL_STEPS=12
 
 if [ "${AUTH_KIT_USE_COLORS}" = "auto" ] && [ -t 1 ]; then
   AUTH_KIT_USE_COLORS=true
@@ -439,6 +439,26 @@ ensure_env_file() {
   upsert_env "${AUTH_KIT_ENV_FILE}" "PANEL_AUTH_BASE_URL" "${AUTH_KIT_PUBLIC_URL}"
 }
 
+ensure_media_directories() {
+  local public_dir="${AUTH_KIT_APP_DIR}/public/ecommpanel-media"
+  local metadata_dir="${AUTH_KIT_APP_DIR}/src/data/ecommpanel/media/assets"
+  local public_probe="${public_dir}/.write-check"
+  local metadata_probe="${metadata_dir}/.write-check"
+
+  install -d -m 0775 "${public_dir}"
+  install -d -m 0775 "${metadata_dir}"
+
+  if ! printf 'ok' > "${public_probe}" 2>/dev/null; then
+    fail "não foi possível escrever em ${public_dir}. Ajuste permissões da pasta pública de mídia."
+  fi
+
+  if ! printf 'ok' > "${metadata_probe}" 2>/dev/null; then
+    fail "não foi possível escrever em ${metadata_dir}. Ajuste permissões da pasta de metadados da galeria."
+  fi
+
+  rm -f "${public_probe}" "${metadata_probe}"
+}
+
 interactive_setup() {
   derive_domain_from_public_url
 
@@ -677,6 +697,8 @@ Aplicação:
   env file: ${AUTH_KIT_ENV_FILE}
   public url: ${AUTH_KIT_PUBLIC_URL}
   porta: ${AUTH_KIT_PORT}
+  mídia pública: ${AUTH_KIT_APP_DIR}/public/ecommpanel-media
+  metadados de mídia: ${AUTH_KIT_APP_DIR}/src/data/ecommpanel/media/assets
 
 Banco:
   database: ${AUTH_KIT_DB_NAME}
@@ -734,6 +756,8 @@ main() {
   run_with_spinner "database ${AUTH_KIT_DB_NAME}" ensure_database
   next_step "Gravando variáveis de ambiente"
   run_with_spinner "arquivo .env.local" ensure_env_file
+  next_step "Preparando storage de mídia"
+  run_with_spinner "pastas da galeria" ensure_media_directories
   install_app_dependencies
   run_auth_bootstrap
   build_app
