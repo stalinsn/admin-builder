@@ -94,7 +94,7 @@ export function getInternalDataDictionary(): InternalDataDictionary {
       panelUsers: process.env.ECOMMPANEL_DB_RUNTIME_MODE?.trim() || 'auto',
       panelSettings: getMode('ECOM_PANEL_SETTINGS_PERSISTENCE_MODE'),
       analyticsEvents: getMode('ECOM_ANALYTICS_EVENTS_PERSISTENCE_MODE'),
-      dataStudio: 'files',
+      dataStudio: getMode('ECOM_DATA_STUDIO_PERSISTENCE_MODE'),
       accountWorkspace: settings.accountWorkspace.mode === 'entity' ? `entity:${settings.accountWorkspace.entitySlug}` : 'native',
       integrationApi: 'database',
     },
@@ -202,7 +202,7 @@ export function getInternalDataDictionary(): InternalDataDictionary {
         domain: 'Painel',
         label: 'Configurações administrativas',
         tableName: 'panel_settings',
-        description: 'Configurações persistidas do painel, como auth/e-mail e analytics config.',
+        description: 'Configurações persistidas do painel, incluindo auth/e-mail, analytics e snapshot estrutural do Data Studio.',
         columns: [
           column('key', 'text', 'Chave única da configuração.', { required: true, primaryKey: true }),
           column('value', 'jsonb', 'Documento completo da configuração.', { required: true }),

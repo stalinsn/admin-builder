@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import ApiIntegrationsManager from '@/features/ecommpanel/components/ApiIntegrationsManager';
 import { getPanelUserFromCookies, hasPermission } from '@/features/ecommpanel/server/auth';
 import { listApiClients, listApiLogs } from '@/features/ecommpanel/server/apiIntegrationStore';
-import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
+import { getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
 import { getApiIntegrationScopeOptions, listReferenceByExposure } from '@/features/public-api/integration';
 
 export default async function PanelIntegrationsPage() {
@@ -25,7 +25,7 @@ export default async function PanelIntegrationsPage() {
     );
   }
 
-  const snapshot = getDataStudioSnapshot();
+  const snapshot = await getDataStudioSnapshotResolved();
 
   return (
     <ApiIntegrationsManager

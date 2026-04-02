@@ -10,7 +10,7 @@ import {
   canRequestCustomerLgpd,
 } from '@/features/ecommerce/server/orderPermissions';
 import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
-import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
+import { getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
 import {
   listCustomerAccountsAdmin,
   listCustomerLgpdRequestsAdmin,
@@ -32,7 +32,8 @@ export default async function ArtmetaPanelAccountsLgpdPage() {
     );
   }
 
-  const settings = getAdminBuilderSettings(getDataStudioSnapshot());
+  const snapshot = await getDataStudioSnapshotResolved();
+  const settings = getAdminBuilderSettings(snapshot);
   if (settings.accountWorkspace.mode === 'entity') {
     return (
       <section className="panel-grid">

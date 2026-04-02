@@ -4,7 +4,7 @@ import AccountWorkspaceManager from '@/features/ecommpanel/components/AccountWor
 import { getAdminBuilderSettings } from '@/features/ecommpanel/server/adminBuilderSettingsStore';
 import { canAccessCustomerWorkspace } from '@/features/ecommerce/server/orderPermissions';
 import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
-import { getDataStudioSnapshot } from '@/features/ecommpanel/server/dataStudioStore';
+import { getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
 
 export default async function ArtmetaPanelAccountsPage() {
   const user = await getPanelUserFromCookies();
@@ -24,7 +24,7 @@ export default async function ArtmetaPanelAccountsPage() {
     );
   }
 
-  const snapshot = getDataStudioSnapshot();
+  const snapshot = await getDataStudioSnapshotResolved();
 
   return <AccountWorkspaceManager initialSettings={getAdminBuilderSettings(snapshot)} entities={snapshot.entities} />;
 }

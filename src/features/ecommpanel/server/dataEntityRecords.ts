@@ -4,7 +4,7 @@ import type { DataEntityDefinition, DataFieldDefinition } from '@/features/ecomm
 
 import { nowIso, randomToken } from './crypto';
 import { getModeledEntityBySlug } from './dataEntityContracts';
-import { getDataStudioSnapshot } from './dataStudioStore';
+import { getDataStudioSnapshotResolved } from './dataStudioStore';
 import { withPostgresClient } from './postgresRuntime';
 
 type DataEntityRecord = Record<string, unknown>;
@@ -82,8 +82,8 @@ function quoteIdentifier(value: string): string {
   return `"${value.replace(/"/g, '""')}"`;
 }
 
-function assertEntity(entitySlug: string): DataEntityDefinition {
-  const entity = getModeledEntityBySlug(entitySlug, getDataStudioSnapshot());
+async function assertEntity(entitySlug: string): Promise<DataEntityDefinition> {
+  const entity = getModeledEntityBySlug(entitySlug, await getDataStudioSnapshotResolved());
   if (!entity) {
     throw new Error('Entidade não encontrada no Data Studio.');
   }
@@ -211,7 +211,7 @@ async function ensureTableExists(entity: DataEntityDefinition): Promise<void> {
 }
 
 export async function listEntityRecords(entitySlug: string, options?: { limit?: number; offset?: number }) {
-  const entity = assertEntity(entitySlug);
+  const entity = await assertEntity(entitySlug);
   await ensureTableExists(entity);
 
   const limit = Math.min(Math.max(options?.limit || 50, 1), 200);
@@ -249,7 +249,7 @@ export async function listEntityRecords(entitySlug: string, options?: { limit?: 
 }
 
 export async function getEntityRecord(entitySlug: string, recordId: string) {
-  const entity = assertEntity(entitySlug);
+  const entity = await assertEntity(entitySlug);
   await ensureTableExists(entity);
 
   const result = await withPostgresClient(async (client) => {
@@ -273,7 +273,7 @@ export async function getEntityRecord(entitySlug: string, recordId: string) {
 }
 
 export async function createEntityRecord(entitySlug: string, record: DataEntityRecord) {
-  const entity = assertEntity(entitySlug);
+  const entity = await assertEntity(entitySlug);
   await ensureTableExists(entity);
 
   const normalized = normalizeInputRecord(entity, record, 'create');
@@ -312,7 +312,7 @@ export async function createEntityRecord(entitySlug: string, record: DataEntityR
 }
 
 export async function updateEntityRecord(entitySlug: string, recordId: string, record: DataEntityRecord) {
-  const entity = assertEntity(entitySlug);
+  const entity = await assertEntity(entitySlug);
   await ensureTableExists(entity);
 
   const normalized = normalizeInputRecord(entity, record, 'update');
@@ -357,7 +357,7 @@ export async function updateEntityRecord(entitySlug: string, recordId: string, r
 }
 
 export async function deleteEntityRecord(entitySlug: string, recordId: string) {
-  const entity = assertEntity(entitySlug);
+  const entity = await assertEntity(entitySlug);
   await ensureTableExists(entity);
 
   const result = await withPostgresClient(async (client) => {
@@ -381,7 +381,7 @@ export async function deleteEntityRecord(entitySlug: string, recordId: string) {
 }
 
 export async function exportEntityRecordsCsv(entitySlug: string) {
-  const entity = assertEntity(entitySlug);
+  const entity = await assertEntity(entitySlug);
   const listing = await listEntityRecords(entitySlug, { limit: 2000, offset: 0 });
   const headers = ['id', ...entity.fields.map((field) => field.name), 'created_at', 'updated_at'];
   const csv = [
@@ -405,7 +405,7 @@ export async function importEntityRecordsCsv(
   entitySlug: string,
   input: { csvContent: string; mode: CsvImportMode },
 ) {
-  const entity = assertEntity(entitySlug);
+  const entity = await assertEntity(entitySlug);
   await ensureTableExists(entity);
 
   const rows = parseCsv(input.csvContent.trim());
