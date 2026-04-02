@@ -159,7 +159,7 @@ export default function PanelAdminNav({
           {
             id: 'records',
             href: '/ecommpanel/admin/records',
-            label: 'Registros',
+            label: 'Entidades & Registros',
             icon: (
               <PanelNavIcon>
                 <IconDatabase />
@@ -169,7 +169,7 @@ export default function PanelAdminNav({
           {
             id: 'operations',
             href: '/ecommpanel/admin/data',
-            label: 'Operações',
+            label: 'Dados & Estrutura',
             match: ['/ecommpanel/admin/data', '/ecommpanel/admin/data/dictionary'],
             icon: (
               <PanelNavIcon>

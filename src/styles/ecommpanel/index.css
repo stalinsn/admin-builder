@@ -6041,28 +6041,28 @@ summary:hover .panel-accordion-chevron {
 }
 
 .panel-root {
-  --panel-bg: #eff4fb;
-  --panel-bg-strong: #e6edf8;
-  --panel-surface: #ffffff;
-  --panel-surface-soft: #f8fbff;
-  --panel-surface-strong: #eef4ff;
-  --panel-ink: #162033;
-  --panel-muted: #6a7488;
-  --panel-muted-soft: #8b94a7;
-  --panel-primary: #2f66ff;
-  --panel-primary-strong: #174de2;
-  --panel-primary-soft: #edf3ff;
+  --panel-bg: #ece9e1;
+  --panel-bg-strong: #e3dfd5;
+  --panel-surface: #fffdfa;
+  --panel-surface-soft: #f6f3ec;
+  --panel-surface-strong: #ece8df;
+  --panel-ink: #171a1d;
+  --panel-muted: #646864;
+  --panel-muted-soft: #8a8f8b;
+  --panel-primary: #2e3c44;
+  --panel-primary-strong: #202b31;
+  --panel-primary-soft: #eaedef;
   --panel-green: #2ea96b;
   --panel-green-soft: #edf9f2;
-  --panel-danger: #df5a41;
-  --panel-danger-soft: #fff1ee;
-  --panel-border: rgba(132, 150, 183, 0.24);
-  --panel-border-strong: rgba(81, 102, 140, 0.3);
-  --panel-shadow: 0 24px 56px rgba(38, 67, 120, 0.08);
-  --panel-shadow-soft: 0 10px 24px rgba(38, 67, 120, 0.06);
+  --panel-danger: #c2604b;
+  --panel-danger-soft: #fff1ed;
+  --panel-border: rgba(86, 92, 89, 0.16);
+  --panel-border-strong: rgba(55, 61, 58, 0.26);
+  --panel-shadow: 0 24px 56px rgba(22, 24, 20, 0.08);
+  --panel-shadow-soft: 0 10px 24px rgba(22, 24, 20, 0.06);
   background:
-    radial-gradient(circle at top left, rgba(47, 102, 255, 0.08), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(244, 248, 255, 0.96)),
+    radial-gradient(circle at top left, rgba(46, 60, 68, 0.06), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(245, 242, 236, 0.96)),
     var(--panel-bg);
 }
 
@@ -6199,18 +6199,18 @@ summary:hover .panel-accordion-chevron {
 }
 
 .panel-nav-link--compact:hover {
-  background: #f5f8ff;
+  background: #f0efea;
 }
 
 .panel-nav-link--compact.is-active {
-  background: #edf3ff;
-  border-color: rgba(47, 102, 255, 0.12);
+  background: #eceff1;
+  border-color: rgba(46, 60, 68, 0.12);
   color: var(--panel-primary);
-  box-shadow: inset 0 0 0 1px rgba(47, 102, 255, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(46, 60, 68, 0.03);
 }
 
 .panel-nav-link--compact.panel-nav-link--primary.is-active {
-  background: #eaf1ff;
+  background: #e7eaed;
 }
 
 .panel-nav-icon {
@@ -6332,7 +6332,7 @@ summary:hover .panel-accordion-chevron {
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: #eff4fb;
+  background: #eef0f2;
 }
 
 .panel-operation-card h2 {
@@ -6357,7 +6357,7 @@ summary:hover .panel-accordion-chevron {
   font-weight: 700;
   text-decoration: none;
   color: var(--panel-primary);
-  background: #edf3ff;
+  background: #eaedef;
 }
 
 .panel-operation-card--green {
@@ -6417,7 +6417,7 @@ summary:hover .panel-accordion-chevron {
 
 .panel-badge-soft {
   border: 0;
-  background: #edf3ff;
+  background: #eaedef;
   color: var(--panel-primary);
 }
 
@@ -6500,7 +6500,7 @@ summary:hover .panel-accordion-chevron {
   width: fit-content;
   padding: 0 0.85rem;
   border-radius: 999px;
-  background: #edf3ff;
+  background: #eaedef;
   color: var(--panel-primary);
   font-weight: 700;
 }
@@ -6513,7 +6513,7 @@ summary:hover .panel-accordion-chevron {
 
 .panel-records-empty-state__hero {
   min-height: 320px;
-  border: 2px dashed rgba(47, 102, 255, 0.22);
+  border: 2px dashed rgba(46, 60, 68, 0.18);
   border-radius: 24px;
   display: grid;
   place-items: center;
@@ -6526,7 +6526,7 @@ summary:hover .panel-accordion-chevron {
   width: 72px;
   height: 72px;
   border-radius: 999px;
-  background: radial-gradient(circle at center, rgba(47, 102, 255, 0.1), rgba(47, 102, 255, 0.03));
+  background: radial-gradient(circle at center, rgba(46, 60, 68, 0.08), rgba(46, 60, 68, 0.02));
 }
 
 .panel-records-empty-state__tips {

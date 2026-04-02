@@ -32,9 +32,9 @@ export default async function ArtmetaPanelRecordsPage() {
     <section className="panel-grid" aria-labelledby="records-workspace-title">
       <article className="panel-card panel-page-intro">
         <div className="panel-page-intro__copy">
-          <h1 id="records-workspace-title">Registros por Entidade</h1>
+          <h1 id="records-workspace-title">Entidades & Registros</h1>
           <p className="panel-muted">
-            Leia, edite e popule os registros das entidades em um workspace compacto, com tabela fixa e edição em modal.
+            Escolha a entidade ativa, visualize os registros em tabela e edite tudo em um fluxo compacto com modal.
           </p>
         </div>
       </article>

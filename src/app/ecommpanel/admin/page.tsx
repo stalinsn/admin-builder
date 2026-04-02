@@ -55,8 +55,8 @@ const QUICK_ACTIONS = [
     tone: 'violet',
   },
   {
-    href: '/ecommpanel/admin/data',
-    title: 'Operar registros',
+    href: '/ecommpanel/admin/records',
+    title: 'Entidades e registros',
     description: 'Listar entidades em tabela, adicionar registros e editar atributos diretamente no painel.',
     cta: 'Ver detalhes',
     tone: 'orange',
@@ -172,15 +172,15 @@ export default async function AdminBuilderDashboardPage() {
           </div>
 
           <div className="panel-dashboard-actions panel-dashboard-actions--stacked">
-            <Link href="/ecommpanel/admin/data" className="panel-dashboard-action panel-dashboard-action--stacked">
-              <strong>Estado estrutural do admin</strong>
+          <Link href="/ecommpanel/admin/data" className="panel-dashboard-action panel-dashboard-action--stacked">
+              <strong>Dados e estrutura</strong>
               <span>{dashboard.storage.rootPath}</span>
               <small>Acessar estado →</small>
             </Link>
-            <Link href="/ecommpanel/admin/integrations" className="panel-dashboard-action panel-dashboard-action--stacked">
-              <strong>Camada dinâmica</strong>
-              <span>Todas as entradas automáticas por entidade e integração headless.</span>
-              <small>Ver camadas →</small>
+            <Link href="/ecommpanel/admin/records" className="panel-dashboard-action panel-dashboard-action--stacked">
+              <strong>Entidades e registros</strong>
+              <span>Leia entidades modeladas, popule linhas e edite registros num workspace direto.</span>
+              <small>Abrir workspace →</small>
             </Link>
           </div>
         </article>
