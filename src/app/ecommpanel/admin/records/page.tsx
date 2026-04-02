@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import DataEntityRecordsWorkspace from '@/features/ecommpanel/components/DataEntityRecordsWorkspace';
+import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 import { getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
 import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
 
@@ -30,14 +31,12 @@ export default async function ArtmetaPanelRecordsPage() {
 
   return (
     <section className="panel-grid" aria-labelledby="records-workspace-title">
-      <article className="panel-card panel-page-intro">
-        <div className="panel-page-intro__copy">
-          <h1 id="records-workspace-title">Entidades & Registros</h1>
-          <p className="panel-muted">
-            Escolha a entidade ativa, visualize os registros em tabela e edite tudo em um fluxo compacto com modal.
-          </p>
-        </div>
-      </article>
+      <PanelPageHeader
+        eyebrow="Registros"
+        title="Entidades & Registros"
+        titleId="records-workspace-title"
+        description="Escolha a entidade ativa, visualize os registros em tabela e edite tudo em um fluxo compacto com modal."
+      />
 
       <DataEntityRecordsWorkspace
         entities={snapshot.entities}

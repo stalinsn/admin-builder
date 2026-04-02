@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { PanelPermission, PanelRole, PanelRoleId, PanelUser } from '@/features/ecommpanel/types/auth';
 import PanelModal from '@/features/ecommpanel/components/PanelModal';
+import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 
 type UsersApiResponse = {
   users?: PanelUser[];
@@ -634,13 +635,19 @@ export default function AdminUsersManager() {
 
   return (
     <section className="panel-users panel-grid panel-users--rework" aria-labelledby="panel-users-title">
-      <div className="panel-card panel-card-hero panel-card-hero--compact">
-        <p className="panel-kicker">Controle de Acesso</p>
-        <h1 id="panel-users-title">Gestão de usuários e permissões</h1>
-        <p className="panel-muted">
-          Perfis devem resolver a maior parte da operação. Exceções continuam disponíveis, mas em uma trilha mais controlada e legível.
-        </p>
-      </div>
+      <PanelPageHeader
+        eyebrow="Controle de Acesso"
+        title="Gestão de usuários e permissões"
+        titleId="panel-users-title"
+        description="Perfis devem resolver a maior parte da operação. Exceções continuam disponíveis, mas em uma trilha mais controlada e legível."
+        actions={
+          canGrantPermissions ? (
+            <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={startCreating}>
+              + Novo usuário
+            </button>
+          ) : null
+        }
+      />
 
       <div className="panel-stats">
         <article className="panel-stat">
@@ -679,11 +686,6 @@ export default function AdminUsersManager() {
                   placeholder="Buscar por nome, e-mail ou perfil"
                   aria-label="Buscar usuários"
                 />
-                {canGrantPermissions ? (
-                  <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={startCreating}>
-                    + Novo usuário
-                  </button>
-                ) : null}
               </div>
             </div>
           </div>

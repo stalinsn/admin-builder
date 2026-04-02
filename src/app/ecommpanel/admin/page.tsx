@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 
 import { getPanelUserFromCookies, hasPermission } from '@/features/ecommpanel/server/auth';
 import { getPanelOperationalDashboard } from '@/features/ecommpanel/server/dashboardMetrics';
+import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 
 function formatRelativeLabel(value?: string): string {
   if (!value) return 'pendente';
@@ -102,20 +103,20 @@ export default async function AdminBuilderDashboardPage() {
 
   return (
     <section className="panel-dashboard panel-grid panel-dashboard--rework" aria-labelledby="panel-dashboard-title">
-      <article className="panel-card panel-page-intro">
-        <div className="panel-page-intro__copy">
-          <h1 id="panel-dashboard-title">Centro de Orquestração</h1>
-          <p className="panel-muted">
-            Esta trilha inicial centraliza dados, sustentação, gestão e integração da plataforma em um shell mais compacto e navegável.
-          </p>
-        </div>
-        <div className="panel-page-intro__meta">
-          <span className="panel-badge panel-badge-success">
-            {dashboard.storage.mode === 'external' ? 'runtime externo' : 'runtime interno'}
-          </span>
-          <span className="panel-badge panel-badge-neutral">{dashboard.user.permissionsCount} permissões ativas</span>
-        </div>
-      </article>
+      <PanelPageHeader
+        eyebrow="Artmeta Panel"
+        title="Centro de Orquestração"
+        titleId="panel-dashboard-title"
+        description="Esta trilha inicial centraliza dados, sustentação, gestão e integração da plataforma em um shell mais compacto e navegável."
+        meta={
+          <>
+            <span className="panel-badge panel-badge-success">
+              {dashboard.storage.mode === 'external' ? 'runtime externo' : 'runtime interno'}
+            </span>
+            <span className="panel-badge panel-badge-neutral">{dashboard.user.permissionsCount} permissões ativas</span>
+          </>
+        }
+      />
 
       <div className="panel-stats panel-stats--compact panel-dashboard-metrics">
         <article className="panel-stat">

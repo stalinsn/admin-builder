@@ -3,6 +3,7 @@
 import type { FormEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import PanelModal from '@/features/ecommpanel/components/PanelModal';
+import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 
 import {
   type ApiIntegrationScopeOption,
@@ -309,23 +310,31 @@ export default function ApiIntegrationsManager({
 
   return (
     <section className="panel-grid" aria-labelledby="api-integrations-title">
-      <article className="panel-card panel-card-hero panel-card-hero--compact">
-        <p className="panel-kicker">APIs e integrações</p>
-        <h1 id="api-integrations-title">Controle de acesso da camada headless</h1>
-        <p className="panel-muted">
-          Gere clientes de API, distribua escopos por entidade ou domínio técnico, rotacione segredos, acompanhe chamadas autenticadas e documente o contrato exposto para apps e serviços externos.
-        </p>
-        <div className="panel-catalog-architecture">
-          <div>
-            <strong>Separação de superfícies</strong>
-            <span>`/api/v1` fica como superfície pública resumida. `/api/integration/v1` exige autenticação e registra trilha operacional.</span>
+      <PanelPageHeader
+        eyebrow="APIs e integrações"
+        title="Controle de acesso da camada headless"
+        titleId="api-integrations-title"
+        description="Gere clientes de API, distribua escopos por entidade ou domínio técnico, rotacione segredos, acompanhe chamadas autenticadas e documente o contrato exposto para apps e serviços externos."
+        actions={
+          canManage ? (
+            <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={handleCreateNew}>
+              + Novo token
+            </button>
+          ) : null
+        }
+        meta={
+          <div className="panel-catalog-architecture">
+            <div>
+              <strong>Separação de superfícies</strong>
+              <span>`/api/v1` fica como superfície pública resumida. `/api/integration/v1` exige autenticação e registra trilha operacional.</span>
+            </div>
+            <div>
+              <strong>Fluxo recomendado</strong>
+              <span>Key ID + secret emitem um bearer token temporário. As requisições seguintes usam somente o token.</span>
+            </div>
           </div>
-          <div>
-            <strong>Fluxo recomendado</strong>
-            <span>Key ID + secret emitem um bearer token temporário. As requisições seguintes usam somente o token.</span>
-          </div>
-        </div>
-      </article>
+        }
+      />
 
       <div className="panel-stats">
         <article className="panel-stat">
@@ -372,11 +381,6 @@ export default function ApiIntegrationsManager({
               <h2>Clientes de API</h2>
               <p className="panel-muted">Crie chaves com escopo por entidade e distribua o acesso técnico sem poluir o restante da interface.</p>
             </div>
-            {canManage ? (
-              <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={handleCreateNew}>
-                + Novo token
-              </button>
-            ) : null}
           </div>
 
           <div className="panel-api-feature-grid">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import PanelAdminNav from '@/features/ecommpanel/components/PanelAdminNav';
 import { safeJsonGet, safeJsonSet, withVersion } from '@/utils/safeStorage';
@@ -22,6 +23,24 @@ type PanelShellUiState = {
 
 const PANEL_SHELL_STORAGE_KEY = withVersion('ecommpanel.admin-shell.ui', 'v1');
 
+const PANEL_ROUTE_TRAILS = [
+  { prefix: '/ecommpanel/admin/data/dictionary', trail: ['Painel', 'Dados & Estrutura', 'Dicionário interno'] },
+  { prefix: '/ecommpanel/admin/records', trail: ['Painel', 'Entidades & Registros'] },
+  { prefix: '/ecommpanel/admin/data', trail: ['Painel', 'Dados & Estrutura'] },
+  { prefix: '/ecommpanel/admin/users', trail: ['Painel', 'Usuários'] },
+  { prefix: '/ecommpanel/admin/integrations', trail: ['Painel', 'API & Integrações'] },
+  { prefix: '/ecommpanel/admin/settings/auth', trail: ['Painel', 'Controle de Acesso'] },
+  { prefix: '/ecommpanel/admin/accounts/lgpd', trail: ['Painel', 'Contas', 'LGPD e dados'] },
+  { prefix: '/ecommpanel/admin/accounts', trail: ['Painel', 'Contas'] },
+  { prefix: '/ecommpanel/admin/analytics', trail: ['Painel', 'Analytics'] },
+  { prefix: '/ecommpanel/admin/media', trail: ['Painel', 'Mídia'] },
+];
+
+function resolvePanelTrail(pathname: string): string[] {
+  const match = PANEL_ROUTE_TRAILS.find((item) => pathname === item.prefix || pathname.startsWith(`${item.prefix}/`));
+  return match?.trail || ['Painel'];
+}
+
 export default function PanelAdminFrame({
   children,
   canManageUsers,
@@ -33,6 +52,7 @@ export default function PanelAdminFrame({
   canReadIntegrations,
 }: PanelAdminFrameProps) {
   const pathname = usePathname();
+  const trail = resolvePanelTrail(pathname);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [uiReady, setUiReady] = useState(false);
@@ -106,7 +126,29 @@ export default function PanelAdminFrame({
             canReadIntegrations={canReadIntegrations}
           />
         </aside>
-        <div className="panel-admin-content">{children}</div>
+        <div className="panel-admin-content">
+          <div className="panel-admin-contextbar">
+            <div className="panel-admin-breadcrumbs" aria-label="Trilha da página atual">
+              {trail.map((label, index) => {
+                const isLast = index === trail.length - 1;
+                return (
+                  <span key={`${label}-${index}`} className="panel-admin-breadcrumbs__item">
+                    {index === 0 ? (
+                      <Link href="/ecommpanel/admin" className="panel-admin-breadcrumbs__link">
+                        {label}
+                      </Link>
+                    ) : (
+                      <span className={isLast ? 'panel-admin-breadcrumbs__current' : undefined}>{label}</span>
+                    )}
+                    {!isLast ? <span className="panel-admin-breadcrumbs__separator">/</span> : null}
+                  </span>
+                );
+              })}
+            </div>
+            <span className="panel-admin-contextbar__path">{pathname}</span>
+          </div>
+          <div className="panel-admin-content__body">{children}</div>
+        </div>
       </div>
     </div>
   );
