@@ -2,6 +2,7 @@
 
 import type { FormEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
+import PanelModal from '@/features/ecommpanel/components/PanelModal';
 
 import {
   type ApiIntegrationScopeOption,
@@ -139,6 +140,7 @@ export default function ApiIntegrationsManager({
   const [loadingLogs, setLoadingLogs] = useState(false);
   const [saving, setSaving] = useState(false);
   const [rotatingSecret, setRotatingSecret] = useState(false);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [revealedSecret, setRevealedSecret] = useState<{ keyId: string; value: string } | null>(null);
@@ -254,6 +256,7 @@ export default function ApiIntegrationsManager({
       } else {
         setSuccess('Cliente de integração atualizado.');
       }
+      setIsEditorOpen(false);
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : 'Erro ao salvar o cliente de integração.');
     } finally {
@@ -301,6 +304,7 @@ export default function ApiIntegrationsManager({
     setError(null);
     setSuccess(null);
     setRevealedSecret(null);
+    setIsEditorOpen(true);
   }
 
   return (
@@ -361,19 +365,217 @@ export default function ApiIntegrationsManager({
         </article>
       ) : null}
 
-      <div className="panel-dashboard-layout">
+      <div className="panel-dashboard-layout panel-dashboard-layout--compact">
+        <article className="panel-card panel-card-subtle">
+          <div className="panel-card-header">
+            <div className="panel-card-header__copy">
+              <h2>Clientes de API</h2>
+              <p className="panel-muted">Crie chaves com escopo por entidade e distribua o acesso técnico sem poluir o restante da interface.</p>
+            </div>
+            {canManage ? (
+              <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={handleCreateNew}>
+                + Novo token
+              </button>
+            ) : null}
+          </div>
+
+          <div className="panel-api-feature-grid">
+            <article className="panel-api-feature-card panel-api-feature-card--blue">
+              <strong>Cliente de APIs</strong>
+              <span>Use chaves para liberar leitura e escrita por entidade.</span>
+            </article>
+            <article className="panel-api-feature-card panel-api-feature-card--green">
+              <strong>Tokens headless</strong>
+              <span>Emita bearer token temporário a partir de `keyId` + `secret`.</span>
+            </article>
+            <article className="panel-api-feature-card panel-api-feature-card--violet">
+              <strong>Logs e contrato</strong>
+              <span>Documentação e trilha de consumo técnico concentradas no mesmo módulo.</span>
+            </article>
+          </div>
+        </article>
+
         <article className="panel-card">
           <div className="panel-card-header">
             <div className="panel-card-header__copy">
-              <h2>{form.clientId ? 'Editar cliente de API' : 'Novo cliente de API'}</h2>
-              <p className="panel-muted">Distribua escopos por entidade ou por domínio técnico, limite IPs quando fizer sentido e defina se a credencial expira.</p>
+              <h2>Clientes cadastrados</h2>
+              <p className="panel-muted">Selecione uma credencial para editar, rotacionar o secret ou revisar o último uso.</p>
             </div>
-            <button type="button" className="panel-button panel-button-secondary" onClick={handleCreateNew}>
-              Novo cliente
-            </button>
+          </div>
+          <div className="panel-table-wrap">
+            <table className="panel-table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Escopos</th>
+                  <th>Status</th>
+                  <th>Último uso</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clients.length ? (
+                  clients.map((client) => (
+                    <tr key={client.id}>
+                      <td>
+                        <strong>{client.name}</strong>
+                        <div className="panel-table-muted">
+                          <code>{client.keyId}</code>
+                          {client.secretHint ? ` • termina em ${client.secretHint}` : ''}
+                        </div>
+                      </td>
+                      <td>{client.scopes.join(', ') || '-'}</td>
+                      <td>
+                        <span className={`panel-badge ${client.active ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
+                          {client.active ? 'ativo' : 'inativo'}
+                        </span>
+                      </td>
+                      <td>{formatDateTime(client.lastUsedAt)}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="panel-btn panel-btn-secondary panel-btn-sm"
+                          onClick={() => {
+                            setSelectedClientId(client.id);
+                            setIsEditorOpen(true);
+                          }}
+                        >
+                          Editar
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={5} className="panel-table-empty">
+                      Nenhum cliente de API cadastrado ainda.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+
+      <div className="panel-dashboard-layout panel-dashboard-layout--compact">
+        <article className="panel-card">
+          <div className="panel-card-header">
+            <div className="panel-card-header__copy">
+              <h2>Referência da API de integração</h2>
+              <p className="panel-muted">Contrato autenticado disponível para apps, middlewares e parceiros técnicos, refletindo as entidades modeladas nesta instância.</p>
+            </div>
+          </div>
+          <div className="panel-api-reference-list">
+            {referenceItems.map((item) => (
+              <div key={item.id} className="panel-api-reference-list__item">
+                <div className="panel-api-reference-list__meta">
+                  <span className={`panel-badge ${item.method === 'GET' ? 'panel-badge-success' : 'panel-badge-neutral'}`}>{item.method}</span>
+                  <code>{item.route}</code>
+                </div>
+                <div className="panel-api-reference-list__copy">
+                  <strong>{item.description}</strong>
+                  <small>
+                    {item.domain} · {item.scope || 'token válido'}
+                  </small>
+                </div>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article className="panel-card">
+          <div className="panel-toolbar">
+            <div className="panel-toolbar__top">
+              <div className="panel-toolbar__copy">
+                <h2>Logs de acesso</h2>
+                <p className="panel-muted">Chamadas autenticadas por chave ou token formam a trilha de auditoria da camada headless.</p>
+              </div>
+              <div className="panel-toolbar__filters">
+                <select
+                  className="panel-select"
+                  value={logClientFilter}
+                  onChange={(event) => {
+                    const next = event.target.value;
+                    setLogClientFilter(next);
+                    void loadLogs(next);
+                  }}
+                >
+                  <option value="all">Todos os clientes</option>
+                  {clients.map((client) => (
+                    <option key={client.id} value={client.id}>
+                      {client.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
 
-          <form className="panel-form" onSubmit={handleSubmit}>
+          <div className="panel-table-wrap">
+            <table className="panel-table">
+              <thead>
+                <tr>
+                  <th>Quando</th>
+                  <th>Rota</th>
+                  <th>Status</th>
+                  <th>Autenticação</th>
+                  <th>Escopo</th>
+                  <th>Cliente</th>
+                </tr>
+              </thead>
+              <tbody>
+                {logs.length ? (
+                  logs.map((item) => (
+                    <tr key={item.id}>
+                      <td>{formatDateTime(item.createdAt)}</td>
+                      <td>
+                        <strong>{item.method}</strong> <code>{item.route}</code>
+                      </td>
+                      <td>{item.statusCode}</td>
+                      <td>{item.authMode}</td>
+                      <td>{item.scope || '-'}</td>
+                      <td>{item.keyId || item.clientId || '-'}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={6} className="panel-table-empty">
+                      {loadingLogs ? 'Carregando logs...' : 'Nenhuma chamada registrada ainda.'}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+
+      <PanelModal
+        open={isEditorOpen}
+        onClose={() => setIsEditorOpen(false)}
+        title={form.clientId ? 'Editar cliente de API' : 'Novo cliente de API'}
+        description="Distribua escopos por entidade ou por domínio técnico, limite IPs quando fizer sentido e defina se a credencial expira."
+        size="xl"
+        footer={
+          <div className="panel-actions">
+            <button className="panel-btn panel-btn-primary" type="submit" form="panel-api-client-form" disabled={!canManage || saving}>
+              {saving ? 'Salvando...' : form.clientId ? 'Salvar cliente' : 'Criar cliente'}
+            </button>
+            {selectedClient ? (
+              <button
+                type="button"
+                className="panel-btn panel-btn-secondary"
+                onClick={() => void handleRotateSecret()}
+                disabled={!canManage || rotatingSecret}
+              >
+                {rotatingSecret ? 'Rotacionando...' : 'Rotacionar secret'}
+              </button>
+            ) : null}
+          </div>
+        }
+      >
+        <form className="panel-form" id="panel-api-client-form" onSubmit={handleSubmit}>
             <div className="panel-form-grid panel-form-grid--two">
               <div className="panel-field">
                 <label htmlFor="api-client-name">Nome operacional</label>
@@ -484,187 +686,8 @@ export default function ApiIntegrationsManager({
                 </label>
               </div>
             </div>
-
-            <div className="panel-form-actions">
-              <button type="submit" className="panel-button" disabled={!canManage || saving}>
-                {saving ? 'Salvando...' : form.clientId ? 'Salvar cliente' : 'Criar cliente'}
-              </button>
-              {selectedClient ? (
-                <button
-                  type="button"
-                  className="panel-button panel-button-secondary"
-                  onClick={() => void handleRotateSecret()}
-                  disabled={!canManage || rotatingSecret}
-                >
-                  {rotatingSecret ? 'Rotacionando...' : 'Rotacionar secret'}
-                </button>
-              ) : null}
-            </div>
-          </form>
-        </article>
-
-        <article className="panel-card">
-          <div className="panel-card-header">
-            <div className="panel-card-header__copy">
-              <h2>Clientes cadastrados</h2>
-              <p className="panel-muted">Selecione uma credencial para editar ou revisar o último uso.</p>
-            </div>
-          </div>
-          <div className="panel-table-wrap">
-            <table className="panel-table">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Escopos</th>
-                  <th>Status</th>
-                  <th>Último uso</th>
-                  <th>Ação</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clients.length ? (
-                  clients.map((client) => (
-                    <tr key={client.id}>
-                      <td>
-                        <strong>{client.name}</strong>
-                        <div className="panel-table-muted">
-                          <code>{client.keyId}</code>
-                          {client.secretHint ? ` • termina em ${client.secretHint}` : ''}
-                        </div>
-                      </td>
-                      <td>{client.scopes.join(', ') || '-'}</td>
-                      <td>
-                        <span className={`panel-badge ${client.active ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
-                          {client.active ? 'ativo' : 'inativo'}
-                        </span>
-                      </td>
-                      <td>{formatDateTime(client.lastUsedAt)}</td>
-                      <td>
-                        <button
-                          type="button"
-                          className="panel-button panel-button-secondary"
-                          onClick={() => setSelectedClientId(client.id)}
-                        >
-                          Editar
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={5} className="panel-table-empty">
-                      Nenhum cliente de API cadastrado ainda.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </div>
-
-      <div className="panel-dashboard-layout">
-        <article className="panel-card">
-          <div className="panel-card-header">
-            <div className="panel-card-header__copy">
-              <h2>Referência da API de integração</h2>
-              <p className="panel-muted">Contrato autenticado disponível para apps, middlewares e parceiros técnicos, refletindo as entidades modeladas nesta instância.</p>
-            </div>
-          </div>
-          <div className="panel-table-wrap">
-            <table className="panel-table">
-              <thead>
-                <tr>
-                  <th>Método</th>
-                  <th>Rota</th>
-                  <th>Domínio</th>
-                  <th>Escopo</th>
-                  <th>Descrição</th>
-                </tr>
-              </thead>
-              <tbody>
-                {referenceItems.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.method}</td>
-                    <td>
-                      <code>{item.route}</code>
-                    </td>
-                    <td>{item.domain}</td>
-                    <td>{item.scope || 'token válido'}</td>
-                    <td>{item.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </article>
-
-        <article className="panel-card">
-          <div className="panel-toolbar">
-            <div className="panel-toolbar__top">
-              <div className="panel-toolbar__copy">
-                <h2>Logs de acesso</h2>
-                <p className="panel-muted">Chamadas autenticadas por chave ou token começam a formar a trilha de auditoria da camada headless.</p>
-              </div>
-              <div className="panel-toolbar__filters">
-                <select
-                  className="panel-select"
-                  value={logClientFilter}
-                  onChange={(event) => {
-                    const next = event.target.value;
-                    setLogClientFilter(next);
-                    void loadLogs(next);
-                  }}
-                >
-                  <option value="all">Todos os clientes</option>
-                  {clients.map((client) => (
-                    <option key={client.id} value={client.id}>
-                      {client.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="panel-table-wrap">
-            <table className="panel-table">
-              <thead>
-                <tr>
-                  <th>Quando</th>
-                  <th>Rota</th>
-                  <th>Status</th>
-                  <th>Autenticação</th>
-                  <th>Escopo</th>
-                  <th>Cliente</th>
-                </tr>
-              </thead>
-              <tbody>
-                {logs.length ? (
-                  logs.map((item) => (
-                    <tr key={item.id}>
-                      <td>{formatDateTime(item.createdAt)}</td>
-                      <td>
-                        <strong>{item.method}</strong> <code>{item.route}</code>
-                      </td>
-                      <td>{item.statusCode}</td>
-                      <td>{item.authMode}</td>
-                      <td>{item.scope || '-'}</td>
-                      <td>{item.keyId || item.clientId || '-'}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={6} className="panel-table-empty">
-                      {loadingLogs ? 'Carregando logs...' : 'Nenhuma chamada registrada ainda.'}
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </div>
+        </form>
+      </PanelModal>
     </section>
   );
 }

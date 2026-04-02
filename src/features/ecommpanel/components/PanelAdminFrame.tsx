@@ -69,11 +69,7 @@ export default function PanelAdminFrame({
   }, [pathname, isMobileViewport]);
 
   return (
-    <div
-      className={`panel-admin-grid ${sidebarCollapsed ? 'is-nav-collapsed' : ''} ${
-        isMobileViewport && !sidebarCollapsed ? 'is-nav-open-mobile' : ''
-      }`}
-    >
+    <div className="panel-admin-shell">
       <button
         type="button"
         className={`panel-nav-fab ${sidebarCollapsed ? '' : 'is-open'}`}
@@ -94,18 +90,24 @@ export default function PanelAdminFrame({
         />
       ) : null}
 
-      <aside className="panel-sidebar">
-        <PanelAdminNav
-          canManageUsers={canManageUsers}
-          canReadAnalytics={canReadAnalytics}
-          canReadDataStudio={canReadDataStudio}
-          canReadCatalog={canReadCatalog}
-          canReadOrders={canReadOrders}
-          canReadPanelSettings={canReadPanelSettings}
-          canReadIntegrations={canReadIntegrations}
-        />
-      </aside>
-      <div className="panel-admin-content">{children}</div>
+      <div
+        className={`panel-admin-grid ${sidebarCollapsed ? 'is-nav-collapsed' : ''} ${
+          isMobileViewport && !sidebarCollapsed ? 'is-nav-open-mobile' : ''
+        }`}
+      >
+        <aside className="panel-sidebar">
+          <PanelAdminNav
+            canManageUsers={canManageUsers}
+            canReadAnalytics={canReadAnalytics}
+            canReadDataStudio={canReadDataStudio}
+            canReadCatalog={canReadCatalog}
+            canReadOrders={canReadOrders}
+            canReadPanelSettings={canReadPanelSettings}
+            canReadIntegrations={canReadIntegrations}
+          />
+        </aside>
+        <div className="panel-admin-content">{children}</div>
+      </div>
     </div>
   );
 }

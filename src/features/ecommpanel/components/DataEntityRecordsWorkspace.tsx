@@ -3,10 +3,11 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import type { DataEntityDefinition } from '@/features/ecommpanel/types/dataStudio';
+import PanelModal from '@/features/ecommpanel/components/PanelModal';
 
 type Props = {
   entities: DataEntityDefinition[];
-  csrfToken: string;
+  csrfToken?: string;
   canManageRecords: boolean;
   initialEntityId?: string | null;
 };
@@ -109,6 +110,7 @@ export default function DataEntityRecordsWorkspace({
   canManageRecords,
   initialEntityId,
 }: Props) {
+  const [csrfTokenValue, setCsrfTokenValue] = useState(csrfToken || '');
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(initialEntityId || entities[0]?.id || null);
   const [records, setRecords] = useState<Record<string, unknown>[]>([]);
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
@@ -119,6 +121,8 @@ export default function DataEntityRecordsWorkspace({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [lastSyncAt, setLastSyncAt] = useState<string | null>(null);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [isImportOpen, setIsImportOpen] = useState(false);
 
   const selectedEntity = useMemo(
     () => entities.find((entity) => entity.id === selectedEntityId) || null,
@@ -134,6 +138,23 @@ export default function DataEntityRecordsWorkspace({
     () => records.find((record) => String(record.id || '') === selectedRecordId) || null,
     [records, selectedRecordId],
   );
+
+  useEffect(() => {
+    if (csrfToken) {
+      setCsrfTokenValue(csrfToken);
+      return;
+    }
+
+    fetch('/api/ecommpanel/auth/me', { credentials: 'same-origin', cache: 'no-store' })
+      .then(async (response) => {
+        if (!response.ok) return null;
+        return (await response.json().catch(() => null)) as { csrfToken?: string } | null;
+      })
+      .then((payload) => {
+        if (payload?.csrfToken) setCsrfTokenValue(payload.csrfToken);
+      })
+      .catch(() => undefined);
+  }, [csrfToken]);
 
   useEffect(() => {
     if (!entities.length) {
@@ -201,7 +222,7 @@ export default function DataEntityRecordsWorkspace({
   }
 
   async function saveRecord() {
-    if (!selectedEntity || !csrfToken) return;
+    if (!selectedEntity || !csrfTokenValue) return;
     setSaving(true);
     setError(null);
     setSuccess(null);
@@ -219,7 +240,7 @@ export default function DataEntityRecordsWorkspace({
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
-          'x-csrf-token': csrfToken,
+          'x-csrf-token': csrfTokenValue,
         },
         body: JSON.stringify({ record }),
       });
@@ -231,6 +252,7 @@ export default function DataEntityRecordsWorkspace({
       setSelectedRecordId(String(payload.record.id || ''));
       await loadRecords(selectedEntity.slug);
       setSuccess(isEditing ? 'Registro atualizado com sucesso.' : 'Registro criado com sucesso.');
+      setIsEditorOpen(false);
     } catch (currentError) {
       setError(currentError instanceof Error ? currentError.message : 'Falha ao salvar o registro.');
     } finally {
@@ -239,7 +261,7 @@ export default function DataEntityRecordsWorkspace({
   }
 
   async function deleteSelectedRecord() {
-    if (!selectedEntity || !selectedRecordId || !csrfToken) return;
+    if (!selectedEntity || !selectedRecordId || !csrfTokenValue) return;
     const confirmed = window.confirm('Remover este registro da entidade selecionada?');
     if (!confirmed) return;
 
@@ -254,7 +276,7 @@ export default function DataEntityRecordsWorkspace({
           method: 'DELETE',
           credentials: 'same-origin',
           headers: {
-            'x-csrf-token': csrfToken,
+            'x-csrf-token': csrfTokenValue,
           },
         },
       );
@@ -266,6 +288,7 @@ export default function DataEntityRecordsWorkspace({
       setSelectedRecordId(null);
       await loadRecords(selectedEntity.slug);
       setSuccess('Registro removido com sucesso.');
+      setIsEditorOpen(false);
     } catch (currentError) {
       setError(currentError instanceof Error ? currentError.message : 'Falha ao remover o registro.');
     } finally {
@@ -274,7 +297,7 @@ export default function DataEntityRecordsWorkspace({
   }
 
   async function importJsonRows() {
-    if (!selectedEntity || !csrfToken) return;
+    if (!selectedEntity || !csrfTokenValue) return;
     setSaving(true);
     setError(null);
     setSuccess(null);
@@ -288,7 +311,7 @@ export default function DataEntityRecordsWorkspace({
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
-          'x-csrf-token': csrfToken,
+          'x-csrf-token': csrfTokenValue,
         },
         body: JSON.stringify({
           action: 'importRows',
@@ -304,6 +327,7 @@ export default function DataEntityRecordsWorkspace({
 
       await loadRecords(selectedEntity.slug);
       setSuccess(`Entidade ${selectedEntity.label} populada com sucesso via JSON.`);
+      setIsImportOpen(false);
     } catch (currentError) {
       setError(currentError instanceof Error ? currentError.message : 'Falha ao importar o JSON.');
     } finally {
@@ -313,9 +337,25 @@ export default function DataEntityRecordsWorkspace({
 
   if (!selectedEntity) {
     return (
-      <article className="panel-card">
-        <h3>Nenhuma entidade disponível</h3>
-        <p className="panel-muted">Modele ao menos uma entidade antes de operar os registros no painel.</p>
+      <article className="panel-card panel-records-empty-state">
+        <div className="panel-records-empty-state__hero">
+          <div className="panel-records-empty-state__icon" aria-hidden="true" />
+          <strong>Nenhuma entidade disponível</strong>
+          <p className="panel-muted">Modele ao menos uma entidade antes de operar registros, editar conteúdo ou popular dados no painel.</p>
+          <button type="button" className="panel-btn panel-btn-primary" disabled>
+            + Criar primeira entidade
+          </button>
+        </div>
+        <div className="panel-records-empty-state__tips">
+          <article className="panel-card panel-card-subtle">
+            <strong>O que são entidades?</strong>
+            <p className="panel-muted">Entidades representam tabelas e coleções operacionais do sistema. Depois de modeladas, você pode listar, editar e integrar registros.</p>
+          </article>
+          <article className="panel-card panel-card-subtle">
+            <strong>Como começar?</strong>
+            <p className="panel-muted">Crie a entidade no módulo de modelagem e depois volte a este workspace para operar os dados em tabela e modais compactos.</p>
+          </article>
+        </div>
       </article>
     );
   }
@@ -342,9 +382,13 @@ export default function DataEntityRecordsWorkspace({
                 setSelectedRecordId(null);
                 setSuccess(null);
                 setError(null);
+                setIsEditorOpen(true);
               }}
             >
               Novo registro
+            </button>
+            <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={() => setIsImportOpen(true)}>
+              + Popular entidade
             </button>
           </div>
         </div>
@@ -418,7 +462,10 @@ export default function DataEntityRecordsWorkspace({
                   <button
                     type="button"
                     className="panel-btn panel-btn-secondary panel-btn-xs panel-table-action is-primary"
-                    onClick={() => setSelectedRecordId(recordId)}
+                    onClick={() => {
+                      setSelectedRecordId(recordId);
+                      setIsEditorOpen(true);
+                    }}
                   >
                     Editar
                   </button>
@@ -441,18 +488,25 @@ export default function DataEntityRecordsWorkspace({
         </div>
       </article>
 
-      <article className="panel-card">
-        <div className="panel-section-heading">
-          <div>
-            <h3>{selectedRecordId ? 'Editar conteúdo do registro' : 'Criar novo registro'}</h3>
-            <p className="panel-muted">Os campos abaixo seguem o schema modelado para {selectedEntity.label}.</p>
-          </div>
-          {selectedRecordId ? (
-            <button type="button" className="panel-btn panel-btn-danger panel-btn-sm" onClick={deleteSelectedRecord} disabled={saving || !canManageRecords}>
-              Excluir registro
+      <PanelModal
+        open={isEditorOpen}
+        onClose={() => setIsEditorOpen(false)}
+        title={selectedRecordId ? 'Editar registro' : 'Novo registro'}
+        description={`Os campos abaixo seguem o schema modelado para ${selectedEntity.label}.`}
+        size="xl"
+        footer={
+          <div className="panel-actions">
+            {selectedRecordId ? (
+              <button type="button" className="panel-btn panel-btn-danger" onClick={deleteSelectedRecord} disabled={saving || !canManageRecords}>
+                Excluir registro
+              </button>
+            ) : null}
+            <button type="button" className="panel-btn panel-btn-primary" onClick={saveRecord} disabled={saving || !canManageRecords}>
+              {saving ? 'Salvando...' : selectedRecordId ? 'Salvar alterações' : 'Criar registro'}
             </button>
-          ) : null}
-        </div>
+          </div>
+        }
+      >
         <div className="panel-form-grid panel-form-grid--two">
           {selectedEntity.fields.map((field) => (
             <label key={field.id} className={`panel-field ${field.type === 'json' || field.type === 'rich_text' ? 'panel-field--span-2' : ''}`}>
@@ -496,25 +550,25 @@ export default function DataEntityRecordsWorkspace({
             </label>
           ))}
         </div>
-        <div className="panel-actions">
-          <button type="button" className="panel-btn panel-btn-primary" onClick={saveRecord} disabled={saving || !canManageRecords}>
-            {saving ? 'Salvando...' : selectedRecordId ? 'Salvar alterações' : 'Criar registro'}
-          </button>
-        </div>
-      </article>
+      </PanelModal>
 
-      <article className="panel-card">
-        <div className="panel-section-heading">
-          <div>
-            <h3>Popular entidade por JSON</h3>
-            <p className="panel-muted">Use um array JSON alinhado ao schema da entidade para carga rápida dentro do painel.</p>
-          </div>
+      <PanelModal
+        open={isImportOpen}
+        onClose={() => setIsImportOpen(false)}
+        title="Popular entidade por JSON"
+        description={`Use um array JSON alinhado ao schema de ${selectedEntity.label} para carga rápida.`}
+        size="lg"
+        footer={
           <div className="panel-actions">
-            <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setJsonRowsText(buildJsonTemplate(selectedEntity))}>
+            <button type="button" className="panel-btn panel-btn-secondary" onClick={() => setJsonRowsText(buildJsonTemplate(selectedEntity))}>
               Gerar exemplo do schema
             </button>
+            <button type="button" className="panel-btn panel-btn-primary" onClick={importJsonRows} disabled={saving || !canManageRecords}>
+              {saving ? 'Importando...' : 'Importar JSON nesta entidade'}
+            </button>
           </div>
-        </div>
+        }
+      >
         <textarea
           className="panel-textarea panel-data-codearea"
           value={jsonRowsText}
@@ -525,12 +579,7 @@ export default function DataEntityRecordsWorkspace({
           <strong>Feedback de população</strong>
           <small>Depois da importação, a listagem acima é recarregada para mostrar imediatamente os registros inseridos.</small>
         </div>
-        <div className="panel-actions">
-          <button type="button" className="panel-btn panel-btn-primary" onClick={importJsonRows} disabled={saving || !canManageRecords}>
-            {saving ? 'Importando...' : 'Importar JSON nesta entidade'}
-          </button>
-        </div>
-      </article>
+      </PanelModal>
     </div>
   );
 }

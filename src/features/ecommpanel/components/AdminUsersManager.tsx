@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { PanelPermission, PanelRole, PanelRoleId, PanelUser } from '@/features/ecommpanel/types/auth';
+import PanelModal from '@/features/ecommpanel/components/PanelModal';
 
 type UsersApiResponse = {
   users?: PanelUser[];
@@ -363,6 +364,7 @@ export default function AdminUsersManager() {
   const [success, setSuccess] = useState<string | null>(null);
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   const filteredUsers = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -430,6 +432,21 @@ export default function AdminUsersManager() {
       temporaryPassword: '',
     });
     setAdvancedOpen(user.permissionsAllow.length > 0 || user.permissionsDeny.length > 0);
+    setError(null);
+    setSuccess(null);
+    setIsEditorOpen(true);
+  }, []);
+
+  const startCreating = useCallback(() => {
+    resetEditor();
+    setError(null);
+    setSuccess(null);
+    setIsEditorOpen(true);
+  }, [resetEditor]);
+
+  const closeEditor = useCallback(() => {
+    setIsEditorOpen(false);
+    setAdvancedOpen(false);
     setError(null);
     setSuccess(null);
   }, []);
@@ -514,6 +531,7 @@ export default function AdminUsersManager() {
       }
       resetEditor();
       await loadData();
+      setIsEditorOpen(false);
     } catch {
       setError(editingUserId ? 'Erro de rede ao atualizar usuário.' : 'Erro de rede ao criar usuário.');
     } finally {
@@ -661,6 +679,11 @@ export default function AdminUsersManager() {
                   placeholder="Buscar por nome, e-mail ou perfil"
                   aria-label="Buscar usuários"
                 />
+                {canGrantPermissions ? (
+                  <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={startCreating}>
+                    + Novo usuário
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>
@@ -780,7 +803,46 @@ export default function AdminUsersManager() {
           ) : null}
         </div>
 
-        <aside className="panel-card panel-users-form-card panel-users-editor-card panel-workspace__sidebar">
+      </div>
+
+      <PanelModal
+        open={isEditorOpen}
+        onClose={closeEditor}
+        title={editingUser ? 'Editar usuário' : 'Novo usuário'}
+        description={
+          editingUser
+            ? `Ajuste papéis, exceções e bloqueios de ${editingUser.name}.`
+            : 'Crie um novo perfil administrativo e defina os acessos centrais desta conta.'
+        }
+        size="xl"
+        footer={
+          <div className="panel-actions">
+            <button className="panel-btn panel-btn-primary" type="submit" form="panel-user-editor-form" disabled={submitting || !canGrantPermissions}>
+              {submitting ? (editingUser ? 'Salvando...' : 'Criando...') : editingUser ? 'Salvar alterações' : 'Criar usuário'}
+            </button>
+            <button type="button" className="panel-btn panel-btn-secondary" onClick={closeEditor} disabled={submitting}>
+              Cancelar
+            </button>
+          </div>
+        }
+      >
+        <div className="panel-users-modal-grid">
+          <section className="panel-users-modal-intro">
+            <div className="panel-users-modal-intro__pill">
+              {editingUser ? 'Conta em edição' : 'Criação guiada'}
+            </div>
+            <strong>{selectedRolesSummary.length ? selectedRolesSummary.join(' · ') : 'Escolha os perfis base'}</strong>
+            <p className="panel-users-helper">
+              Comece pelos perfis. Só use ajustes avançados quando precisar liberar ou bloquear uma exceção fora do papel principal.
+            </p>
+            {!canGrantPermissions ? (
+              <p className="panel-feedback panel-feedback-success">
+                Seu perfil pode consultar usuários e perfis, mas não pode criar nem alterar acessos permanentes.
+              </p>
+            ) : null}
+          </section>
+
+          <div className="panel-card panel-users-form-card panel-users-editor-card">
           <div className="panel-card-header panel-card-header--users-editor">
             <div className="panel-card-header__copy">
               <p className="panel-kicker">Editor de acesso</p>
@@ -808,13 +870,7 @@ export default function AdminUsersManager() {
             </div>
           </div>
 
-          {!canGrantPermissions ? (
-            <p className="panel-feedback panel-feedback-success">
-              Seu perfil pode consultar usuários e perfis, mas não pode criar nem alterar acessos permanentes.
-            </p>
-          ) : null}
-
-          <form className="panel-form" onSubmit={onSubmit}>
+          <form className="panel-form" id="panel-user-editor-form" onSubmit={onSubmit}>
             <div className="panel-field">
               <label htmlFor="panel-user-name">Nome</label>
               <input
@@ -1021,18 +1077,6 @@ export default function AdminUsersManager() {
                 ))}
               </div>
             </details>
-
-            <div className="panel-actions">
-              <button className="panel-btn panel-btn-primary" type="submit" disabled={submitting || !canGrantPermissions}>
-                {submitting ? (editingUser ? 'Salvando...' : 'Criando...') : editingUser ? 'Salvar alterações' : 'Criar usuário'}
-              </button>
-
-              {editingUser ? (
-                <button type="button" className="panel-btn panel-btn-secondary" onClick={resetEditor} disabled={submitting}>
-                  Voltar para criação
-                </button>
-              ) : null}
-            </div>
           </form>
 
           {error ? (
@@ -1046,9 +1090,9 @@ export default function AdminUsersManager() {
               {success}
             </p>
           ) : null}
-        </aside>
-
-      </div>
+          </div>
+        </div>
+      </PanelModal>
     </section>
   );
 }
