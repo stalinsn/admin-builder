@@ -3,10 +3,6 @@ export const PANEL_AUTH_SETTINGS_SCHEMA_VERSION = 1;
 export type PanelAuthSettings = {
   schemaVersion: number;
   updatedAt: string;
-  adminSession: {
-    hardTtlMinutes: number;
-    idleTtlMinutes: number;
-  };
   transport: {
     enabled: boolean;
     host: string;
@@ -36,9 +32,4 @@ export type PanelAuthSettingsDiagnostics = {
   smtpPasswordReferenceResolved: boolean;
   effectiveFromEmail: string;
   effectiveSmtpUser: string;
-};
-
-export type PanelAuthSessionPolicy = {
-  hardTtlMs: number;
-  idleTtlMs: number;
 };

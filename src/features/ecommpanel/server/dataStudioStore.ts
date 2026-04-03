@@ -35,7 +35,6 @@ import {
   provisionMysqlConnection,
   provisionPostgresConnection,
 } from './dataProvisioning';
-import { inspectDataStudioRuntime, syncEntityPhysicalTable, upsertEntityRecords } from './dataEntityRuntime';
 
 const ROOT_DIR = path.join(process.cwd(), 'src/data/ecommpanel/data-studio');
 const SNAPSHOT_FILE = path.join(ROOT_DIR, 'schema.json');
@@ -810,11 +809,6 @@ export async function getDataStudioSnapshotResolved(): Promise<DataStudioSnapsho
   return toSnapshot(await loadSnapshotResolved());
 }
 
-export async function getDataStudioRuntimeResolved(snapshot?: DataStudioSnapshot) {
-  const resolvedSnapshot = snapshot || (await getDataStudioSnapshotResolved());
-  return inspectDataStudioRuntime(resolvedSnapshot.entities);
-}
-
 export async function saveDataEntity(input: SaveEntityInput): Promise<DataStudioSnapshot> {
   const snapshot = await loadSnapshotResolved();
   const now = nowIso();
@@ -864,11 +858,6 @@ export async function saveDataEntity(input: SaveEntityInput): Promise<DataStudio
   const nextEntities = existing
     ? snapshot.entities.map((candidate) => (candidate.id === entity.id ? entity : candidate))
     : [entity, ...snapshot.entities];
-
-  const syncResult = await syncEntityPhysicalTable(entity);
-  if (!syncResult.available) {
-    throw new Error('Banco indisponível para materializar a tabela física da entidade.');
-  }
 
   return toSnapshot(await persistSnapshot({ ...snapshot, entities: nextEntities }));
 }
@@ -1199,13 +1188,6 @@ export async function importDataRows(input: {
     rowsCount: rows.length,
     importedAt: payload.importedAt,
   };
-
-  const syncResult = await syncEntityPhysicalTable(entity);
-  if (!syncResult.available) {
-    throw new Error('Banco indisponível para aplicar os registros importados.');
-  }
-
-  await upsertEntityRecords(entity, rows);
 
   return toSnapshot(await persistSnapshot({ ...snapshot, imports: [importRecord, ...snapshot.imports].slice(0, 80) }));
 }

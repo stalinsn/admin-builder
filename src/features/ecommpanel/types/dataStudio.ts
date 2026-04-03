@@ -125,34 +125,6 @@ export type DataStudioBundle = {
   files: DataStudioBundleFile[];
 };
 
-export type DataEntityRuntimeStatus = {
-  entityId: string;
-  entitySlug: string;
-  entityLabel: string;
-  tableName: string;
-  databaseAvailable: boolean;
-  tableExists: boolean;
-  modeledFieldCount: number;
-  databaseColumnCount: number;
-  rowCount: number;
-  missingColumns: string[];
-  extraColumns: string[];
-  schemaPath: string;
-  internalCollectionPath: string;
-  internalItemPath: string;
-  integrationCollectionPath: string;
-  integrationItemPath: string;
-  readScope: string;
-  writeScope: string;
-  inspectedAt: string;
-};
-
-export type DataStudioRuntimeSummary = {
-  databaseAvailable: boolean;
-  inspectedAt: string;
-  entities: DataEntityRuntimeStatus[];
-};
-
 export type DataDatabaseTableColumn = {
   name: string;
   dataType: string;

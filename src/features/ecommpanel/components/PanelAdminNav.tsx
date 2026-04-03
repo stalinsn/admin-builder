@@ -2,11 +2,9 @@
 
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 type PanelAdminNavProps = {
-  userName: string;
-  userEmail: string;
   canManageUsers: boolean;
   canReadAnalytics: boolean;
   canReadDataStudio: boolean;
@@ -21,21 +19,9 @@ type NavItem = {
   href: string;
   label: string;
   icon: ReactNode;
+  match?: string[];
   tone?: 'default' | 'primary';
-  children?: NavItem[];
 };
-
-type SectionId = 'dashboard' | 'users' | 'access' | 'data' | 'media' | 'integrations' | 'settings';
-type DataSectionId =
-  | 'data-modeling'
-  | 'data-connections'
-  | 'data-bootstrap'
-  | 'data-records'
-  | 'data-import'
-  | 'data-csv'
-  | 'data-bundle'
-  | 'data-dictionary';
-type IntegrationSectionId = 'integrations-keys' | 'integrations-scopes' | 'integrations-reference' | 'integrations-logs';
 
 function PanelNavIcon({ children }: { children: ReactNode }) {
   return <span className="panel-nav-icon" aria-hidden="true">{children}</span>;
@@ -82,23 +68,23 @@ function IconDatabase() {
   );
 }
 
+function IconWorkflow() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none">
+      <path d="M4 4.75h4v4H4z" />
+      <path d="M12 11.25h4v4h-4z" />
+      <path d="M8 6.75h2.5a2 2 0 0 1 2 2v2.5" />
+      <path d="m11.5 10.25 1 1 1-1" />
+    </svg>
+  );
+}
+
 function IconPlug() {
   return (
     <svg viewBox="0 0 20 20" fill="none">
       <path d="M7 3v5" />
       <path d="M13 3v5" />
       <path d="M6 8h8v1.5A4.5 4.5 0 0 1 9.5 14H8v3" />
-    </svg>
-  );
-}
-
-function IconImage() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none">
-      <rect x="3" y="4" width="14" height="12" rx="2" />
-      <circle cx="7.5" cy="8" r="1.25" />
-      <path d="m5.5 13 3.2-3.2a1.5 1.5 0 0 1 2.12 0L14.5 13" />
-      <path d="m11.75 11.25 1.15-1.15a1.5 1.5 0 0 1 2.1 0L16.25 11.35" />
     </svg>
   );
 }
@@ -112,74 +98,13 @@ function IconGear() {
   );
 }
 
-function IconChevron() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none">
-      <path d="m7.5 5.75 5 4.25-5 4.25" />
-    </svg>
-  );
-}
-
-function resolveSection(pathname: string): SectionId | null {
+function isPathActive(pathname: string, item: NavItem): boolean {
   const normalizedPath = pathname.replace(/\/+$/, '') || '/';
-
-  if (normalizedPath === '/ecommpanel/admin') return 'dashboard';
-  if (normalizedPath === '/ecommpanel/admin/users' || normalizedPath.startsWith('/ecommpanel/admin/users/')) return 'users';
-  if (normalizedPath === '/ecommpanel/admin/settings/auth' || normalizedPath.startsWith('/ecommpanel/admin/settings/auth/')) return 'access';
-  if (normalizedPath === '/ecommpanel/admin/media' || normalizedPath.startsWith('/ecommpanel/admin/media/')) return 'media';
-  if (
-    normalizedPath === '/ecommpanel/admin/data' ||
-    normalizedPath.startsWith('/ecommpanel/admin/data/') ||
-    normalizedPath === '/ecommpanel/admin/records' ||
-    normalizedPath.startsWith('/ecommpanel/admin/records/')
-  ) {
-    return 'data';
-  }
-  if (normalizedPath === '/ecommpanel/admin/integrations' || normalizedPath.startsWith('/ecommpanel/admin/integrations/')) return 'integrations';
-  if (normalizedPath === '/ecommpanel/admin/settings/media' || normalizedPath.startsWith('/ecommpanel/admin/settings/media/')) return 'settings';
-  return null;
-}
-
-function resolveDataSection(pathname: string, module: string | null): DataSectionId {
-  const normalizedPath = pathname.replace(/\/+$/, '') || '/';
-
-  if (normalizedPath === '/ecommpanel/admin/records' || normalizedPath.startsWith('/ecommpanel/admin/records/')) return 'data-records';
-  if (normalizedPath === '/ecommpanel/admin/data/dictionary' || normalizedPath.startsWith('/ecommpanel/admin/data/dictionary/')) return 'data-dictionary';
-
-  switch (module) {
-    case 'connections':
-      return 'data-connections';
-    case 'bootstrap':
-      return 'data-bootstrap';
-    case 'import':
-      return 'data-import';
-    case 'csv':
-      return 'data-csv';
-    case 'bundle':
-      return 'data-bundle';
-    case 'modeling':
-    default:
-      return 'data-modeling';
-  }
-}
-
-function resolveIntegrationSection(view: string | null): IntegrationSectionId {
-  switch (view) {
-    case 'scopes':
-      return 'integrations-scopes';
-    case 'reference':
-      return 'integrations-reference';
-    case 'logs':
-      return 'integrations-logs';
-    case 'keys':
-    default:
-      return 'integrations-keys';
-  }
+  const possibilities = [item.href, ...(item.match || [])].map((entry) => entry.replace(/\/+$/, '') || '/');
+  return possibilities.some((entry) => normalizedPath === entry || normalizedPath.startsWith(`${entry}/`));
 }
 
 export default function PanelAdminNav({
-  userName,
-  userEmail,
   canManageUsers,
   canReadAnalytics,
   canReadDataStudio,
@@ -189,93 +114,104 @@ export default function PanelAdminNav({
   canReadIntegrations,
 }: PanelAdminNavProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const activeSection = resolveSection(pathname);
-  const activeDataSection = resolveDataSection(pathname, searchParams.get('module'));
-  const activeIntegrationSection = resolveIntegrationSection(searchParams.get('view'));
-  const canReadMedia = canReadPanelSettings;
 
   const primaryItems: NavItem[] = [
     {
       id: 'dashboard',
       href: '/ecommpanel/admin',
       label: 'Dashboard',
-      icon: <PanelNavIcon><IconDashboard /></PanelNavIcon>,
+      icon: (
+        <PanelNavIcon>
+          <IconDashboard />
+        </PanelNavIcon>
+      ),
     },
     ...(canManageUsers
-      ? [{
-          id: 'users',
-          href: '/ecommpanel/admin/users',
-          label: 'Usuários',
-          icon: <PanelNavIcon><IconUsers /></PanelNavIcon>,
-        }]
+      ? [
+          {
+            id: 'users',
+            href: '/ecommpanel/admin/users',
+            label: 'Usuários',
+            icon: (
+              <PanelNavIcon>
+                <IconUsers />
+              </PanelNavIcon>
+            ),
+          },
+        ]
       : []),
     ...(canReadPanelSettings
-      ? [{
-          id: 'access',
-          href: '/ecommpanel/admin/settings/auth',
-          label: 'Controle de acesso',
-          icon: <PanelNavIcon><IconShield /></PanelNavIcon>,
-        }]
+      ? [
+          {
+            id: 'access',
+            href: '/ecommpanel/admin/settings/auth',
+            label: 'Controle de Acesso',
+            icon: (
+              <PanelNavIcon>
+                <IconShield />
+              </PanelNavIcon>
+            ),
+          },
+        ]
       : []),
     ...(canReadDataStudio
-      ? [{
-          id: 'data',
-          href: '/ecommpanel/admin/data',
-          label: 'Entidades & Dados',
-          tone: 'primary' as const,
-          icon: <PanelNavIcon><IconDatabase /></PanelNavIcon>,
-          children: [
-            { id: 'data-modeling', href: '/ecommpanel/admin/data?module=modeling', label: 'Modelagem', icon: null },
-            { id: 'data-connections', href: '/ecommpanel/admin/data?module=connections', label: 'Conexões', icon: null },
-            { id: 'data-bootstrap', href: '/ecommpanel/admin/data?module=bootstrap', label: 'Implantação', icon: null },
-            { id: 'data-records', href: '/ecommpanel/admin/records', label: 'Registros', icon: null },
-            { id: 'data-import', href: '/ecommpanel/admin/data?module=import', label: 'Importação', icon: null },
-            { id: 'data-csv', href: '/ecommpanel/admin/data?module=csv', label: 'CSV', icon: null },
-            { id: 'data-bundle', href: '/ecommpanel/admin/data?module=bundle', label: 'Pacote Base', icon: null },
-            { id: 'data-dictionary', href: '/ecommpanel/admin/data/dictionary', label: 'Dicionário', icon: null },
-          ],
-        }]
-      : []),
-    ...(canReadMedia
-      ? [{
-          id: 'media',
-          href: '/ecommpanel/admin/media',
-          label: 'Galeria de Mídia',
-          icon: <PanelNavIcon><IconImage /></PanelNavIcon>,
-        }]
+      ? [
+          {
+            id: 'records',
+            href: '/ecommpanel/admin/records',
+            label: 'Entidades & Registros',
+            icon: (
+              <PanelNavIcon>
+                <IconDatabase />
+              </PanelNavIcon>
+            ),
+          },
+          {
+            id: 'operations',
+            href: '/ecommpanel/admin/data',
+            label: 'Dados & Estrutura',
+            match: ['/ecommpanel/admin/data', '/ecommpanel/admin/data/dictionary'],
+            icon: (
+              <PanelNavIcon>
+                <IconWorkflow />
+              </PanelNavIcon>
+            ),
+            tone: 'primary' as const,
+          },
+        ]
       : []),
     ...((canReadIntegrations || canReadAnalytics)
-      ? [{
-          id: 'integrations',
-          href: '/ecommpanel/admin/integrations',
-          label: 'API & Integrações',
-          icon: <PanelNavIcon><IconPlug /></PanelNavIcon>,
-          children: [
-            { id: 'integrations-keys', href: '/ecommpanel/admin/integrations?view=keys', label: 'Chaves & Tokens', icon: null },
-            { id: 'integrations-scopes', href: '/ecommpanel/admin/integrations?view=scopes', label: 'Escopos por Entidade', icon: null },
-            { id: 'integrations-reference', href: '/ecommpanel/admin/integrations?view=reference', label: 'Referência', icon: null },
-            { id: 'integrations-logs', href: '/ecommpanel/admin/integrations?view=logs', label: 'Logs de Acesso', icon: null },
-          ],
-        }]
-      : []),
-    ...(canReadPanelSettings
-      ? [{
-          id: 'settings',
-          href: '/ecommpanel/admin/settings/media',
-          label: 'Configurações',
-          icon: <PanelNavIcon><IconGear /></PanelNavIcon>,
-        }]
+      ? [
+          {
+            id: 'integrations',
+            href: '/ecommpanel/admin/integrations',
+            label: 'API & Integrações',
+            icon: (
+              <PanelNavIcon>
+                <IconPlug />
+              </PanelNavIcon>
+            ),
+          },
+        ]
       : []),
   ];
 
-  void canReadCatalog;
-  void canReadOrders;
+  const footerItems: NavItem[] = [
+    {
+      id: 'settings',
+      href: canReadPanelSettings ? '/ecommpanel/admin/settings/auth' : '/ecommpanel/admin',
+      label: 'Configurações',
+      icon: (
+        <PanelNavIcon>
+          <IconGear />
+        </PanelNavIcon>
+      ),
+    },
+  ];
 
   return (
     <nav className="panel-nav" aria-label="Menu administrativo">
       <div className="panel-nav-header">
-        <div className="panel-nav-brandmark" aria-hidden="true">A</div>
         <div className="panel-nav-header__copy">
           <strong>Artmeta Panel</strong>
           <small>Admin Dashboard</small>
@@ -284,55 +220,7 @@ export default function PanelAdminNav({
 
       <div className="panel-nav-links panel-nav-links--primary">
         {primaryItems.map((item) => {
-          const active = item.id === activeSection;
-          if (item.children?.length) {
-            return (
-              <details key={item.id} className="panel-nav-branch panel-nav-branch--compact" open={active}>
-                <summary
-                  className={`panel-nav-link panel-nav-link--compact panel-nav-link--branch ${item.tone === 'primary' ? 'panel-nav-link--primary' : ''} ${active ? 'is-active' : ''}`}
-                  aria-current={active ? 'page' : undefined}
-                >
-                  <span className="panel-nav-link-branch-main">
-                    {item.icon}
-                    <span className="panel-nav-link-copy">
-                      <span className="panel-nav-link-label">{item.label}</span>
-                    </span>
-                  </span>
-                  <span className="panel-nav-link-meta">
-                    <span className="panel-nav-link-chevron" aria-hidden="true">
-                      <IconChevron />
-                    </span>
-                  </span>
-                </summary>
-                <div className="panel-nav-submenu">
-                  <p className="panel-nav-submenu__eyebrow">{item.id === 'integrations' ? 'Superfícies da API' : 'Fluxos do módulo'}</p>
-                  <div className="panel-nav-children panel-nav-children--compact">
-                  {item.children.map((child) => {
-                    const childActive =
-                      item.id === 'data'
-                        ? child.id === activeDataSection
-                        : item.id === 'integrations'
-                          ? child.id === activeIntegrationSection
-                          : false;
-                    return (
-                      <Link
-                        key={child.id}
-                        href={child.href}
-                        className={`panel-nav-link panel-nav-link--compact panel-nav-link--nested ${childActive ? 'is-active' : ''}`}
-                        aria-current={childActive ? 'page' : undefined}
-                      >
-                        <span className="panel-nav-link-copy">
-                          <span className="panel-nav-link-label">{child.label}</span>
-                        </span>
-                      </Link>
-                    );
-                  })}
-                  </div>
-                </div>
-              </details>
-            );
-          }
-
+          const active = isPathActive(pathname, item);
           return (
             <Link
               key={item.id}
@@ -341,24 +229,27 @@ export default function PanelAdminNav({
               aria-current={active ? 'page' : undefined}
             >
               {item.icon}
-              <span className="panel-nav-link-copy">
-                <span className="panel-nav-link-label">{item.label}</span>
-              </span>
+              <span className="panel-nav-link-label">{item.label}</span>
             </Link>
           );
         })}
       </div>
 
       <div className="panel-nav-footer">
-        <div className="panel-nav-usercard">
-          <div className="panel-nav-usercard__avatar" aria-hidden="true">
-            {userName.trim().charAt(0).toUpperCase() || 'A'}
-          </div>
-          <div className="panel-nav-usercard__copy">
-            <strong>{userName}</strong>
-            <small>{userEmail}</small>
-          </div>
-        </div>
+        {footerItems.map((item) => {
+          const active = isPathActive(pathname, item);
+          return (
+            <Link
+              key={item.id}
+              href={item.href}
+              className={`panel-nav-link panel-nav-link--compact ${active ? 'is-active' : ''}`}
+              aria-current={active ? 'page' : undefined}
+            >
+              {item.icon}
+              <span className="panel-nav-link-label">{item.label}</span>
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

@@ -4,7 +4,6 @@ import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 
 import type { PanelAuthSettings, PanelAuthSettingsDiagnostics } from '@/features/ecommpanel/types/panelAuthSettings';
-import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 
 type MeResponse = {
   csrfToken?: string;
@@ -84,127 +83,58 @@ export default function PanelAuthSettingsManager({
   }
 
   return (
-    <section className="panel-grid panel-manager-page panel-auth-settings-page" aria-labelledby="panel-auth-settings-title">
-      <PanelPageHeader
-        title="Controle de acesso"
-        titleId="panel-auth-settings-title"
-        description="Gerencie autenticação, recuperação de conta e transporte de e-mail em uma trilha única de operação."
-        actions={
-          <div className="panel-inline panel-inline-wrap">
+    <section className="panel-grid" aria-labelledby="panel-auth-settings-title">
+      <article className="panel-card panel-card-hero panel-dashboard-hero">
+        <div className="panel-dashboard-hero__header">
+          <div>
+            <p className="panel-kicker">Configurações do painel</p>
+            <h1 id="panel-auth-settings-title">Auth e e-mail transacional</h1>
+            <p className="panel-muted">Centralize o remetente, o SMTP e a política de cadastro do cliente em um único ponto de controle.</p>
+          </div>
+          <div className="panel-dashboard-hero__badges">
             <span className={`panel-badge ${diagnostics.mailEnabled ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
               SMTP {diagnostics.mailEnabled ? 'pronto' : 'incompleto'}
             </span>
-            <span className={`panel-badge ${diagnostics.smtpPasswordReferenceResolved ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
+            <span
+              className={`panel-badge ${diagnostics.smtpPasswordReferenceResolved ? 'panel-badge-success' : 'panel-badge-neutral'}`}
+            >
               senha {diagnostics.smtpPasswordReferenceResolved ? 'resolvida' : 'pendente'}
             </span>
           </div>
-        }
-      />
+        </div>
 
-      <div className="panel-manager-stats panel-manager-stats--four">
-        <article className="panel-manager-stat panel-manager-stat--blue">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
+        <div className="panel-dashboard-hero__meta">
           <div>
-            <span className="panel-manager-stat__label">Remetente efetivo</span>
-            <strong>{diagnostics.effectiveFromEmail || '-'}</strong>
-            <small>Identidade visível nas mensagens do sistema.</small>
+            <span className="panel-muted">Remetente efetivo</span>
+            <strong>{diagnostics.effectiveFromEmail || 'não definido'}</strong>
+            <span>Endereço exibido nas mensagens do painel.</span>
           </div>
-        </article>
-        <article className="panel-manager-stat panel-manager-stat--green">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
           <div>
-            <span className="panel-manager-stat__label">Usuário SMTP</span>
-            <strong>{diagnostics.effectiveSmtpUser || '-'}</strong>
-            <small>Conta autenticada usada para envio.</small>
+            <span className="panel-muted">Usuário SMTP efetivo</span>
+            <strong>{diagnostics.effectiveSmtpUser || 'não definido'}</strong>
+            <span>Conta autenticada para envio.</span>
           </div>
-        </article>
-        <article className="panel-manager-stat panel-manager-stat--gold">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
           <div>
-            <span className="panel-manager-stat__label">Política de acesso</span>
-            <strong>Código em 10 min</strong>
-            <small>Login transacional com token temporário.</small>
+            <span className="panel-muted">Política atual</span>
+            <strong>Código único por 10 min</strong>
+            <span>Não reenvia um novo código enquanto existir um ativo.</span>
           </div>
-        </article>
-        <article className="panel-manager-stat panel-manager-stat--purple">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
           <div>
-            <span className="panel-manager-stat__label">Sessão administrativa</span>
-            <strong>{settings.adminSession.idleTtlMinutes} min inativa</strong>
-            <small>
-              Máxima de {settings.adminSession.hardTtlMinutes / 60}h antes de exigir novo login.
-            </small>
+            <span className="panel-muted">Cadastro do cliente</span>
+            <strong>
+              {settings.customerRegistration.requireEmailVerification ? 'verificação por e-mail' : 'cadastro direto'}
+            </strong>
+            <span>
+              {settings.customerRegistration.blockDisposableEmailDomains
+                ? 'Bloqueio de e-mails temporários ativo.'
+                : 'E-mails temporários liberados por configuração.'}
+            </span>
           </div>
-        </article>
-      </div>
+        </div>
+      </article>
 
-      <article className="panel-manager-card">
+      <article className="panel-card">
         <form className="panel-form" onSubmit={handleSave}>
-          <details className="panel-layer-item panel-form-panel" open>
-            <summary className="panel-form-panel__summary">
-              <span className="panel-form-panel__copy">
-                <strong>Sessão administrativa</strong>
-                <small>Controle o tempo máximo da sessão e a expiração por inatividade do usuário autenticado.</small>
-              </span>
-              <span className="panel-accordion-chevron" aria-hidden="true" />
-            </summary>
-            <div className="panel-form-panel__body">
-              <div className="panel-form-grid panel-form-grid--two">
-                <div className="panel-field">
-                  <label htmlFor="panel-auth-session-idle">Inatividade máxima (minutos)</label>
-                  <input
-                    id="panel-auth-session-idle"
-                    className="panel-input"
-                    type="number"
-                    min={5}
-                    max={720}
-                    value={settings.adminSession.idleTtlMinutes}
-                    onChange={(event) =>
-                      setSettings((prev) => ({
-                        ...prev,
-                        adminSession: {
-                          ...prev.adminSession,
-                          idleTtlMinutes: Number(event.target.value || 30),
-                        },
-                      }))
-                    }
-                    disabled={!canManage}
-                  />
-                  <span className="panel-field-help">Se o usuário ficar sem atividade por esse período, a sessão expira.</span>
-                </div>
-
-                <div className="panel-field">
-                  <label htmlFor="panel-auth-session-hard">Sessão máxima (minutos)</label>
-                  <input
-                    id="panel-auth-session-hard"
-                    className="panel-input"
-                    type="number"
-                    min={30}
-                    max={1440}
-                    value={settings.adminSession.hardTtlMinutes}
-                    onChange={(event) =>
-                      setSettings((prev) => ({
-                        ...prev,
-                        adminSession: {
-                          ...prev.adminSession,
-                          hardTtlMinutes: Number(event.target.value || 480),
-                        },
-                      }))
-                    }
-                    disabled={!canManage}
-                  />
-                  <span className="panel-field-help">Limite absoluto da sessão, mesmo com atividade contínua.</span>
-                </div>
-              </div>
-
-              <p className="panel-muted">
-                Hoje o painel renova a sessão a cada uso, mas respeita um teto absoluto. O padrão atual é{' '}
-                <strong>{settings.adminSession.idleTtlMinutes} min</strong> de inatividade e{' '}
-                <strong>{Math.round((settings.adminSession.hardTtlMinutes / 60) * 10) / 10}h</strong> de sessão máxima.
-              </p>
-            </div>
-          </details>
-
           <details className="panel-layer-item panel-form-panel" open>
             <summary className="panel-form-panel__summary">
               <span className="panel-form-panel__copy">

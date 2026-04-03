@@ -33,7 +33,7 @@ export default function PanelLogoutButton() {
   }
 
   return (
-    <button className="panel-btn panel-btn-secondary panel-logout-button" type="button" onClick={onLogout} disabled={loading}>
+    <button className="panel-btn panel-btn-secondary" type="button" onClick={onLogout} disabled={loading}>
       {loading ? 'Saindo...' : 'Sair'}
     </button>
   );

@@ -8,7 +8,6 @@ import {
   PANEL_AUTH_SETTINGS_SCHEMA_VERSION,
   type PanelAuthSettings,
   type PanelAuthSettingsDiagnostics,
-  type PanelAuthSessionPolicy,
 } from '@/features/ecommpanel/types/panelAuthSettings';
 import {
   getPanelSettingFromDatabase,
@@ -68,20 +67,10 @@ function normalizePort(value: unknown, fallback: number): number {
   return Math.min(Math.max(Math.round(parsed), 1), 65535);
 }
 
-function normalizeMinutes(value: unknown, fallback: number, min: number, max: number): number {
-  const parsed = typeof value === 'number' ? value : Number.parseInt(String(value || ''), 10);
-  if (!Number.isFinite(parsed)) return fallback;
-  return Math.min(Math.max(Math.round(parsed), min), max);
-}
-
 export function createDefaultPanelAuthSettings(): PanelAuthSettings {
   return {
     schemaVersion: PANEL_AUTH_SETTINGS_SCHEMA_VERSION,
     updatedAt: nowIso(),
-    adminSession: {
-      hardTtlMinutes: 480,
-      idleTtlMinutes: 30,
-    },
     transport: {
       enabled: true,
       host: process.env.PANEL_SMTP_HOST?.trim() || '',
@@ -128,13 +117,11 @@ function requireDatabaseValue<T>(
 export function normalizePanelAuthSettings(input: unknown): PanelAuthSettings {
   const fallback = createDefaultPanelAuthSettings();
   const source = (input && typeof input === 'object' ? input : {}) as Partial<PanelAuthSettings> & {
-    adminSession?: Partial<PanelAuthSettings['adminSession']>;
     transport?: Partial<PanelAuthSettings['transport']>;
     identity?: Partial<PanelAuthSettings['identity']>;
     links?: Partial<PanelAuthSettings['links']>;
   };
 
-  const adminSession: Partial<PanelAuthSettings['adminSession']> = source.adminSession ?? {};
   const transport: Partial<PanelAuthSettings['transport']> = source.transport ?? {};
   const identity: Partial<PanelAuthSettings['identity']> = source.identity ?? {};
   const links: Partial<PanelAuthSettings['links']> = source.links ?? {};
@@ -143,10 +130,6 @@ export function normalizePanelAuthSettings(input: unknown): PanelAuthSettings {
   const normalized: PanelAuthSettings = {
     schemaVersion: PANEL_AUTH_SETTINGS_SCHEMA_VERSION,
     updatedAt: normalizeString(source.updatedAt, fallback.updatedAt, 64) || fallback.updatedAt,
-    adminSession: {
-      hardTtlMinutes: normalizeMinutes(adminSession.hardTtlMinutes, fallback.adminSession.hardTtlMinutes, 30, 60 * 24),
-      idleTtlMinutes: normalizeMinutes(adminSession.idleTtlMinutes, fallback.adminSession.idleTtlMinutes, 5, 60 * 12),
-    },
     transport: {
       enabled: normalizeBoolean(transport.enabled, fallback.transport.enabled),
       host: normalizeString(transport.host, fallback.transport.host, 160),
@@ -190,14 +173,6 @@ export function normalizePanelAuthSettings(input: unknown): PanelAuthSettings {
       ),
     },
   };
-
-  normalized.adminSession.idleTtlMinutes = Math.min(
-    normalized.adminSession.idleTtlMinutes,
-    normalized.adminSession.hardTtlMinutes,
-  );
-  if (normalized.identity.fromName === 'EcommPanel') {
-    normalized.identity.fromName = 'Artmeta Panel';
-  }
 
   return normalized;
 }
@@ -322,23 +297,9 @@ export async function getCustomerRegistrationSettingsRuntime() {
   return settings.customerRegistration;
 }
 
-export function getPanelAuthSessionPolicy(settings = getPanelAuthSettings()): PanelAuthSessionPolicy {
-  return {
-    hardTtlMs: settings.adminSession.hardTtlMinutes * 60 * 1000,
-    idleTtlMs: settings.adminSession.idleTtlMinutes * 60 * 1000,
-  };
-}
-
 export async function getPanelAuthSettingsDiagnosticsRuntime(
   settings?: PanelAuthSettings,
 ): Promise<PanelAuthSettingsDiagnostics> {
   const resolvedSettings = settings || (await getPanelAuthSettingsRuntime());
   return getPanelAuthSettingsDiagnostics(resolvedSettings);
-}
-
-export async function getPanelAuthSessionPolicyRuntime(
-  settings?: PanelAuthSettings,
-): Promise<PanelAuthSessionPolicy> {
-  const resolvedSettings = settings || (await getPanelAuthSettingsRuntime());
-  return getPanelAuthSessionPolicy(resolvedSettings);
 }

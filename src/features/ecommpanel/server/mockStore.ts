@@ -16,7 +16,6 @@ import {
 import { PANEL_SECURITY } from '../config/security';
 import { nowIso, randomToken, sha256 } from './crypto';
 import { hashPassword } from './password';
-import { getPanelAuthSessionPolicyRuntime } from './panelAuthSettingsStore';
 
 type MockDb = {
   users: Map<string, PanelUserRecord>;
@@ -502,23 +501,17 @@ export function isUserLocked(user: PanelUserRecord): boolean {
   return Date.now() < new Date(user.lockUntil).getTime();
 }
 
-export async function createSession(input: {
+export function createSession(input: {
   userId: string;
   userAgent: string;
   ip: string;
   hardTtlMs?: number;
-}): Promise<{ session: PanelSession; rawSessionId: string }> {
+}): { session: PanelSession; rawSessionId: string } {
   const db = getDb();
   const rawSessionId = randomToken(24);
   const id = sha256(rawSessionId);
   const now = Date.now();
-  const sessionPolicy = await getPanelAuthSessionPolicyRuntime().catch(() => ({
-    hardTtlMs: PANEL_SECURITY.sessionTtlMs,
-    idleTtlMs: PANEL_SECURITY.sessionIdleTtlMs,
-  }));
-  const effectiveHardTtlMs = input.hardTtlMs || sessionPolicy.hardTtlMs;
-  const hardExpiresAt = new Date(now + effectiveHardTtlMs).toISOString();
-  const idleExpiresAt = new Date(Math.min(new Date(hardExpiresAt).getTime(), now + sessionPolicy.idleTtlMs)).toISOString();
+  const hardExpiresAt = new Date(now + (input.hardTtlMs || PANEL_SECURITY.sessionTtlMs)).toISOString();
   const session: PanelSession = {
     id,
     userId: input.userId,
@@ -526,7 +519,7 @@ export async function createSession(input: {
     createdAt: new Date(now).toISOString(),
     hardExpiresAt,
     lastSeenAt: new Date(now).toISOString(),
-    expiresAt: idleExpiresAt,
+    expiresAt: hardExpiresAt,
     userAgentHash: sha256(input.userAgent || 'unknown-ua'),
     ipHash: sha256(input.ip || 'unknown-ip'),
   };
@@ -547,7 +540,7 @@ export function getSession(rawSessionId: string): PanelSession | null {
   return null;
 }
 
-export async function touchSession(rawSessionId: string): Promise<PanelSession | null> {
+export function touchSession(rawSessionId: string): PanelSession | null {
   const db = getDb();
   const id = sha256(rawSessionId);
   const found = db.sessions.get(id);
@@ -561,11 +554,7 @@ export async function touchSession(rawSessionId: string): Promise<PanelSession |
     return null;
   }
 
-  const sessionPolicy = await getPanelAuthSessionPolicyRuntime().catch(() => ({
-    hardTtlMs: PANEL_SECURITY.sessionTtlMs,
-    idleTtlMs: PANEL_SECURITY.sessionIdleTtlMs,
-  }));
-  const newIdleExpiry = new Date(now + sessionPolicy.idleTtlMs).getTime();
+  const newIdleExpiry = new Date(now + PANEL_SECURITY.sessionIdleTtlMs).getTime();
   found.lastSeenAt = new Date(now).toISOString();
   found.expiresAt = new Date(Math.min(hardExpiresAt, newIdleExpiry)).toISOString();
   db.sessions.set(id, found);

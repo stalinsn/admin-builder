@@ -32,7 +32,6 @@ export type PanelMediaSettings = {
   };
   storage: {
     publicBasePath: string;
-    defaultFolder: string;
   };
   presets: Record<PanelMediaPresetKey, PanelMediaPreset>;
 };
@@ -43,10 +42,6 @@ export type PanelMediaSettingsDiagnostics = {
   allowedMimeTypes: string[];
   publicBasePath: string;
   enabledPresets: PanelMediaPresetKey[];
-  publicDirectory: string;
-  metadataDirectory: string;
-  publicDirectoryWritable: boolean;
-  metadataDirectoryWritable: boolean;
 };
 
 export type PanelMediaAssetVariant = {
@@ -61,11 +56,9 @@ export type PanelMediaAssetVariant = {
 export type PanelMediaAsset = {
   id: string;
   scope: string;
-  folder: string;
   originalName: string;
   uploadedAt: string;
   mimeType: string;
   originalBytes: number;
-  primaryUrl: string;
   variants: Record<string, PanelMediaAssetVariant>;
 };

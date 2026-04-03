@@ -15,7 +15,6 @@ import type {
 import { PANEL_SECURITY } from '../config/security';
 import { nowIso, randomToken, sha256 } from './crypto';
 import { hashPassword } from './password';
-import { getPanelAuthSessionPolicyRuntime } from './panelAuthSettingsStore';
 import * as mockStore from './mockStore';
 import { resolvePostgresRuntime, type PostgresRuntime, withPostgresClient } from './postgresRuntime';
 
@@ -630,18 +629,11 @@ export async function createSession(input: {
   ip: string;
   hardTtlMs?: number;
 }): Promise<{ session: PanelSession; rawSessionId: string }> {
-  const sessionPolicy = await getPanelAuthSessionPolicyRuntime().catch(() => ({
-    hardTtlMs: PANEL_SECURITY.sessionTtlMs,
-    idleTtlMs: PANEL_SECURITY.sessionIdleTtlMs,
-  }));
-
   const result = await withDbClient(async (client) => {
     const rawSessionId = randomToken(24);
     const id = sha256(rawSessionId);
     const now = Date.now();
-    const effectiveHardTtlMs = input.hardTtlMs || sessionPolicy.hardTtlMs;
-    const hardExpiresAt = new Date(now + effectiveHardTtlMs).toISOString();
-    const idleExpiresAt = new Date(Math.min(new Date(hardExpiresAt).getTime(), now + sessionPolicy.idleTtlMs)).toISOString();
+    const hardExpiresAt = new Date(now + (input.hardTtlMs || PANEL_SECURITY.sessionTtlMs)).toISOString();
     const session: PanelSession = {
       id,
       userId: input.userId,
@@ -649,7 +641,7 @@ export async function createSession(input: {
       createdAt: new Date(now).toISOString(),
       hardExpiresAt,
       lastSeenAt: new Date(now).toISOString(),
-      expiresAt: idleExpiresAt,
+      expiresAt: hardExpiresAt,
       userAgentHash: sha256(input.userAgent || 'unknown-ua'),
       ipHash: sha256(input.ip || 'unknown-ip'),
     };
@@ -697,11 +689,7 @@ export async function touchSession(rawSessionId: string): Promise<PanelSession |
     return null;
   }
 
-  const sessionPolicy = await getPanelAuthSessionPolicyRuntime().catch(() => ({
-    hardTtlMs: PANEL_SECURITY.sessionTtlMs,
-    idleTtlMs: PANEL_SECURITY.sessionIdleTtlMs,
-  }));
-  const nextExpiry = new Date(Math.min(hardExpiresAt, now + sessionPolicy.idleTtlMs)).toISOString();
+  const nextExpiry = new Date(Math.min(hardExpiresAt, now + PANEL_SECURITY.sessionIdleTtlMs)).toISOString();
   const lastSeenAt = new Date(now).toISOString();
 
   const result = await withDbClient(async (client) => {

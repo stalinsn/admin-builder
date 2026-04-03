@@ -29,8 +29,6 @@ type PanelSettingsPersistenceMode = 'files' | 'hybrid' | 'database';
 const ROOT_DIR = path.join(process.cwd(), 'src/data/ecommpanel/panel-settings');
 const SETTINGS_FILE = path.join(ROOT_DIR, 'media.json');
 const PANEL_MEDIA_SETTINGS_KEY = 'panel-media-settings';
-const PUBLIC_ROOT_DIR = path.join(process.cwd(), 'public');
-const MEDIA_METADATA_ROOT = path.join(process.cwd(), 'src/data/ecommpanel/media/assets');
 
 declare global {
   var __ECOMMPANEL_MEDIA_SETTINGS_CACHE__: PanelMediaSettingsCache | undefined;
@@ -118,7 +116,6 @@ export function createDefaultPanelMediaSettings(): PanelMediaSettings {
     },
     storage: {
       publicBasePath: '/ecommpanel-media',
-      defaultFolder: 'geral',
     },
     presets: {
       productPdp: createPreset({ maxWidth: 800, maxHeight: 800, quality: 84 }),
@@ -180,20 +177,9 @@ export function normalizePanelMediaSettings(input: unknown): PanelMediaSettings 
     },
     storage: {
       publicBasePath: normalizeString(source.storage?.publicBasePath, fallback.storage.publicBasePath, 80) || '/ecommpanel-media',
-      defaultFolder: normalizeString(source.storage?.defaultFolder, fallback.storage.defaultFolder, 120) || fallback.storage.defaultFolder,
     },
     presets,
   };
-}
-
-function canWriteDirectory(targetDir: string): boolean {
-  try {
-    fs.mkdirSync(targetDir, { recursive: true });
-    fs.accessSync(targetDir, fs.constants.R_OK | fs.constants.W_OK);
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 function getCache(): PanelMediaSettingsCache {
@@ -237,17 +223,12 @@ export function getPanelMediaSettingsDiagnostics(
   settings = getPanelMediaSettings(),
 ): PanelMediaSettingsDiagnostics {
   const enabledPresets = PANEL_MEDIA_PRESET_KEYS.filter((key) => settings.presets[key].enabled);
-  const publicDirectory = path.join(PUBLIC_ROOT_DIR, settings.storage.publicBasePath.replace(/^\/+/, ''));
   return {
     uploadEnabled: settings.upload.maxFileSizeMb > 0 && enabledPresets.length > 0,
     maxFileSizeMb: settings.upload.maxFileSizeMb,
     allowedMimeTypes: settings.upload.allowedMimeTypes,
     publicBasePath: settings.storage.publicBasePath,
     enabledPresets,
-    publicDirectory,
-    metadataDirectory: MEDIA_METADATA_ROOT,
-    publicDirectoryWritable: canWriteDirectory(publicDirectory),
-    metadataDirectoryWritable: canWriteDirectory(MEDIA_METADATA_ROOT),
   };
 }
 

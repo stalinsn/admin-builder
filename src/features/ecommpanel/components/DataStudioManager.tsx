@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   DATA_FIELD_TYPES,
@@ -9,11 +8,9 @@ import {
   type DataConnectionProfile,
   type DataDatabaseTable,
   type DataEntityDefinition,
-  type DataEntityRuntimeStatus,
   type DataFieldDefinition,
   type DataFieldType,
   type DataStudioBundle,
-  type DataStudioRuntimeSummary,
   type DataStudioBundleFile,
   type DataStudioSnapshot,
   type DataTableCsvExport,
@@ -21,7 +18,6 @@ import {
   type DataTableCsvImportResult,
 } from '@/features/ecommpanel/types/dataStudio';
 import DataEntityRecordsWorkspace from '@/features/ecommpanel/components/DataEntityRecordsWorkspace';
-import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 
 type MeApiResponse = {
   csrfToken?: string;
@@ -29,7 +25,6 @@ type MeApiResponse = {
 
 type DataStudioApiResponse = {
   snapshot?: DataStudioSnapshot;
-  runtime?: DataStudioRuntimeSummary;
   bundle?: DataStudioBundle;
   databaseTables?: DataDatabaseTable[];
   databaseTablesAvailable?: boolean;
@@ -40,7 +35,6 @@ type DataStudioApiResponse = {
 
 type DataStudioManagerProps = {
   initialSnapshot: DataStudioSnapshot;
-  initialRuntime: DataStudioRuntimeSummary;
   initialBundle: DataStudioBundle;
   initialDatabaseTables: DataDatabaseTable[];
   initialDatabaseTablesAvailable: boolean;
@@ -100,65 +94,6 @@ type ProvisioningSecretsForm = {
   mainAdminEmail: string;
   mainAdminPassword: string;
 };
-
-type DataModuleKey = 'modeling' | 'connections' | 'bootstrap' | 'records' | 'import' | 'csv' | 'bundle';
-
-const DATA_MODULE_META: Record<
-  DataModuleKey,
-  {
-    label: string;
-    title: string;
-    description: string;
-    detail: string;
-  }
-> = {
-  modeling: {
-    label: 'Modelagem',
-    title: 'Modelagem de entidades',
-    description: 'Defina entidades, campos, regras e status estrutural da base.',
-    detail: 'Estrutura lógica, tabela física e runtime por entidade.',
-  },
-  connections: {
-    label: 'Conexões',
-    title: 'Perfis de conexão',
-    description: 'Cadastre, teste e promova conexões da instância com o banco.',
-    detail: 'Host, engine, credenciais técnicas e conexão principal.',
-  },
-  bootstrap: {
-    label: 'Implantação',
-    title: 'Implantação inicial',
-    description: 'Controle o bootstrap, credenciais e provisionamento do ambiente.',
-    detail: 'Base criada, admin inicial, boilerplate e inspeção remota.',
-  },
-  records: {
-    label: 'Registros',
-    title: 'Registros por entidade',
-    description: 'Leia, edite e popule os dados reais das entidades criadas.',
-    detail: 'Tabela dinâmica, criação manual, exclusão e importação JSON.',
-  },
-  import: {
-    label: 'Importação',
-    title: 'Importação manual',
-    description: 'Carregue registros JSON ou pacotes completos de estrutura.',
-    detail: 'Importação orientada por entidade ou por bundle estrutural.',
-  },
-  csv: {
-    label: 'CSV',
-    title: 'Sincronização CSV',
-    description: 'Exporte e reimporte tabelas físicas em fluxo de planilha.',
-    detail: 'Append, replace, preview e trilha de auditoria por tabela.',
-  },
-  bundle: {
-    label: 'Pacote base',
-    title: 'Pacote técnico',
-    description: 'Consolide schema, contratos e artefatos técnicos do módulo.',
-    detail: 'JSON Schema, OpenAPI e bundle para consumo externo.',
-  },
-};
-
-function isDataModuleKey(value: string | null): value is DataModuleKey {
-  return value === 'modeling' || value === 'connections' || value === 'bootstrap' || value === 'records' || value === 'import' || value === 'csv' || value === 'bundle';
-}
 
 function formatDateTime(value?: string): string {
   if (!value) return 'Ainda não gerado';
@@ -347,23 +282,6 @@ function buildEntityAcronym(entity: DataEntityDefinition): string {
   return (compact.slice(0, 4) || 'ENT').toUpperCase();
 }
 
-function buildMissingColumnsLabel(runtime?: DataEntityRuntimeStatus | null): string {
-  if (!runtime) return 'runtime indisponível';
-  if (!runtime.databaseAvailable) return 'sem conexão com o banco';
-  if (!runtime.tableExists) return 'tabela ainda não materializada';
-  if (!runtime.missingColumns.length && !runtime.extraColumns.length) return 'schema alinhado';
-  const parts = [];
-  if (runtime.missingColumns.length) parts.push(`${runtime.missingColumns.length} faltando`);
-  if (runtime.extraColumns.length) parts.push(`${runtime.extraColumns.length} extras`);
-  return parts.join(' • ');
-}
-
-function buildRuntimeTableStatus(runtime?: DataEntityRuntimeStatus | null): string {
-  if (!runtime) return 'Sem inspeção';
-  if (!runtime.databaseAvailable) return 'Banco indisponível';
-  return runtime.tableExists ? 'Tabela física ativa' : 'Tabela pendente';
-}
-
 function buildEmptyProvisioningSecrets(): ProvisioningSecretsForm {
   return {
     sshPassword: '',
@@ -377,7 +295,6 @@ function buildEmptyProvisioningSecrets(): ProvisioningSecretsForm {
 
 export default function DataStudioManager({
   initialSnapshot,
-  initialRuntime,
   initialBundle,
   initialDatabaseTables,
   initialDatabaseTablesAvailable,
@@ -387,11 +304,7 @@ export default function DataStudioManager({
   canManageRecords,
   canManageDatabaseTables,
 }: DataStudioManagerProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [snapshot, setSnapshot] = useState<DataStudioSnapshot>(initialSnapshot);
-  const [runtime, setRuntime] = useState<DataStudioRuntimeSummary>(initialRuntime);
   const [bundle, setBundle] = useState<DataStudioBundle>(initialBundle);
   const [databaseTables, setDatabaseTables] = useState<DataDatabaseTable[]>(initialDatabaseTables);
   const [databaseTablesAvailable, setDatabaseTablesAvailable] = useState(initialDatabaseTablesAvailable);
@@ -414,25 +327,14 @@ export default function DataStudioManager({
   const [csvImportSummary, setCsvImportSummary] = useState<DataTableCsvImportResult | null>(null);
   const [activeBundlePath, setActiveBundlePath] = useState<string>(initialBundle.files[0]?.path || '');
   const [currentProvisioningStep, setCurrentProvisioningStep] = useState<1 | 2 | 3 | 4>(1);
-  const [activeDataModule, setActiveDataModule] = useState<DataModuleKey | null>(null);
+  const [activeDataModule, setActiveDataModule] = useState<'modeling' | 'connections' | 'bootstrap' | 'records' | 'import' | 'csv' | 'bundle' | null>(null);
   const [isEntityViewerOpen, setIsEntityViewerOpen] = useState(false);
   const [isEntityEditorOpen, setIsEntityEditorOpen] = useState(false);
   const [expandedFieldId, setExpandedFieldId] = useState<string | null>(null);
-  const createIntentHandledRef = useRef(false);
 
   const selectedEntity = useMemo(
     () => snapshot.entities.find((entity) => entity.id === selectedEntityId) || null,
     [selectedEntityId, snapshot.entities],
-  );
-
-  const selectedEntityRuntime = useMemo(
-    () => runtime.entities.find((entity) => entity.entityId === selectedEntityId) || null,
-    [runtime.entities, selectedEntityId],
-  );
-
-  const runtimeByEntityId = useMemo(
-    () => new Map(runtime.entities.map((entity) => [entity.entityId, entity])),
-    [runtime.entities],
   );
 
   const selectedConnection = useMemo(
@@ -469,27 +371,6 @@ export default function DataStudioManager({
     () => snapshot.connections.filter((connection) => connection.reachability === 'reachable').length,
     [snapshot.connections],
   );
-
-  function updateModuleQuery(moduleKey: DataModuleKey | null) {
-    const params = new URLSearchParams(searchParams.toString());
-    if (moduleKey) {
-      params.set('module', moduleKey);
-    } else {
-      params.delete('module');
-    }
-    const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-  }
-
-  function openDataModule(moduleKey: DataModuleKey) {
-    setActiveDataModule(moduleKey);
-    updateModuleQuery(moduleKey);
-  }
-
-  function closeDataModule() {
-    setActiveDataModule(null);
-    updateModuleQuery(null);
-  }
 
   useEffect(() => {
     fetch('/api/ecommpanel/auth/me', { credentials: 'same-origin' })
@@ -536,33 +417,6 @@ export default function DataStudioManager({
     }
   }, [databaseTables, selectedDatabaseTableName]);
 
-  useEffect(() => {
-    const requestedModule = searchParams.get('module');
-    if (isDataModuleKey(requestedModule)) {
-      setActiveDataModule(requestedModule);
-      return;
-    }
-
-    if (!requestedModule && activeDataModule) {
-      setActiveDataModule(null);
-    }
-  }, [activeDataModule, searchParams]);
-
-  useEffect(() => {
-    const requestedModule = searchParams.get('module');
-    const requestedCreate = searchParams.get('create');
-
-    if (requestedModule === 'modeling' && requestedCreate === '1' && !createIntentHandledRef.current) {
-      createIntentHandledRef.current = true;
-      handleNewEntity();
-      return;
-    }
-
-    if (requestedCreate !== '1') {
-      createIntentHandledRef.current = false;
-    }
-  }, [searchParams]);
-
   function applyPayload(payload: DataStudioApiResponse, nextSuccess?: string) {
     if (payload.snapshot) {
       setSnapshot(payload.snapshot);
@@ -584,10 +438,6 @@ export default function DataStudioManager({
       setBundle(payload.bundle);
     }
 
-    if (payload.runtime) {
-      setRuntime(payload.runtime);
-    }
-
     if (payload.databaseTables) {
       setDatabaseTables(payload.databaseTables);
     }
@@ -606,28 +456,6 @@ export default function DataStudioManager({
 
     setError(null);
     setSuccess(nextSuccess || null);
-  }
-
-  async function refreshStudioState(nextSuccess?: string) {
-    setSaving(true);
-    setError(null);
-    setSuccess(null);
-
-    try {
-      const response = await fetch('/api/ecommpanel/data-studio', {
-        method: 'GET',
-        credentials: 'same-origin',
-      });
-      const payload = (await response.json().catch(() => null)) as DataStudioApiResponse | null;
-      if (!response.ok) {
-        throw new Error(payload?.error || 'Falha ao atualizar o estado do Data Studio.');
-      }
-      applyPayload(payload || {}, nextSuccess);
-    } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : 'Falha ao atualizar o estado do Data Studio.');
-    } finally {
-      setSaving(false);
-    }
   }
 
   async function requestAction(body: unknown, nextSuccess: string) {
@@ -968,30 +796,6 @@ export default function DataStudioManager({
     );
   }
 
-  async function handleSyncSelectedEntityStructure() {
-    if (!canManageEntities || !selectedEntityId) return;
-    await requestAction(
-      {
-        action: 'syncEntityStructure',
-        entityId: selectedEntityId,
-      },
-      'Estrutura da entidade sincronizada com a tabela física.',
-    );
-  }
-
-  async function handleRebuildEntitiesFromDatabase(replaceExisting: boolean) {
-    if (!canManageEntities) return;
-    await requestAction(
-      {
-        action: 'rebuildEntitiesFromDatabase',
-        replaceExisting,
-      },
-      replaceExisting
-        ? 'Entidades reconstruídas a partir da base física.'
-        : 'Entidades do banco adicionadas ao snapshot.',
-    );
-  }
-
   async function handleRefreshDatabaseTables() {
     if (!canManageDatabaseTables) return;
 
@@ -1056,231 +860,487 @@ export default function DataStudioManager({
     }
   }
 
-  useEffect(() => {
-    const hasOverlayOpen = Boolean(activeDataModule || isEntityViewerOpen || isEntityEditorOpen);
-    if (!hasOverlayOpen) return undefined;
-
-    function handleEscape(event: KeyboardEvent) {
-      if (event.key !== 'Escape') return;
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (isEntityEditorOpen) {
-        setIsEntityEditorOpen(false);
-        return;
-      }
-
-      if (isEntityViewerOpen) {
-        setIsEntityViewerOpen(false);
-        return;
-      }
-
-      if (activeDataModule) {
-        closeDataModule();
-      }
-    }
-
-    document.addEventListener('keydown', handleEscape, true);
-    return () => document.removeEventListener('keydown', handleEscape, true);
-  }, [activeDataModule, isEntityEditorOpen, isEntityViewerOpen]);
-
-  const currentDataModule: DataModuleKey = activeDataModule ?? 'modeling';
-  const currentModuleMeta = DATA_MODULE_META[currentDataModule];
-
   return (
-    <section className={`panel-grid panel-data-studio panel-data-studio--${currentDataModule} panel-manager-page`} aria-labelledby="panel-data-title">
-      <PanelPageHeader
-        title={currentModuleMeta.title}
-        titleId="panel-data-title"
-        description={currentModuleMeta.description}
-        actions={
-          currentDataModule === 'modeling' && canManageEntities ? (
-            <button type="button" className="panel-btn panel-btn-primary panel-btn-sm panel-manager-primary-button" onClick={handleNewEntity}>
-              + Nova Entidade
-            </button>
-          ) : null
-        }
-      />
+    <section className="panel-grid panel-data-studio" aria-labelledby="panel-data-title">
+      <article className="panel-card panel-card-hero panel-card-hero--compact">
+        <div className="panel-inline-between panel-inline-wrap">
+          <div>
+            <p className="panel-kicker">Configurações do painel</p>
+            <h1 id="panel-data-title">Dados, conexão e pacote base do banco</h1>
+            <p className="panel-muted">
+              Este módulo centraliza a preparação do banco do produto. O master admin cuida da conexão e do bootstrap. Perfis
+              operacionais podem continuar modelando entidades, importando dados e revisando o pacote sem acesso à conexão crítica.
+            </p>
+          </div>
+          <a href="/ecommpanel/admin/data/dictionary" className="panel-btn panel-btn-secondary">
+            Abrir dicionário interno
+          </a>
+        </div>
+      </article>
 
-      {currentDataModule === 'modeling' ? (
-      <div className="panel-manager-stats">
-        <article className="panel-manager-stat panel-manager-stat--blue">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
-          <div>
-            <span className="panel-manager-stat__label">Entidades Total</span>
-            <strong>{formatInteger(snapshot.entities.length)}</strong>
-          </div>
+      <div className="panel-stats">
+        <article className="panel-stat">
+          <span className="panel-muted">Conexões cadastradas</span>
+          <strong>{formatInteger(snapshot.connections.length)}</strong>
+          <span>{formatInteger(reachableConnections)} respondendo no último teste</span>
         </article>
-        <article className="panel-manager-stat panel-manager-stat--green">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
-          <div>
-            <span className="panel-manager-stat__label">Ativas</span>
-            <strong>{formatInteger(readyEntities)}</strong>
-          </div>
+        <article className="panel-stat">
+          <span className="panel-muted">Entidades</span>
+          <strong>{formatInteger(snapshot.entities.length)}</strong>
+          <span>{formatInteger(readyEntities)} modelos prontos</span>
         </article>
-        <article className="panel-manager-stat panel-manager-stat--gold">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
-          <div>
-            <span className="panel-manager-stat__label">Total de Campos</span>
-            <strong>{formatInteger(totalFields)}</strong>
-          </div>
+        <article className="panel-stat">
+          <span className="panel-muted">Campos definidos</span>
+          <strong>{formatInteger(totalFields)}</strong>
+          <span>Estrutura consolidada por entidade</span>
         </article>
-        <article className="panel-manager-stat panel-manager-stat--purple">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
-          <div>
-            <span className="panel-manager-stat__label">Total de Registros</span>
-            <strong>{formatInteger(runtime.entities.reduce((sum, entity) => sum + entity.rowCount, 0))}</strong>
-          </div>
+        <article className="panel-stat">
+          <span className="panel-muted">Estado do bootstrap</span>
+          <strong>{snapshot.bootstrap.databaseProvisioned ? 'Base criada' : 'Base pendente'}</strong>
+          <span>{snapshot.bootstrap.seedAdminProvisioned ? 'Admin inicial pronto' : 'Admin inicial pendente'}</span>
+        </article>
+        <article className="panel-stat">
+          <span className="panel-muted">Imports recebidos</span>
+          <strong>{formatInteger(snapshot.imports.length)}</strong>
+          <span>Atualizado em {formatDateTime(snapshot.updatedAt)}</span>
         </article>
       </div>
-      ) : null}
 
       {(error || success) && (
         <div className={`panel-feedback ${error ? 'panel-feedback-error' : 'panel-feedback-success'}`}>{error || success}</div>
       )}
 
-      {currentDataModule === 'modeling' ? (
-      <div className="panel-table-shell">
-        <div className="panel-table-wrap">
-          <table className="panel-table panel-manager-table panel-manager-entities-table">
-            <thead>
-              <tr>
-                <th>Entidade</th>
-                <th>Tabela Física</th>
-                <th>Campos</th>
-                <th>Registros</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {snapshot.entities.length ? (
-                snapshot.entities.map((entity) => {
-                  const entityRuntime = runtimeByEntityId.get(entity.id);
-                  return (
-                    <tr key={entity.id}>
-                      <td>
-                        <div className="panel-manager-entity-cell">
-                          <span className="panel-manager-entity-cell__icon">{buildEntityAcronym(entity)}</span>
-                          <div>
-                            <strong>{entity.label}</strong>
-                            <small>{entity.slug}</small>
-                          </div>
-                        </div>
-                      </td>
-                      <td><code>{entity.tableName}</code></td>
-                      <td>{entity.fields.length} campos</td>
-                      <td>{formatInteger(entityRuntime?.rowCount || 0)}</td>
-                      <td>
-                        <span className={`panel-badge ${entity.status === 'ready' ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
-                          {entity.status === 'ready' ? 'Ativa' : 'Rascunho'}
-                        </span>
-                      </td>
-                      <td>
-                        <div className="panel-manager-icon-actions">
-                          <button type="button" className="panel-manager-icon-button panel-manager-icon-button--blue" onClick={() => openEntityViewer(entity.id)} aria-label={`Ver ${entity.label}`}>
-                            ◉
-                          </button>
-                          {canManageEntities ? (
-                            <button type="button" className="panel-manager-icon-button panel-manager-icon-button--gold" onClick={() => openEntityEditor(entity.id)} aria-label={`Editar ${entity.label}`}>
-                              ✎
-                            </button>
-                          ) : null}
-                          {canManageEntities ? (
-                            <button
-                              type="button"
-                              className="panel-manager-icon-button panel-manager-icon-button--neutral"
-                              onClick={async () => {
-                                setSelectedEntityId(entity.id);
-                                await requestAction(
-                                  {
-                                    action: 'saveEntity',
-                                    entity: {
-                                      ...entity,
-                                      status: entity.status === 'ready' ? 'draft' : 'ready',
-                                    },
-                                  },
-                                  entity.status === 'ready' ? 'Entidade voltou para rascunho.' : 'Entidade marcada como pronta.',
-                                );
-                              }}
-                              aria-label={`Alternar status de ${entity.label}`}
-                            >
-                              ⚙
-                            </button>
-                          ) : null}
-                          {canManageEntities ? (
-                            <button
-                              type="button"
-                              className="panel-manager-icon-button panel-manager-icon-button--danger"
-                              onClick={async () => {
-                                const confirmed = window.confirm('Remover esta entidade e os imports relacionados?');
-                                if (!confirmed) return;
-                                await requestAction(
-                                  {
-                                    action: 'deleteEntity',
-                                    entityId: entity.id,
-                                  },
-                                  'Entidade removida com sucesso.',
-                                );
-                              }}
-                              aria-label={`Remover ${entity.label}`}
-                            >
-                              🗑
-                            </button>
-                          ) : null}
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan={6} className="panel-table-empty">Nenhuma entidade modelada ainda.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      ) : null}
-
-      {currentDataModule === 'modeling' ? (
-      <article className="panel-manager-card panel-manager-card--actions">
-        <div className="panel-card-header">
-          <div className="panel-card-header__copy">
-            <h2>Operações estruturais</h2>
-            <p className="panel-muted">Aplique ações técnicas sem sair da tabela principal de entidades.</p>
-          </div>
-        </div>
-        <div className="panel-manager-quick-actions panel-manager-quick-actions--tight">
-          <button type="button" className="panel-manager-quick-action" onClick={handleSyncSelectedEntityStructure} disabled={!selectedEntity || saving || !canManageEntities}>
-            <strong>Sincronizar com Banco</strong>
-            <small>Atualizar a tabela física da entidade selecionada.</small>
-          </button>
-          <button type="button" className="panel-manager-quick-action" onClick={handleGenerateBundle} disabled={saving || (!canManageEntities && !canManageBootstrap)}>
-            <strong>Exportar Schema</strong>
-            <small>Atualizar contrato JSON e artefatos técnicos.</small>
-          </button>
-          <button type="button" className="panel-manager-quick-action" onClick={() => openDataModule('import')}>
-            <strong>Importar definições</strong>
-            <small>Carregar estrutura existente sem trocar de seção.</small>
-          </button>
-        </div>
-      </article>
-      ) : null}
-
-      {currentDataModule !== 'modeling' ? (
-        <section className="panel-data-module-surface" aria-labelledby="panel-data-module-title">
-          <div className="panel-data-module-surface__header">
+      <div className="panel-data-overview-grid">
+        <article className="panel-card panel-data-flow-card">
+          <div className="panel-inline-between">
             <div>
-              <p className="panel-kicker">Fluxo ativo</p>
-              <h2 id="panel-data-module-title">{currentModuleMeta.label}</h2>
-              <p>{currentModuleMeta.detail}</p>
+              <h2>Fluxo operacional do banco</h2>
+              <p className="panel-muted">
+                Use os módulos na ordem recomendada. Cada etapa informa claramente o que pode ser alterado e qual efeito operacional
+                ela gera no ambiente.
+              </p>
             </div>
           </div>
 
-            <div className="panel-data-module-surface__body">
-              {currentDataModule === 'connections' ? (
+          <div className="panel-data-wizard-quick panel-data-wizard-quick--single">
+            <article className="panel-data-wizard-quick-step">
+              <header>
+                <span className="panel-data-wizard-quick-step__index">1</span>
+                <strong>Conexoes e acesso</strong>
+              </header>
+              <p className="panel-muted">Configura os perfis de conexao e valida a comunicacao do painel com o banco.</p>
+              <div className="panel-data-wizard-quick-step__meta">
+                <span>Modifica: perfis de conexao e status de alcance</span>
+                <span>Resultado: ambiente apto para operacao e provisionamento</span>
+              </div>
+              <div className="panel-actions">
+                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('connections')}>
+                  Abrir conexoes
+                </button>
+              </div>
+            </article>
+
+            <article className="panel-data-wizard-quick-step">
+              <header>
+                <span className="panel-data-wizard-quick-step__index">2</span>
+                <strong>Implantacao inicial</strong>
+              </header>
+              <p className="panel-muted">Executa validacao, provisionamento e confirmacao do bootstrap da base.</p>
+              <div className="panel-data-wizard-quick-step__meta">
+                <span>Modifica: estrutura inicial de banco e usuario tecnico</span>
+                <span>Resultado: base pronta para receber modulos e dados</span>
+              </div>
+              <div className="panel-actions">
+                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('bootstrap')}>
+                  Abrir implantacao
+                </button>
+              </div>
+            </article>
+
+            <article className="panel-data-wizard-quick-step">
+              <header>
+                <span className="panel-data-wizard-quick-step__index">3</span>
+                <strong>Modelar entidades</strong>
+              </header>
+              <p className="panel-muted">Define estrutura de dados, campos, regras e status operacional da entidade.</p>
+              <div className="panel-data-wizard-quick-step__meta">
+                <span>Modifica: schema logico (entidades/campos)</span>
+                <span>Resultado: base consistente para API e operacao</span>
+              </div>
+              <div className="panel-actions">
+                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('modeling')}>
+                  Abrir modelagem
+                </button>
+                {canManageEntities ? (
+                  <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={handleNewEntity}>
+                    Nova entidade
+                  </button>
+                ) : null}
+              </div>
+            </article>
+
+            <article className="panel-data-wizard-quick-step">
+              <header>
+                <span className="panel-data-wizard-quick-step__index">4</span>
+                <strong>Operar registros</strong>
+              </header>
+              <p className="panel-muted">Leia a entidade em formato de tabela, edite registros e valide rapidamente o conteúdo já populado.</p>
+              <div className="panel-data-wizard-quick-step__meta">
+                <span>Modifica: registros persistidos nas entidades prontas</span>
+                <span>Resultado: leitura operacional e edição rápida no painel</span>
+              </div>
+              <div className="panel-actions">
+                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('records')}>
+                  Abrir registros
+                </button>
+              </div>
+            </article>
+
+            <article className="panel-data-wizard-quick-step">
+              <header>
+                <span className="panel-data-wizard-quick-step__index">5</span>
+                <strong>Carregar dados</strong>
+              </header>
+              <p className="panel-muted">Importa registros JSON ou pacotes de estrutura para acelerar preenchimento inicial.</p>
+              <div className="panel-data-wizard-quick-step__meta">
+                <span>Modifica: dados de entidades ja criadas</span>
+                <span>Resultado: massa inicial e atualizacao operacional</span>
+              </div>
+              <div className="panel-actions">
+                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('import')}>
+                  Abrir importação
+                </button>
+              </div>
+            </article>
+
+            <article className="panel-data-wizard-quick-step">
+              <header>
+                <span className="panel-data-wizard-quick-step__index">6</span>
+                <strong>Sincronizar CSV</strong>
+              </header>
+              <p className="panel-muted">Exporta para auditoria e importa CSV em tabelas físicas com controle de modo.</p>
+              <div className="panel-data-wizard-quick-step__meta">
+                <span>Modifica: tabelas fisicas da base conectada</span>
+                <span>Resultado: integracao externa e trilha de auditoria</span>
+              </div>
+              <div className="panel-actions">
+                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('csv')}>
+                  Abrir CSV
+                </button>
+              </div>
+            </article>
+
+            <article className="panel-data-wizard-quick-step">
+              <header>
+                <span className="panel-data-wizard-quick-step__index">7</span>
+                <strong>Gerar pacote base</strong>
+              </header>
+              <p className="panel-muted">Consolida boilerplate e artefatos para implantação e versionamento de estrutura.</p>
+              <div className="panel-data-wizard-quick-step__meta">
+                <span>Modifica: artefatos tecnicos do modulo</span>
+                <span>Resultado: implantacao reproduzivel e versionada</span>
+              </div>
+              <div className="panel-actions">
+                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('bundle')}>
+                  Abrir pacote
+                </button>
+              </div>
+            </article>
+          </div>
+        </article>
+
+        <article className="panel-card panel-data-modeling-card">
+          <div className="panel-inline-between">
+            <div>
+              <h2>Modelagem da base</h2>
+              <p className="panel-muted">
+                Visualizacao executiva das entidades cadastradas. A edicao detalhada fica no modulo de modelagem para evitar ruido
+                visual na tela principal.
+              </p>
+            </div>
+            <div className="panel-actions panel-data-primary-action">
+              <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('modeling')}>
+                Abrir modelagem
+              </button>
+            </div>
+          </div>
+
+          <div className="panel-data-overview-summary">
+            <div className="panel-data-connection-status">
+              <strong>Entidades modeladas</strong>
+              <span>{formatInteger(snapshot.entities.length)} registradas</span>
+              <small>{formatInteger(readyEntities)} prontas para operação e {formatInteger(totalFields)} campos definidos.</small>
+            </div>
+            <div className="panel-data-connection-status">
+              <strong>Entidade em foco</strong>
+              {selectedEntity ? (
+                <>
+                  <span>{selectedEntity.label}</span>
+                  <small>{selectedEntity.tableName} · {selectedEntity.fields.length} campos · {selectedEntity.status === 'ready' ? 'pronta' : 'rascunho'}</small>
+                </>
+              ) : (
+                <small>Nenhuma entidade selecionada no momento.</small>
+              )}
+            </div>
+          </div>
+
+          <div className="panel-form-section">
+            <h3>Entidades cadastradas</h3>
+            <p className="panel-muted panel-data-section-note">
+              A coluna de código é uma sigla automática da entidade para facilitar leitura rápida na operação.
+            </p>
+            <div className="panel-data-entity-table panel-data-entity-table--dense">
+              <div className="panel-data-entity-table__head">
+                <span>Código</span>
+                <span>Entidade</span>
+                <span>Status</span>
+                <span>Campos</span>
+                <span>Ações</span>
+              </div>
+              {snapshot.entities.slice(0, 10).map((entity) => (
+                <div
+                  key={entity.id}
+                  className={`panel-data-entity-row panel-data-entity-row--dense ${entity.id === selectedEntityId ? 'is-active' : ''}`}
+                >
+                  <span className="panel-data-acronym">{buildEntityAcronym(entity)}</span>
+                  <span className="panel-data-entity-row__main">
+                    <strong>{entity.label}</strong>
+                    <small>{entity.tableName}</small>
+                  </span>
+                  <span>
+                    <span className={`panel-badge ${entity.status === 'ready' ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
+                      {entity.status === 'ready' ? 'pronto' : 'rascunho'}
+                    </span>
+                  </span>
+                  <span>{formatInteger(entity.fields.length)}</span>
+                  <div className="panel-actions panel-data-inline-actions">
+                    <button
+                      type="button"
+                      className="panel-btn panel-btn-secondary panel-btn-xs panel-table-action is-primary"
+                      onClick={() => {
+                        setSelectedEntityId(entity.id);
+                        openEntityViewer(entity.id);
+                      }}
+                    >
+                      Abrir
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="panel-form-section">
+            <h3>Imports recentes</h3>
+            <div className="panel-data-import-log">
+              {snapshot.imports.length ? (
+                snapshot.imports.slice(0, 6).map((entry) => (
+                  <div key={entry.id} className="panel-data-import-item">
+                    <strong>{entry.entitySlug}</strong>
+                    <span>{entry.sourceLabel}</span>
+                    <small>
+                      {formatInteger(entry.rowsCount)} registros em {formatDateTime(entry.importedAt)}
+                    </small>
+                  </div>
+                ))
+              ) : (
+                <p className="panel-muted">Nenhuma importação registrada ainda.</p>
+              )}
+            </div>
+          </div>
+        </article>
+      </div>
+
+      {activeDataModule ? (
+        <div className="panel-editor-modal" role="dialog" aria-modal="true" aria-labelledby="panel-data-module-title">
+            <div className="panel-editor-modal__content panel-data-editor-modal__content">
+            <div className="panel-editor-modal__header panel-editor-modal__header--data">
+              <div>
+                <p className="panel-kicker">Ferramenta do banco</p>
+                <h2 id="panel-data-module-title">
+                  {activeDataModule === 'modeling'
+                    ? 'Modelagem de entidades'
+                    : activeDataModule === 'connections'
+                    ? 'Perfis de conexão'
+                    : activeDataModule === 'bootstrap'
+                      ? 'Assistente de implantação'
+                      : activeDataModule === 'records'
+                        ? 'Registros por entidade'
+                      : activeDataModule === 'import'
+                        ? 'Importação manual'
+                        : activeDataModule === 'csv'
+                          ? 'CSV por tabela'
+                          : 'Pacote base'}
+                </h2>
+                <p>
+                  {activeDataModule === 'modeling'
+                    ? 'Consulte, abra, edite e altere o estado das entidades em um espaço dedicado.'
+                    : activeDataModule === 'connections'
+                    ? 'Cadastre, revise e teste as conexões do painel com toda a largura disponível.'
+                    : activeDataModule === 'bootstrap'
+                      ? 'Siga as etapas do provisionamento sem competir por espaço com a navegação lateral.'
+                      : activeDataModule === 'records'
+                        ? 'Leia, edite e popule os registros das entidades em um workspace compacto e visível.'
+                      : activeDataModule === 'import'
+                        ? 'Importe registros ou pacotes completos em um espaço de trabalho dedicado.'
+                        : activeDataModule === 'csv'
+                          ? 'Trabalhe com exportação e importação CSV de forma mais operacional.'
+                          : 'Atualize, selecione e baixe os arquivos do pacote base.'}
+                </p>
+              </div>
+              <button type="button" className="panel-editor-modal__close" onClick={() => setActiveDataModule(null)} aria-label="Fechar módulo">
+                ×
+              </button>
+            </div>
+
+            <div className="panel-data-editor-modal__body">
+              {activeDataModule === 'modeling' ? (
+                <div className="panel-grid">
+                  <article className="panel-card">
+                    <div className="panel-inline-between">
+                      <div>
+                        <h3>Entidades cadastradas</h3>
+                        <p className="panel-muted">Abra uma entidade para revisar a estrutura ou editar o modelo.</p>
+                      </div>
+                      {canManageEntities ? (
+                        <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={handleNewEntity}>
+                          Nova entidade
+                        </button>
+                      ) : null}
+                    </div>
+
+                    <div className="panel-data-entity-table panel-data-entity-table--modeling-modal">
+                      <div className="panel-data-entity-table__head">
+                        <span>Entidade</span>
+                        <span>Status</span>
+                        <span>Campos</span>
+                        <span>Ações</span>
+                      </div>
+                      {snapshot.entities.map((entity) => (
+                        <div key={entity.id} className={`panel-data-entity-row ${entity.id === selectedEntityId ? 'is-active' : ''}`}>
+                          <span className="panel-data-entity-row__main">
+                            <strong>{entity.label}</strong>
+                            <small>{entity.tableName}</small>
+                          </span>
+                          <span>
+                            <span className={`panel-badge ${entity.status === 'ready' ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
+                              {entity.status === 'ready' ? 'pronto' : 'rascunho'}
+                            </span>
+                          </span>
+                          <span>{formatInteger(entity.fields.length)}</span>
+                          <div className="panel-actions panel-data-inline-actions">
+                            <button type="button" className="panel-btn panel-btn-secondary panel-btn-xs panel-table-action" onClick={() => setSelectedEntityId(entity.id)}>
+                              Selecionar
+                            </button>
+                            <button type="button" className="panel-btn panel-btn-secondary panel-btn-xs panel-table-action is-primary" onClick={() => openEntityViewer(entity.id)}>
+                              Ver
+                            </button>
+                            {canManageEntities ? (
+                              <>
+                                <button type="button" className="panel-btn panel-btn-secondary panel-btn-xs panel-table-action" onClick={() => openEntityEditor(entity.id)}>
+                                  Editar
+                                </button>
+                                <button
+                                  type="button"
+                                  className="panel-btn panel-btn-secondary panel-btn-xs panel-table-action"
+                                  onClick={async () => {
+                                    setSelectedEntityId(entity.id);
+                                    await requestAction(
+                                      {
+                                        action: 'saveEntity',
+                                        entity: {
+                                          ...entity,
+                                          status: entity.status === 'ready' ? 'draft' : 'ready',
+                                        },
+                                      },
+                                      entity.status === 'ready' ? 'Entidade voltou para rascunho.' : 'Entidade marcada como pronta.',
+                                    );
+                                  }}
+                                >
+                                  {entity.status === 'ready' ? 'Desativar' : 'Ativar'}
+                                </button>
+                              </>
+                            ) : null}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+
+                  <article className="panel-card">
+                    <div className="panel-inline-between panel-data-summary-header">
+                      <div>
+                        <h3>Resumo da entidade</h3>
+                        <p className="panel-muted">Consulte o resumo e abra o detalhamento completo quando necessário.</p>
+                      </div>
+                      <div className="panel-actions panel-data-summary-actions">
+                        <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => openEntityViewer(selectedEntity?.id)} disabled={!selectedEntity}>
+                          Abrir detalhes
+                        </button>
+                        {canManageEntities ? (
+                          <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => openEntityEditor(selectedEntity?.id)} disabled={!selectedEntity}>
+                            Editar
+                          </button>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    {selectedEntity ? (
+                      <div className="panel-data-entity-overview">
+                        <div className="panel-data-entity-overview__meta panel-data-entity-overview__meta--spaced">
+                          <div>
+                            <span className="panel-muted">Nome</span>
+                            <strong>{selectedEntity.label}</strong>
+                          </div>
+                          <div>
+                            <span className="panel-muted">Slug</span>
+                            <strong>{selectedEntity.slug}</strong>
+                          </div>
+                          <div>
+                            <span className="panel-muted">Tabela</span>
+                            <strong>{selectedEntity.tableName}</strong>
+                          </div>
+                          <div>
+                            <span className="panel-muted">Status</span>
+                            <strong>{selectedEntity.status === 'ready' ? 'Pronto' : 'Rascunho'}</strong>
+                          </div>
+                        </div>
+
+                        <div className="panel-data-entity-overview__description">
+                          <span className="panel-muted">Descrição</span>
+                          <p>{selectedEntity.description || 'Sem descrição cadastrada.'}</p>
+                        </div>
+
+                        <div className="panel-data-fields-table panel-data-fields-table--compact">
+                          <div className="panel-data-fields-table__head">
+                            <span>Campo</span>
+                            <span>Rótulo</span>
+                            <span>Tipo</span>
+                            <span>Regras</span>
+                            <span>Lista</span>
+                          </div>
+                          {selectedEntity.fields.slice(0, 8).map((field) => (
+                            <div key={field.id} className="panel-data-fields-table__row">
+                              <div><strong>{field.name}</strong></div>
+                              <div>{field.label || '-'}</div>
+                              <div>{field.type}</div>
+                              <div>{describeFieldRules(field)}</div>
+                              <div>{field.listVisible ? 'Sim' : 'Não'}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="panel-data-empty-state">
+                        <strong>Nenhuma entidade selecionada</strong>
+                        <p className="panel-muted">Escolha uma entidade na lista para revisar a estrutura.</p>
+                      </div>
+                    )}
+                  </article>
+                </div>
+              ) : null}
+
+              {activeDataModule === 'connections' ? (
                 <div className="panel-grid">
                   <article className="panel-card">
                     <div className="panel-inline-between">
@@ -1469,7 +1529,7 @@ export default function DataStudioManager({
                 </div>
               ) : null}
 
-              {currentDataModule === 'bootstrap' ? (
+              {activeDataModule === 'bootstrap' ? (
                 <div className="panel-data-wizard">
                   <div className="panel-inline-between">
                     <span className="panel-muted">Último pacote em {formatDateTime(snapshot.bootstrap.packageGeneratedAt)}</span>
@@ -1621,51 +1681,10 @@ export default function DataStudioManager({
                 </div>
               ) : null}
 
-              {currentDataModule === 'import' ? (
+              {activeDataModule === 'import' ? (
                 <div className="panel-data-import-grid">
                   <article className="panel-card">
-                    <div className="panel-data-context-banner panel-data-context-banner--import">
-                      <div>
-                        <strong>Entidade alvo</strong>
-                        <p className="panel-muted">
-                          {selectedEntity
-                            ? `Os registros abaixo serão aplicados em ${selectedEntity.label} (${selectedEntity.tableName}).`
-                            : 'Selecione ou crie uma entidade antes de importar registros específicos.'}
-                        </p>
-                      </div>
-                      <label className="panel-field panel-field--toolbar">
-                        <span>Entidade</span>
-                        <select
-                          className="panel-select"
-                          value={selectedEntityId || ''}
-                          onChange={(event) => setSelectedEntityId(event.target.value || null)}
-                          disabled={!snapshot.entities.length}
-                        >
-                          <option value="">Selecione</option>
-                          {snapshot.entities.map((entity) => (
-                            <option key={entity.id} value={entity.id}>
-                              {entity.label} ({entity.tableName})
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                    </div>
-                    {selectedEntity ? (
-                      <div className="panel-data-import-target">
-                        <span className="panel-badge panel-badge-success">Entidade ativa</span>
-                        <strong>{selectedEntity.label}</strong>
-                        <code>{selectedEntity.tableName}</code>
-                        <small>
-                          {selectedEntity.fields.length} campos · {selectedEntity.status === 'ready' ? 'pronta para operação' : 'em rascunho'}
-                        </small>
-                      </div>
-                    ) : null}
                     <h3>Registros da entidade selecionada</h3>
-                    {!selectedEntity ? (
-                      <div className="panel-feedback panel-feedback-warning">
-                        Nenhuma entidade selecionada. Escolha a entidade alvo para liberar a importação manual de registros.
-                      </div>
-                    ) : null}
                     <textarea className="panel-textarea panel-data-codearea" value={importRowsText} onChange={(event) => setImportRowsText(event.target.value)} disabled={!canManageRecords} />
                     <div className="panel-actions">
                       <button type="button" className="panel-btn panel-btn-secondary" onClick={handleImportRows} disabled={saving || !selectedEntityId || !canManageRecords}>
@@ -1685,7 +1704,7 @@ export default function DataStudioManager({
                 </div>
               ) : null}
 
-              {currentDataModule === 'records' ? (
+              {activeDataModule === 'records' ? (
                 <DataEntityRecordsWorkspace
                   entities={snapshot.entities}
                   csrfToken={csrfToken}
@@ -1694,7 +1713,7 @@ export default function DataStudioManager({
                 />
               ) : null}
 
-              {currentDataModule === 'csv' && canManageDatabaseTables ? (
+              {activeDataModule === 'csv' && canManageDatabaseTables ? (
                 <div className="panel-data-import-grid">
                   <article className="panel-card">
                     <div className="panel-inline-between panel-inline-wrap">
@@ -1830,7 +1849,7 @@ export default function DataStudioManager({
                 </div>
               ) : null}
 
-              {currentDataModule === 'bundle' ? (
+              {activeDataModule === 'bundle' ? (
                 <article className="panel-card">
                   <div className="panel-inline-between">
                     <div>
@@ -1870,7 +1889,8 @@ export default function DataStudioManager({
                 </article>
               ) : null}
             </div>
-        </section>
+          </div>
+        </div>
       ) : null}
 
       {isEntityViewerOpen && selectedEntity ? (
@@ -1906,14 +1926,6 @@ export default function DataStudioManager({
                     <span className="panel-muted">Status</span>
                     <strong>{selectedEntity.status === 'ready' ? 'Pronto' : 'Rascunho'}</strong>
                   </div>
-                  <div>
-                    <span className="panel-muted">Tabela física</span>
-                    <strong>{buildRuntimeTableStatus(selectedEntityRuntime)}</strong>
-                  </div>
-                  <div>
-                    <span className="panel-muted">Linhas atuais</span>
-                    <strong>{formatInteger(selectedEntityRuntime?.rowCount || 0)}</strong>
-                  </div>
                 </div>
 
                 <div className="panel-data-entity-overview__description">
@@ -1921,41 +1933,9 @@ export default function DataStudioManager({
                   <p>{selectedEntity.description || 'Sem descrição cadastrada.'}</p>
                 </div>
 
-                {selectedEntityRuntime ? (
-                  <div className="panel-data-entity-overview__description">
-                    <span className="panel-muted">Schema, API e permissões</span>
-                    <div className="panel-data-csv-tags">
-                      <span className="panel-link-chip">{selectedEntityRuntime.schemaPath}</span>
-                      <span className="panel-link-chip">{selectedEntityRuntime.internalCollectionPath}</span>
-                      <span className="panel-link-chip">{selectedEntityRuntime.integrationCollectionPath}</span>
-                      <span className="panel-link-chip">{selectedEntityRuntime.readScope}</span>
-                      <span className="panel-link-chip">{selectedEntityRuntime.writeScope}</span>
-                    </div>
-                    {selectedEntityRuntime.missingColumns.length || selectedEntityRuntime.extraColumns.length ? (
-                      <p className="panel-muted">
-                        {selectedEntityRuntime.missingColumns.length
-                          ? `Faltando no banco: ${selectedEntityRuntime.missingColumns.join(', ')}. `
-                          : ''}
-                        {selectedEntityRuntime.extraColumns.length
-                          ? `Extras na tabela: ${selectedEntityRuntime.extraColumns.join(', ')}.`
-                          : ''}
-                      </p>
-                    ) : (
-                      <p className="panel-muted">Schema lógico e tabela física estão alinhados.</p>
-                    )}
-                  </div>
-                ) : null}
-
                 <div className="panel-actions">
                   {canManageEntities ? (
                     <>
-                      <button
-                        type="button"
-                        className="panel-btn panel-btn-secondary panel-btn-sm"
-                        onClick={handleSyncSelectedEntityStructure}
-                      >
-                        Sincronizar tabela
-                      </button>
                       <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => {
                         setIsEntityViewerOpen(false);
                         openEntityEditor(selectedEntity.id);

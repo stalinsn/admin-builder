@@ -351,17 +351,6 @@ function roleCoversOtherRole(candidate: PanelRole, target: PanelRole): boolean {
   return target.permissions.every((permission) => candidatePermissions.has(permission));
 }
 
-function buildUserInitials(name: string): string {
-  const parts = name
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2);
-
-  if (!parts.length) return 'A';
-  return parts.map((part) => part.charAt(0).toUpperCase()).join('');
-}
-
 export default function AdminUsersManager() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -372,7 +361,6 @@ export default function AdminUsersManager() {
   const [csrfToken, setCsrfToken] = useState('');
   const [form, setForm] = useState<UserForm>(INITIAL_FORM);
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'blocked'>('all');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [advancedOpen, setAdvancedOpen] = useState(false);
@@ -381,16 +369,15 @@ export default function AdminUsersManager() {
 
   const filteredUsers = useMemo(() => {
     const term = search.trim().toLowerCase();
+    if (!term) return users;
     return users.filter((user) => {
-      const matchesSearch =
+      return (
         user.name.toLowerCase().includes(term) ||
         user.email.toLowerCase().includes(term) ||
-        user.roleIds.some((role) => role.toLowerCase().includes(term));
-      const matchesStatus =
-        statusFilter === 'all' || (statusFilter === 'active' ? user.active : !user.active);
-      return (term ? matchesSearch : true) && matchesStatus;
+        user.roleIds.some((role) => role.toLowerCase().includes(term))
+      );
     });
-  }, [search, statusFilter, users]);
+  }, [search, users]);
 
   const activeUsers = useMemo(() => users.filter((user) => user.active).length, [users]);
   const hasAdvancedOverrides = form.permissionsAllow.length > 0 || form.permissionsDeny.length > 0;
@@ -647,158 +634,177 @@ export default function AdminUsersManager() {
   }
 
   return (
-    <section className="panel-users panel-grid panel-manager-page" aria-labelledby="panel-users-title">
+    <section className="panel-users panel-grid panel-users--rework" aria-labelledby="panel-users-title">
       <PanelPageHeader
-        title="Gestão de Usuários"
+        eyebrow="Controle de Acesso"
+        title="Gestão de usuários e permissões"
         titleId="panel-users-title"
-        description="Gerencie usuários, funções e permissões do sistema."
+        description="Perfis devem resolver a maior parte da operação. Exceções continuam disponíveis, mas em uma trilha mais controlada e legível."
         actions={
-          <div className="panel-inline panel-inline-wrap">
-            {canGrantPermissions ? (
-              <button type="button" className="panel-btn panel-btn-primary panel-btn-sm panel-manager-primary-button" onClick={startCreating}>
-                + Novo Usuário
-              </button>
-            ) : null}
-          </div>
+          canGrantPermissions ? (
+            <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={startCreating}>
+              + Novo usuário
+            </button>
+          ) : null
         }
       />
 
-      <div className="panel-manager-stats panel-manager-stats--three">
-        <article className="panel-manager-stat panel-manager-stat--blue">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
-          <div>
-            <span className="panel-manager-stat__label">Usuários Cadastrados</span>
-            <strong>{users.length}</strong>
-          </div>
+      <div className="panel-stats">
+        <article className="panel-stat">
+          <span className="panel-muted">Usuários cadastrados</span>
+          <strong>{users.length}</strong>
+          <span>Total no ambiente atual</span>
         </article>
 
-        <article className="panel-manager-stat panel-manager-stat--green">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
-          <div>
-            <span className="panel-manager-stat__label">Usuários Ativos</span>
-            <strong>{activeUsers}</strong>
-          </div>
+        <article className="panel-stat">
+          <span className="panel-muted">Usuários ativos</span>
+          <strong>{activeUsers}</strong>
+          <span>{users.length ? `${Math.round((activeUsers / users.length) * 100)}% da base` : 'Sem usuários'}</span>
         </article>
 
-        <article className="panel-manager-stat panel-manager-stat--purple">
-          <div className="panel-manager-stat__icon" aria-hidden="true" />
-          <div>
-            <span className="panel-manager-stat__label">Administradores</span>
-            <strong>{users.filter((user) => user.roleIds.includes('main_admin') || user.roleIds.includes('admin')).length}</strong>
-          </div>
+        <article className="panel-stat">
+          <span className="panel-muted">Visíveis no filtro</span>
+          <strong>{filteredUsers.length}</strong>
+          <span>Busca por nome, e-mail ou perfil</span>
         </article>
       </div>
 
-      <div className="panel-manager-card panel-manager-table-card">
-        <div className="panel-manager-toolbar panel-manager-toolbar--managerpanel">
-          <div className="panel-manager-search">
-            <input
-              className="panel-search"
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Buscar por nome, email ou cargo..."
-              aria-label="Buscar usuários"
-            />
+      <div className="panel-workspace panel-workspace--users">
+        <div className="panel-card panel-workspace__main panel-users-list-card">
+          <div className="panel-toolbar">
+            <div className="panel-toolbar__top">
+              <div className="panel-toolbar__copy">
+                <h2>Usuários existentes</h2>
+                <p className="panel-muted">Busque rapidamente, revise perfis aplicados e entre na edição individual quando necessário.</p>
+              </div>
+              <div className="panel-toolbar__filters">
+                <input
+                  className="panel-search"
+                  type="search"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder="Buscar por nome, e-mail ou perfil"
+                  aria-label="Buscar usuários"
+                />
+              </div>
+            </div>
           </div>
-          <select className="panel-select panel-manager-select" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as 'all' | 'active' | 'blocked')}>
-            <option value="all">Todos os status</option>
-            <option value="active">Ativo</option>
-            <option value="blocked">Bloqueado</option>
-          </select>
-        </div>
 
-        {loading ? <p className="panel-muted">Carregando usuários...</p> : null}
+          {loading ? <p className="panel-muted">Carregando usuários...</p> : null}
 
-        {!loading && filteredUsers.length === 0 ? <p className="panel-table-empty">Nenhum usuário encontrado para o filtro atual.</p> : null}
+          {!loading && filteredUsers.length === 0 ? <p className="panel-table-empty">Nenhum usuário encontrado para o filtro atual.</p> : null}
 
-        {!loading && filteredUsers.length > 0 ? (
-          <div className="panel-table-wrap panel-users-table-wrap">
-            <table className="panel-table panel-users-table panel-manager-table" aria-label="Tabela de usuários">
-              <thead>
-                <tr>
-                  <th>Usuário</th>
-                  <th>Perfil</th>
-                  <th>Status</th>
-                  <th>Último acesso</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredUsers.map((user) => {
-                  const busy = actionUserId === user.id;
-                  const roleLabels = user.roleIds
-                    .map((roleId) => {
-                      const role = rolesById.get(roleId as PanelRoleId);
-                      return role ? getRolePresentation(role).label : roleId;
-                    })
-                    .join(', ');
-                  return (
-                    <tr key={user.id} className={editingUserId === user.id ? 'panel-users-row-active' : undefined}>
-                      <td>
-                        <div className="panel-users-identity">
-                          <span className="panel-users-avatar" aria-hidden="true">
-                            {buildUserInitials(user.name)}
-                          </span>
-                          <div className="panel-users-identity__copy">
+          {!loading && filteredUsers.length > 0 ? (
+            <div className="panel-table-wrap panel-users-table-wrap">
+              <table className="panel-table panel-users-table" aria-label="Tabela de usuários">
+                <thead>
+                  <tr>
+                    <th>Usuário</th>
+                    <th>Perfis</th>
+                    <th>Ajustes extras</th>
+                    <th>Bloqueios</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredUsers.map((user) => {
+                    const busy = actionUserId === user.id;
+                    return (
+                      <tr key={user.id} className={editingUserId === user.id ? 'panel-users-row-active' : undefined}>
+                        <td>
+                          <div className="panel-users-identity">
                             <strong>{user.name}</strong>
                             <span className="panel-muted">{user.email}</span>
                           </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="panel-users-profile-cell">
-                          <span className="panel-badge" title={roleLabels || 'Sem perfil'}>
-                            {roleLabels || 'Sem perfil'}
-                          </span>
-                          <small className="panel-muted">
-                            {user.permissionsAllow.length || user.permissionsDeny.length
-                              ? `${user.permissionsAllow.length} extra / ${user.permissionsDeny.length} bloqueio`
-                              : 'Sem exceções'}
-                          </small>
-                        </div>
-                      </td>
-                      <td>
-                        <span className={`panel-badge ${user.active ? 'panel-badge-success' : 'panel-badge-neutral'}`}>{user.active ? 'Ativo' : 'Bloqueado'}</span>
-                      </td>
-                      <td>
-                        <span className="panel-muted">{editingUserId === user.id ? 'Agora' : 'Sem telemetria'}</span>
-                      </td>
-                      <td className="panel-users-actions-cell">
-                        <div className="panel-users-actions-stack">
-                          <button
-                            type="button"
-                            className={`panel-btn panel-btn-sm panel-table-action ${editingUserId === user.id ? 'panel-btn-primary is-primary' : 'panel-btn-secondary'}`}
-                            onClick={() => startEditing(user)}
-                            disabled={busy}
-                          >
-                            {editingUserId === user.id ? 'Editando' : 'Editar'}
-                          </button>
-                          <button
-                            type="button"
-                            className="panel-btn panel-btn-sm panel-btn-secondary"
-                            onClick={() => toggleUserActive(user)}
-                            disabled={busy || !canGrantPermissions}
-                          >
-                            {busy && actingOnUser?.id === user.id ? 'Salvando...' : user.active ? 'Bloquear' : 'Reativar'}
-                          </button>
-                          <button
-                            type="button"
-                            className="panel-btn panel-btn-sm panel-btn-danger"
-                            onClick={() => removeUser(user)}
-                            disabled={busy || !canGrantPermissions}
-                          >
-                            {busy && actingOnUser?.id === user.id ? 'Excluindo...' : 'Excluir'}
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        ) : null}
+                        </td>
+                        <td>
+                          <div className="panel-users-chip-stack">
+                            {user.roleIds.map((roleId) => {
+                              const role = rolesById.get(roleId as PanelRoleId);
+                              const label = role ? getRolePresentation(role).label : roleId;
+                              const description = role ? getRolePresentation(role).description : roleId;
+
+                              return (
+                                <span className="panel-badge" key={`${user.id}-${roleId}`} title={description}>
+                                  {label}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="panel-users-chip-stack">
+                            {user.permissionsAllow.length ? (
+                              user.permissionsAllow.map((permission) => {
+                                const permissionMeta = getPermissionPresentation(permission);
+                                return (
+                                  <span className="panel-badge" key={`${user.id}-allow-${permission}`} title={permissionMeta.description}>
+                                    {permissionMeta.label}
+                                  </span>
+                                );
+                              })
+                            ) : (
+                              <span className="panel-muted">Nenhum</span>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="panel-users-chip-stack">
+                            {user.permissionsDeny.length ? (
+                              user.permissionsDeny.map((permission) => {
+                                const permissionMeta = getPermissionPresentation(permission);
+                                return (
+                                  <span className="panel-badge panel-badge-neutral" key={`${user.id}-deny-${permission}`} title={permissionMeta.description}>
+                                    {permissionMeta.label}
+                                  </span>
+                                );
+                              })
+                            ) : (
+                              <span className="panel-muted">Nenhum</span>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <span className={`panel-badge ${user.active ? 'panel-badge-success' : 'panel-badge-neutral'}`}>{user.active ? 'Ativo' : 'Bloqueado'}</span>
+                        </td>
+                        <td className="panel-users-actions-cell">
+                          <div className="panel-users-actions-stack">
+                            <button
+                              type="button"
+                              className={`panel-btn panel-btn-sm panel-table-action ${editingUserId === user.id ? 'panel-btn-primary is-primary' : 'panel-btn-secondary'}`}
+                              onClick={() => startEditing(user)}
+                              disabled={busy}
+                            >
+                              {editingUserId === user.id ? 'Editando' : 'Editar'}
+                            </button>
+                            <button
+                              type="button"
+                              className="panel-btn panel-btn-sm panel-btn-secondary"
+                              onClick={() => toggleUserActive(user)}
+                              disabled={busy || !canGrantPermissions}
+                            >
+                              {busy && actingOnUser?.id === user.id ? 'Salvando...' : user.active ? 'Bloquear' : 'Reativar'}
+                            </button>
+                            <button
+                              type="button"
+                              className="panel-btn panel-btn-sm panel-btn-danger"
+                              onClick={() => removeUser(user)}
+                              disabled={busy || !canGrantPermissions}
+                            >
+                              {busy && actingOnUser?.id === user.id ? 'Excluindo...' : 'Excluir'}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
+        </div>
+
       </div>
 
       <PanelModal

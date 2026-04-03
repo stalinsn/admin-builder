@@ -6,10 +6,22 @@ import {
   isTrustedOrigin,
 } from '@/features/ecommpanel/server/auth';
 import { errorNoStore, jsonNoStore } from '@/features/ecommpanel/server/http';
-import { canManagePanelMedia } from '@/features/ecommpanel/server/panelMediaAccess';
 import { processPanelMediaUpload } from '@/features/ecommpanel/server/panelMediaService';
 
 export const dynamic = 'force-dynamic';
+
+function canUploadMedia(permissions: string[]): boolean {
+  return [
+    'catalog.products.manage',
+    'catalog.content.manage',
+    'site.content.manage',
+    'site.layout.manage',
+    'blog.posts.manage',
+    'blog.posts.edit',
+    'store.settings.manage',
+    'integrations.manage',
+  ].some((permission) => permissions.includes(permission));
+}
 
 export async function POST(req: NextRequest) {
   if (!isTrustedOrigin(req)) {
@@ -21,7 +33,7 @@ export async function POST(req: NextRequest) {
     return errorNoStore(401, 'Não autenticado.');
   }
 
-  if (!canManagePanelMedia(auth.user)) {
+  if (!canUploadMedia(auth.user.permissions)) {
     return errorNoStore(403, 'Sem permissão para enviar imagens.');
   }
 
@@ -32,7 +44,6 @@ export async function POST(req: NextRequest) {
   const formData = await req.formData().catch(() => null);
   const fileValue = formData?.get('file');
   const scopeValue = formData?.get('scope');
-  const folderValue = formData?.get('folder');
 
   if (!(fileValue instanceof File)) {
     return errorNoStore(400, 'Envie um arquivo de imagem no campo "file".');
@@ -48,7 +59,6 @@ export async function POST(req: NextRequest) {
       mimeType: fileValue.type || 'application/octet-stream',
       bytes: Buffer.from(await fileValue.arrayBuffer()),
       scope: typeof scopeValue === 'string' ? scopeValue : undefined,
-      folder: typeof folderValue === 'string' ? folderValue : undefined,
     });
 
     return jsonNoStore({

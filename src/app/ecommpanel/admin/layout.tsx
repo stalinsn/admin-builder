@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import PanelLogoutButton from '@/features/ecommpanel/components/PanelLogoutButton';
 import PanelAdminFrame from '@/features/ecommpanel/components/PanelAdminFrame';
 import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
 
@@ -24,18 +25,37 @@ export default async function EcommPanelAdminLayout({ children }: { children: Re
     user.permissions.includes('integrations.manage') || user.permissions.includes('api.keys.manage');
 
   return (
-    <PanelAdminFrame
-      userName={user.name}
-      userEmail={user.email}
-      canManageUsers={canManageUsers}
-      canReadAnalytics={canReadAnalytics}
-      canReadDataStudio={canReadDataStudio}
-      canReadCatalog={canReadCatalog}
-      canReadOrders={canReadOrders}
-      canReadPanelSettings={canReadPanelSettings}
-      canReadIntegrations={canReadIntegrations}
-    >
-      {children}
-    </PanelAdminFrame>
+    <>
+      <header className="panel-topbar">
+        <div className="panel-topbar-content">
+          <div className="panel-brand panel-brand--inline">
+            <strong>Workspace ativo</strong>
+            <span>Dados, permissões, registros e integrações do ambiente</span>
+          </div>
+
+          <div className="panel-top-actions">
+            <span className="panel-user-chip">
+              <strong>{user.name}</strong>
+              <span>{user.email}</span>
+            </span>
+            <PanelLogoutButton />
+          </div>
+        </div>
+      </header>
+
+      <div className="panel-shell panel-shell--admin">
+        <PanelAdminFrame
+          canManageUsers={canManageUsers}
+          canReadAnalytics={canReadAnalytics}
+          canReadDataStudio={canReadDataStudio}
+          canReadCatalog={canReadCatalog}
+          canReadOrders={canReadOrders}
+          canReadPanelSettings={canReadPanelSettings}
+          canReadIntegrations={canReadIntegrations}
+        >
+          {children}
+        </PanelAdminFrame>
+      </div>
+    </>
   );
 }
