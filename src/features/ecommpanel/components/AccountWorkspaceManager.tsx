@@ -85,46 +85,17 @@ function downloadTextFile(fileName: string, content: string, mimeType: string) {
   URL.revokeObjectURL(url);
 }
 
-function buildEntityAcronym(entity: DataEntityDefinition): string {
-  const source = (entity.label || entity.slug).replace(/[_-]+/g, ' ').trim();
-  if (!source) return 'ENT';
-  const parts = source.split(/\s+/).filter(Boolean);
-  if (parts.length >= 2) {
-    return parts.slice(0, 3).map((part) => part[0]).join('').toUpperCase();
-  }
-  return source.replace(/[^a-zA-Z0-9]/g, '').slice(0, 3).toUpperCase() || 'ENT';
-}
-
-function getDefaultVisibleFieldNames(entity: DataEntityDefinition | null): string[] {
-  if (!entity) return [];
-  const preferredFields = entity.fields.filter((field) => field.listVisible);
-  const source = preferredFields.length ? preferredFields : entity.fields;
-  return source.slice(0, 6).map((field) => field.name);
-}
-
-function formatRecordValue(value: unknown): string {
-  if (value === null || value === undefined || value === '') return '—';
-  if (typeof value === 'boolean') return value ? 'Sim' : 'Não';
-  if (typeof value === 'object') return JSON.stringify(value);
-  const stringValue = String(value);
-  return stringValue.length > 96 ? `${stringValue.slice(0, 93)}...` : stringValue;
-}
-
 export default function AccountWorkspaceManager({ initialSettings, entities }: Props) {
   const [settings, setSettings] = useState(initialSettings);
   const [mode, setMode] = useState<WorkspaceMode>(initialSettings.accountWorkspace.mode);
   const [entitySlug, setEntitySlug] = useState(initialSettings.accountWorkspace.entitySlug || entities[0]?.slug || '');
-  const [entityListFieldNames, setEntityListFieldNames] = useState<Record<string, string[]>>(
-    initialSettings.accountWorkspace.entityListFieldNames || {},
-  );
   const [csrfToken, setCsrfToken] = useState('');
   const [records, setRecords] = useState<Record<string, unknown>[]>([]);
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
   const [recordDraft, setRecordDraft] = useState<Record<string, string>>({});
-  const [jsonRowsText, setJsonRowsText] = useState('[\n  {\n    "slug": "starter-account",\n    "name": "Conta inicial"\n  }\n]');
+  const [jsonRowsText, setJsonRowsText] = useState('[\n  {\n    \"slug\": \"starter-account\",\n    \"name\": \"Conta inicial\"\n  }\n]');
   const [csvText, setCsvText] = useState('');
   const [csvMode, setCsvMode] = useState<'append' | 'upsert'>('upsert');
-  const [fieldSelectionDirty, setFieldSelectionDirty] = useState(false);
   const [loading, setLoading] = useState(false);
   const [savingSettings, setSavingSettings] = useState(false);
   const [savingRecord, setSavingRecord] = useState(false);
@@ -136,32 +107,15 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
     [entities, entitySlug],
   );
 
-  const selectedFieldNames = useMemo(() => {
-    if (!selectedEntity) return [];
-    const allowedFieldNames = new Set(selectedEntity.fields.map((field) => field.name));
-    const savedFieldNames = entityListFieldNames[selectedEntity.slug] || [];
-    const normalizedFieldNames = savedFieldNames.filter((fieldName) => allowedFieldNames.has(fieldName));
-    return normalizedFieldNames.length ? normalizedFieldNames.slice(0, 8) : getDefaultVisibleFieldNames(selectedEntity);
-  }, [entityListFieldNames, selectedEntity]);
-
-  const visibleFields = useMemo(() => {
-    if (!selectedEntity) return [];
-    const selectedFieldNameSet = new Set(selectedFieldNames);
-    return selectedFieldNames
-      .map((fieldName) => selectedEntity.fields.find((field) => field.name === fieldName) || null)
-      .filter((field): field is DataEntityDefinition['fields'][number] => Boolean(field))
-      .filter((field) => selectedFieldNameSet.has(field.name));
-  }, [selectedEntity, selectedFieldNames]);
+  const visibleFields = useMemo(
+    () => selectedEntity?.fields.filter((field) => field.listVisible).slice(0, 4) || selectedEntity?.fields.slice(0, 4) || [],
+    [selectedEntity],
+  );
 
   const selectedRecord = useMemo(
     () => records.find((record) => String(record.id || '') === selectedRecordId) || null,
     [records, selectedRecordId],
   );
-
-  const recordTableTemplate = useMemo(() => {
-    const columns = ['minmax(220px, 1.45fr)', ...visibleFields.map(() => 'minmax(160px, 1fr)')];
-    return columns.join(' ');
-  }, [visibleFields]);
 
   useEffect(() => {
     fetch('/api/ecommpanel/auth/me', { credentials: 'same-origin', cache: 'no-store' })
@@ -200,15 +154,6 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
     );
   }, [selectedEntity, selectedRecord]);
 
-  useEffect(() => {
-    if (!selectedEntity) return;
-    if ((entityListFieldNames[selectedEntity.slug] || []).length) return;
-    setEntityListFieldNames((current) => ({
-      ...current,
-      [selectedEntity.slug]: getDefaultVisibleFieldNames(selectedEntity),
-    }));
-  }, [entityListFieldNames, selectedEntity]);
-
   async function loadRecords(nextEntitySlug: string) {
     setLoading(true);
     setError(null);
@@ -223,7 +168,7 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
       }
       const nextRecords = payload?.records || [];
       setRecords(nextRecords);
-      setSelectedRecordId((current) => (current && nextRecords.some((record) => String(record.id || '') === current) ? current : String(nextRecords[0]?.id || '') || null));
+      setSelectedRecordId((current) => current || String(nextRecords[0]?.id || '') || null);
     } catch (currentError) {
       setError(currentError instanceof Error ? currentError.message : 'Falha ao carregar registros.');
     } finally {
@@ -231,15 +176,8 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
     }
   }
 
-  async function saveWorkspaceSettings(
-    overrides?: Partial<AdminBuilderSettings['accountWorkspace']>,
-    successMessage = 'Workspace de contas atualizado.',
-  ) {
+  async function saveWorkspaceSettings() {
     if (!csrfToken) return;
-    const nextMode = overrides?.mode ?? mode;
-    const nextEntitySlug = overrides?.entitySlug ?? entitySlug;
-    const nextEntityListFieldNames = overrides?.entityListFieldNames ?? entityListFieldNames;
-
     setSavingSettings(true);
     setError(null);
     setSuccess(null);
@@ -253,9 +191,8 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
         body: JSON.stringify({
           settings: {
             accountWorkspace: {
-              mode: nextMode,
-              entitySlug: nextEntitySlug,
-              entityListFieldNames: nextEntityListFieldNames,
+              mode,
+              entitySlug,
             },
           },
         }),
@@ -267,9 +204,7 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
       setSettings(payload.settings);
       setMode(payload.settings.accountWorkspace.mode);
       setEntitySlug(payload.settings.accountWorkspace.entitySlug || entities[0]?.slug || '');
-      setEntityListFieldNames(payload.settings.accountWorkspace.entityListFieldNames || {});
-      setFieldSelectionDirty(false);
-      setSuccess(successMessage);
+      setSuccess('Workspace de contas atualizado.');
     } catch (currentError) {
       setError(currentError instanceof Error ? currentError.message : 'Falha ao salvar as preferências.');
     } finally {
@@ -288,7 +223,7 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
       );
       const isEditing = Boolean(selectedRecordId);
       const endpoint = isEditing
-        ? `/api/ecommpanel/data-studio/entities/${encodeURIComponent(selectedEntity.slug)}/records/${encodeURIComponent(selectedRecordId || '')}`
+        ? `/api/ecommpanel/data-studio/entities/${encodeURIComponent(selectedEntity.slug)}/records/${encodeURIComponent(selectedRecordId!)}`
         : `/api/ecommpanel/data-studio/entities/${encodeURIComponent(selectedEntity.slug)}/records`;
       const response = await fetch(endpoint, {
         method: isEditing ? 'PUT' : 'POST',
@@ -431,40 +366,6 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
     }
   }
 
-  function handleSelectEntity(nextEntitySlug: string) {
-    setEntitySlug(nextEntitySlug);
-    setSelectedRecordId(null);
-    setSuccess(null);
-    setError(null);
-  }
-
-  function toggleVisibleField(fieldName: string) {
-    if (!selectedEntity) return;
-
-    setEntityListFieldNames((current) => {
-      const currentFields = current[selectedEntity.slug] || getDefaultVisibleFieldNames(selectedEntity);
-      const nextFields = currentFields.includes(fieldName)
-        ? currentFields.filter((currentFieldName) => currentFieldName !== fieldName)
-        : [...currentFields, fieldName].slice(0, 8);
-
-      setFieldSelectionDirty(true);
-
-      return {
-        ...current,
-        [selectedEntity.slug]: nextFields.length ? nextFields : getDefaultVisibleFieldNames(selectedEntity),
-      };
-    });
-  }
-
-  function resetVisibleFields() {
-    if (!selectedEntity) return;
-    setEntityListFieldNames((current) => ({
-      ...current,
-      [selectedEntity.slug]: getDefaultVisibleFieldNames(selectedEntity),
-    }));
-    setFieldSelectionDirty(true);
-  }
-
   if (mode === 'native' && settings.accountWorkspace.mode === 'native') {
     return (
       <section className="panel-grid">
@@ -480,11 +381,15 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
                 <option value="entity">Entidade do Data Studio</option>
               </select>
             </label>
-            <div className="panel-actions">
-              <button type="button" className="panel-btn panel-btn-primary" onClick={() => void saveWorkspaceSettings()} disabled={savingSettings}>
-                Aplicar
-              </button>
-            </div>
+            <label className="panel-field">
+              <span>Entidade</span>
+              <select className="panel-select" value={entitySlug} onChange={(event) => setEntitySlug(event.target.value)} disabled={!entities.length}>
+                {entities.length ? entities.map((entity) => <option key={entity.id} value={entity.slug}>{entity.label}</option>) : <option value="">Nenhuma entidade modelada</option>}
+              </select>
+            </label>
+            <button type="button" className="panel-btn panel-btn-primary" onClick={saveWorkspaceSettings} disabled={savingSettings}>
+              Aplicar
+            </button>
           </div>
           {error ? <p className="panel-feedback panel-feedback-error">{error}</p> : null}
           {success ? <p className="panel-feedback panel-feedback-success">{success}</p> : null}
@@ -509,13 +414,14 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
               <option value="entity">Entidade do Data Studio</option>
             </select>
           </label>
-          <button
-            type="button"
-            className="panel-btn panel-btn-primary"
-            onClick={() => void saveWorkspaceSettings(undefined, 'Preferências do workspace salvas.')}
-            disabled={savingSettings || !entitySlug}
-          >
-            Salvar preferências
+          <label className="panel-field">
+            <span>Entidade base</span>
+            <select className="panel-select" value={entitySlug} onChange={(event) => setEntitySlug(event.target.value)} disabled={!entities.length}>
+              {entities.length ? entities.map((entity) => <option key={entity.id} value={entity.slug}>{entity.label}</option>) : <option value="">Nenhuma entidade modelada</option>}
+            </select>
+          </label>
+          <button type="button" className="panel-btn panel-btn-primary" onClick={saveWorkspaceSettings} disabled={savingSettings || !entitySlug}>
+            Aplicar
           </button>
         </div>
         <div className="panel-grid panel-grid-2">
@@ -542,95 +448,11 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
           <article className="panel-card">
             <div className="panel-section-heading">
               <div>
-                <h2>Entidade base</h2>
-                <p className="panel-muted">Troque a entidade por uma grade visual em vez do select clássico.</p>
-              </div>
-              <div className="panel-data-connection-status">
-                <strong>{selectedEntity.label}</strong>
-                <span>{selectedEntity.tableName}</span>
-                <small>{selectedEntity.fields.length} campos modelados</small>
-              </div>
-            </div>
-            <div className="panel-workspace-entity-grid">
-              {entities.map((entity) => (
-                <button
-                  key={entity.id}
-                  type="button"
-                  className={`panel-workspace-entity-card ${entity.slug === entitySlug ? 'is-active' : ''}`}
-                  onClick={() => handleSelectEntity(entity.slug)}
-                >
-                  <span className="panel-workspace-entity-card__badge">{buildEntityAcronym(entity)}</span>
-                  <span className="panel-workspace-entity-card__content">
-                    <strong>{entity.label}</strong>
-                    <small>{entity.slug}</small>
-                  </span>
-                  <span className="panel-workspace-entity-card__meta">{entity.fields.length} campos</span>
-                </button>
-              ))}
-            </div>
-          </article>
-
-          <article className="panel-card">
-            <div className="panel-section-heading">
-              <div>
-                <h2>Colunas da tabela</h2>
-                <p className="panel-muted">Escolha quais campos principais aparecem na grade de leitura rápida.</p>
-              </div>
-              <div className="panel-inline-actions">
-                <button type="button" className="panel-btn panel-btn-secondary" onClick={resetVisibleFields} disabled={savingSettings}>
-                  Usar padrão
-                </button>
-                <button
-                  type="button"
-                  className="panel-btn panel-btn-primary"
-                  onClick={() =>
-                    void saveWorkspaceSettings(
-                      {
-                        entityListFieldNames,
-                      },
-                      'Colunas visíveis da entidade salvas.',
-                    )
-                  }
-                  disabled={savingSettings || !fieldSelectionDirty}
-                >
-                  Salvar grade
-                </button>
-              </div>
-            </div>
-            <div className="panel-workspace-filter-bar">
-              {selectedEntity.fields.map((field) => {
-                const isActive = selectedFieldNames.includes(field.name);
-                return (
-                  <button
-                    key={field.id}
-                    type="button"
-                    className={`panel-workspace-filter-chip ${isActive ? 'is-active' : ''}`}
-                    onClick={() => toggleVisibleField(field.name)}
-                  >
-                    <span>{field.label}</span>
-                    <small>{field.name}</small>
-                  </button>
-                );
-              })}
-            </div>
-          </article>
-
-          <article className="panel-card">
-            <div className="panel-section-heading">
-              <div>
                 <h2>Registros de {selectedEntity.label}</h2>
                 <p className="panel-muted">{selectedEntity.tableName} · {records.length} registros carregados</p>
               </div>
               <div className="panel-inline-actions">
-                <button
-                  type="button"
-                  className="panel-btn panel-btn-secondary"
-                  onClick={() => {
-                    setSelectedRecordId(null);
-                    setSuccess(null);
-                    setError(null);
-                  }}
-                >
+                <button type="button" className="panel-btn panel-btn-secondary" onClick={() => { setSelectedRecordId(null); setSuccess(null); setError(null); }}>
                   Novo registro
                 </button>
                 <button type="button" className="panel-btn panel-btn-secondary" onClick={exportCsv}>
@@ -639,43 +461,33 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
               </div>
             </div>
             {loading ? <p className="panel-muted">Carregando registros...</p> : null}
-            <div className="panel-workspace-records-table">
-              <div className="panel-workspace-records-table__head" style={{ gridTemplateColumns: recordTableTemplate }}>
-                <span>Registro</span>
-                {visibleFields.map((field) => (
-                  <span key={field.id}>{field.label}</span>
-                ))}
-              </div>
+            <div className="panel-list">
               {records.map((record) => (
                 <button
                   key={String(record.id || '')}
                   type="button"
-                  className={`panel-workspace-records-row ${selectedRecordId === String(record.id || '') ? 'is-active' : ''}`}
-                  style={{ gridTemplateColumns: recordTableTemplate }}
+                  className={`panel-list-card ${selectedRecordId === String(record.id || '') ? 'is-active' : ''}`}
                   onClick={() => setSelectedRecordId(String(record.id || ''))}
                 >
-                  <span className="panel-workspace-records-row__identity">
-                    <strong>{String(record.id || '')}</strong>
-                    <small>
-                      Atualizado em {String(record.updated_at || record.created_at || 'sem histórico')}
-                    </small>
-                  </span>
-                  {visibleFields.map((field) => (
-                    <span key={field.id} className="panel-workspace-records-row__cell" title={formatRecordValue(record[field.name])}>
-                      {formatRecordValue(record[field.name])}
-                    </span>
-                  ))}
+                  <strong>{String(record.id || '')}</strong>
+                  <div className="panel-record-grid">
+                    {visibleFields.map((field) => (
+                      <span key={field.id}>
+                        <strong>{field.label}:</strong> {String(record[field.name] ?? '-')}
+                      </span>
+                    ))}
+                  </div>
                 </button>
               ))}
               {!records.length && !loading ? <p className="panel-muted">Nenhum registro disponível ainda.</p> : null}
             </div>
           </article>
 
-          <article className="panel-card panel-workspace-editor-card">
+          <article className="panel-card">
             <div className="panel-section-heading">
               <div>
                 <h2>{selectedRecordId ? 'Editar registro' : 'Novo registro'}</h2>
-                <p className="panel-muted">Leitura mais clara, com superfície mais próxima da experiência de modelagem.</p>
+                <p className="panel-muted">Os campos abaixo seguem o schema modelado no Data Studio.</p>
               </div>
               {selectedRecordId ? (
                 <button type="button" className="panel-btn panel-btn-danger" onClick={deleteSelectedRecord} disabled={savingRecord}>
@@ -683,46 +495,36 @@ export default function AccountWorkspaceManager({ initialSettings, entities }: P
                 </button>
               ) : null}
             </div>
-            <div className="panel-workspace-editor-surface">
-              <div className="panel-form-grid">
-                {selectedEntity.fields.map((field) => (
-                  <label key={field.id} className="panel-field">
-                    <span>{field.label}</span>
-                    {field.type === 'boolean' ? (
-                      <select
-                        className="panel-select"
-                        value={recordDraft[field.name] || ''}
-                        onChange={(event) => setRecordDraft((current) => ({ ...current, [field.name]: event.target.value }))}
-                      >
-                        <option value="">Selecione</option>
-                        <option value="true">Sim</option>
-                        <option value="false">Não</option>
-                      </select>
-                    ) : field.type === 'json' || field.type === 'rich_text' ? (
-                      <textarea
-                        className="panel-textarea"
-                        value={recordDraft[field.name] || ''}
-                        onChange={(event) => setRecordDraft((current) => ({ ...current, [field.name]: event.target.value }))}
-                      />
-                    ) : (
-                      <input
-                        className="panel-input"
-                        type={
-                          field.type === 'date'
-                            ? 'date'
-                            : field.type === 'datetime'
-                              ? 'datetime-local'
-                              : field.type === 'integer' || field.type === 'number' || field.type === 'currency'
-                                ? 'number'
-                                : 'text'
-                        }
-                        value={recordDraft[field.name] || ''}
-                        onChange={(event) => setRecordDraft((current) => ({ ...current, [field.name]: event.target.value }))}
-                      />
-                    )}
-                  </label>
-                ))}
-              </div>
+            <div className="panel-form-grid">
+              {selectedEntity.fields.map((field) => (
+                <label key={field.id} className="panel-field">
+                  <span>{field.label}</span>
+                  {field.type === 'boolean' ? (
+                    <select
+                      className="panel-select"
+                      value={recordDraft[field.name] || ''}
+                      onChange={(event) => setRecordDraft((current) => ({ ...current, [field.name]: event.target.value }))}
+                    >
+                      <option value="">Selecione</option>
+                      <option value="true">Sim</option>
+                      <option value="false">Não</option>
+                    </select>
+                  ) : field.type === 'json' || field.type === 'rich_text' ? (
+                    <textarea
+                      className="panel-textarea"
+                      value={recordDraft[field.name] || ''}
+                      onChange={(event) => setRecordDraft((current) => ({ ...current, [field.name]: event.target.value }))}
+                    />
+                  ) : (
+                    <input
+                      className="panel-input"
+                      type={field.type === 'date' ? 'date' : field.type === 'datetime' ? 'datetime-local' : field.type === 'integer' || field.type === 'number' || field.type === 'currency' ? 'number' : 'text'}
+                      value={recordDraft[field.name] || ''}
+                      onChange={(event) => setRecordDraft((current) => ({ ...current, [field.name]: event.target.value }))}
+                    />
+                  )}
+                </label>
+              ))}
             </div>
             <div className="panel-inline-actions">
               <button type="button" className="panel-btn panel-btn-primary" onClick={saveRecord} disabled={savingRecord}>

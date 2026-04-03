@@ -125,15 +125,6 @@ export type DataStudioBundle = {
   files: DataStudioBundleFile[];
 };
 
-export type DataStudioBackup = {
-  kind: 'artmeta-panel-data-studio-backup';
-  schemaVersion: number;
-  generatedAt: string;
-  entities: DataEntityDefinition[];
-  importsByEntity: Record<string, DataImportPayload[]>;
-  recordsByEntity: Record<string, Record<string, unknown>[]>;
-};
-
 export type DataEntityRuntimeStatus = {
   entityId: string;
   entitySlug: string;
@@ -146,7 +137,6 @@ export type DataEntityRuntimeStatus = {
   rowCount: number;
   missingColumns: string[];
   extraColumns: string[];
-  inspectedAt: string;
   schemaPath: string;
   internalCollectionPath: string;
   internalItemPath: string;
@@ -154,6 +144,7 @@ export type DataEntityRuntimeStatus = {
   integrationItemPath: string;
   readScope: string;
   writeScope: string;
+  inspectedAt: string;
 };
 
 export type DataStudioRuntimeSummary = {

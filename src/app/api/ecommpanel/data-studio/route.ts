@@ -3,18 +3,19 @@ import type { NextRequest } from 'next/server';
 import {
   deleteDataEntity,
   deleteDataConnection,
-  generateDataStudioBundle,
-  getDataStudioSnapshot,
+  generateDataStudioBundleResolved,
+  getDataStudioRuntimeResolved,
+  getDataStudioSnapshotResolved,
   importDataRows,
   importDataStudioBundle,
   inspectDataProvisioning,
   probeDataConnection,
   provisionDataConnection,
+  rebuildDataEntitiesFromDatabase,
   saveDataConnection,
   saveDataEntity,
   updateDataBootstrapState,
 } from '@/features/ecommpanel/server/dataStudioStore';
-import { generateDataStudioBackup, restoreDataStudioBackup } from '@/features/ecommpanel/server/dataStudioBackup';
 import { generateDataStudioContracts } from '@/features/ecommpanel/server/dataEntityContracts';
 import {
   exportDatabaseTableCsv,
@@ -98,13 +99,6 @@ type DataStudioActionBody =
       action: 'generateBundle';
     }
   | {
-      action: 'generateBackup';
-    }
-  | {
-      action: 'restoreBackup';
-      backup?: unknown;
-    }
-  | {
       action: 'saveConnection';
       connection?: {
         id?: string;
@@ -180,6 +174,14 @@ type DataStudioActionBody =
       tableName?: string;
       csvContent?: string;
       mode?: 'append' | 'upsert';
+    }
+  | {
+      action: 'rebuildEntitiesFromDatabase';
+      replaceExisting?: boolean;
+    }
+  | {
+      action: 'syncEntityStructure';
+      entityId?: string;
     };
 
 async function requireAccess(req: NextRequest) {
@@ -197,11 +199,14 @@ export async function GET(req: NextRequest) {
 
   const canUseDatabaseTables = canManageDatabaseTables(guard.auth.user.permissions);
   const databaseTables = canUseDatabaseTables ? await listDatabaseTables() : { available: false, tables: [] };
+  const snapshot = await getDataStudioSnapshotResolved();
+  const runtime = await getDataStudioRuntimeResolved(snapshot);
 
   return jsonNoStore({
-    snapshot: getDataStudioSnapshot(),
-    bundle: generateDataStudioBundle(),
-    contracts: generateDataStudioContracts(getDataStudioSnapshot()),
+    snapshot,
+    runtime,
+    bundle: await generateDataStudioBundleResolved(snapshot),
+    contracts: generateDataStudioContracts(snapshot),
     databaseTables: databaseTables.tables,
     databaseTablesAvailable: databaseTables.available,
   });
@@ -235,7 +240,7 @@ export async function POST(req: NextRequest) {
           return errorNoStore(400, 'Slug e nome da entidade são obrigatórios.');
         }
 
-        const snapshot = saveDataEntity({
+        const snapshot = await saveDataEntity({
           id: body.entity.id,
           slug: body.entity.slug,
           label: body.entity.label,
@@ -258,7 +263,8 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -272,7 +278,7 @@ export async function POST(req: NextRequest) {
           return errorNoStore(400, 'Entidade é obrigatória para remoção.');
         }
 
-        const snapshot = deleteDataEntity(body.entityId);
+        const snapshot = await deleteDataEntity(body.entityId);
         addAuditEvent({
           actorUserId: guard.auth.user.id,
           event: 'data-studio.entity.deleted',
@@ -283,7 +289,8 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -297,7 +304,7 @@ export async function POST(req: NextRequest) {
           return errorNoStore(400, 'Entidade e registros são obrigatórios para importação.');
         }
 
-        const snapshot = importDataRows({
+        const snapshot = await importDataRows({
           entityId: body.entityId,
           sourceLabel: body.sourceLabel,
           rows: toObjectList(body.rows),
@@ -317,7 +324,8 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -331,7 +339,7 @@ export async function POST(req: NextRequest) {
           return errorNoStore(400, 'Pacote de importação é obrigatório.');
         }
 
-        const snapshot = importDataStudioBundle(body.bundle);
+        const snapshot = await importDataStudioBundle(body.bundle);
         addAuditEvent({
           actorUserId: guard.auth.user.id,
           event: 'data-studio.bundle.imported',
@@ -342,7 +350,8 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -359,66 +368,13 @@ export async function POST(req: NextRequest) {
           target: 'bundle',
         });
 
-        return jsonNoStore({
-          ok: true,
-          snapshot: getDataStudioSnapshot(),
-          bundle: generateDataStudioBundle(),
-          contracts: generateDataStudioContracts(getDataStudioSnapshot()),
-        });
-      }
-
-      case 'generateBackup': {
-        if (!canManageEntities(guard.auth.user.permissions) && !canManageRecords(guard.auth.user.permissions)) {
-          return errorNoStore(403, 'Sem permissão para gerar backup do Data Studio.');
-        }
-
-        const snapshot = getDataStudioSnapshot();
-        const backup = await generateDataStudioBackup();
-
-        addAuditEvent({
-          actorUserId: guard.auth.user.id,
-          event: 'data-studio.backup.generated',
-          outcome: 'success',
-          target: 'backup',
-          details: {
-            entities: backup.entities.length,
-          },
-        });
+        const snapshot = await getDataStudioSnapshotResolved();
 
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
-          contracts: generateDataStudioContracts(snapshot),
-          backup,
-        });
-      }
-
-      case 'restoreBackup': {
-        if (!canManageEntities(guard.auth.user.permissions) || !canManageRecords(guard.auth.user.permissions)) {
-          return errorNoStore(403, 'Sem permissão para restaurar backup do Data Studio.');
-        }
-
-        if (!body.backup || typeof body.backup !== 'object') {
-          return errorNoStore(400, 'Backup inválido.');
-        }
-
-        const snapshot = await restoreDataStudioBackup(body.backup);
-
-        addAuditEvent({
-          actorUserId: guard.auth.user.id,
-          event: 'data-studio.backup.restored',
-          outcome: 'success',
-          target: 'backup',
-          details: {
-            entities: snapshot.entities.length,
-          },
-        });
-
-        return jsonNoStore({
-          ok: true,
-          snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -432,7 +388,7 @@ export async function POST(req: NextRequest) {
           return errorNoStore(400, 'Nome, host, banco e usuário são obrigatórios para a conexão.');
         }
 
-        const snapshot = saveDataConnection({
+        const snapshot = await saveDataConnection({
           id: body.connection.id,
           label: body.connection.label,
           engine: body.connection.engine,
@@ -467,7 +423,8 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -481,7 +438,7 @@ export async function POST(req: NextRequest) {
           return errorNoStore(400, 'Conexão é obrigatória para remoção.');
         }
 
-        const snapshot = deleteDataConnection(body.connectionId);
+        const snapshot = await deleteDataConnection(body.connectionId);
         addAuditEvent({
           actorUserId: guard.auth.user.id,
           event: 'data-studio.connection.deleted',
@@ -492,7 +449,8 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -517,7 +475,8 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -547,7 +506,8 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -590,7 +550,7 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          bundle: await generateDataStudioBundleResolved(snapshot),
           contracts: generateDataStudioContracts(snapshot),
         });
       }
@@ -600,7 +560,7 @@ export async function POST(req: NextRequest) {
           return errorNoStore(403, 'Sem permissão para alterar o estado de bootstrap.');
         }
 
-        const snapshot = updateDataBootstrapState(body.bootstrap || {});
+        const snapshot = await updateDataBootstrapState(body.bootstrap || {});
         addAuditEvent({
           actorUserId: guard.auth.user.id,
           event: 'data-studio.bootstrap.updated',
@@ -611,7 +571,69 @@ export async function POST(req: NextRequest) {
         return jsonNoStore({
           ok: true,
           snapshot,
-          bundle: generateDataStudioBundle(),
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
+        });
+      }
+
+      case 'rebuildEntitiesFromDatabase': {
+        if (!canManageEntities(guard.auth.user.permissions)) {
+          return errorNoStore(403, 'Sem permissão para reconstruir entidades a partir do banco.');
+        }
+
+        const snapshot = await rebuildDataEntitiesFromDatabase({
+          replaceExisting: body.replaceExisting === true,
+        });
+
+        addAuditEvent({
+          actorUserId: guard.auth.user.id,
+          event: 'data-studio.entities.rebuilt',
+          outcome: 'success',
+          target: 'database-introspection',
+          details: {
+            entities: snapshot.entities.length,
+            replaceExisting: body.replaceExisting === true,
+          },
+        });
+
+        return jsonNoStore({
+          ok: true,
+          snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
+          contracts: generateDataStudioContracts(snapshot),
+        });
+      }
+
+      case 'syncEntityStructure': {
+        if (!canManageEntities(guard.auth.user.permissions)) {
+          return errorNoStore(403, 'Sem permissão para sincronizar a estrutura da entidade.');
+        }
+
+        if (!body.entityId) {
+          return errorNoStore(400, 'Entidade é obrigatória para sincronização.');
+        }
+
+        const currentSnapshot = await getDataStudioSnapshotResolved();
+        const entity = currentSnapshot.entities.find((candidate) => candidate.id === body.entityId);
+        if (!entity) {
+          return errorNoStore(404, 'Entidade não encontrada para sincronização.');
+        }
+
+        const snapshot = await saveDataEntity(entity);
+        addAuditEvent({
+          actorUserId: guard.auth.user.id,
+          event: 'data-studio.entity.synced',
+          outcome: 'success',
+          target: entity.slug,
+        });
+
+        return jsonNoStore({
+          ok: true,
+          snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
+          contracts: generateDataStudioContracts(snapshot),
         });
       }
 
@@ -633,11 +655,14 @@ export async function POST(req: NextRequest) {
           },
         });
 
+        const snapshot = await getDataStudioSnapshotResolved();
+
         return jsonNoStore({
           ok: true,
-          snapshot: getDataStudioSnapshot(),
-          bundle: generateDataStudioBundle(),
-          contracts: generateDataStudioContracts(getDataStudioSnapshot()),
+          snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
+          contracts: generateDataStudioContracts(snapshot),
           databaseTables: databaseTables.tables,
           databaseTablesAvailable: databaseTables.available,
         });
@@ -665,11 +690,14 @@ export async function POST(req: NextRequest) {
           },
         });
 
+        const snapshot = await getDataStudioSnapshotResolved();
+
         return jsonNoStore({
           ok: true,
-          snapshot: getDataStudioSnapshot(),
-          bundle: generateDataStudioBundle(),
-          contracts: generateDataStudioContracts(getDataStudioSnapshot()),
+          snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
+          contracts: generateDataStudioContracts(snapshot),
           databaseTables: databaseTables.tables,
           databaseTablesAvailable: databaseTables.available,
           csvExport,
@@ -705,11 +733,14 @@ export async function POST(req: NextRequest) {
           },
         });
 
+        const snapshot = await getDataStudioSnapshotResolved();
+
         return jsonNoStore({
           ok: true,
-          snapshot: getDataStudioSnapshot(),
-          bundle: generateDataStudioBundle(),
-          contracts: generateDataStudioContracts(getDataStudioSnapshot()),
+          snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
+          contracts: generateDataStudioContracts(snapshot),
           databaseTables: databaseTables.tables,
           databaseTablesAvailable: databaseTables.available,
           csvImportResult,
