@@ -4,6 +4,7 @@ import type { AuthenticatedPanelUser, PanelAuditEvent, PanelRoleId } from '@/fea
 import { getSiteBuilderOperationalSummaryRuntime } from '@/features/ecommpanel/server/siteBuilderStore';
 import { getStorefrontTemplateRuntime } from '@/features/ecommpanel/server/storefrontTemplateStore';
 import { listAuditEvents, listUsers } from '@/features/ecommpanel/server/panelStore';
+import { getDataStudioRuntimeResolved, getDataStudioSnapshotResolved } from '@/features/ecommpanel/server/dataStudioStore';
 import { getBlogOperationalSummaryRuntime, readBlogRuntimeManifestRuntime } from '@/features/blog/server/blogStore';
 import {
   getPublishedRuntimeContentRoot,
@@ -57,6 +58,13 @@ export type PanelOperationalDashboard = {
     editorial: number;
     privileged: number;
     mustRotatePassword: number;
+  };
+  dataStudio: {
+    entitiesTotal: number;
+    readyEntities: number;
+    totalFields: number;
+    totalRecords: number;
+    databaseAvailable: boolean;
   };
   audit: {
     sampledCount: number;
@@ -148,6 +156,8 @@ export async function getPanelOperationalDashboard(user: AuthenticatedPanelUser)
   const publishedTemplate = readPublishedRuntimeStorefrontTemplate();
   const users = await listUsers();
   const auditEvents = await listAuditEvents(24);
+  const dataStudioSnapshot = await getDataStudioSnapshotResolved();
+  const dataStudioRuntime = await getDataStudioRuntimeResolved(dataStudioSnapshot);
 
   const dashboard: PanelOperationalDashboard = {
     user: {
@@ -197,6 +207,13 @@ export async function getPanelOperationalDashboard(user: AuthenticatedPanelUser)
         ),
       ).length,
       mustRotatePassword: users.filter((item) => item.mustChangePassword).length,
+    },
+    dataStudio: {
+      entitiesTotal: dataStudioSnapshot.entities.length,
+      readyEntities: dataStudioSnapshot.entities.filter((entity) => entity.status === 'ready').length,
+      totalFields: dataStudioSnapshot.entities.reduce((sum, entity) => sum + entity.fields.length, 0),
+      totalRecords: dataStudioRuntime.entities.reduce((sum, entity) => sum + entity.rowCount, 0),
+      databaseAvailable: dataStudioRuntime.databaseAvailable,
     },
     audit: {
       sampledCount: auditEvents.length,

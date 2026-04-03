@@ -14,11 +14,14 @@ export type AdminBuilderSettings = {
     mode: AccountWorkspaceMode;
     entitySlug: string;
   };
+  recordsWorkspace: {
+    visibleColumnsByEntity: Record<string, string[]>;
+  };
 };
 
 const ROOT_DIR = path.join(process.cwd(), 'src/data/ecommpanel/panel-settings');
 const SETTINGS_FILE = path.join(ROOT_DIR, 'admin-builder.json');
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 
 declare global {
   var __ADMIN_BUILDER_SETTINGS_CACHE__:
@@ -64,6 +67,9 @@ export function createDefaultAdminBuilderSettings(): AdminBuilderSettings {
       mode: 'native',
       entitySlug: '',
     },
+    recordsWorkspace: {
+      visibleColumnsByEntity: {},
+    },
   };
 }
 
@@ -74,13 +80,29 @@ export function normalizeAdminBuilderSettings(
   const fallback = createDefaultAdminBuilderSettings();
   const source = (input && typeof input === 'object' ? input : {}) as Partial<AdminBuilderSettings> & {
     accountWorkspace?: Partial<AdminBuilderSettings['accountWorkspace']>;
+    recordsWorkspace?: Partial<AdminBuilderSettings['recordsWorkspace']>;
   };
   const accountWorkspace: Partial<AdminBuilderSettings['accountWorkspace']> = source.accountWorkspace ?? {};
+  const recordsWorkspace: Partial<AdminBuilderSettings['recordsWorkspace']> = source.recordsWorkspace ?? {};
   const requestedMode = accountWorkspace.mode === 'entity' ? 'entity' : 'native';
   const requestedSlug = normalizeString(accountWorkspace.entitySlug, '');
   const availableSlugs = new Set((snapshot?.entities || []).map((entity) => entity.slug));
   const hasRequestedEntity = requestedSlug && availableSlugs.has(requestedSlug);
   const firstEntitySlug = snapshot?.entities[0]?.slug || '';
+  const visibleColumnsByEntity = Object.fromEntries(
+    Object.entries(recordsWorkspace.visibleColumnsByEntity || {})
+      .filter(([entitySlug]) => !snapshot || availableSlugs.has(entitySlug))
+      .map(([entitySlug, columns]) => [
+        entitySlug,
+        Array.isArray(columns)
+          ? columns
+              .filter((column): column is string => typeof column === 'string' && column.trim().length > 0)
+              .map((column) => column.trim())
+              .slice(0, 12)
+          : [],
+      ])
+      .filter(([, columns]) => columns.length > 0),
+  );
 
   return {
     schemaVersion: SCHEMA_VERSION,
@@ -88,6 +110,9 @@ export function normalizeAdminBuilderSettings(
     accountWorkspace: {
       mode: requestedMode === 'entity' && (hasRequestedEntity || firstEntitySlug) ? 'entity' : 'native',
       entitySlug: hasRequestedEntity ? requestedSlug : requestedMode === 'entity' ? firstEntitySlug : '',
+    },
+    recordsWorkspace: {
+      visibleColumnsByEntity,
     },
   };
 }
@@ -125,14 +150,24 @@ export function updateAdminBuilderSettings(
   snapshot?: DataStudioSnapshot | null,
 ): AdminBuilderSettings {
   loadSettings(snapshot);
+  const cache = getCache();
+  const partial = input && typeof input === 'object' ? input : {};
   const normalized = normalizeAdminBuilderSettings(
     {
-      ...(input && typeof input === 'object' ? input : {}),
+      ...cache.settings,
+      ...partial,
+      accountWorkspace: {
+        ...cache.settings.accountWorkspace,
+        ...((partial as { accountWorkspace?: Partial<AdminBuilderSettings['accountWorkspace']> }).accountWorkspace || {}),
+      },
+      recordsWorkspace: {
+        ...cache.settings.recordsWorkspace,
+        ...((partial as { recordsWorkspace?: Partial<AdminBuilderSettings['recordsWorkspace']> }).recordsWorkspace || {}),
+      },
       updatedAt: nowIso(),
     },
     snapshot,
   );
-  const cache = getCache();
   cache.settings = normalized;
   writeJsonAtomic(SETTINGS_FILE, normalized);
   return normalized;

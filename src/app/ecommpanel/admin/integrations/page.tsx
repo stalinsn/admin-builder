@@ -32,6 +32,7 @@ export default async function PanelIntegrationsPage() {
       initialClients={await listApiClients()}
       initialLogs={await listApiLogs(60)}
       referenceItems={listReferenceByExposure('integration', snapshot)}
+      entityFieldsBySlug={Object.fromEntries(snapshot.entities.map((entity) => [entity.slug, entity.fields]))}
       availableScopes={getApiIntegrationScopeOptions(snapshot)}
       canManage={canManage}
     />

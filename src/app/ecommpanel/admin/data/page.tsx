@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import DataStudioManager from '@/features/ecommpanel/components/DataStudioManager';
+import { getAdminBuilderSettings } from '@/features/ecommpanel/server/adminBuilderSettingsStore';
 import {
   generateDataStudioBundleResolved,
   getDataStudioRuntimeResolved,
@@ -35,9 +36,11 @@ export default async function EcommPanelDataStudioPage() {
   const databaseTables = canManageDatabaseTables ? await listDatabaseTables() : { available: false, tables: [] };
   const snapshot = await getDataStudioSnapshotResolved();
   const runtime = await getDataStudioRuntimeResolved(snapshot);
+  const settings = getAdminBuilderSettings(snapshot);
 
   return (
     <DataStudioManager
+      initialSettings={settings}
       initialSnapshot={snapshot}
       initialRuntime={runtime}
       initialBundle={await generateDataStudioBundleResolved(snapshot)}

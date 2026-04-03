@@ -211,7 +211,7 @@ export async function ensureSeededUsers(): Promise<void> {
       id: 'usr-owner-001',
       email: 'stalinsn@hotmail.com',
       name: 'Owner da Plataforma',
-      roleIds: ['store_owner'],
+      roleIds: ['main_admin', 'store_owner'],
       permissionsAllow: [],
       permissionsDeny: [],
       active: true,

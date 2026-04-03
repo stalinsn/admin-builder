@@ -6,9 +6,11 @@ import { useRouter } from 'next/navigation';
 import type { DataEntityDefinition } from '@/features/ecommpanel/types/dataStudio';
 import PanelModal from '@/features/ecommpanel/components/PanelModal';
 import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
+import type { AdminBuilderSettings } from '@/features/ecommpanel/server/adminBuilderSettingsStore';
 
 type Props = {
   entities: DataEntityDefinition[];
+  initialSettings: AdminBuilderSettings;
   csrfToken?: string;
   canManageRecords: boolean;
   initialEntityId?: string | null;
@@ -106,8 +108,27 @@ function buildJsonTemplate(entity?: DataEntityDefinition | null): string {
   return JSON.stringify([draftRow], null, 2);
 }
 
+function buildDefaultVisibleColumnNames(entity?: DataEntityDefinition | null): string[] {
+  if (!entity) return [];
+  const defaultFields = entity.fields.filter((field) => field.listVisible).slice(0, 5);
+  return (defaultFields.length ? defaultFields : entity.fields.slice(0, 5)).map((field) => field.name);
+}
+
+function formatCellPreview(value: unknown): string {
+  if (value === null || value === undefined || value === '') return '-';
+  if (typeof value === 'boolean') return value ? 'Sim' : 'Nao';
+  if (typeof value === 'object') {
+    const serialized = JSON.stringify(value);
+    return serialized.length > 96 ? `${serialized.slice(0, 93)}...` : serialized;
+  }
+
+  const text = String(value).replace(/\s+/g, ' ').trim();
+  return text.length > 96 ? `${text.slice(0, 93)}...` : text;
+}
+
 export default function DataEntityRecordsWorkspace({
   entities,
+  initialSettings,
   csrfToken,
   canManageRecords,
   initialEntityId,
@@ -118,28 +139,51 @@ export default function DataEntityRecordsWorkspace({
   const [records, setRecords] = useState<Record<string, unknown>[]>([]);
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
   const [recordDraft, setRecordDraft] = useState<Record<string, string>>({});
+  const [settings, setSettings] = useState(initialSettings);
+  const [visibleColumnNames, setVisibleColumnNames] = useState<string[]>([]);
   const [jsonRowsText, setJsonRowsText] = useState(() => buildJsonTemplate(entities[0] || null));
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [savingPreferences, setSavingPreferences] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [lastSyncAt, setLastSyncAt] = useState<string | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [isImportOpen, setIsImportOpen] = useState(false);
+  const [isColumnsOpen, setIsColumnsOpen] = useState(false);
 
   const selectedEntity = useMemo(
     () => entities.find((entity) => entity.id === selectedEntityId) || null,
     [entities, selectedEntityId],
   );
 
-  const visibleFields = useMemo(
-    () => selectedEntity?.fields.filter((field) => field.listVisible).slice(0, 5) || selectedEntity?.fields.slice(0, 5) || [],
-    [selectedEntity],
+  const preferredVisibleColumns = useMemo(
+    () => (selectedEntity ? settings.recordsWorkspace.visibleColumnsByEntity[selectedEntity.slug] || [] : []),
+    [selectedEntity, settings.recordsWorkspace.visibleColumnsByEntity],
   );
+
+  const visibleFields = useMemo(() => {
+    if (!selectedEntity) return [];
+    const preferredFields = preferredVisibleColumns
+      .map((fieldName) => selectedEntity.fields.find((field) => field.name === fieldName))
+      .filter((field): field is DataEntityDefinition['fields'][number] => Boolean(field));
+
+    if (preferredFields.length) {
+      return preferredFields;
+    }
+
+    return selectedEntity.fields.filter((field) => field.listVisible).slice(0, 5) || selectedEntity.fields.slice(0, 5);
+  }, [preferredVisibleColumns, selectedEntity]);
 
   const selectedRecord = useMemo(
     () => records.find((record) => String(record.id || '') === selectedRecordId) || null,
     [records, selectedRecordId],
+  );
+
+  const recordsTableColumns = useMemo(
+    () =>
+      `minmax(156px, 1.15fr) repeat(${Math.max(visibleFields.length, 1)}, minmax(150px, 1fr)) minmax(142px, 0.92fr) minmax(112px, auto)`,
+    [visibleFields.length],
   );
 
   useEffect(() => {
@@ -176,6 +220,8 @@ export default function DataEntityRecordsWorkspace({
       return;
     }
 
+    setVisibleColumnNames(preferredVisibleColumns.length ? preferredVisibleColumns : buildDefaultVisibleColumnNames(selectedEntity));
+
     setJsonRowsText(buildJsonTemplate(selectedEntity));
 
     if (!selectedRecord) {
@@ -192,7 +238,7 @@ export default function DataEntityRecordsWorkspace({
         selectedEntity.fields.map((field) => [field.name, normalizeInputValue(selectedRecord[field.name], field.type)]),
       ),
     );
-  }, [selectedEntity, selectedRecord]);
+  }, [preferredVisibleColumns, selectedEntity, selectedRecord]);
 
   useEffect(() => {
     if (!selectedEntity) return;
@@ -222,6 +268,61 @@ export default function DataEntityRecordsWorkspace({
     } finally {
       setLoading(false);
     }
+  }
+
+  async function persistVisibleColumns(nextVisibleColumns: string[]) {
+    if (!selectedEntity || !csrfTokenValue) return;
+
+    setSavingPreferences(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/ecommpanel/settings/admin-builder', {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-csrf-token': csrfTokenValue,
+        },
+        body: JSON.stringify({
+          settings: {
+            recordsWorkspace: {
+              visibleColumnsByEntity: {
+                ...settings.recordsWorkspace.visibleColumnsByEntity,
+                [selectedEntity.slug]: nextVisibleColumns,
+              },
+            },
+          },
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as { settings?: AdminBuilderSettings; error?: string } | null;
+      if (!response.ok || !payload?.settings) {
+        throw new Error(payload?.error || 'Não foi possível salvar as colunas visíveis.');
+      }
+
+      setSettings(payload.settings);
+      setVisibleColumnNames(nextVisibleColumns);
+      setSuccess('Colunas visíveis atualizadas.');
+    } catch (currentError) {
+      setError(currentError instanceof Error ? currentError.message : 'Falha ao salvar as colunas visíveis.');
+    } finally {
+      setSavingPreferences(false);
+    }
+  }
+
+  function handleToggleVisibleColumn(fieldName: string) {
+    const isActive = visibleColumnNames.includes(fieldName);
+    const nextVisibleColumns = isActive
+      ? visibleColumnNames.filter((name) => name !== fieldName)
+      : [...visibleColumnNames, fieldName];
+
+    if (!nextVisibleColumns.length) return;
+    void persistVisibleColumns(nextVisibleColumns);
+  }
+
+  function handleResetVisibleColumns() {
+    if (!selectedEntity) return;
+    void persistVisibleColumns(buildDefaultVisibleColumnNames(selectedEntity));
   }
 
   async function saveRecord() {
@@ -375,23 +476,11 @@ export default function DataEntityRecordsWorkspace({
         description="Selecione a entidade ativa, leia os registros em tabela e abra a edição só quando precisar alterar o conteúdo."
         actions={
           <div className="panel-inline panel-inline-wrap">
-            <label className="panel-field panel-field--toolbar">
-              <span>Entidade</span>
-              <select
-                className="panel-select"
-                value={selectedEntityId || ''}
-                onChange={(event) => setSelectedEntityId(event.target.value || null)}
-                disabled={!entities.length}
-              >
-                {entities.map((entity) => (
-                  <option key={entity.id} value={entity.id}>
-                    {entity.label} ({entity.tableName})
-                  </option>
-                ))}
-              </select>
-            </label>
             <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => loadRecords(selectedEntity.slug)} disabled={loading}>
               Recarregar
+            </button>
+            <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setIsColumnsOpen((current) => !current)}>
+              Colunas visíveis
             </button>
             <button
               type="button"
@@ -424,6 +513,74 @@ export default function DataEntityRecordsWorkspace({
         <div className={`panel-feedback ${error ? 'panel-feedback-error' : 'panel-feedback-success'}`}>{error || success}</div>
       )}
 
+      <article className="panel-card panel-records-entity-shell">
+        <div className="panel-section-heading">
+          <div>
+            <h3>Entidades disponíveis</h3>
+            <p className="panel-muted">Troque a entidade ativa por cards visuais, sem depender do select do toolbar.</p>
+          </div>
+          <div className="panel-inline panel-inline-wrap">
+            <span className="panel-link-chip">{selectedEntity.label}</span>
+            <span className="panel-link-chip">{selectedEntity.fields.length} campos</span>
+            <span className="panel-link-chip">{selectedEntity.status === 'ready' ? 'pronta' : 'rascunho'}</span>
+          </div>
+        </div>
+        <div className="panel-records-entity-grid">
+          {entities.map((entity) => {
+            const isActive = entity.id === selectedEntityId;
+            return (
+              <button
+                key={entity.id}
+                type="button"
+                className={`panel-records-entity-card ${isActive ? 'is-active' : ''}`}
+                onClick={() => setSelectedEntityId(entity.id)}
+              >
+                <span className="panel-records-entity-card__badge">{entity.slug}</span>
+                <strong>{entity.label}</strong>
+                <small>{entity.tableName}</small>
+                <div className="panel-records-entity-card__meta">
+                  <span>{entity.fields.length} campos</span>
+                  <span>{entity.status === 'ready' ? 'Pronta' : 'Rascunho'}</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </article>
+
+      {isColumnsOpen ? (
+        <article className="panel-card panel-records-columns-card">
+          <div className="panel-section-heading">
+            <div>
+              <h3>Colunas visíveis na tabela</h3>
+              <p className="panel-muted">Escolha quais campos principais ficam expostos na leitura rápida da entidade ativa.</p>
+            </div>
+            <div className="panel-actions">
+              <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={handleResetVisibleColumns} disabled={savingPreferences}>
+                Restaurar padrão
+              </button>
+              <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setIsColumnsOpen(false)}>
+                Fechar
+              </button>
+            </div>
+          </div>
+          <div className="panel-records-columns-grid">
+            {selectedEntity.fields.map((field) => (
+              <label key={field.id} className={`panel-records-column-chip ${visibleColumnNames.includes(field.name) ? 'is-active' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={visibleColumnNames.includes(field.name)}
+                  onChange={() => handleToggleVisibleColumn(field.name)}
+                  disabled={savingPreferences || (visibleColumnNames.includes(field.name) && visibleColumnNames.length === 1)}
+                />
+                <span>{field.label}</span>
+                <small>{field.name}</small>
+              </label>
+            ))}
+          </div>
+        </article>
+      ) : null}
+
       <article className="panel-card">
         <div className="panel-section-heading">
           <div>
@@ -432,7 +589,7 @@ export default function DataEntityRecordsWorkspace({
           </div>
         </div>
         <div className="panel-data-records-table">
-          <div className="panel-data-records-table__head">
+          <div className="panel-data-records-table__head" style={{ gridTemplateColumns: recordsTableColumns }}>
             <span>ID</span>
             {visibleFields.map((field) => (
               <span key={field.id}>{field.label}</span>
@@ -443,11 +600,15 @@ export default function DataEntityRecordsWorkspace({
           {records.map((record) => {
             const recordId = String(record.id || '');
             return (
-              <div key={recordId} className={`panel-data-records-row ${selectedRecordId === recordId ? 'is-active' : ''}`}>
+              <div
+                key={recordId}
+                className={`panel-data-records-row ${selectedRecordId === recordId ? 'is-active' : ''}`}
+                style={{ gridTemplateColumns: recordsTableColumns }}
+              >
                 <span className="panel-data-records-row__id">{recordId}</span>
                 {visibleFields.map((field) => (
                   <span key={field.id} className="panel-data-records-row__cell">
-                    {String(record[field.name] ?? '-')}
+                    {formatCellPreview(record[field.name])}
                   </span>
                 ))}
                 <span className="panel-data-records-row__cell">

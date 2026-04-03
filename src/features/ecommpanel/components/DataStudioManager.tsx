@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import {
   DATA_FIELD_TYPES,
+  type DataStudioBackup,
   type DataBootstrapState,
   type DataConnectionProfile,
   type DataDatabaseTable,
@@ -22,6 +23,7 @@ import {
 } from '@/features/ecommpanel/types/dataStudio';
 import DataEntityRecordsWorkspace from '@/features/ecommpanel/components/DataEntityRecordsWorkspace';
 import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
+import type { AdminBuilderSettings } from '@/features/ecommpanel/server/adminBuilderSettingsStore';
 
 type MeApiResponse = {
   csrfToken?: string;
@@ -31,6 +33,7 @@ type DataStudioApiResponse = {
   snapshot?: DataStudioSnapshot;
   runtime?: DataStudioRuntimeSummary;
   bundle?: DataStudioBundle;
+  backup?: DataStudioBackup;
   databaseTables?: DataDatabaseTable[];
   databaseTablesAvailable?: boolean;
   csvExport?: DataTableCsvExport;
@@ -39,6 +42,7 @@ type DataStudioApiResponse = {
 };
 
 type DataStudioManagerProps = {
+  initialSettings: AdminBuilderSettings;
   initialSnapshot: DataStudioSnapshot;
   initialRuntime: DataStudioRuntimeSummary;
   initialBundle: DataStudioBundle;
@@ -376,6 +380,7 @@ function buildEmptyProvisioningSecrets(): ProvisioningSecretsForm {
 }
 
 export default function DataStudioManager({
+  initialSettings,
   initialSnapshot,
   initialRuntime,
   initialBundle,
@@ -395,6 +400,8 @@ export default function DataStudioManager({
   const [bundle, setBundle] = useState<DataStudioBundle>(initialBundle);
   const [databaseTables, setDatabaseTables] = useState<DataDatabaseTable[]>(initialDatabaseTables);
   const [databaseTablesAvailable, setDatabaseTablesAvailable] = useState(initialDatabaseTablesAvailable);
+  const [backupDraftText, setBackupDraftText] = useState('');
+  const [backupFileName, setBackupFileName] = useState('');
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(initialSnapshot.entities[0]?.id || null);
   const [selectedConnectionId, setSelectedConnectionId] = useState<string | null>(initialSnapshot.connections[0]?.id || null);
   const [selectedDatabaseTableName, setSelectedDatabaseTableName] = useState<string | null>(initialDatabaseTables[0]?.tableName || null);
@@ -582,6 +589,11 @@ export default function DataStudioManager({
 
     if (payload.bundle) {
       setBundle(payload.bundle);
+    }
+
+    if (payload.backup) {
+      setBackupDraftText(JSON.stringify(payload.backup, null, 2));
+      setBackupFileName(`artmeta-panel-backup-${payload.backup.generatedAt.replace(/[:.]/g, '-')}.json`);
     }
 
     if (payload.runtime) {
@@ -966,6 +978,78 @@ export default function DataStudioManager({
       },
       'Pacote base atualizado com sucesso.',
     );
+  }
+
+  async function handleGenerateBackup() {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const response = await fetch('/api/ecommpanel/data-studio', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken,
+        },
+        body: JSON.stringify({
+          action: 'generateBackup',
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as DataStudioApiResponse | null;
+      if (!response.ok || !payload?.backup) {
+        throw new Error(payload?.error || 'Não foi possível gerar o backup geral do Data Studio.');
+      }
+
+      applyPayload(
+        payload,
+        payload.backup.recordsStatus === 'included'
+          ? 'Backup geral gerado com sucesso.'
+          : 'Backup estrutural gerado sem registros, porque o banco não está disponível.',
+      );
+    } catch (currentError) {
+      setError(currentError instanceof Error ? currentError.message : 'Falha ao gerar o backup geral.');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleRestoreBackup() {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const parsedBackup = JSON.parse(backupDraftText);
+      const response = await fetch('/api/ecommpanel/data-studio', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken,
+        },
+        body: JSON.stringify({
+          action: 'restoreBackup',
+          backup: parsedBackup,
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as DataStudioApiResponse | null;
+      if (!response.ok || !payload?.backup || !payload.snapshot) {
+        throw new Error(payload?.error || 'Não foi possível restaurar o backup geral.');
+      }
+
+      applyPayload(
+        payload,
+        payload.backup.recordsStatus === 'included'
+          ? 'Backup restaurado com sucesso.'
+          : 'Backup restaurado em modo estrutural. Os registros não foram reaplicados porque o banco não está disponível.',
+      );
+    } catch (currentError) {
+      setError(currentError instanceof Error ? currentError.message : 'Falha ao restaurar o backup geral.');
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function handleSyncSelectedEntityStructure() {
@@ -1688,6 +1772,7 @@ export default function DataStudioManager({
               {currentDataModule === 'records' ? (
                 <DataEntityRecordsWorkspace
                   entities={snapshot.entities}
+                  initialSettings={initialSettings}
                   csrfToken={csrfToken}
                   canManageRecords={canManageRecords}
                   initialEntityId={selectedEntityId}
@@ -1831,43 +1916,110 @@ export default function DataStudioManager({
               ) : null}
 
               {currentDataModule === 'bundle' ? (
-                <article className="panel-card">
-                  <div className="panel-inline-between">
-                    <div>
-                      <h3>Arquivos do pacote</h3>
-                      <p className="panel-muted">Atualize, selecione e baixe os arquivos gerados para bootstrap do ambiente.</p>
-                    </div>
-                    <div className="panel-actions">
-                      <span className="panel-muted">Gerado em {formatDateTime(bundle.generatedAt)}</span>
-                      <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={handleGenerateBundle} disabled={saving || (!canManageEntities && !canManageBootstrap)}>
-                        Atualizar pacote
-                      </button>
-                    </div>
-                  </div>
-                  <div className="panel-segmented-links">
-                    {bundle.files.map((file) => (
-                      <button key={file.path} type="button" className={`panel-link-chip ${activeBundlePath === file.path ? 'is-active' : ''}`} onClick={() => setActiveBundlePath(file.path)}>
-                        {file.path.split('/').pop()}
-                      </button>
-                    ))}
-                  </div>
-                  {activeBundleFile ? (
-                    <div className="panel-data-code-shell">
-                      <div className="panel-data-code-toolbar">
-                        <strong>{activeBundleFile.path}</strong>
-                        <div className="panel-actions">
-                          <button type="button" className="panel-btn panel-btn-secondary panel-btn-xs" onClick={() => downloadTextFile(activeBundleFile)}>
-                            Baixar
-                          </button>
-                          <button type="button" className="panel-btn panel-btn-secondary panel-btn-xs" onClick={() => navigator.clipboard.writeText(activeBundleFile.content)}>
-                            Copiar
-                          </button>
-                        </div>
+                <div className="panel-data-import-grid">
+                  <article className="panel-card">
+                    <div className="panel-inline-between">
+                      <div>
+                        <h3>Arquivos do pacote</h3>
+                        <p className="panel-muted">Atualize, selecione e baixe os arquivos gerados para bootstrap do ambiente.</p>
                       </div>
-                      <pre className="panel-data-code-pre">{activeBundleFile.content}</pre>
+                      <div className="panel-actions">
+                        <span className="panel-muted">Gerado em {formatDateTime(bundle.generatedAt)}</span>
+                        <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={handleGenerateBundle} disabled={saving || (!canManageEntities && !canManageBootstrap)}>
+                          Atualizar pacote
+                        </button>
+                      </div>
                     </div>
-                  ) : null}
-                </article>
+                    <div className="panel-segmented-links">
+                      {bundle.files.map((file) => (
+                        <button key={file.path} type="button" className={`panel-link-chip ${activeBundlePath === file.path ? 'is-active' : ''}`} onClick={() => setActiveBundlePath(file.path)}>
+                          {file.path.split('/').pop()}
+                        </button>
+                      ))}
+                    </div>
+                    {activeBundleFile ? (
+                      <div className="panel-data-code-shell">
+                        <div className="panel-data-code-toolbar">
+                          <strong>{activeBundleFile.path}</strong>
+                          <div className="panel-actions">
+                            <button type="button" className="panel-btn panel-btn-secondary panel-btn-xs" onClick={() => downloadTextFile(activeBundleFile)}>
+                              Baixar
+                            </button>
+                            <button type="button" className="panel-btn panel-btn-secondary panel-btn-xs" onClick={() => navigator.clipboard.writeText(activeBundleFile.content)}>
+                              Copiar
+                            </button>
+                          </div>
+                        </div>
+                        <pre className="panel-data-code-pre">{activeBundleFile.content}</pre>
+                      </div>
+                    ) : null}
+                  </article>
+
+                  <article className="panel-card">
+                    <div className="panel-inline-between panel-inline-wrap">
+                      <div>
+                        <h3>Backup geral do Data Studio</h3>
+                        <p className="panel-muted">Exporta entidades, imports e registros reais das tabelas modeladas em um único JSON restaurável.</p>
+                      </div>
+                      <div className="panel-actions">
+                        <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={handleGenerateBackup} disabled={saving || (!canManageEntities && !canManageRecords)}>
+                          Gerar backup
+                        </button>
+                        {backupDraftText ? (
+                          <button
+                            type="button"
+                            className="panel-btn panel-btn-secondary panel-btn-sm"
+                            onClick={() => downloadNamedTextFile(backupFileName || `artmeta-panel-backup-${Date.now()}.json`, backupDraftText, 'application/json;charset=utf-8')}
+                          >
+                            Baixar JSON
+                          </button>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <label className="panel-field">
+                      <span>Carregar backup salvo</span>
+                      <input
+                        className="panel-input"
+                        type="file"
+                        accept="application/json,.json"
+                        onChange={async (event) => {
+                          const file = event.target.files?.[0];
+                          if (!file) return;
+                          setBackupFileName(file.name);
+                          setBackupDraftText(await file.text());
+                          event.currentTarget.value = '';
+                        }}
+                      />
+                    </label>
+
+                    <textarea
+                      className="panel-textarea panel-data-codearea"
+                      value={backupDraftText}
+                      onChange={(event) => setBackupDraftText(event.target.value)}
+                      placeholder='{"snapshot": {...}, "recordsByEntity": {...}}'
+                    />
+
+                    <div className="panel-data-connection-status">
+                      <strong>Modo do backup</strong>
+                      <small>
+                        Se o runtime de banco estiver indisponível, o painel gera um backup estrutural com <code>snapshot</code> e <code>imports</code>.
+                        Quando houver conexão ativa, ele inclui também os registros em <code>recordsByEntity</code>.
+                      </small>
+                    </div>
+
+                    <div className="panel-actions">
+                      <button
+                        type="button"
+                        className="panel-btn panel-btn-primary"
+                        onClick={handleRestoreBackup}
+                        disabled={saving || !backupDraftText.trim() || (!canManageEntities && !canManageRecords)}
+                      >
+                        Restaurar backup
+                      </button>
+                    </div>
+                  </article>
+                </div>
               ) : null}
             </div>
         </section>

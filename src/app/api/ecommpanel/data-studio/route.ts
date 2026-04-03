@@ -16,6 +16,7 @@ import {
   saveDataEntity,
   updateDataBootstrapState,
 } from '@/features/ecommpanel/server/dataStudioStore';
+import { generateDataStudioBackup, restoreDataStudioBackup } from '@/features/ecommpanel/server/dataStudioBackup';
 import { generateDataStudioContracts } from '@/features/ecommpanel/server/dataEntityContracts';
 import {
   exportDatabaseTableCsv,
@@ -97,6 +98,13 @@ type DataStudioActionBody =
     }
   | {
       action: 'generateBundle';
+    }
+  | {
+      action: 'generateBackup';
+    }
+  | {
+      action: 'restoreBackup';
+      backup?: unknown;
     }
   | {
       action: 'saveConnection';
@@ -372,6 +380,56 @@ export async function POST(req: NextRequest) {
 
         return jsonNoStore({
           ok: true,
+          snapshot,
+          runtime: await getDataStudioRuntimeResolved(snapshot),
+          bundle: await generateDataStudioBundleResolved(snapshot),
+          contracts: generateDataStudioContracts(snapshot),
+        });
+      }
+
+      case 'generateBackup': {
+        if (!canManageEntities(guard.auth.user.permissions) && !canManageRecords(guard.auth.user.permissions)) {
+          return errorNoStore(403, 'Sem permissão para gerar o backup completo.');
+        }
+
+        addAuditEvent({
+          actorUserId: guard.auth.user.id,
+          event: 'data-studio.backup.generated',
+          outcome: 'success',
+          target: 'backup',
+        });
+
+        return jsonNoStore({
+          ok: true,
+          backup: await generateDataStudioBackup(),
+        });
+      }
+
+      case 'restoreBackup': {
+        if (!canManageEntities(guard.auth.user.permissions) && !canManageRecords(guard.auth.user.permissions)) {
+          return errorNoStore(403, 'Sem permissão para restaurar o backup completo.');
+        }
+        if (!body.backup) {
+          return errorNoStore(400, 'O payload do backup é obrigatório para restauração.');
+        }
+
+        const backup = await restoreDataStudioBackup(body.backup);
+        const snapshot = backup.snapshot;
+
+        addAuditEvent({
+          actorUserId: guard.auth.user.id,
+          event: 'data-studio.backup.restored',
+          outcome: 'success',
+          target: 'backup',
+          details: {
+            entities: snapshot.entities.length,
+            generatedAt: backup.generatedAt,
+          },
+        });
+
+        return jsonNoStore({
+          ok: true,
+          backup,
           snapshot,
           runtime: await getDataStudioRuntimeResolved(snapshot),
           bundle: await generateDataStudioBundleResolved(snapshot),

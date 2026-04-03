@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import PanelModal from '@/features/ecommpanel/components/PanelModal';
 import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
+import type { DataFieldDefinition } from '@/features/ecommpanel/types/dataStudio';
 
 import {
   type ApiIntegrationScopeOption,
@@ -67,6 +68,7 @@ type ApiIntegrationsManagerProps = {
   initialClients: ApiClientRecord[];
   initialLogs: ApiRequestLogItem[];
   referenceItems: ApiReferenceItem[];
+  entityFieldsBySlug: Record<string, DataFieldDefinition[]>;
   availableScopes: ApiIntegrationScopeOption[];
   canManage: boolean;
 };
@@ -128,10 +130,69 @@ function mapClientToForm(client: ApiClientRecord): ClientFormState {
   };
 }
 
+function buildCurlCommand(method: string, route: string): string {
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+  const lines = [`curl -X ${method.toUpperCase()} '${origin}${route}'`, "  -H 'Authorization: Bearer <TOKEN>'"];
+
+  if (method.toUpperCase() !== 'GET') {
+    lines.push("  -H 'Content-Type: application/json'");
+  }
+
+  if (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT') {
+    lines.push("  -d '{\"example\":\"value\"}'");
+  }
+
+  return lines.join(' \\\n');
+}
+
+function resolveExampleValue(field: DataFieldDefinition): unknown {
+  switch (field.type) {
+    case 'slug':
+      return `example-${field.name}`;
+    case 'email':
+      return 'player@example.com';
+    case 'url':
+      return 'https://example.com/resource';
+    case 'integer':
+      return 1;
+    case 'number':
+    case 'currency':
+      return 1.5;
+    case 'boolean':
+      return true;
+    case 'date':
+      return '2026-04-03';
+    case 'datetime':
+      return '2026-04-03T12:00:00.000Z';
+    case 'json':
+      return { example: true };
+    case 'reference':
+      return '<REFERENCE_ID>';
+    case 'rich_text':
+      return `Conteudo de ${field.label}`;
+    case 'text':
+    default:
+      return `Exemplo de ${field.label}`;
+  }
+}
+
+function buildExamplePayload(fields: DataFieldDefinition[]): string {
+  const payload = Object.fromEntries(
+    fields.map((field) => [field.name, field.defaultValue || resolveExampleValue(field)]),
+  );
+  return JSON.stringify(payload, null, 2);
+}
+
+function resolveEntitySlugFromRoute(route: string): string | null {
+  const routeMatch = route.match(/\/entities\/([^/]+)\/records/);
+  return routeMatch?.[1] || null;
+}
+
 export default function ApiIntegrationsManager({
   initialClients,
   initialLogs,
   referenceItems,
+  entityFieldsBySlug,
   availableScopes,
   canManage,
 }: ApiIntegrationsManagerProps) {
@@ -147,6 +208,12 @@ export default function ApiIntegrationsManager({
   const [saving, setSaving] = useState(false);
   const [rotatingSecret, setRotatingSecret] = useState(false);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [scopeQuery, setScopeQuery] = useState('');
+  const [scopeEntityFilter, setScopeEntityFilter] = useState<string>('all');
+  const [referenceQuery, setReferenceQuery] = useState('');
+  const [referenceDomainFilter, setReferenceDomainFilter] = useState<'all' | 'system' | 'data' | 'entity'>('all');
+  const [copiedReferenceId, setCopiedReferenceId] = useState<string | null>(null);
+  const [copiedReferencePayloadId, setCopiedReferencePayloadId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [revealedSecret, setRevealedSecret] = useState<{ keyId: string; value: string } | null>(null);
@@ -187,10 +254,63 @@ export default function ApiIntegrationsManager({
     };
   }, [availableScopes, clients, logs.length, referenceItems.length]);
 
+  async function copyReferenceCurl(item: ApiReferenceItem) {
+    try {
+      await navigator.clipboard.writeText(buildCurlCommand(item.method, item.route));
+      setCopiedReferenceId(item.id);
+      window.setTimeout(() => {
+        setCopiedReferenceId((current) => (current === item.id ? null : current));
+      }, 1600);
+    } catch {
+      setCopiedReferenceId(null);
+    }
+  }
+
+  async function copyReferencePayload(item: ApiReferenceItem) {
+    const entitySlug = resolveEntitySlugFromRoute(item.route);
+    if (!entitySlug) return;
+    const fields = entityFieldsBySlug[entitySlug];
+    if (!fields?.length) return;
+
+    try {
+      await navigator.clipboard.writeText(buildExamplePayload(fields));
+      setCopiedReferencePayloadId(item.id);
+      window.setTimeout(() => {
+        setCopiedReferencePayloadId((current) => (current === item.id ? null : current));
+      }, 1600);
+    } catch {
+      setCopiedReferencePayloadId(null);
+    }
+  }
+
   const entityScopes = useMemo(
     () => availableScopes.filter((scope) => scope.group === 'entity'),
     [availableScopes],
   );
+
+  const filteredEntityScopes = useMemo(() => {
+    const query = scopeQuery.trim().toLowerCase();
+
+    return entityScopes.filter((scope) => {
+      if (scopeEntityFilter !== 'all' && scope.entitySlug !== scopeEntityFilter) {
+        return false;
+      }
+
+      if (!query) return true;
+
+      const haystack = [scope.label, scope.description, scope.scope, scope.entitySlug || '']
+        .join(' ')
+        .toLowerCase();
+
+      return haystack.includes(query);
+    });
+  }, [entityScopes, scopeEntityFilter, scopeQuery]);
+
+  const scopeEntityOptions = useMemo(() => {
+    return Array.from(
+      new Map(entityScopes.filter((scope) => scope.entitySlug).map((scope) => [scope.entitySlug!, scope.label.replace(/: leitura|: escrita/g, '')])).entries(),
+    ).map(([slug, label]) => ({ slug, label }));
+  }, [entityScopes]);
 
   const focusIds: Record<IntegrationView, string> = {
     keys: 'panel-integrations-clients',
@@ -203,6 +323,32 @@ export default function ApiIntegrationsManager({
     () => clients.find((item) => item.id === (selectedClientId || form.clientId)) || null,
     [clients, form.clientId, selectedClientId],
   );
+
+  const referenceStats = useMemo(() => {
+    return {
+      system: referenceItems.filter((item) => item.domain === 'system').length,
+      data: referenceItems.filter((item) => item.domain === 'data').length,
+      entity: referenceItems.filter((item) => item.domain === 'entity').length,
+    };
+  }, [referenceItems]);
+
+  const filteredReferenceItems = useMemo(() => {
+    const query = referenceQuery.trim().toLowerCase();
+
+    return referenceItems.filter((item) => {
+      if (referenceDomainFilter !== 'all' && item.domain !== referenceDomainFilter) {
+        return false;
+      }
+
+      if (!query) return true;
+
+      const haystack = [item.method, item.route, item.description, item.domain, item.scope || 'token valido']
+        .join(' ')
+        .toLowerCase();
+
+      return haystack.includes(query);
+    });
+  }, [referenceDomainFilter, referenceItems, referenceQuery]);
 
   async function loadClients() {
     const response = await fetch('/api/ecommpanel/integrations/clients', { cache: 'no-store', credentials: 'same-origin' });
@@ -477,9 +623,39 @@ export default function ApiIntegrationsManager({
               </div>
               <span className="panel-link-chip">{entityScopes.length} disponíveis</span>
             </div>
+            <div className="panel-api-reference-toolbar">
+              <label className="panel-search panel-manager-search">
+                <span className="panel-search__icon" aria-hidden="true">⌕</span>
+                <input
+                  type="search"
+                  value={scopeQuery}
+                  onChange={(event) => setScopeQuery(event.target.value)}
+                  placeholder="Buscar por entidade, scope ou descrição"
+                />
+              </label>
+              <div className="panel-filter-row">
+                <button
+                  type="button"
+                  className={`panel-filter-chip ${scopeEntityFilter === 'all' ? 'is-active' : ''}`}
+                  onClick={() => setScopeEntityFilter('all')}
+                >
+                  Todas ({entityScopes.length})
+                </button>
+                {scopeEntityOptions.map((option) => (
+                  <button
+                    key={option.slug}
+                    type="button"
+                    className={`panel-filter-chip ${scopeEntityFilter === option.slug ? 'is-active' : ''}`}
+                    onClick={() => setScopeEntityFilter(option.slug)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="panel-api-scope-summary">
-              {entityScopes.length ? (
-                entityScopes.map((scope) => (
+              {filteredEntityScopes.length ? (
+                filteredEntityScopes.map((scope) => (
                   <article key={scope.scope} className="panel-api-scope-summary__item">
                     <strong>{scope.label}</strong>
                     <span>{scope.description}</span>
@@ -490,7 +666,9 @@ export default function ApiIntegrationsManager({
                 ))
               ) : (
                 <div className="panel-table-empty panel-table-empty--card">
-                  Nenhuma entidade modelada ainda. Assim que você criar uma entidade, os scopes `read` e `write` aparecem aqui.
+                  {entityScopes.length
+                    ? 'Nenhum escopo encontrado com esse filtro.'
+                    : 'Nenhuma entidade modelada ainda. Assim que você criar uma entidade, os scopes `read` e `write` aparecem aqui.'}
                 </div>
               )}
             </div>
@@ -506,12 +684,61 @@ export default function ApiIntegrationsManager({
                 Documentação
               </a>
             </div>
+            <div className="panel-api-reference-toolbar">
+              <label className="panel-search panel-manager-search">
+                <span className="panel-search__icon" aria-hidden="true">⌕</span>
+                <input
+                  type="search"
+                  value={referenceQuery}
+                  onChange={(event) => setReferenceQuery(event.target.value)}
+                  placeholder="Buscar por rota, método, scope ou descrição"
+                />
+              </label>
+              <div className="panel-filter-row">
+                <button
+                  type="button"
+                  className={`panel-filter-chip ${referenceDomainFilter === 'all' ? 'is-active' : ''}`}
+                  onClick={() => setReferenceDomainFilter('all')}
+                >
+                  Tudo ({referenceItems.length})
+                </button>
+                <button
+                  type="button"
+                  className={`panel-filter-chip ${referenceDomainFilter === 'system' ? 'is-active' : ''}`}
+                  onClick={() => setReferenceDomainFilter('system')}
+                >
+                  Sistema ({referenceStats.system})
+                </button>
+                <button
+                  type="button"
+                  className={`panel-filter-chip ${referenceDomainFilter === 'data' ? 'is-active' : ''}`}
+                  onClick={() => setReferenceDomainFilter('data')}
+                >
+                  Dados ({referenceStats.data})
+                </button>
+                <button
+                  type="button"
+                  className={`panel-filter-chip ${referenceDomainFilter === 'entity' ? 'is-active' : ''}`}
+                  onClick={() => setReferenceDomainFilter('entity')}
+                >
+                  Entidades ({referenceStats.entity})
+                </button>
+              </div>
+            </div>
             <div className="panel-api-reference-list">
-              {referenceItems.map((item) => (
+              {filteredReferenceItems.length ? filteredReferenceItems.map((item) => (
                 <div key={item.id} className="panel-api-reference-list__item">
                   <div className="panel-api-reference-list__meta">
                     <span className={`panel-badge ${item.method === 'GET' ? 'panel-badge-success' : 'panel-badge-neutral'}`}>{item.method}</span>
                     <code>{item.route}</code>
+                    <button type="button" className="panel-api-reference-list__copy-btn" onClick={() => void copyReferenceCurl(item)}>
+                      {copiedReferenceId === item.id ? 'Copiado' : 'Copiar curl'}
+                    </button>
+                    {(item.method === 'POST' || item.method === 'PUT') && resolveEntitySlugFromRoute(item.route) ? (
+                      <button type="button" className="panel-api-reference-list__copy-btn" onClick={() => void copyReferencePayload(item)}>
+                        {copiedReferencePayloadId === item.id ? 'JSON copiado' : 'Copiar JSON'}
+                      </button>
+                    ) : null}
                   </div>
                   <div className="panel-api-reference-list__copy">
                     <strong>{item.description}</strong>
@@ -520,7 +747,11 @@ export default function ApiIntegrationsManager({
                     </small>
                   </div>
                 </div>
-              ))}
+              )) : (
+                <div className="panel-table-empty panel-table-empty--card">
+                  Nenhum endpoint encontrado com esse filtro. Tente buscar por `cards`, `records`, `GET` ou pelo nome da entidade.
+                </div>
+              )}
             </div>
           </article>
         </div>

@@ -105,6 +105,16 @@ export type DataImportPayload = {
   rows: Record<string, unknown>[];
 };
 
+export type DataStudioBackup = {
+  version: number;
+  generatedAt: string;
+  recordsStatus?: 'included' | 'unavailable';
+  warnings?: string[];
+  snapshot: DataStudioSnapshot;
+  importsByEntity: Record<string, DataImportPayload[]>;
+  recordsByEntity: Record<string, Record<string, unknown>[]>;
+};
+
 export type DataStudioSnapshot = {
   schemaVersion: number;
   updatedAt: string;

@@ -598,13 +598,20 @@ async function loadSnapshotResolved(): Promise<PersistedSnapshot> {
   return nextSnapshot;
 }
 
-function readImportRows(entitySlug: string): DataImportPayload[] {
+export function readImportRows(entitySlug: string): DataImportPayload[] {
   const filePath = path.join(IMPORTS_DIR, `${entitySlug}.json`);
   return readJsonFile<DataImportPayload[]>(filePath) || [];
 }
 
-function writeImportRows(entitySlug: string, rows: DataImportPayload[]): void {
+export function writeImportRows(entitySlug: string, rows: DataImportPayload[]): void {
   writeJsonAtomic(path.join(IMPORTS_DIR, `${entitySlug}.json`), rows);
+}
+
+function removeImportRows(entitySlug: string): void {
+  const filePath = path.join(IMPORTS_DIR, `${entitySlug}.json`);
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+  }
 }
 
 function toSnapshot(snapshot: PersistedSnapshot): DataStudioSnapshot {
@@ -808,6 +815,29 @@ export function getDataStudioSnapshot(): DataStudioSnapshot {
 
 export async function getDataStudioSnapshotResolved(): Promise<DataStudioSnapshot> {
   return toSnapshot(await loadSnapshotResolved());
+}
+
+export async function replaceDataStudioSnapshot(snapshot: DataStudioSnapshot): Promise<DataStudioSnapshot> {
+  const persisted = normalizePersistedSnapshot(snapshot);
+  return toSnapshot(await persistSnapshot(persisted));
+}
+
+export async function replaceDataStudioImportsByEntity(importsByEntity: Record<string, DataImportPayload[]>): Promise<void> {
+  ensureDirs();
+  const entries = Object.entries(importsByEntity);
+  const knownSlugs = new Set(entries.map(([entitySlug]) => entitySlug));
+
+  for (const fileName of fs.readdirSync(IMPORTS_DIR)) {
+    if (!fileName.endsWith('.json')) continue;
+    const entitySlug = fileName.replace(/\.json$/i, '');
+    if (!knownSlugs.has(entitySlug)) {
+      removeImportRows(entitySlug);
+    }
+  }
+
+  for (const [entitySlug, rows] of entries) {
+    writeImportRows(entitySlug, Array.isArray(rows) ? rows : []);
+  }
 }
 
 export async function getDataStudioRuntimeResolved(snapshot?: DataStudioSnapshot) {

@@ -107,20 +107,20 @@ export default async function AdminBuilderDashboardPage() {
     },
     {
       label: 'Entidades Configuradas',
-      value: dashboard.site.totalPages,
-      subtitle: `${dashboard.site.runtimePagesCount} páginas materializadas`,
+      value: dashboard.dataStudio.entitiesTotal,
+      subtitle: `${dashboard.dataStudio.readyEntities} prontas`,
       tone: 'purple',
     },
     {
-      label: 'Âncoras Headless',
-      value: Math.max(2, Math.min(8, dashboard.site.totalPages || 0)),
-      subtitle: 'Superfícies registradas',
+      label: 'Campos Modelados',
+      value: dashboard.dataStudio.totalFields,
+      subtitle: dashboard.dataStudio.databaseAvailable ? 'runtime online' : 'sem banco conectado',
       tone: 'gold',
     },
     {
-      label: 'Chamadas API',
-      value: dashboard.audit.sampledCount,
-      subtitle: 'Amostra operacional',
+      label: 'Registros do Data Studio',
+      value: dashboard.dataStudio.totalRecords,
+      subtitle: dashboard.dataStudio.databaseAvailable ? 'linhas sincronizadas' : 'aguardando runtime',
       tone: 'green',
     },
   ];
@@ -200,10 +200,10 @@ export default async function AdminBuilderDashboardPage() {
             <div className="panel-manager-system-item__head">
               <span>Runtime de Entidades</span>
               <span className="panel-manager-pill panel-manager-pill--success">
-                {dashboard.storage.mode === 'external' ? 'Externo' : 'Interno'}
+                {dashboard.dataStudio.databaseAvailable ? 'Conectado' : 'Estrutural'}
               </span>
             </div>
-            <small>{dashboard.site.runtimePagesCount} artefatos materializados</small>
+            <small>{dashboard.dataStudio.entitiesTotal} entidades · {dashboard.dataStudio.totalFields} campos</small>
           </div>
           <div className="panel-manager-system-item">
             <div className="panel-manager-system-item__head">

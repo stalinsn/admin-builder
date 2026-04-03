@@ -1,0 +1,5 @@
+.next-build/
+node_modules/
+tmp/
+src/data/ecommpanel/panel-settings/admin-builder.json
+src/data/ecommpanel/panel-settings/game-delivery.json

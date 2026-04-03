@@ -24,13 +24,15 @@ type PanelShellUiState = {
   sidebarCollapsed: boolean;
 };
 
-const PANEL_SHELL_STORAGE_KEY = withVersion('ecommpanel.admin-shell.ui', 'v1');
+const PANEL_SHELL_STORAGE_KEY = withVersion('ecommpanel.admin-shell.ui', 'v2');
 const PANEL_THEME_STORAGE_KEY = withVersion('artmeta-panel.theme', 'v1');
 
 const PANEL_ROUTE_TRAILS = [
   { prefix: '/ecommpanel/admin/data/dictionary', trail: ['Entidades & Dados', 'Dicionário interno'] },
   { prefix: '/ecommpanel/admin/records', trail: ['Entidades & Dados', 'Registros'] },
   { prefix: '/ecommpanel/admin/data', trail: ['Entidades & Dados', 'Modelagem'] },
+  { prefix: '/ecommpanel/admin/game-endpoints', trail: ['Game Endpoints'] },
+  { prefix: '/ecommpanel/admin/game-delivery', trail: ['Game Delivery'] },
   { prefix: '/ecommpanel/admin/users', trail: ['Usuários'] },
   { prefix: '/ecommpanel/admin/integrations', trail: ['API & Integrações'] },
   { prefix: '/ecommpanel/admin/settings/auth', trail: ['Configurações', 'Controle de Acesso'] },

@@ -25,7 +25,7 @@ type NavItem = {
   children?: NavItem[];
 };
 
-type SectionId = 'dashboard' | 'users' | 'access' | 'data' | 'media' | 'integrations' | 'settings';
+type SectionId = 'dashboard' | 'users' | 'access' | 'data' | 'media' | 'integrations' | 'game-endpoints' | 'game-delivery' | 'settings';
 type DataSectionId =
   | 'data-modeling'
   | 'data-connections'
@@ -92,6 +92,18 @@ function IconPlug() {
   );
 }
 
+function IconTopology() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none">
+      <rect x="2.75" y="3" width="4.5" height="4.5" rx="1.25" />
+      <rect x="12.75" y="3" width="4.5" height="4.5" rx="1.25" />
+      <rect x="7.75" y="12.5" width="4.5" height="4.5" rx="1.25" />
+      <path d="M7.25 5.25h5.5" />
+      <path d="M10 7.5v5" />
+    </svg>
+  );
+}
+
 function IconImage() {
   return (
     <svg viewBox="0 0 20 20" fill="none">
@@ -136,6 +148,8 @@ function resolveSection(pathname: string): SectionId | null {
     return 'data';
   }
   if (normalizedPath === '/ecommpanel/admin/integrations' || normalizedPath.startsWith('/ecommpanel/admin/integrations/')) return 'integrations';
+  if (normalizedPath === '/ecommpanel/admin/game-endpoints' || normalizedPath.startsWith('/ecommpanel/admin/game-endpoints/')) return 'game-endpoints';
+  if (normalizedPath === '/ecommpanel/admin/game-delivery' || normalizedPath.startsWith('/ecommpanel/admin/game-delivery/')) return 'game-delivery';
   if (normalizedPath === '/ecommpanel/admin/settings/media' || normalizedPath.startsWith('/ecommpanel/admin/settings/media/')) return 'settings';
   return null;
 }
@@ -257,6 +271,22 @@ export default function PanelAdminNav({
             { id: 'integrations-reference', href: '/ecommpanel/admin/integrations?view=reference', label: 'Referência', icon: null },
             { id: 'integrations-logs', href: '/ecommpanel/admin/integrations?view=logs', label: 'Logs de Acesso', icon: null },
           ],
+        }]
+      : []),
+    ...((canReadDataStudio || canReadIntegrations)
+      ? [{
+          id: 'game-endpoints',
+          href: '/ecommpanel/admin/game-endpoints',
+          label: 'Game Endpoints',
+          icon: <PanelNavIcon><IconTopology /></PanelNavIcon>,
+        }]
+      : []),
+    ...((canReadDataStudio || canReadIntegrations)
+      ? [{
+          id: 'game-delivery',
+          href: '/ecommpanel/admin/game-delivery',
+          label: 'Game Delivery',
+          icon: <PanelNavIcon><IconTopology /></PanelNavIcon>,
         }]
       : []),
     ...(canReadPanelSettings

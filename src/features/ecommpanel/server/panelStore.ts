@@ -238,7 +238,7 @@ function getSeedUsers(): Array<{
 }> {
   return [
     { id: 'usr-main-001', email: 'main@ecommpanel.local', name: 'Main Admin', roleIds: ['main_admin'], password: 'Admin@123456' },
-    { id: 'usr-owner-001', email: 'stalinsn@hotmail.com', name: 'Owner da Plataforma', roleIds: ['store_owner'], password: 'Lojista@123456' },
+    { id: 'usr-owner-001', email: 'stalinsn@hotmail.com', name: 'Owner da Plataforma', roleIds: ['main_admin', 'store_owner'], password: 'Lojista@123456' },
     { id: 'usr-data-manager-001', email: 'data.manager@ecommpanel.local', name: 'Gestor de Dados', roleIds: ['data_manager'], password: 'Dados@123456' },
     { id: 'usr-data-editor-001', email: 'data.editor@ecommpanel.local', name: 'Operador de Dados', roleIds: ['data_editor'], password: 'Dados@123456' },
     { id: 'usr-data-viewer-001', email: 'data.viewer@ecommpanel.local', name: 'Leitora de Dados', roleIds: ['data_viewer'], password: 'Dados@123456' },
