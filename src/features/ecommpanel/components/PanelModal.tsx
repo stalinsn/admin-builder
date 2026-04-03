@@ -25,15 +25,19 @@ export default function PanelModal({
     if (!open) return undefined;
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        event.stopPropagation();
+        onClose();
+      }
     }
 
-    window.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keydown', onKeyDown, true);
     const { overflow } = document.body.style;
     document.body.style.overflow = 'hidden';
 
     return () => {
-      window.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('keydown', onKeyDown, true);
       document.body.style.overflow = overflow;
     };
   }, [onClose, open]);

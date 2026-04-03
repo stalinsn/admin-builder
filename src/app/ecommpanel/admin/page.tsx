@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 
 import { getPanelUserFromCookies, hasPermission } from '@/features/ecommpanel/server/auth';
 import { getPanelOperationalDashboard } from '@/features/ecommpanel/server/dashboardMetrics';
-import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 
 function formatRelativeLabel(value?: string): string {
   if (!value) return 'pendente';
@@ -36,45 +35,33 @@ function formatRoleLabel(roleId: string): string {
 const QUICK_ACTIONS = [
   {
     href: '/ecommpanel/admin/data',
-    title: 'Conexão e acesso',
-    description: 'Configure perfis de conexão e valide a comunicação da plataforma com o banco.',
-    cta: 'Ver detalhes',
-    tone: 'blue',
+    title: 'Modelar base',
+    description: 'Abrir conexões, bootstrap, entidades, imports e pacote base.',
   },
   {
-    href: '/ecommpanel/admin/data',
-    title: 'Importação inicial',
-    description: 'Execute validações, provisionamento e confirmação do bootstrap da base.',
-    cta: 'Executar agora',
-    tone: 'green',
+    href: '/ecommpanel/admin/data/dictionary',
+    title: 'Revisar dicionário',
+    description: 'Conferir tabelas, campos, tipos e finalidade do banco atual.',
   },
   {
-    href: '/ecommpanel/admin/data',
-    title: 'Modelar entidades',
-    description: 'Defina estruturas de tabelas, campos e atributos operacionais das entidades.',
-    cta: 'Ver detalhes',
-    tone: 'violet',
+    href: '/ecommpanel/admin/users',
+    title: 'Gerenciar acessos',
+    description: 'Revisar usuários administrativos, papéis e permissões.',
   },
   {
-    href: '/ecommpanel/admin/records',
-    title: 'Entidades e registros',
-    description: 'Listar entidades em tabela, adicionar registros e editar atributos diretamente no painel.',
-    cta: 'Ver detalhes',
-    tone: 'orange',
+    href: '/ecommpanel/admin/settings/auth',
+    title: 'Configurar auth',
+    description: 'Ajustar caixa de autenticação, SMTP e políticas de acesso.',
   },
   {
     href: '/ecommpanel/admin/integrations',
-    title: 'Ativar registros',
-    description: 'Preparar leitura headless, autenticação técnica e operação externa por token.',
-    cta: 'Ver detalhes',
-    tone: 'indigo',
+    title: 'Abrir integrações',
+    description: 'Gerenciar clientes de API, escopos, segredos e contratos autenticados.',
   },
   {
-    href: '/ecommpanel/admin/data',
-    title: 'Sincronizar CSV',
-    description: 'Exportar tabelas, revisar cabeçalhos e sincronizar dados com planilhas externas.',
-    cta: 'Ver detalhes',
-    tone: 'pink',
+    href: '/ecommpanel/admin/catalog/media',
+    title: 'Operar mídia',
+    description: 'Enviar imagens, reutilizar assets e revisar processamento.',
   },
 ] as const;
 
@@ -102,132 +89,123 @@ export default async function AdminBuilderDashboardPage() {
   const dashboard = await getPanelOperationalDashboard(user);
 
   return (
-    <section className="panel-dashboard panel-grid panel-dashboard--rework" aria-labelledby="panel-dashboard-title">
-      <PanelPageHeader
-        eyebrow="Artmeta Panel"
-        title="Centro de Orquestração"
-        titleId="panel-dashboard-title"
-        description="Esta trilha inicial centraliza dados, sustentação, gestão e integração da plataforma em um shell mais compacto e navegável."
-        meta={
-          <>
+    <section className="panel-dashboard panel-grid" aria-labelledby="panel-dashboard-title">
+      <article className="panel-card panel-card-hero panel-dashboard-hero">
+        <div className="panel-dashboard-hero__header">
+          <div>
+            <p className="panel-kicker">Artmeta Panel</p>
+            <h1 id="panel-dashboard-title">Centro de orquestração da base e da plataforma</h1>
+            <p className="panel-muted">
+              Esta visão inicial serve para administrar estrutura de dados, autenticação, mídia e integrações do sistema, sem dependência de fluxo comercial.
+            </p>
+          </div>
+          <div className="panel-dashboard-hero__badges">
             <span className="panel-badge panel-badge-success">
               {dashboard.storage.mode === 'external' ? 'runtime externo' : 'runtime interno'}
             </span>
             <span className="panel-badge panel-badge-neutral">{dashboard.user.permissionsCount} permissões ativas</span>
-          </>
-        }
-      />
+          </div>
+        </div>
 
-      <div className="panel-stats panel-stats--compact panel-dashboard-metrics">
+        <div className="panel-dashboard-hero__meta">
+          <div>
+            <span className="panel-muted">Operador atual</span>
+            <strong>{dashboard.user.name}</strong>
+            <span>{dashboard.user.email}</span>
+          </div>
+          <div>
+            <span className="panel-muted">Papéis ativos</span>
+            <strong>{dashboard.user.roleIds.length}</strong>
+            <span>{dashboard.user.roleIds.map(formatRoleLabel).join(', ')}</span>
+          </div>
+          <div>
+            <span className="panel-muted">Leitura principal do runtime</span>
+            <strong>{dashboard.storage.mode === 'external' ? 'Pasta externa' : 'Pasta interna do projeto'}</strong>
+            <span>{dashboard.storage.rootPath}</span>
+          </div>
+        </div>
+      </article>
+
+      <div className="panel-stats panel-dashboard-metrics">
         <article className="panel-stat">
           <span className="panel-muted">Usuários ativos</span>
           <strong>{dashboard.users.active}</strong>
-          <span>{dashboard.users.total} administradores cadastrados</span>
+          <span>{dashboard.users.total} contas administrativas cadastradas</span>
         </article>
 
         <article className="panel-stat">
-          <span className="panel-muted">Usuários existentes</span>
+          <span className="panel-muted">Perfis com poder amplo</span>
           <strong>{dashboard.users.privileged}</strong>
-          <span>{dashboard.users.total - dashboard.users.privileged} perfis complementares ativos</span>
+          <span>{dashboard.users.editorial} perfis especializados adicionais</span>
         </article>
 
         <article className="panel-stat">
-          <span className="panel-muted">Âncoras headless</span>
-          <strong>{Math.max(2, Math.min(4, dashboard.site.totalPages || 0))}</strong>
-          <span>Superfícies prontas para integração</span>
+          <span className="panel-muted">Eventos recentes</span>
+          <strong>{dashboard.audit.sampledCount}</strong>
+          <span>auditorias registradas nos últimos 7 dias</span>
         </article>
 
         <article className="panel-stat">
-          <span className="panel-muted">Perfil de acesso</span>
+          <span className="panel-muted">Último evento</span>
           <strong>{formatRelativeLabel(dashboard.audit.latest?.createdAt)}</strong>
-          <span>Última atualização do runtime</span>
+          <span>{dashboard.audit.latest?.event || 'Sem eventos recentes'}</span>
         </article>
       </div>
 
-      <div className="panel-operations-grid">
-        {QUICK_ACTIONS.map((action) => (
-          <article key={`${action.href}-${action.title}`} className={`panel-card panel-operation-card panel-operation-card--${action.tone}`}>
-            <div className="panel-operation-card__head">
-              <span className="panel-operation-card__icon" aria-hidden="true" />
-              <span className={`panel-badge panel-badge-soft panel-badge-soft--${action.tone}`}>
-                {action.tone === 'green' ? 'Executar' : action.tone === 'blue' ? 'Configurar' : 'Pendente'}
-              </span>
-            </div>
-            <h2>{action.title}</h2>
-            <p>{action.description}</p>
-            <Link href={action.href} className={`panel-operation-card__cta panel-operation-card__cta--${action.tone}`}>
-              {action.cta}
-            </Link>
-          </article>
-        ))}
-      </div>
-
-      <div className="panel-dashboard-layout panel-dashboard-layout--compact">
+      <div className="panel-dashboard-layout">
         <article className="panel-card panel-dashboard-card">
           <div className="panel-dashboard-card__header">
             <div>
-              <h2>Passos ativos</h2>
-              <p className="panel-muted">Camadas do ambiente prontas para manutenção direta.</p>
+              <p className="panel-kicker">Base ativa</p>
+              <h2>Estado estrutural do admin</h2>
             </div>
-            <span className="panel-badge panel-badge-success">Pronto · Executar</span>
+            <span className="panel-badge panel-badge-neutral">
+              {dashboard.storage.mode === 'external' ? 'projeto isolado' : 'projeto embutido'}
+            </span>
           </div>
 
-          <div className="panel-dashboard-actions panel-dashboard-actions--stacked">
-          <Link href="/ecommpanel/admin/data" className="panel-dashboard-action panel-dashboard-action--stacked">
-              <strong>Dados e estrutura</strong>
+          <div className="panel-dashboard-list">
+            <div className="panel-dashboard-row">
+              <strong>Root operacional</strong>
               <span>{dashboard.storage.rootPath}</span>
-              <small>Acessar estado →</small>
-            </Link>
-            <Link href="/ecommpanel/admin/records" className="panel-dashboard-action panel-dashboard-action--stacked">
-              <strong>Entidades e registros</strong>
-              <span>Leia entidades modeladas, popule linhas e edite registros num workspace direto.</span>
-              <small>Abrir workspace →</small>
-            </Link>
+              <small>É daqui que o sistema lê snapshots, runtime e arquivos publicados.</small>
+            </div>
+
+            <div className="panel-dashboard-row">
+              <strong>Camada dinâmica</strong>
+              <span>{dashboard.site.totalPages} rotas internas conhecidas pelo runtime</span>
+              <small>{dashboard.site.runtimePagesCount} rotas publicadas atualmente no snapshot ativo.</small>
+            </div>
+
+            <div className="panel-dashboard-row">
+              <strong>Trilha de auditoria</strong>
+              <span>{dashboard.audit.sampledCount} eventos recentes</span>
+              <small>Último evento em {dashboard.audit.latest?.createdAt || 'não registrado'}.</small>
+            </div>
+
+            <div className="panel-dashboard-row">
+              <strong>Estrutura de usuários</strong>
+              <span>{dashboard.users.active} contas ativas e {dashboard.users.privileged} perfis elevados</span>
+              <small>Controle de acesso segue papéis + permissões granulares no painel.</small>
+            </div>
           </div>
         </article>
 
         <article className="panel-card panel-dashboard-card">
           <div className="panel-dashboard-card__header">
             <div>
-              <h2>Atividades recentes</h2>
-              <p className="panel-muted">Leitura rápida do que mudou na plataforma.</p>
+              <p className="panel-kicker">Fluxos principais</p>
+              <h2>Entradas mais úteis do builder</h2>
             </div>
-            <Link href="/ecommpanel/admin/users" className="panel-link-chip">
-              Ver todas
-            </Link>
           </div>
 
-          <div className="panel-activity-feed">
-            {(dashboard.audit.latest
-              ? [
-                  dashboard.audit.latest,
-                  ...Array.from({ length: Math.max(0, Math.min(2, dashboard.audit.sampledCount - 1)) }).map((_, index) => ({
-                    event: index === 0 ? 'configuração atualizada' : 'acesso à API gerado',
-                    createdAt: dashboard.audit.latest?.createdAt,
-                    actor: index === 0 ? dashboard.user.name : 'Sistema',
-                  })),
-                ]
-              : []
-            ).map((entry, index) => (
-              <div key={`${entry.event}-${index}`} className="panel-activity-feed__item">
-                <span className={`panel-activity-feed__dot ${index === 2 ? 'is-warning' : ''}`} />
-                <div>
-                  <strong>{entry.event}</strong>
-                  <small>
-                    {(entry as { actor?: string }).actor || dashboard.user.name} · {formatRelativeLabel(entry.createdAt)}
-                  </small>
-                </div>
-              </div>
+          <div className="panel-dashboard-actions">
+            {QUICK_ACTIONS.map((action) => (
+              <Link key={action.href} href={action.href} className="panel-dashboard-action">
+                <strong>{action.title}</strong>
+                <span>{action.description}</span>
+              </Link>
             ))}
-            {!dashboard.audit.latest ? (
-              <div className="panel-activity-feed__item">
-                <span className="panel-activity-feed__dot" />
-                <div>
-                  <strong>Nenhuma atividade recente</strong>
-                  <small>O painel ainda não registrou operações recentes nesta instância.</small>
-                </div>
-              </div>
-            ) : null}
           </div>
         </article>
       </div>

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import {
+  type DataStudioBackup,
   DATA_FIELD_TYPES,
   type DataBootstrapState,
   type DataConnectionProfile,
@@ -12,12 +13,12 @@ import {
   type DataFieldType,
   type DataStudioBundle,
   type DataStudioBundleFile,
+  type DataStudioRuntimeSummary,
   type DataStudioSnapshot,
   type DataTableCsvExport,
   type DataTableCsvImportMode,
   type DataTableCsvImportResult,
 } from '@/features/ecommpanel/types/dataStudio';
-import DataEntityRecordsWorkspace from '@/features/ecommpanel/components/DataEntityRecordsWorkspace';
 
 type MeApiResponse = {
   csrfToken?: string;
@@ -26,6 +27,7 @@ type MeApiResponse = {
 type DataStudioApiResponse = {
   snapshot?: DataStudioSnapshot;
   bundle?: DataStudioBundle;
+  backup?: DataStudioBackup;
   databaseTables?: DataDatabaseTable[];
   databaseTablesAvailable?: boolean;
   csvExport?: DataTableCsvExport;
@@ -35,6 +37,7 @@ type DataStudioApiResponse = {
 
 type DataStudioManagerProps = {
   initialSnapshot: DataStudioSnapshot;
+  initialRuntime?: DataStudioRuntimeSummary;
   initialBundle: DataStudioBundle;
   initialDatabaseTables: DataDatabaseTable[];
   initialDatabaseTablesAvailable: boolean;
@@ -295,6 +298,7 @@ function buildEmptyProvisioningSecrets(): ProvisioningSecretsForm {
 
 export default function DataStudioManager({
   initialSnapshot,
+  initialRuntime: _initialRuntime,
   initialBundle,
   initialDatabaseTables,
   initialDatabaseTablesAvailable,
@@ -321,13 +325,14 @@ export default function DataStudioManager({
   const [provisioningSecrets, setProvisioningSecrets] = useState<ProvisioningSecretsForm>(() => buildEmptyProvisioningSecrets());
   const [importRowsText, setImportRowsText] = useState('[\n  {\n    \"email\": \"cliente@exemplo.com\",\n    \"first_name\": \"Stalin\"\n  }\n]');
   const [importBundleText, setImportBundleText] = useState('{\n  "entities": [],\n  "records": {}\n}');
+  const [backupText, setBackupText] = useState('');
   const [csvImportText, setCsvImportText] = useState('');
   const [csvImportMode, setCsvImportMode] = useState<DataTableCsvImportMode>('append');
   const [csvPreview, setCsvPreview] = useState<DataTableCsvExport | null>(null);
   const [csvImportSummary, setCsvImportSummary] = useState<DataTableCsvImportResult | null>(null);
   const [activeBundlePath, setActiveBundlePath] = useState<string>(initialBundle.files[0]?.path || '');
   const [currentProvisioningStep, setCurrentProvisioningStep] = useState<1 | 2 | 3 | 4>(1);
-  const [activeDataModule, setActiveDataModule] = useState<'modeling' | 'connections' | 'bootstrap' | 'records' | 'import' | 'csv' | 'bundle' | null>(null);
+  const [activeDataModule, setActiveDataModule] = useState<'modeling' | 'connections' | 'bootstrap' | 'import' | 'csv' | 'bundle' | null>(null);
   const [isEntityViewerOpen, setIsEntityViewerOpen] = useState(false);
   const [isEntityEditorOpen, setIsEntityEditorOpen] = useState(false);
   const [expandedFieldId, setExpandedFieldId] = useState<string | null>(null);
@@ -458,8 +463,8 @@ export default function DataStudioManager({
     setSuccess(nextSuccess || null);
   }
 
-  async function requestAction(body: unknown, nextSuccess: string) {
-    if (!csrfToken || saving) return false;
+  async function requestAction(body: unknown, nextSuccess: string): Promise<DataStudioApiResponse | null> {
+    if (!csrfToken || saving) return null;
 
     setSaving(true);
     setError(null);
@@ -482,10 +487,10 @@ export default function DataStudioManager({
       }
 
       applyPayload(payload || {}, nextSuccess);
-      return true;
+      return payload || {};
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : 'Falha ao processar o Data Studio.');
-      return false;
+      return null;
     } finally {
       setSaving(false);
     }
@@ -796,6 +801,48 @@ export default function DataStudioManager({
     );
   }
 
+  async function handleGenerateBackup() {
+    const payload = await requestAction(
+      {
+        action: 'generateBackup',
+      },
+      'Backup geral gerado com sucesso.',
+    );
+
+    if (!payload?.backup) return;
+
+    const serialized = JSON.stringify(payload.backup, null, 2);
+    setBackupText(serialized);
+    downloadNamedTextFile(
+      `data-studio-backup-${(payload.backup.generatedAt || new Date().toISOString()).replace(/[:.]/g, '-')}.json`,
+      serialized,
+      'application/json;charset=utf-8',
+    );
+  }
+
+  async function handleRestoreBackup() {
+    if (!backupText.trim()) {
+      setError('Cole um backup JSON ou carregue um arquivo antes de restaurar.');
+      return;
+    }
+
+    try {
+      const backupPayload = JSON.parse(backupText) as unknown;
+      const confirmed = window.confirm('Restaurar o backup vai substituir o modelo atual e os registros existentes das entidades restauradas. Deseja continuar?');
+      if (!confirmed) return;
+
+      await requestAction(
+        {
+          action: 'restoreBackup',
+          backup: backupPayload,
+        },
+        'Backup restaurado com sucesso.',
+      );
+    } catch (restoreError) {
+      setError(restoreError instanceof Error ? restoreError.message : 'Backup JSON inválido.');
+    }
+  }
+
   async function handleRefreshDatabaseTables() {
     if (!canManageDatabaseTables) return;
 
@@ -855,6 +902,22 @@ export default function DataStudioManager({
       setError(null);
     } catch {
       setError('Não foi possível ler o arquivo CSV selecionado.');
+    } finally {
+      event.target.value = '';
+    }
+  }
+
+  async function handleLoadBackupFile(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const content = await file.text();
+      setBackupText(content);
+      setSuccess(`Arquivo ${file.name} carregado para restauração.`);
+      setError(null);
+    } catch {
+      setError('Não foi possível ler o arquivo de backup selecionado.');
     } finally {
       event.target.value = '';
     }
@@ -982,23 +1045,6 @@ export default function DataStudioManager({
             <article className="panel-data-wizard-quick-step">
               <header>
                 <span className="panel-data-wizard-quick-step__index">4</span>
-                <strong>Operar registros</strong>
-              </header>
-              <p className="panel-muted">Leia a entidade em formato de tabela, edite registros e valide rapidamente o conteúdo já populado.</p>
-              <div className="panel-data-wizard-quick-step__meta">
-                <span>Modifica: registros persistidos nas entidades prontas</span>
-                <span>Resultado: leitura operacional e edição rápida no painel</span>
-              </div>
-              <div className="panel-actions">
-                <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => setActiveDataModule('records')}>
-                  Abrir registros
-                </button>
-              </div>
-            </article>
-
-            <article className="panel-data-wizard-quick-step">
-              <header>
-                <span className="panel-data-wizard-quick-step__index">5</span>
                 <strong>Carregar dados</strong>
               </header>
               <p className="panel-muted">Importa registros JSON ou pacotes de estrutura para acelerar preenchimento inicial.</p>
@@ -1015,7 +1061,7 @@ export default function DataStudioManager({
 
             <article className="panel-data-wizard-quick-step">
               <header>
-                <span className="panel-data-wizard-quick-step__index">6</span>
+                <span className="panel-data-wizard-quick-step__index">5</span>
                 <strong>Sincronizar CSV</strong>
               </header>
               <p className="panel-muted">Exporta para auditoria e importa CSV em tabelas físicas com controle de modo.</p>
@@ -1032,7 +1078,7 @@ export default function DataStudioManager({
 
             <article className="panel-data-wizard-quick-step">
               <header>
-                <span className="panel-data-wizard-quick-step__index">7</span>
+                <span className="panel-data-wizard-quick-step__index">6</span>
                 <strong>Gerar pacote base</strong>
               </header>
               <p className="panel-muted">Consolida boilerplate e artefatos para implantação e versionamento de estrutura.</p>
@@ -1164,8 +1210,6 @@ export default function DataStudioManager({
                     ? 'Perfis de conexão'
                     : activeDataModule === 'bootstrap'
                       ? 'Assistente de implantação'
-                      : activeDataModule === 'records'
-                        ? 'Registros por entidade'
                       : activeDataModule === 'import'
                         ? 'Importação manual'
                         : activeDataModule === 'csv'
@@ -1179,8 +1223,6 @@ export default function DataStudioManager({
                     ? 'Cadastre, revise e teste as conexões do painel com toda a largura disponível.'
                     : activeDataModule === 'bootstrap'
                       ? 'Siga as etapas do provisionamento sem competir por espaço com a navegação lateral.'
-                      : activeDataModule === 'records'
-                        ? 'Leia, edite e popule os registros das entidades em um workspace compacto e visível.'
                       : activeDataModule === 'import'
                         ? 'Importe registros ou pacotes completos em um espaço de trabalho dedicado.'
                         : activeDataModule === 'csv'
@@ -1704,15 +1746,6 @@ export default function DataStudioManager({
                 </div>
               ) : null}
 
-              {activeDataModule === 'records' ? (
-                <DataEntityRecordsWorkspace
-                  entities={snapshot.entities}
-                  csrfToken={csrfToken}
-                  canManageRecords={canManageRecords}
-                  initialEntityId={selectedEntityId}
-                />
-              ) : null}
-
               {activeDataModule === 'csv' && canManageDatabaseTables ? (
                 <div className="panel-data-import-grid">
                   <article className="panel-card">
@@ -1854,12 +1887,15 @@ export default function DataStudioManager({
                   <div className="panel-inline-between">
                     <div>
                       <h3>Arquivos do pacote</h3>
-                      <p className="panel-muted">Atualize, selecione e baixe os arquivos gerados para bootstrap do ambiente.</p>
+                      <p className="panel-muted">Atualize, selecione e baixe os arquivos gerados para bootstrap do ambiente e mantenha um backup completo do módulo.</p>
                     </div>
                     <div className="panel-actions">
                       <span className="panel-muted">Gerado em {formatDateTime(bundle.generatedAt)}</span>
                       <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={handleGenerateBundle} disabled={saving || (!canManageEntities && !canManageBootstrap)}>
                         Atualizar pacote
+                      </button>
+                      <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={handleGenerateBackup} disabled={saving || (!canManageEntities && !canManageRecords)}>
+                        Backup geral
                       </button>
                     </div>
                   </div>
@@ -1886,6 +1922,33 @@ export default function DataStudioManager({
                       <pre className="panel-data-code-pre">{activeBundleFile.content}</pre>
                     </div>
                   ) : null}
+
+                  <div className="panel-form-grid" style={{ marginTop: 16 }}>
+                    <div className="panel-form-field" style={{ gridColumn: '1 / -1' }}>
+                      <div className="panel-inline-between">
+                        <label>Restaurar backup geral</label>
+                        <label className="panel-btn panel-btn-secondary panel-btn-sm">
+                          Carregar arquivo
+                          <input type="file" accept=".json,application/json" hidden onChange={handleLoadBackupFile} />
+                        </label>
+                      </div>
+                      <textarea
+                        className="panel-textarea panel-data-codearea"
+                        value={backupText}
+                        onChange={(event) => setBackupText(event.target.value)}
+                        disabled={saving}
+                        placeholder='{"kind":"artmeta-panel-data-studio-backup","entities":[],"importsByEntity":{},"recordsByEntity":{}}'
+                      />
+                      <div className="panel-actions" style={{ marginTop: 12 }}>
+                        <button type="button" className="panel-btn panel-btn-primary" onClick={handleRestoreBackup} disabled={saving || !canManageEntities || !canManageRecords || !backupText.trim()}>
+                          Restaurar backup
+                        </button>
+                        <button type="button" className="panel-btn panel-btn-secondary" onClick={() => setBackupText('')} disabled={saving || !backupText.trim()}>
+                          Limpar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </article>
               ) : null}
             </div>

@@ -3,6 +3,8 @@
 import type { FormEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
+import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
+
 import {
   PANEL_MEDIA_PRESET_KEYS,
   type PanelMediaFit,
@@ -155,42 +157,33 @@ export default function PanelMediaSettingsManager({
   }
 
   return (
-    <section className="panel-grid" aria-labelledby="panel-media-settings-title">
-      <article className="panel-card panel-card-hero panel-dashboard-hero">
-        <div className="panel-dashboard-hero__header">
-          <div>
-            <p className="panel-kicker">Configurações do painel</p>
-            <h1 id="panel-media-settings-title">Mídia e processamento de imagens</h1>
-            <p className="panel-muted">
-              Centralize upload, compressão e tamanhos máximos por contexto. O CSS continua controlando layout, mas o payload já sai otimizado do servidor.
-            </p>
+    <section className="panel-grid panel-media-settings-page" aria-labelledby="panel-media-settings-title">
+      <PanelPageHeader
+        eyebrow="Configurações do painel"
+        title="Mídia e processamento de imagens"
+        titleId="panel-media-settings-title"
+        description="Centralize upload, compressão e tamanhos máximos por contexto. O layout continua livre, mas o payload já sai otimizado do servidor."
+        meta={
+          <div className="panel-catalog-architecture panel-catalog-architecture--media">
+            <div>
+              <strong>Limite por arquivo</strong>
+              <span>{diagnostics.maxFileSizeMb} MB por upload. Arquivos acima deste teto são recusados antes do processamento.</span>
+            </div>
+            <div>
+              <strong>Destino público</strong>
+              <span>{diagnostics.publicBasePath} · prefixo usado para servir os arquivos otimizados ao painel e às APIs.</span>
+            </div>
           </div>
-          <div className="panel-dashboard-hero__badges">
+        }
+        actions={
+          <div className="panel-inline panel-inline-wrap">
             <span className={`panel-badge ${diagnostics.uploadEnabled ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
               upload {diagnostics.uploadEnabled ? 'ativo' : 'limitado'}
             </span>
             <span className="panel-badge panel-badge-neutral">{enabledPresetsCount} presets</span>
           </div>
-        </div>
-
-        <div className="panel-dashboard-hero__meta">
-          <div>
-            <span className="panel-muted">Limite por arquivo</span>
-            <strong>{diagnostics.maxFileSizeMb} MB</strong>
-            <span>Arquivos acima deste teto são recusados antes do processamento.</span>
-          </div>
-          <div>
-            <span className="panel-muted">Formatos aceitos</span>
-            <strong>{diagnostics.allowedMimeTypes.join(', ')}</strong>
-            <span>Use JPG, PNG ou WebP de entrada conforme a operação precisar.</span>
-          </div>
-          <div>
-            <span className="panel-muted">Destino público</span>
-            <strong>{diagnostics.publicBasePath}</strong>
-            <span>Prefixo usado para servir os arquivos otimizados ao site e ao painel.</span>
-          </div>
-        </div>
-      </article>
+        }
+      />
 
       <article className="panel-card">
         <form className="panel-form" onSubmit={handleSave}>
@@ -238,6 +231,39 @@ export default function PanelMediaSettingsManager({
                 />
                 <small className="panel-field-help">Exemplo: <code>/ecommpanel-media</code>. No futuro, este módulo pode apontar para storage externo mantendo a mesma interface.</small>
               </div>
+
+              <div className="panel-field panel-field--span-3">
+                <label htmlFor="panel-media-default-folder">Pasta padrão da galeria</label>
+                <input
+                  id="panel-media-default-folder"
+                  className="panel-input"
+                  value={settings.storage.defaultFolder}
+                  onChange={(event) =>
+                    setSettings((prev) => ({
+                      ...prev,
+                      storage: {
+                        ...prev.storage,
+                        defaultFolder: event.target.value,
+                      },
+                    }))
+                  }
+                  disabled={!canManage}
+                />
+                <small className="panel-field-help">Use nomes como <code>cartas</code>, <code>cartas/raras</code> ou <code>documentos</code>. O upload pode sobrescrever essa pasta no momento do envio.</small>
+              </div>
+            </div>
+
+            <div className="panel-manager-feature-grid">
+              <article className={`panel-manager-feature-card ${diagnostics.publicDirectoryWritable ? 'panel-manager-feature-card--green' : 'panel-manager-feature-card--orange'}`}>
+                <strong>Pasta pública</strong>
+                <p><code>{diagnostics.publicDirectory}</code></p>
+                <p>{diagnostics.publicDirectoryWritable ? 'Leitura e escrita confirmadas.' : 'Sem permissão de escrita. Ajuste a pasta no servidor.'}</p>
+              </article>
+              <article className={`panel-manager-feature-card ${diagnostics.metadataDirectoryWritable ? 'panel-manager-feature-card--blue' : 'panel-manager-feature-card--orange'}`}>
+                <strong>Metadados da galeria</strong>
+                <p><code>{diagnostics.metadataDirectory}</code></p>
+                <p>{diagnostics.metadataDirectoryWritable ? 'Leitura e escrita confirmadas.' : 'Sem permissão de escrita. Ajuste a pasta de metadados.'}</p>
+              </article>
             </div>
 
             <div className="panel-media-mime-grid">

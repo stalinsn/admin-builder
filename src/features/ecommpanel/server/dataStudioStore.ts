@@ -6,7 +6,6 @@ import path from 'node:path';
 
 import type {
   DataBootstrapState,
-  DataDatabaseTableColumn,
   DataConnectionProfile,
   DataEntityDefinition,
   DataFieldDefinition,
@@ -15,16 +14,12 @@ import type {
   DataImportRecord,
   DataStudioBundle,
   DataStudioBundleFile,
+  DataStudioRuntimeSummary,
   DataStudioSnapshot,
 } from '@/features/ecommpanel/types/dataStudio';
 import { DATA_FIELD_TYPES } from '@/features/ecommpanel/types/dataStudio';
 import { generateDataStudioContracts } from './dataEntityContracts';
 import { nowIso, randomToken } from './crypto';
-import {
-  getPanelSettingFromDatabase,
-  upsertPanelSettingInDatabase,
-} from './panelSettingsDatabaseStore';
-import { withPostgresClient } from './postgresRuntime';
 import {
   buildMysqlPanelBootstrapSql,
   buildPostgresPanelBootstrapSql,
@@ -39,9 +34,6 @@ import {
 const ROOT_DIR = path.join(process.cwd(), 'src/data/ecommpanel/data-studio');
 const SNAPSHOT_FILE = path.join(ROOT_DIR, 'schema.json');
 const IMPORTS_DIR = path.join(ROOT_DIR, 'imports');
-const DATA_STUDIO_SNAPSHOT_KEY = 'data-studio-snapshot';
-
-type DataStudioPersistenceMode = 'files' | 'hybrid' | 'database';
 
 type PersistedSnapshot = DataStudioSnapshot;
 
@@ -89,17 +81,6 @@ type ImportBundleInput = {
   records?: Record<string, unknown[]>;
 };
 
-type DatabaseTableColumnRow = {
-  table_name: string;
-  column_name: string;
-  data_type: string;
-  udt_name: string;
-  is_nullable: 'YES' | 'NO';
-  column_default: string | null;
-  ordinal_position: number;
-  is_primary_key: boolean;
-};
-
 function readJsonFile<T>(filePath: string): T | null {
   if (!fs.existsSync(filePath)) return null;
 
@@ -116,13 +97,6 @@ function writeJsonAtomic(filePath: string, value: unknown): void {
   const tmpPath = `${filePath}.tmp-${process.pid}-${Date.now()}`;
   fs.writeFileSync(tmpPath, payload, 'utf-8');
   fs.renameSync(tmpPath, filePath);
-}
-
-function getDataStudioPersistenceMode(): DataStudioPersistenceMode {
-  const value = process.env.ECOM_DATA_STUDIO_PERSISTENCE_MODE?.trim().toLowerCase();
-  if (value === 'files') return 'files';
-  if (value === 'database') return 'database';
-  return 'hybrid';
 }
 
 function ensureDirs(): void {
@@ -192,14 +166,6 @@ function sanitizeProvisioningMethod(value: string | undefined): DataConnectionPr
   if (value === 'ssh_postgres') return 'ssh_postgres';
   if (value === 'ssh_mysql') return 'ssh_mysql';
   return 'manual';
-}
-
-function titleize(value: string): string {
-  return value
-    .split(/[\s_-]+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
 }
 
 function isFieldType(value: string): value is DataFieldType {
@@ -298,46 +264,45 @@ function createSeedSnapshot(): PersistedSnapshot {
   };
 }
 
-function normalizePersistedSnapshot(stored?: PersistedSnapshot | null): PersistedSnapshot {
+function loadSnapshot(): PersistedSnapshot {
+  ensureDirs();
+  const stored = readJsonFile<PersistedSnapshot>(SNAPSHOT_FILE);
   const hasStoredSnapshot =
     Boolean(stored) &&
     (Array.isArray(stored?.entities) ||
       Array.isArray(stored?.connections) ||
       Array.isArray(stored?.imports) ||
       typeof stored?.bootstrap === 'object');
-  if (!hasStoredSnapshot) {
-    return createSeedSnapshot();
-  }
+  if (hasStoredSnapshot) {
+    return {
+      schemaVersion: 1,
+      updatedAt: stored.updatedAt || nowIso(),
+      entities: stored.entities.map((entity) => ({
+        ...entity,
+        fields: (entity.fields || []).map((field, index) => sanitizeField(field, field.name || `field_${index + 1}`)),
+      })),
+      imports: Array.isArray(stored.imports) ? stored.imports : [],
+      connections: Array.isArray(stored.connections)
+        ? stored.connections.map((connection) => {
+            const engine = sanitizeEngine(connection.engine);
+            const isLocalSeedConnection = connection.id === 'conn-local-postgres' && engine === 'postgresql';
+            const resolvedDatabase =
+              isLocalSeedConnection && shouldHydrateSeedConnectionValue(connection.database)
+                ? getDefaultConnectionDatabase()
+                : sanitizeTableName(connection.database || getDefaultConnectionDatabase()) || getDefaultConnectionDatabase();
+            const resolvedUsername =
+              isLocalSeedConnection && shouldHydrateSeedConnectionValue(connection.username)
+                ? getDefaultConnectionUser()
+                : sanitizeLine(connection.username || getDefaultConnectionUser()) || getDefaultConnectionUser();
 
-  return {
-    schemaVersion: 1,
-    updatedAt: stored?.updatedAt || nowIso(),
-    entities: (stored?.entities || []).map((entity) => ({
-      ...entity,
-      fields: (entity.fields || []).map((field, index) => sanitizeField(field, field.name || `field_${index + 1}`)),
-    })),
-    imports: Array.isArray(stored?.imports) ? stored.imports : [],
-    connections: Array.isArray(stored?.connections)
-      ? stored.connections.map((connection) => {
-          const engine = sanitizeEngine(connection.engine);
-          const isLocalSeedConnection = connection.id === 'conn-local-postgres' && engine === 'postgresql';
-          const resolvedDatabase =
-            isLocalSeedConnection && shouldHydrateSeedConnectionValue(connection.database)
-              ? getDefaultConnectionDatabase()
-              : sanitizeTableName(connection.database || getDefaultConnectionDatabase()) || getDefaultConnectionDatabase();
-          const resolvedUsername =
-            isLocalSeedConnection && shouldHydrateSeedConnectionValue(connection.username)
-              ? getDefaultConnectionUser()
-              : sanitizeLine(connection.username || getDefaultConnectionUser()) || getDefaultConnectionUser();
-
-          return {
-            id: connection.id || `conn-${randomToken(6)}`,
-            label: sanitizeLine(connection.label || 'Conexão sem nome') || 'Conexão sem nome',
-            engine,
-            host: sanitizeHost(connection.host || getDefaultConnectionHost()) || getDefaultConnectionHost(),
-            port: Number.isFinite(connection.port) ? Number(connection.port) : getDefaultConnectionPort(engine),
-            database: resolvedDatabase,
-            username: resolvedUsername,
+            return {
+              id: connection.id || `conn-${randomToken(6)}`,
+              label: sanitizeLine(connection.label || 'Conexão sem nome') || 'Conexão sem nome',
+              engine,
+              host: sanitizeHost(connection.host || getDefaultConnectionHost()) || getDefaultConnectionHost(),
+              port: Number.isFinite(connection.port) ? Number(connection.port) : getDefaultConnectionPort(engine),
+              database: resolvedDatabase,
+              username: resolvedUsername,
             passwordReference: sanitizeLine(connection.passwordReference || 'APP_DB_PASSWORD') || 'APP_DB_PASSWORD',
             appHostPattern: sanitizeUserHostPattern(connection.appHostPattern || 'localhost'),
             sslMode: connection.sslMode === 'require' ? 'require' : connection.sslMode === 'prefer' ? 'prefer' : 'disable',
@@ -348,8 +313,7 @@ function normalizePersistedSnapshot(stored?: PersistedSnapshot | null): Persiste
             adminDatabase:
               sanitizeTableName(connection.adminDatabase || (sanitizeEngine(connection.engine) === 'mysql' ? 'mysql' : 'postgres')) ||
               (sanitizeEngine(connection.engine) === 'mysql' ? 'mysql' : 'postgres'),
-            adminUsername:
-              sanitizeLine(connection.adminUsername || (sanitizeEngine(connection.engine) === 'mysql' ? 'root' : 'postgres')) ||
+            adminUsername: sanitizeLine(connection.adminUsername || (sanitizeEngine(connection.engine) === 'mysql' ? 'root' : 'postgres')) ||
               (sanitizeEngine(connection.engine) === 'mysql' ? 'root' : 'postgres'),
             adminPasswordReference:
               sanitizeLine(connection.adminPasswordReference || 'APP_DB_ADMIN_PASSWORD') || 'APP_DB_ADMIN_PASSWORD',
@@ -378,220 +342,31 @@ function normalizePersistedSnapshot(stored?: PersistedSnapshot | null): Persiste
             updatedAt: connection.updatedAt || nowIso(),
           };
         })
-      : [],
-    bootstrap: {
-      activeConnectionId: sanitizeLine(stored?.bootstrap?.activeConnectionId || '') || undefined,
-      credentialsVerified: Boolean(stored?.bootstrap?.credentialsVerified),
-      databaseProvisioned: Boolean(stored?.bootstrap?.databaseProvisioned),
-      seedAdminProvisioned: Boolean(stored?.bootstrap?.seedAdminProvisioned),
-      boilerplateProvisioned: Boolean(stored?.bootstrap?.boilerplateProvisioned),
-      packageGeneratedAt: stored?.bootstrap?.packageGeneratedAt,
-      declaredAt: stored?.bootstrap?.declaredAt,
-      notes: sanitizeLine(stored?.bootstrap?.notes || ''),
-    },
-  };
+        : [],
+      bootstrap: {
+        activeConnectionId: sanitizeLine(stored.bootstrap?.activeConnectionId || '') || undefined,
+        credentialsVerified: Boolean(stored.bootstrap?.credentialsVerified),
+        databaseProvisioned: Boolean(stored.bootstrap?.databaseProvisioned),
+        seedAdminProvisioned: Boolean(stored.bootstrap?.seedAdminProvisioned),
+        boilerplateProvisioned: Boolean(stored.bootstrap?.boilerplateProvisioned),
+        packageGeneratedAt: stored.bootstrap?.packageGeneratedAt,
+        declaredAt: stored.bootstrap?.declaredAt,
+        notes: sanitizeLine(stored.bootstrap?.notes || ''),
+      },
+    };
+  }
+
+  const seed = createSeedSnapshot();
+  writeJsonAtomic(SNAPSHOT_FILE, seed);
+  return seed;
 }
 
-function loadSnapshot(): PersistedSnapshot {
-  ensureDirs();
-  const stored = readJsonFile<PersistedSnapshot>(SNAPSHOT_FILE);
-  const normalized = normalizePersistedSnapshot(stored);
-  writeJsonAtomic(SNAPSHOT_FILE, normalized);
-  return normalized;
-}
-
-async function persistSnapshot(snapshot: PersistedSnapshot): Promise<PersistedSnapshot> {
+function persistSnapshot(snapshot: PersistedSnapshot): PersistedSnapshot {
   const nextSnapshot: PersistedSnapshot = {
     ...snapshot,
     schemaVersion: 1,
     updatedAt: nowIso(),
   };
-
-  if (getDataStudioPersistenceMode() !== 'files') {
-    const persisted = await upsertPanelSettingInDatabase(DATA_STUDIO_SNAPSHOT_KEY, nextSnapshot);
-    if (!persisted.available && getDataStudioPersistenceMode() === 'database') {
-      throw new Error('Data Studio em modo database exige PostgreSQL disponível para persistir o snapshot.');
-    }
-  }
-
-  writeJsonAtomic(SNAPSHOT_FILE, nextSnapshot);
-  return nextSnapshot;
-}
-
-function isReservedSystemTableName(tableName: string): boolean {
-  return (
-    tableName === 'analytics_events' ||
-    tableName.startsWith('panel_') ||
-    tableName.startsWith('api_integration_') ||
-    tableName.startsWith('customer_') ||
-    tableName.startsWith('commerce_') ||
-    tableName.startsWith('blog_') ||
-    tableName.startsWith('site_') ||
-    tableName.startsWith('storefront_')
-  );
-}
-
-function inferFieldType(column: DataDatabaseTableColumn): DataFieldType {
-  const dataType = column.dataType.toLowerCase();
-  const fieldName = column.name.toLowerCase();
-
-  if (fieldName === 'slug') return 'slug';
-  if (fieldName.includes('email')) return 'email';
-  if (fieldName === 'url' || fieldName.endsWith('_url')) return 'url';
-  if (fieldName.endsWith('_id')) return 'reference';
-
-  if (dataType === 'smallint' || dataType === 'integer' || dataType === 'bigint') return 'integer';
-  if (dataType === 'numeric' || dataType === 'decimal' || dataType === 'real' || dataType === 'double precision') return 'number';
-  if (dataType === 'boolean') return 'boolean';
-  if (dataType === 'date') return 'date';
-  if (dataType.includes('timestamp')) return 'datetime';
-  if (dataType === 'json' || dataType === 'jsonb' || dataType === 'array') return 'json';
-
-  return 'text';
-}
-
-function buildReconstructedEntity(tableName: string, columns: DataDatabaseTableColumn[]): DataEntityDefinition {
-  const now = nowIso();
-  const slug = sanitizeSlug(tableName.replace(/_/g, '-'));
-  const visibleColumns = columns.filter(
-    (column) => column.name !== 'id' && column.name !== 'created_at' && column.name !== 'updated_at',
-  );
-
-  return {
-    id: `ent-${sanitizeTableName(tableName)}`,
-    slug,
-    label: titleize(tableName),
-    tableName,
-    description: 'Entidade reconstruída automaticamente a partir da estrutura física do PostgreSQL.',
-    status: 'ready',
-    fields: visibleColumns.map((column) =>
-      sanitizeField(
-        {
-          id: `fld-${sanitizeTableName(tableName)}-${column.name}`,
-          name: column.name,
-          label: titleize(column.name),
-          type: inferFieldType(column),
-          description: `Campo reconstruído a partir da coluna ${column.name} da tabela ${tableName}.`,
-          required: !column.nullable,
-          unique: false,
-          indexed: column.primaryKey,
-          listVisible: true,
-          defaultValue: column.defaultValue || undefined,
-          createdAt: now,
-          updatedAt: now,
-        },
-        column.name,
-      ),
-    ),
-    createdAt: now,
-    updatedAt: now,
-  };
-}
-
-async function reconstructEntitiesFromDatabase(): Promise<DataEntityDefinition[]> {
-  const result = await withPostgresClient(async (client) => {
-    const query = `
-      WITH primary_keys AS (
-        SELECT
-          kcu.table_name,
-          kcu.column_name
-        FROM information_schema.table_constraints tc
-        INNER JOIN information_schema.key_column_usage kcu
-          ON tc.constraint_name = kcu.constraint_name
-         AND tc.table_schema = kcu.table_schema
-         AND tc.table_name = kcu.table_name
-        WHERE tc.constraint_type = 'PRIMARY KEY'
-          AND tc.table_schema = 'public'
-      )
-      SELECT
-        c.table_name,
-        c.column_name,
-        c.data_type,
-        c.udt_name,
-        c.is_nullable,
-        c.column_default,
-        c.ordinal_position,
-        (pk.column_name IS NOT NULL) AS is_primary_key
-      FROM information_schema.columns c
-      INNER JOIN information_schema.tables t
-        ON t.table_schema = c.table_schema
-       AND t.table_name = c.table_name
-      LEFT JOIN primary_keys pk
-        ON pk.table_name = c.table_name
-       AND pk.column_name = c.column_name
-      WHERE c.table_schema = 'public'
-        AND t.table_type = 'BASE TABLE'
-      ORDER BY c.table_name, c.ordinal_position
-    `;
-
-    const response = await client.query<DatabaseTableColumnRow>(query);
-    return response.rows;
-  });
-
-  if (!result.available) return [];
-
-  const grouped = new Map<string, DataDatabaseTableColumn[]>();
-
-  for (const row of result.value) {
-    if (isReservedSystemTableName(row.table_name)) continue;
-
-    const list = grouped.get(row.table_name) || [];
-    list.push({
-      name: row.column_name,
-      dataType: row.data_type === 'USER-DEFINED' ? row.udt_name : row.data_type,
-      nullable: row.is_nullable === 'YES',
-      defaultValue: row.column_default || undefined,
-      ordinalPosition: row.ordinal_position,
-      primaryKey: row.is_primary_key,
-    });
-    grouped.set(row.table_name, list);
-  }
-
-  return Array.from(grouped.entries())
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(([tableName, columns]) => buildReconstructedEntity(tableName, columns));
-}
-
-async function loadSnapshotResolved(): Promise<PersistedSnapshot> {
-  ensureDirs();
-
-  const mode = getDataStudioPersistenceMode();
-  const fileSnapshot = normalizePersistedSnapshot(readJsonFile<PersistedSnapshot>(SNAPSHOT_FILE));
-
-  if (mode === 'files') {
-    writeJsonAtomic(SNAPSHOT_FILE, fileSnapshot);
-    return fileSnapshot;
-  }
-
-  const stored = await getPanelSettingFromDatabase<PersistedSnapshot>(DATA_STUDIO_SNAPSHOT_KEY);
-  if (stored.available && stored.value) {
-    const normalized = normalizePersistedSnapshot(stored.value);
-    writeJsonAtomic(SNAPSHOT_FILE, normalized);
-    return normalized;
-  }
-
-  let nextSnapshot = fileSnapshot;
-  if (!nextSnapshot.entities.length) {
-    const reconstructedEntities = await reconstructEntitiesFromDatabase();
-    if (reconstructedEntities.length) {
-      nextSnapshot = {
-        ...nextSnapshot,
-        entities: reconstructedEntities,
-        updatedAt: nowIso(),
-        bootstrap: {
-          ...nextSnapshot.bootstrap,
-          notes:
-            nextSnapshot.bootstrap.notes ||
-            'Entidades reconstruídas automaticamente a partir da estrutura física do banco.',
-        },
-      };
-    }
-  }
-
-  const persisted = await upsertPanelSettingInDatabase(DATA_STUDIO_SNAPSHOT_KEY, nextSnapshot);
-  if (!persisted.available && mode === 'database') {
-    throw new Error('Data Studio em modo database exige PostgreSQL disponível para carregar o snapshot.');
-  }
 
   writeJsonAtomic(SNAPSHOT_FILE, nextSnapshot);
   return nextSnapshot;
@@ -604,6 +379,27 @@ function readImportRows(entitySlug: string): DataImportPayload[] {
 
 function writeImportRows(entitySlug: string, rows: DataImportPayload[]): void {
   writeJsonAtomic(path.join(IMPORTS_DIR, `${entitySlug}.json`), rows);
+}
+
+function normalizeImportPayload(
+  entity: DataEntityDefinition,
+  payload: Partial<DataImportPayload>,
+  index: number,
+): DataImportPayload | null {
+  const importedAt = payload.importedAt || nowIso();
+  const rows = Array.isArray(payload.rows)
+    ? payload.rows.filter((row): row is Record<string, unknown> => Boolean(row) && typeof row === 'object')
+    : [];
+
+  if (!rows.length) return null;
+
+  return {
+    entityId: entity.id,
+    entitySlug: entity.slug,
+    sourceLabel: sanitizeLine(payload.sourceLabel || `restored-import-${index + 1}`) || `restored-import-${index + 1}`,
+    importedAt,
+    rows,
+  };
 }
 
 function toSnapshot(snapshot: PersistedSnapshot): DataStudioSnapshot {
@@ -805,12 +601,8 @@ export function getDataStudioSnapshot(): DataStudioSnapshot {
   return toSnapshot(loadSnapshot());
 }
 
-export async function getDataStudioSnapshotResolved(): Promise<DataStudioSnapshot> {
-  return toSnapshot(await loadSnapshotResolved());
-}
-
-export async function saveDataEntity(input: SaveEntityInput): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+export function saveDataEntity(input: SaveEntityInput): DataStudioSnapshot {
+  const snapshot = loadSnapshot();
   const now = nowIso();
   const normalizedSlug = sanitizeSlug(input.slug);
   if (!normalizedSlug) {
@@ -859,11 +651,11 @@ export async function saveDataEntity(input: SaveEntityInput): Promise<DataStudio
     ? snapshot.entities.map((candidate) => (candidate.id === entity.id ? entity : candidate))
     : [entity, ...snapshot.entities];
 
-  return toSnapshot(await persistSnapshot({ ...snapshot, entities: nextEntities }));
+  return toSnapshot(persistSnapshot({ ...snapshot, entities: nextEntities }));
 }
 
-export async function deleteDataEntity(entityId: string): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+export function deleteDataEntity(entityId: string): DataStudioSnapshot {
+  const snapshot = loadSnapshot();
   const target = snapshot.entities.find((entity) => entity.id === entityId);
   if (!target) {
     throw new Error('Entidade não encontrada.');
@@ -876,11 +668,11 @@ export async function deleteDataEntity(entityId: string): Promise<DataStudioSnap
     fs.unlinkSync(importFile);
   }
 
-  return toSnapshot(await persistSnapshot({ ...snapshot, entities: nextEntities, imports: nextImports }));
+  return toSnapshot(persistSnapshot({ ...snapshot, entities: nextEntities, imports: nextImports }));
 }
 
-export async function saveDataConnection(input: SaveConnectionInput): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+export function saveDataConnection(input: SaveConnectionInput): DataStudioSnapshot {
+  const snapshot = loadSnapshot();
   const now = nowIso();
   const existing = input.id ? snapshot.connections.find((connection) => connection.id === input.id) : null;
   const engine = sanitizeEngine(input.engine || existing?.engine);
@@ -947,7 +739,7 @@ export async function saveDataConnection(input: SaveConnectionInput): Promise<Da
   }
 
   return toSnapshot(
-    await persistSnapshot({
+    persistSnapshot({
       ...snapshot,
       connections: nextConnections,
       bootstrap: {
@@ -958,8 +750,8 @@ export async function saveDataConnection(input: SaveConnectionInput): Promise<Da
   );
 }
 
-export async function deleteDataConnection(connectionId: string): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+export function deleteDataConnection(connectionId: string): DataStudioSnapshot {
+  const snapshot = loadSnapshot();
   const nextConnections = snapshot.connections.filter((connection) => connection.id !== connectionId);
   const nextActive = nextConnections[0];
   if (nextActive && !nextConnections.some((connection) => connection.active)) {
@@ -967,7 +759,7 @@ export async function deleteDataConnection(connectionId: string): Promise<DataSt
   }
 
   return toSnapshot(
-    await persistSnapshot({
+    persistSnapshot({
       ...snapshot,
       connections: nextConnections,
       bootstrap: {
@@ -978,8 +770,8 @@ export async function deleteDataConnection(connectionId: string): Promise<DataSt
   );
 }
 
-export async function updateDataBootstrapState(input: BootstrapUpdateInput): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+export function updateDataBootstrapState(input: BootstrapUpdateInput): DataStudioSnapshot {
+  const snapshot = loadSnapshot();
   const nextBootstrap: DataBootstrapState = {
     ...snapshot.bootstrap,
     ...input,
@@ -994,7 +786,7 @@ export async function updateDataBootstrapState(input: BootstrapUpdateInput): Pro
   };
 
   return toSnapshot(
-    await persistSnapshot({
+    persistSnapshot({
       ...snapshot,
       bootstrap: nextBootstrap,
     }),
@@ -1042,7 +834,7 @@ function applyProvisioningInspection(
 }
 
 export async function probeDataConnection(connectionId: string): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+  const snapshot = loadSnapshot();
   const target = snapshot.connections.find((connection) => connection.id === connectionId);
   if (!target) {
     throw new Error('Conexão não encontrada.');
@@ -1079,7 +871,7 @@ export async function probeDataConnection(connectionId: string): Promise<DataStu
   );
 
   return toSnapshot(
-    await persistSnapshot({
+    persistSnapshot({
       ...snapshot,
       connections: nextConnections,
     }),
@@ -1087,7 +879,7 @@ export async function probeDataConnection(connectionId: string): Promise<DataStu
 }
 
 export async function inspectDataProvisioning(connectionId: string, secrets: DataProvisioningSecrets): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+  const snapshot = loadSnapshot();
   const target = snapshot.connections.find((connection) => connection.id === connectionId);
   if (!target) {
     throw new Error('Conexão não encontrada.');
@@ -1102,7 +894,7 @@ export async function inspectDataProvisioning(connectionId: string, secrets: Dat
       sshPassword: secrets.sshPassword,
       mainAdminEmail: secrets.mainAdminEmail,
     });
-    return toSnapshot(await persistSnapshot(applyProvisioningInspection(snapshot, connectionId, inspection)));
+    return toSnapshot(persistSnapshot(applyProvisioningInspection(snapshot, connectionId, inspection)));
   }
 
   if (target.engine === 'mysql' && target.provisioningMethod === 'ssh_mysql') {
@@ -1111,7 +903,7 @@ export async function inspectDataProvisioning(connectionId: string, secrets: Dat
     }
 
     const inspection = await inspectMysqlProvisioning(target, secrets);
-    return toSnapshot(await persistSnapshot(applyProvisioningInspection(snapshot, connectionId, inspection)));
+    return toSnapshot(persistSnapshot(applyProvisioningInspection(snapshot, connectionId, inspection)));
   }
 
   throw new Error('A inspeção remota automática está disponível apenas para conexões SSH do PostgreSQL ou MySQL/MariaDB.');
@@ -1122,7 +914,7 @@ export async function provisionDataConnection(
   secrets: Required<Pick<DataProvisioningSecrets, 'sshPassword' | 'appPassword' | 'mainAdminName' | 'mainAdminEmail' | 'mainAdminPassword'>> &
     Partial<Pick<DataProvisioningSecrets, 'adminPassword'>>,
 ): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+  const snapshot = loadSnapshot();
   const target = snapshot.connections.find((connection) => connection.id === connectionId);
   if (!target) {
     throw new Error('Conexão não encontrada.');
@@ -1130,7 +922,7 @@ export async function provisionDataConnection(
 
   if (target.engine === 'postgresql' && target.provisioningMethod === 'ssh_postgres') {
     const inspection = await provisionPostgresConnection(target, secrets);
-    return toSnapshot(await persistSnapshot(applyProvisioningInspection(snapshot, connectionId, inspection, { provisioned: true })));
+    return toSnapshot(persistSnapshot(applyProvisioningInspection(snapshot, connectionId, inspection, { provisioned: true })));
   }
 
   if (target.engine === 'mysql' && target.provisioningMethod === 'ssh_mysql') {
@@ -1146,18 +938,18 @@ export async function provisionDataConnection(
       mainAdminEmail: secrets.mainAdminEmail,
       mainAdminPassword: secrets.mainAdminPassword,
     });
-    return toSnapshot(await persistSnapshot(applyProvisioningInspection(snapshot, connectionId, inspection, { provisioned: true })));
+    return toSnapshot(persistSnapshot(applyProvisioningInspection(snapshot, connectionId, inspection, { provisioned: true })));
   }
 
   throw new Error('O provisionamento remoto automático está disponível apenas para conexões SSH do PostgreSQL ou MySQL/MariaDB.');
 }
 
-export async function importDataRows(input: {
+export function importDataRows(input: {
   entityId: string;
   sourceLabel?: string;
   rows: Record<string, unknown>[];
-}): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
+}): DataStudioSnapshot {
+  const snapshot = loadSnapshot();
   const entity = snapshot.entities.find((candidate) => candidate.id === input.entityId);
   if (!entity) {
     throw new Error('Entidade não encontrada para importação.');
@@ -1189,26 +981,26 @@ export async function importDataRows(input: {
     importedAt: payload.importedAt,
   };
 
-  return toSnapshot(await persistSnapshot({ ...snapshot, imports: [importRecord, ...snapshot.imports].slice(0, 80) }));
+  return toSnapshot(persistSnapshot({ ...snapshot, imports: [importRecord, ...snapshot.imports].slice(0, 80) }));
 }
 
-export async function importDataStudioBundle(input: ImportBundleInput): Promise<DataStudioSnapshot> {
+export function importDataStudioBundle(input: ImportBundleInput): DataStudioSnapshot {
   const entities = Array.isArray(input.entities) ? input.entities : [];
 
-  const savedEntities = await Promise.all(entities.map(async (entity) => {
+  const savedEntities = entities.map((entity) => {
     if (!entity || typeof entity !== 'object') {
       throw new Error('Entidade inválida no pacote de importação.');
     }
     return saveDataEntity(entity as SaveEntityInput);
-  }));
+  });
 
-  let latestSnapshot = savedEntities[savedEntities.length - 1] || (await getDataStudioSnapshotResolved());
+  let latestSnapshot = savedEntities[savedEntities.length - 1] || getDataStudioSnapshot();
 
   if (input.records && typeof input.records === 'object') {
     for (const [entitySlug, rows] of Object.entries(input.records)) {
       const entity = latestSnapshot.entities.find((candidate) => candidate.slug === sanitizeSlug(entitySlug));
       if (!entity || !Array.isArray(rows) || !rows.length) continue;
-      latestSnapshot = await importDataRows({
+      latestSnapshot = importDataRows({
         entityId: entity.id,
         sourceLabel: 'pacote-importado',
         rows: rows.filter((row): row is Record<string, unknown> => Boolean(row) && typeof row === 'object'),
@@ -1219,12 +1011,57 @@ export async function importDataStudioBundle(input: ImportBundleInput): Promise<
   return latestSnapshot;
 }
 
-function generateDataStudioBundleFromSnapshot(snapshot: PersistedSnapshot): DataStudioBundle {
-  const contracts = generateDataStudioContracts(toSnapshot(snapshot));
-  const importedRows = snapshot.entities.reduce<Record<string, DataImportPayload[]>>((acc, entity) => {
+export function exportDataImportPayloadMap(): Record<string, DataImportPayload[]> {
+  const snapshot = loadSnapshot();
+
+  return snapshot.entities.reduce<Record<string, DataImportPayload[]>>((acc, entity) => {
     acc[entity.slug] = readImportRows(entity.slug);
     return acc;
   }, {});
+}
+
+export function restoreDataImportPayloadMap(payloadMap: Record<string, unknown>): DataStudioSnapshot {
+  const snapshot = loadSnapshot();
+  const nextImports: DataImportRecord[] = [];
+  const nextPayloadMap = payloadMap && typeof payloadMap === 'object' ? payloadMap : {};
+
+  for (const entity of snapshot.entities) {
+    const rawPayloads: unknown[] = Array.isArray(nextPayloadMap[entity.slug]) ? (nextPayloadMap[entity.slug] as unknown[]) : [];
+    const normalizedPayloads = rawPayloads
+      .map((payload, index) =>
+        payload && typeof payload === 'object' ? normalizeImportPayload(entity, payload as Partial<DataImportPayload>, index) : null,
+      )
+      .filter((payload): payload is DataImportPayload => Boolean(payload))
+      .slice(0, 12);
+
+    writeImportRows(entity.slug, normalizedPayloads);
+
+    for (const payload of normalizedPayloads) {
+      nextImports.push({
+        id: `imp-${randomToken(6)}`,
+        entityId: entity.id,
+        entitySlug: entity.slug,
+        sourceLabel: payload.sourceLabel,
+        rowsCount: payload.rows.length,
+        importedAt: payload.importedAt,
+      });
+    }
+  }
+
+  nextImports.sort((left, right) => right.importedAt.localeCompare(left.importedAt));
+
+  return toSnapshot(
+    persistSnapshot({
+      ...snapshot,
+      imports: nextImports.slice(0, 80),
+    }),
+  );
+}
+
+export function generateDataStudioBundle(): DataStudioBundle {
+  const snapshot = loadSnapshot();
+  const contracts = generateDataStudioContracts(toSnapshot(snapshot));
+  const importedRows = exportDataImportPayloadMap();
 
   const activeConnection = snapshot.connections.find((connection) => connection.id === snapshot.bootstrap.activeConnectionId) || snapshot.connections[0];
   const generatedAt = nowIso();
@@ -1336,52 +1173,38 @@ function generateDataStudioBundleFromSnapshot(snapshot: PersistedSnapshot): Data
   };
 }
 
-export function generateDataStudioBundle(snapshot?: DataStudioSnapshot): DataStudioBundle {
-  return generateDataStudioBundleFromSnapshot(
-    snapshot
-      ? {
-          schemaVersion: snapshot.schemaVersion,
-          updatedAt: snapshot.updatedAt,
-          entities: snapshot.entities,
-          imports: snapshot.imports,
-          connections: snapshot.connections,
-          bootstrap: snapshot.bootstrap,
-        }
-      : loadSnapshot(),
-  );
+export async function getDataStudioSnapshotResolved(): Promise<DataStudioSnapshot> {
+  return getDataStudioSnapshot();
 }
 
-export async function generateDataStudioBundleResolved(snapshot?: DataStudioSnapshot): Promise<DataStudioBundle> {
-  if (snapshot) {
-    return generateDataStudioBundle(snapshot);
-  }
-  return generateDataStudioBundleFromSnapshot(await loadSnapshotResolved());
+export async function getDataStudioRuntimeResolved(snapshot?: DataStudioSnapshot): Promise<DataStudioRuntimeSummary> {
+  return {
+    databaseAvailable: false,
+    inspectedAt: nowIso(),
+    entities: (snapshot || getDataStudioSnapshot()).entities.map((entity) => ({
+      entityId: entity.id,
+      entitySlug: entity.slug,
+      entityLabel: entity.label,
+      tableName: entity.tableName,
+      databaseAvailable: false,
+      tableExists: false,
+      modeledFieldCount: entity.fields.length,
+      databaseColumnCount: 0,
+      rowCount: 0,
+      missingColumns: entity.fields.map((field) => field.name),
+      extraColumns: [],
+      inspectedAt: nowIso(),
+      schemaPath: `/contracts/entities/${entity.slug}.schema.json`,
+      internalCollectionPath: `/api/ecommpanel/data-studio/entities/${entity.slug}/records`,
+      internalItemPath: `/api/ecommpanel/data-studio/entities/${entity.slug}/records/{recordId}`,
+      integrationCollectionPath: `/api/integration/v1/data/entities/${entity.slug}/records`,
+      integrationItemPath: `/api/integration/v1/data/entities/${entity.slug}/records/{recordId}`,
+      readScope: `entity.${entity.slug}.read`,
+      writeScope: `entity.${entity.slug}.write`,
+    })),
+  };
 }
 
-export async function rebuildDataEntitiesFromDatabase(options?: { replaceExisting?: boolean }): Promise<DataStudioSnapshot> {
-  const snapshot = await loadSnapshotResolved();
-  const reconstructed = await reconstructEntitiesFromDatabase();
-  const nextEntities = options?.replaceExisting
-    ? reconstructed
-    : [
-        ...snapshot.entities,
-        ...reconstructed.filter(
-          (entity) =>
-            !snapshot.entities.some(
-              (existing) => existing.slug === entity.slug || existing.tableName === entity.tableName,
-            ),
-        ),
-      ];
-
-  return toSnapshot(
-    await persistSnapshot({
-      ...snapshot,
-      entities: nextEntities,
-      updatedAt: nowIso(),
-      bootstrap: {
-        ...snapshot.bootstrap,
-        notes: 'Entidades sincronizadas com a estrutura física do banco.',
-      },
-    }),
-  );
+export async function generateDataStudioBundleResolved(_snapshot?: DataStudioSnapshot): Promise<DataStudioBundle> {
+  return generateDataStudioBundle();
 }

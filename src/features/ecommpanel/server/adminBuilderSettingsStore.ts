@@ -13,6 +13,7 @@ export type AdminBuilderSettings = {
   accountWorkspace: {
     mode: AccountWorkspaceMode;
     entitySlug: string;
+    entityListFieldNames: Record<string, string[]>;
   };
 };
 
@@ -63,6 +64,7 @@ export function createDefaultAdminBuilderSettings(): AdminBuilderSettings {
     accountWorkspace: {
       mode: 'native',
       entitySlug: '',
+      entityListFieldNames: {},
     },
   };
 }
@@ -81,6 +83,22 @@ export function normalizeAdminBuilderSettings(
   const availableSlugs = new Set((snapshot?.entities || []).map((entity) => entity.slug));
   const hasRequestedEntity = requestedSlug && availableSlugs.has(requestedSlug);
   const firstEntitySlug = snapshot?.entities[0]?.slug || '';
+  const rawFieldMap =
+    accountWorkspace.entityListFieldNames && typeof accountWorkspace.entityListFieldNames === 'object'
+      ? accountWorkspace.entityListFieldNames
+      : {};
+  const entityListFieldNames = Object.fromEntries(
+    Object.entries(rawFieldMap).flatMap(([entitySlug, fieldNames]) => {
+      if (!availableSlugs.has(entitySlug) || !Array.isArray(fieldNames)) return [];
+      const entity = snapshot?.entities.find((currentEntity) => currentEntity.slug === entitySlug);
+      if (!entity) return [];
+      const allowedFieldNames = new Set(entity.fields.map((field) => field.name));
+      const normalizedFieldNames = fieldNames
+        .map((fieldName) => normalizeString(fieldName, '', 160))
+        .filter((fieldName) => fieldName && allowedFieldNames.has(fieldName));
+      return [[entitySlug, Array.from(new Set(normalizedFieldNames)).slice(0, 8)]];
+    }),
+  );
 
   return {
     schemaVersion: SCHEMA_VERSION,
@@ -88,6 +106,7 @@ export function normalizeAdminBuilderSettings(
     accountWorkspace: {
       mode: requestedMode === 'entity' && (hasRequestedEntity || firstEntitySlug) ? 'entity' : 'native',
       entitySlug: hasRequestedEntity ? requestedSlug : requestedMode === 'entity' ? firstEntitySlug : '',
+      entityListFieldNames,
     },
   };
 }

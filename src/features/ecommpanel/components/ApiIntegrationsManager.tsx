@@ -2,6 +2,8 @@
 
 import type { FormEvent } from 'react';
 import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import PanelModal from '@/features/ecommpanel/components/PanelModal';
 import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 
@@ -79,6 +81,8 @@ type ClientFormState = {
   expiresAt: string;
 };
 
+type IntegrationView = 'keys' | 'scopes' | 'reference' | 'logs';
+
 function buildEmptyForm(availableScopes: ApiIntegrationScope[]): ClientFormState {
   return {
     name: '',
@@ -131,6 +135,7 @@ export default function ApiIntegrationsManager({
   availableScopes,
   canManage,
 }: ApiIntegrationsManagerProps) {
+  const searchParams = useSearchParams();
   const scopeIds = useMemo(() => availableScopes.map((scope) => scope.scope), [availableScopes]);
   const [csrfToken, setCsrfToken] = useState('');
   const [clients, setClients] = useState<ApiClientRecord[]>(initialClients);
@@ -145,6 +150,7 @@ export default function ApiIntegrationsManager({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [revealedSecret, setRevealedSecret] = useState<{ keyId: string; value: string } | null>(null);
+  const activeView = (searchParams.get('view') as IntegrationView | null) || 'keys';
 
   useEffect(() => {
     fetch('/api/ecommpanel/auth/me', { credentials: 'same-origin' })
@@ -180,6 +186,18 @@ export default function ApiIntegrationsManager({
       entityScopes,
     };
   }, [availableScopes, clients, logs.length, referenceItems.length]);
+
+  const entityScopes = useMemo(
+    () => availableScopes.filter((scope) => scope.group === 'entity'),
+    [availableScopes],
+  );
+
+  const focusIds: Record<IntegrationView, string> = {
+    keys: 'panel-integrations-clients',
+    scopes: 'panel-integrations-scopes',
+    reference: 'panel-integrations-reference',
+    logs: 'panel-integrations-logs',
+  };
 
   const selectedClient = useMemo(
     () => clients.find((item) => item.id === (selectedClientId || form.clientId)) || null,
@@ -309,191 +327,210 @@ export default function ApiIntegrationsManager({
   }
 
   return (
-    <section className="panel-grid" aria-labelledby="api-integrations-title">
+    <section className="panel-grid panel-manager-page panel-integrations-page" aria-labelledby="api-integrations-title">
       <PanelPageHeader
-        eyebrow="APIs e integrações"
-        title="Controle de acesso da camada headless"
+        title="API & Integrações"
         titleId="api-integrations-title"
-        description="Gere clientes de API, distribua escopos por entidade ou domínio técnico, rotacione segredos, acompanhe chamadas autenticadas e documente o contrato exposto para apps e serviços externos."
+        description="Gere chaves, emita tokens e distribua escopos por entidade para integrações externas."
         actions={
-          canManage ? (
-            <button type="button" className="panel-btn panel-btn-primary panel-btn-sm" onClick={handleCreateNew}>
-              + Novo token
-            </button>
-          ) : null
-        }
-        meta={
-          <div className="panel-catalog-architecture">
-            <div>
-              <strong>Separação de superfícies</strong>
-              <span>`/api/v1` fica como superfície pública resumida. `/api/integration/v1` exige autenticação e registra trilha operacional.</span>
-            </div>
-            <div>
-              <strong>Fluxo recomendado</strong>
-              <span>Key ID + secret emitem um bearer token temporário. As requisições seguintes usam somente o token.</span>
-            </div>
+          <div className="panel-inline panel-inline-wrap">
+            {canManage ? (
+              <button type="button" className="panel-btn panel-btn-primary panel-btn-sm panel-manager-primary-button" onClick={handleCreateNew}>
+                + Novo Token
+              </button>
+            ) : null}
           </div>
         }
       />
 
-      <div className="panel-stats">
-        <article className="panel-stat">
-          <span className="panel-muted">Clientes de API</span>
-          <strong>{stats.totalClients}</strong>
-          <span>{stats.activeClients} ativos</span>
+      <nav className="panel-section-tabs panel-section-tabs--integrations" aria-label="Superfícies de integração">
+        <Link href="/ecommpanel/admin/integrations?view=keys" className={`panel-section-tab ${activeView === 'keys' ? 'is-active' : ''}`}>
+          Chaves & Tokens
+        </Link>
+        <Link href="/ecommpanel/admin/integrations?view=scopes" className={`panel-section-tab ${activeView === 'scopes' ? 'is-active' : ''}`}>
+          Escopos por Entidade
+        </Link>
+        <Link href="/ecommpanel/admin/integrations?view=reference" className={`panel-section-tab ${activeView === 'reference' ? 'is-active' : ''}`}>
+          Referência
+        </Link>
+        <Link href="/ecommpanel/admin/integrations?view=logs" className={`panel-section-tab ${activeView === 'logs' ? 'is-active' : ''}`}>
+          Logs de Acesso
+        </Link>
+      </nav>
+
+      <div className="panel-manager-feature-grid panel-manager-feature-grid--three">
+        <article className={`panel-manager-feature-card panel-manager-feature-card--blue ${activeView === 'keys' ? 'is-focused' : ''}`}>
+          <div className="panel-manager-feature-card__icon" aria-hidden="true" />
+          <div>
+            <h2>Clientes de API</h2>
+            <p>Use credenciais e escopos para controlar o acesso à base.</p>
+            <strong>{stats.totalClients}</strong>
+            <small>{stats.activeClients} ativos</small>
+          </div>
         </article>
-        <article className="panel-stat">
-          <span className="panel-muted">Rotas autenticadas</span>
-          <strong>{stats.totalRoutes}</strong>
-          <span>Contrato disponível para integração</span>
+        <article className={`panel-manager-feature-card panel-manager-feature-card--green ${activeView === 'scopes' ? 'is-focused' : ''}`}>
+          <div className="panel-manager-feature-card__icon" aria-hidden="true" />
+          <div>
+            <h2>Integrações autenticadas</h2>
+            <p>Rotas com token e escopos dinâmicos por entidade.</p>
+            <strong>{stats.totalRoutes}</strong>
+            <small>{stats.entityScopes} escopos por entidade</small>
+          </div>
         </article>
-        <article className="panel-stat">
-          <span className="panel-muted">Logs recentes</span>
-          <strong>{stats.totalLogs}</strong>
-          <span>Últimas chamadas rastreadas</span>
-        </article>
-        <article className="panel-stat">
-          <span className="panel-muted">Escopos por entidade</span>
-          <strong>{stats.entityScopes}</strong>
-          <span>{stats.reservedScopes} reservados para expansão</span>
+        <article className={`panel-manager-feature-card panel-manager-feature-card--purple ${activeView === 'reference' || activeView === 'logs' ? 'is-focused' : ''}`}>
+          <div className="panel-manager-feature-card__icon" aria-hidden="true" />
+          <div>
+            <h2>Documentação viva</h2>
+            <p>Contratos e logs prontos para integrar apps externos.</p>
+            <strong>{stats.totalLogs}</strong>
+            <small>{stats.reservedScopes} escopos reservados</small>
+          </div>
         </article>
       </div>
 
       {error ? <p className="panel-feedback panel-feedback-error">{error}</p> : null}
       {success ? <p className="panel-feedback panel-feedback-success">{success}</p> : null}
 
-      {revealedSecret ? (
-        <article className="panel-card panel-feedback panel-feedback-warning">
-          <strong>Secret disponível uma única vez</strong>
-          <span>
-            Key ID: <code>{revealedSecret.keyId}</code>
-          </span>
-          <span>
-            Secret: <code>{revealedSecret.value}</code>
-          </span>
-        </article>
-      ) : null}
+      <div className="panel-integrations-layout">
+        <div className="panel-integrations-layout__main">
+          {revealedSecret ? (
+            <article className="panel-card panel-feedback panel-feedback-warning panel-integrations-secret-card">
+              <strong>Secret disponível uma única vez</strong>
+              <span>
+                Key ID: <code>{revealedSecret.keyId}</code>
+              </span>
+              <span>
+                Secret: <code>{revealedSecret.value}</code>
+              </span>
+            </article>
+          ) : null}
 
-      <div className="panel-dashboard-layout panel-dashboard-layout--compact">
-        <article className="panel-card panel-card-subtle">
-          <div className="panel-card-header">
-            <div className="panel-card-header__copy">
-              <h2>Clientes de API</h2>
-              <p className="panel-muted">Crie chaves com escopo por entidade e distribua o acesso técnico sem poluir o restante da interface.</p>
+          <article id={focusIds.keys} className={`panel-manager-card panel-manager-card--clients ${activeView === 'keys' ? 'is-focused' : ''}`}>
+            <div className="panel-card-header">
+              <div className="panel-card-header__copy">
+                <h2>Clientes cadastrados</h2>
+                <p className="panel-muted">Selecione uma credencial para editar, rotacionar o secret ou reaproveitar os scopes de entidades já modeladas.</p>
+              </div>
             </div>
-          </div>
-
-          <div className="panel-api-feature-grid">
-            <article className="panel-api-feature-card panel-api-feature-card--blue">
-              <strong>Cliente de APIs</strong>
-              <span>Use chaves para liberar leitura e escrita por entidade.</span>
-            </article>
-            <article className="panel-api-feature-card panel-api-feature-card--green">
-              <strong>Tokens headless</strong>
-              <span>Emita bearer token temporário a partir de `keyId` + `secret`.</span>
-            </article>
-            <article className="panel-api-feature-card panel-api-feature-card--violet">
-              <strong>Logs e contrato</strong>
-              <span>Documentação e trilha de consumo técnico concentradas no mesmo módulo.</span>
-            </article>
-          </div>
-        </article>
-
-        <article className="panel-card">
-          <div className="panel-card-header">
-            <div className="panel-card-header__copy">
-              <h2>Clientes cadastrados</h2>
-              <p className="panel-muted">Selecione uma credencial para editar, rotacionar o secret ou revisar o último uso.</p>
-            </div>
-          </div>
-          <div className="panel-table-wrap">
-            <table className="panel-table">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Escopos</th>
-                  <th>Status</th>
-                  <th>Último uso</th>
-                  <th>Ação</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clients.length ? (
-                  clients.map((client) => (
-                    <tr key={client.id}>
-                      <td>
-                        <strong>{client.name}</strong>
-                        <div className="panel-table-muted">
-                          <code>{client.keyId}</code>
-                          {client.secretHint ? ` • termina em ${client.secretHint}` : ''}
-                        </div>
-                      </td>
-                      <td>{client.scopes.join(', ') || '-'}</td>
-                      <td>
-                        <span className={`panel-badge ${client.active ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
-                          {client.active ? 'ativo' : 'inativo'}
-                        </span>
-                      </td>
-                      <td>{formatDateTime(client.lastUsedAt)}</td>
-                      <td>
-                        <button
-                          type="button"
-                          className="panel-btn panel-btn-secondary panel-btn-sm"
-                          onClick={() => {
-                            setSelectedClientId(client.id);
-                            setIsEditorOpen(true);
-                          }}
-                        >
-                          Editar
-                        </button>
+            <div className="panel-table-wrap">
+              <table className="panel-table panel-manager-table">
+                <thead>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Escopos</th>
+                    <th>Status</th>
+                    <th>Último uso</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clients.length ? (
+                    clients.map((client) => (
+                      <tr key={client.id}>
+                        <td>
+                          <div className="panel-api-client-cell">
+                            <strong>{client.name}</strong>
+                            <div className="panel-table-muted">
+                              <code>{client.keyId}</code>
+                              {client.secretHint ? ` • termina em ${client.secretHint}` : ''}
+                            </div>
+                          </div>
+                        </td>
+                        <td>{client.scopes.join(', ') || '-'}</td>
+                        <td>
+                          <span className={`panel-badge ${client.active ? 'panel-badge-success' : 'panel-badge-neutral'}`}>
+                            {client.active ? 'ativo' : 'inativo'}
+                          </span>
+                        </td>
+                        <td>{formatDateTime(client.lastUsedAt)}</td>
+                        <td>
+                          <button
+                            type="button"
+                            className="panel-btn panel-btn-secondary panel-btn-sm"
+                            onClick={() => {
+                              setSelectedClientId(client.id);
+                              setIsEditorOpen(true);
+                            }}
+                          >
+                            Editar
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5} className="panel-table-empty">
+                        Nenhum cliente de API cadastrado ainda.
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={5} className="panel-table-empty">
-                      Nenhum cliente de API cadastrado ainda.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </div>
-
-      <div className="panel-dashboard-layout panel-dashboard-layout--compact">
-        <article className="panel-card">
-          <div className="panel-card-header">
-            <div className="panel-card-header__copy">
-              <h2>Referência da API de integração</h2>
-              <p className="panel-muted">Contrato autenticado disponível para apps, middlewares e parceiros técnicos, refletindo as entidades modeladas nesta instância.</p>
+                  )}
+                </tbody>
+              </table>
             </div>
-          </div>
-          <div className="panel-api-reference-list">
-            {referenceItems.map((item) => (
-              <div key={item.id} className="panel-api-reference-list__item">
-                <div className="panel-api-reference-list__meta">
-                  <span className={`panel-badge ${item.method === 'GET' ? 'panel-badge-success' : 'panel-badge-neutral'}`}>{item.method}</span>
-                  <code>{item.route}</code>
-                </div>
-                <div className="panel-api-reference-list__copy">
-                  <strong>{item.description}</strong>
-                  <small>
-                    {item.domain} · {item.scope || 'token válido'}
-                  </small>
-                </div>
-              </div>
-            ))}
-          </div>
-        </article>
+          </article>
 
-        <article className="panel-card">
-          <div className="panel-toolbar">
-            <div className="panel-toolbar__top">
-              <div className="panel-toolbar__copy">
+          <article id={focusIds.scopes} className={`panel-manager-card ${activeView === 'scopes' ? 'is-focused' : ''}`}>
+            <div className="panel-card-header">
+              <div className="panel-card-header__copy">
+                <h2>Escopos por entidade</h2>
+                <p className="panel-muted">Toda entidade criada no painel gera scopes de leitura e escrita para a camada de integração.</p>
+              </div>
+              <span className="panel-link-chip">{entityScopes.length} disponíveis</span>
+            </div>
+            <div className="panel-api-scope-summary">
+              {entityScopes.length ? (
+                entityScopes.map((scope) => (
+                  <article key={scope.scope} className="panel-api-scope-summary__item">
+                    <strong>{scope.label}</strong>
+                    <span>{scope.description}</span>
+                    <small>
+                      <code>{scope.scope}</code>
+                    </small>
+                  </article>
+                ))
+              ) : (
+                <div className="panel-table-empty panel-table-empty--card">
+                  Nenhuma entidade modelada ainda. Assim que você criar uma entidade, os scopes `read` e `write` aparecem aqui.
+                </div>
+              )}
+            </div>
+          </article>
+
+          <article id={focusIds.reference} className={`panel-manager-card ${activeView === 'reference' ? 'is-focused' : ''}`}>
+            <div className="panel-card-header">
+              <div className="panel-card-header__copy">
+                <h2>Referência da API de Integração</h2>
+                <p className="panel-muted">Endpoints disponíveis para integração externa.</p>
+              </div>
+              <a href="/api/integration/v1/data/contracts" target="_blank" rel="noreferrer" className="panel-link-chip">
+                Documentação
+              </a>
+            </div>
+            <div className="panel-api-reference-list">
+              {referenceItems.map((item) => (
+                <div key={item.id} className="panel-api-reference-list__item">
+                  <div className="panel-api-reference-list__meta">
+                    <span className={`panel-badge ${item.method === 'GET' ? 'panel-badge-success' : 'panel-badge-neutral'}`}>{item.method}</span>
+                    <code>{item.route}</code>
+                  </div>
+                  <div className="panel-api-reference-list__copy">
+                    <strong>{item.description}</strong>
+                    <small>
+                      {item.domain} · {item.scope || 'token válido'}
+                    </small>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
+
+        <div className="panel-integrations-layout__side">
+          <article id={focusIds.logs} className={`panel-manager-card ${activeView === 'logs' ? 'is-focused' : ''}`}>
+            <div className="panel-card-header">
+              <div className="panel-card-header__copy">
                 <h2>Logs de acesso</h2>
-                <p className="panel-muted">Chamadas autenticadas por chave ou token formam a trilha de auditoria da camada headless.</p>
+                <p className="panel-muted">Últimas chamadas à API em tempo real.</p>
               </div>
               <div className="panel-toolbar__filters">
                 <select
@@ -514,45 +551,43 @@ export default function ApiIntegrationsManager({
                 </select>
               </div>
             </div>
-          </div>
 
-          <div className="panel-table-wrap">
-            <table className="panel-table">
-              <thead>
-                <tr>
-                  <th>Quando</th>
-                  <th>Rota</th>
-                  <th>Status</th>
-                  <th>Autenticação</th>
-                  <th>Escopo</th>
-                  <th>Cliente</th>
-                </tr>
-              </thead>
-              <tbody>
-                {logs.length ? (
-                  logs.map((item) => (
-                    <tr key={item.id}>
-                      <td>{formatDateTime(item.createdAt)}</td>
-                      <td>
-                        <strong>{item.method}</strong> <code>{item.route}</code>
-                      </td>
-                      <td>{item.statusCode}</td>
-                      <td>{item.authMode}</td>
-                      <td>{item.scope || '-'}</td>
-                      <td>{item.keyId || item.clientId || '-'}</td>
-                    </tr>
-                  ))
-                ) : (
+            <div className="panel-table-wrap">
+              <table className="panel-table panel-manager-table">
+                <thead>
                   <tr>
-                    <td colSpan={6} className="panel-table-empty">
-                      {loadingLogs ? 'Carregando logs...' : 'Nenhuma chamada registrada ainda.'}
-                    </td>
+                    <th>Rota</th>
+                    <th>Status</th>
+                    <th>Cliente</th>
+                    <th>Data/Hora</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </article>
+                </thead>
+                <tbody>
+                  {logs.length ? (
+                    logs.map((item) => (
+                      <tr key={item.id}>
+                        <td>
+                          <strong>{item.method}</strong> <code>{item.route}</code>
+                        </td>
+                        <td>
+                          <span className="panel-badge panel-badge-success">{item.statusCode}</span>
+                        </td>
+                        <td>{item.keyId || item.clientId || item.authMode || '-'}</td>
+                        <td>{formatDateTime(item.createdAt)}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={4} className="panel-table-empty">
+                        {loadingLogs ? 'Carregando logs...' : 'Nenhuma chamada registrada ainda.'}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
       </div>
 
       <PanelModal

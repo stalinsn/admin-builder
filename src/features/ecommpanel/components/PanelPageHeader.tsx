@@ -18,7 +18,7 @@ export default function PanelPageHeader({
   titleId,
 }: PanelPageHeaderProps) {
   return (
-    <article className="panel-card panel-page-header">
+    <section className="panel-page-header">
       <div className="panel-page-header__main">
         <div className="panel-page-header__copy">
           {eyebrow ? <p className="panel-page-header__eyebrow">{eyebrow}</p> : null}
@@ -28,6 +28,6 @@ export default function PanelPageHeader({
         {actions ? <div className="panel-page-header__actions">{actions}</div> : null}
       </div>
       {meta ? <div className="panel-page-header__meta">{meta}</div> : null}
-    </article>
+    </section>
   );
 }

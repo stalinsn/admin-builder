@@ -28,9 +28,9 @@ export default async function EcommPanelAdminLayout({ children }: { children: Re
     <>
       <header className="panel-topbar">
         <div className="panel-topbar-content">
-          <div className="panel-brand panel-brand--inline">
-            <strong>Workspace ativo</strong>
-            <span>Dados, permissões, registros e integrações do ambiente</span>
+          <div className="panel-brand">
+            <strong>Artmeta Panel</strong>
+            <span>Orquestração administrativa, base de dados e integrações</span>
           </div>
 
           <div className="panel-top-actions">

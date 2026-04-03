@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation';
 
 import CatalogMediaManager from '@/features/ecommpanel/components/CatalogMediaManager';
-import { canAccessCatalogWorkspace } from '@/features/catalog/server/permissions';
 import { getPanelUserFromCookies } from '@/features/ecommpanel/server/auth';
+import { canReadPanelMedia } from '@/features/ecommpanel/server/panelMediaAccess';
 
 export default async function ArtmetaPanelMediaPage() {
   const user = await getPanelUserFromCookies();
@@ -11,7 +11,7 @@ export default async function ArtmetaPanelMediaPage() {
     redirect('/ecommpanel/login');
   }
 
-  if (!canAccessCatalogWorkspace(user)) {
+  if (!canReadPanelMedia(user)) {
     return (
       <section className="panel-grid">
         <article className="panel-card">

@@ -124,6 +124,8 @@ export function generateDataStudioContracts(snapshot: DataStudioSnapshot) {
       const baseName = toComponentName(entity);
       const collectionPath = `/api/ecommpanel/data-studio/entities/${entity.slug}/records`;
       const itemPath = `/api/ecommpanel/data-studio/entities/${entity.slug}/records/{recordId}`;
+      const integrationCollectionPath = `/api/integration/v1/data/entities/${entity.slug}/records`;
+      const integrationItemPath = `/api/integration/v1/data/entities/${entity.slug}/records/{recordId}`;
 
       return [
         [
@@ -240,6 +242,125 @@ export function generateDataStudioContracts(snapshot: DataStudioSnapshot) {
               responses: {
                 200: {
                   description: 'Registro removido.',
+                },
+              },
+            },
+          },
+        ],
+        [
+          integrationCollectionPath,
+          {
+            get: {
+              tags: ['Integration Data API'],
+              summary: `Listar registros externos de ${entity.label}`,
+              parameters: [
+                {
+                  name: 'limit',
+                  in: 'query',
+                  schema: { type: 'integer', minimum: 1, maximum: 200, default: 50 },
+                },
+                {
+                  name: 'offset',
+                  in: 'query',
+                  schema: { type: 'integer', minimum: 0, default: 0 },
+                },
+              ],
+              responses: {
+                200: {
+                  description: 'Lista paginada de registros via API autenticada.',
+                },
+              },
+            },
+            post: {
+              tags: ['Integration Data API'],
+              summary: `Criar registro externo em ${entity.label}`,
+              requestBody: {
+                required: true,
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'object',
+                      required: ['record'],
+                      properties: {
+                        record: { $ref: `#/components/schemas/${baseName}Input` },
+                      },
+                    },
+                  },
+                },
+              },
+              responses: {
+                200: {
+                  description: 'Registro criado pela API autenticada.',
+                },
+              },
+            },
+          },
+        ],
+        [
+          integrationItemPath,
+          {
+            get: {
+              tags: ['Integration Data API'],
+              summary: `Ler registro externo de ${entity.label}`,
+              parameters: [
+                {
+                  name: 'recordId',
+                  in: 'path',
+                  required: true,
+                  schema: { type: 'string' },
+                },
+              ],
+              responses: {
+                200: {
+                  description: 'Registro retornado com sucesso pela API autenticada.',
+                },
+              },
+            },
+            put: {
+              tags: ['Integration Data API'],
+              summary: `Atualizar registro externo de ${entity.label}`,
+              parameters: [
+                {
+                  name: 'recordId',
+                  in: 'path',
+                  required: true,
+                  schema: { type: 'string' },
+                },
+              ],
+              requestBody: {
+                required: true,
+                content: {
+                  'application/json': {
+                    schema: {
+                      type: 'object',
+                      required: ['record'],
+                      properties: {
+                        record: { $ref: `#/components/schemas/${baseName}Input` },
+                      },
+                    },
+                  },
+                },
+              },
+              responses: {
+                200: {
+                  description: 'Registro atualizado pela API autenticada.',
+                },
+              },
+            },
+            delete: {
+              tags: ['Integration Data API'],
+              summary: `Remover registro externo de ${entity.label}`,
+              parameters: [
+                {
+                  name: 'recordId',
+                  in: 'path',
+                  required: true,
+                  schema: { type: 'string' },
+                },
+              ],
+              responses: {
+                200: {
+                  description: 'Registro removido pela API autenticada.',
                 },
               },
             },

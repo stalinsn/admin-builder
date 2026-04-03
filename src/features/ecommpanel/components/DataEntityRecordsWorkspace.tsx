@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import type { DataEntityDefinition } from '@/features/ecommpanel/types/dataStudio';
 import PanelModal from '@/features/ecommpanel/components/PanelModal';
+import PanelPageHeader from '@/features/ecommpanel/components/PanelPageHeader';
 
 type Props = {
   entities: DataEntityDefinition[];
@@ -110,6 +112,7 @@ export default function DataEntityRecordsWorkspace({
   canManageRecords,
   initialEntityId,
 }: Props) {
+  const router = useRouter();
   const [csrfTokenValue, setCsrfTokenValue] = useState(csrfToken || '');
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(initialEntityId || entities[0]?.id || null);
   const [records, setRecords] = useState<Record<string, unknown>[]>([]);
@@ -342,7 +345,11 @@ export default function DataEntityRecordsWorkspace({
           <div className="panel-records-empty-state__icon" aria-hidden="true" />
           <strong>Nenhuma entidade disponível</strong>
           <p className="panel-muted">Modele ao menos uma entidade antes de operar registros, editar conteúdo ou popular dados no painel.</p>
-          <button type="button" className="panel-btn panel-btn-primary" disabled>
+          <button
+            type="button"
+            className="panel-btn panel-btn-primary"
+            onClick={() => router.push('/ecommpanel/admin/data?module=modeling&create=1')}
+          >
             + Criar primeira entidade
           </button>
         </div>
@@ -362,16 +369,27 @@ export default function DataEntityRecordsWorkspace({
 
   return (
     <div className="panel-grid panel-data-records-workspace">
-      <article className="panel-card panel-card-hero panel-card-hero--compact">
-        <div className="panel-inline-between panel-inline-wrap">
-          <div>
-            <p className="panel-kicker">Registros</p>
-            <h3>Operação compacta por entidade</h3>
-            <p className="panel-muted">
-              Selecione a entidade alvo, confira a tabela física ligada ao schema e edite os registros diretamente no painel.
-            </p>
-          </div>
-          <div className="panel-actions">
+      <PanelPageHeader
+        eyebrow="Entidades & Dados"
+        title="Registros por entidade"
+        description="Selecione a entidade ativa, leia os registros em tabela e abra a edição só quando precisar alterar o conteúdo."
+        actions={
+          <div className="panel-inline panel-inline-wrap">
+            <label className="panel-field panel-field--toolbar">
+              <span>Entidade</span>
+              <select
+                className="panel-select"
+                value={selectedEntityId || ''}
+                onChange={(event) => setSelectedEntityId(event.target.value || null)}
+                disabled={!entities.length}
+              >
+                {entities.map((entity) => (
+                  <option key={entity.id} value={entity.id}>
+                    {entity.label} ({entity.tableName})
+                  </option>
+                ))}
+              </select>
+            </label>
             <button type="button" className="panel-btn panel-btn-secondary panel-btn-sm" onClick={() => loadRecords(selectedEntity.slug)} disabled={loading}>
               Recarregar
             </button>
@@ -391,39 +409,16 @@ export default function DataEntityRecordsWorkspace({
               + Popular entidade
             </button>
           </div>
-        </div>
-
-        <div className="panel-form-grid panel-form-grid--two">
-          <label className="panel-field">
-            <span>Entidade alvo</span>
-            <select
-              className="panel-select"
-              value={selectedEntityId || ''}
-              onChange={(event) => setSelectedEntityId(event.target.value || null)}
-              disabled={!entities.length}
-            >
-              {entities.map((entity) => (
-                <option key={entity.id} value={entity.id}>
-                  {entity.label} ({entity.tableName})
-                </option>
-              ))}
-            </select>
-          </label>
-          <div className="panel-data-connection-status">
-            <strong>{selectedEntity.label}</strong>
-            <span>{selectedEntity.tableName}</span>
-            <small>
-              {formatInteger(selectedEntity.fields.length)} campos · {formatInteger(records.length)} registros carregados · sync {formatDateTime(lastSyncAt || undefined)}
-            </small>
+        }
+        meta={
+          <div className="panel-inline panel-inline-wrap">
+            <span className="panel-link-chip">{selectedEntity.tableName}</span>
+            <span className="panel-link-chip">{selectedEntity.status === 'ready' ? 'pronta' : 'rascunho'}</span>
+            <span className="panel-link-chip">{formatInteger(records.length)} registros</span>
+            <span className="panel-link-chip">sync {formatDateTime(lastSyncAt || undefined)}</span>
           </div>
-        </div>
-
-        <div className="panel-data-csv-tags">
-          <span className="panel-link-chip">slug: {selectedEntity.slug}</span>
-          <span className="panel-link-chip">status: {selectedEntity.status === 'ready' ? 'pronta' : 'rascunho'}</span>
-          <span className="panel-link-chip">campos visíveis: {formatInteger(visibleFields.length)}</span>
-        </div>
-      </article>
+        }
+      />
 
       {(error || success) && (
         <div className={`panel-feedback ${error ? 'panel-feedback-error' : 'panel-feedback-success'}`}>{error || success}</div>
